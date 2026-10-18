@@ -1,0 +1,28 @@
+#!/bin/bash
+#BSUB -J qwen38_q8_microbench
+#BSUB -q ssc-cpu
+#BSUB -m hg_6148
+#BSUB -n 40
+#BSUB -R "span[ptile=40]"
+#BSUB -W 00:30
+#BSUB -o /work/apac2602/qwen38-cpu/logs/%J.q8_micro.out
+#BSUB -e /work/apac2602/qwen38-cpu/logs/%J.q8_micro.err
+set -euo pipefail
+source /work/apac2602/qwen38-cpu/scripts/env.sh
+ROOT=/work/apac2602/qwen38-cpu/optimization/20261018-v1
+OUT="$ROOT/results/q8_micro_${LSB_JOBID}"
+mkdir -p "$OUT"
+trap 'echo FAILED > "$OUT/status"' ERR
+echo RUNNING > "$OUT/status"
+{ date -Is; hostname; lscpu; icc --version; } > "$OUT/environment.txt"
+icc -gcc-name=/share/base/e5/gcc/11.2.0/bin/gcc -std=gnu11 -O3 -g \
+    -fp-model precise -no-ftz -xCORE-AVX512 -qsimd-honor-fp-model -diag-disable=10441 \
+    "$ROOT/scripts/q8-microbench.c" -ldl -Wl,--no-as-needed,/lib64/libm.so.6,--as-needed \
+    -o "$OUT/q8-microbench" > "$OUT/compile.log" 2>&1
+objdump -d "$OUT/q8-microbench" > "$OUT/disassembly.txt"
+for nb in 64 128 256 512; do
+    numactl --physcpubind=0 --membind=0 "$OUT/q8-microbench" "$LLAMA_CPP_DIR/build/bin/libggml-cpu.so" "$nb" 256 > "$OUT/nb${nb}.csv" 2> "$OUT/nb${nb}.log"
+    python3 "$ROOT/scripts/analyze_q8.py" "$OUT/nb${nb}.csv" > "$OUT/nb${nb}.summary.json"
+done
+echo READY > "$OUT/status"
+printf '%s\n' "$OUT" > "$ROOT/results/q8_micro.last"

@@ -1,0 +1,15 @@
+#!/bin/bash
+#BSUB -J qwen38_cli
+#BSUB -q ssc-cpu
+#BSUB -m hg_6148
+#BSUB -n 40
+#BSUB -R "span[ptile=40]"
+#BSUB -W 00:30
+#BSUB -o /work/apac2602/qwen38-cpu/logs/%J.cli.out
+#BSUB -e /work/apac2602/qwen38-cpu/logs/%J.cli.err
+set -euo pipefail
+cd /work/apac2602/qwen38-cpu
+source scripts/env.sh
+exec llama-cli -m "$MODEL" -t 38 -tb 38 -ngl 0 --numa distribute \
+  -c 2048 -b 512 -ub 256 -ctk f16 -ctv f16 \
+  -p "${PROMPT:-Explain what a CPU is in two sentences.}" -n 128 --single-turn

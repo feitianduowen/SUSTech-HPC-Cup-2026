@@ -1,0 +1,25 @@
+{
+  "source_sha256": "3c489fdc77e3ab484a5f188bff9c60c0e9483c951ed65c1a562a04c249d5628e",
+  "candidates": {
+    "u2": {
+      "width": 2,
+      "independent_accumulators": false,
+      "preserves_fma_order": true
+    },
+    "u4": {
+      "width": 4,
+      "independent_accumulators": false,
+      "preserves_fma_order": true
+    },
+    "a2": {
+      "width": 2,
+      "independent_accumulators": true,
+      "preserves_fma_order": false
+    },
+    "a4": {
+      "width": 4,
+      "independent_accumulators": true,
+      "preserves_fma_order": false
+    }
+  }
+}

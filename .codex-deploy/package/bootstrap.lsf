@@ -1,0 +1,26 @@
+#!/bin/bash
+#BSUB -J qwen38_deploy
+#BSUB -q ssc-cpu
+#BSUB -m hg_6148
+#BSUB -n 40
+#BSUB -R "span[ptile=40]"
+#BSUB -W 02:00
+#BSUB -o /work/apac2602/qwen38-cpu/logs/%J.out
+#BSUB -e /work/apac2602/qwen38-cpu/logs/%J.err
+set -euo pipefail
+cd /work/apac2602/qwen38-cpu
+if [[ -f llama.cpp/build/CMakeCache.txt ]] && grep -q '^CMAKE_C_COMPILER:FILEPATH=.*/gcc$' llama.cpp/build/CMakeCache.txt; then
+  test ! -e llama.cpp/build-gcc-reference
+  mv llama.cpp/build llama.cpp/build-gcc-reference
+fi
+trap 'code=$?; if (( code != 0 )); then echo "FAILED exit=$code job=$LSB_JOBID" > deployment.status; fi' EXIT
+echo "BUILDING job=$LSB_JOBID host=$(hostname)" > deployment.status
+source scripts/env.sh
+python3 scripts/check_assets.py > logs/assets.json
+bash scripts/build.sh
+echo "VALIDATING_PPL job=$LSB_JOBID host=$(hostname)" > deployment.status
+RUN_BENCH=0 bash scripts/benchmark.lsf
+echo "VALIDATING_SERVER job=$LSB_JOBID host=$(hostname)" > deployment.status
+python3 scripts/server_smoke.py
+echo "READY job=$LSB_JOBID host=$(hostname)" > deployment.status
+date -Is >> deployment.status

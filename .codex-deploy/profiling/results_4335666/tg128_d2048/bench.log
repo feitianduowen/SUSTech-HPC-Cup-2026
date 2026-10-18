@@ -1,0 +1,22 @@
+llama-bench: benchmark 1/1: starting
+llama-bench: benchmark 1/1: warmup generation run
+llama-bench: benchmark 1/1: depth run 1/10
+llama-bench: benchmark 1/1: generation run 1/10
+llama-bench: benchmark 1/1: depth run 2/10 (cached)
+llama-bench: benchmark 1/1: generation run 2/10
+llama-bench: benchmark 1/1: depth run 3/10 (cached)
+llama-bench: benchmark 1/1: generation run 3/10
+llama-bench: benchmark 1/1: depth run 4/10 (cached)
+llama-bench: benchmark 1/1: generation run 4/10
+llama-bench: benchmark 1/1: depth run 5/10 (cached)
+llama-bench: benchmark 1/1: generation run 5/10
+llama-bench: benchmark 1/1: depth run 6/10 (cached)
+llama-bench: benchmark 1/1: generation run 6/10
+llama-bench: benchmark 1/1: depth run 7/10 (cached)
+llama-bench: benchmark 1/1: generation run 7/10
+llama-bench: benchmark 1/1: depth run 8/10 (cached)
+llama-bench: benchmark 1/1: generation run 8/10
+llama-bench: benchmark 1/1: depth run 9/10 (cached)
+llama-bench: benchmark 1/1: generation run 9/10
+llama-bench: benchmark 1/1: depth run 10/10 (cached)
+llama-bench: benchmark 1/1: generation run 10/10

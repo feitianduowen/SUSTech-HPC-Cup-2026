@@ -1,0 +1,34 @@
+--- a/ggml/src/ggml-cpu/llamafile/sgemm.cpp
++++ b/ggml/src/ggml-cpu/llamafile/sgemm.cpp
+@@ -1634,6 +1634,7 @@
+                 __m256i avec2 = load(A + lda * (ii + 2) + l);
+                 __m256i avec3 = load(A + lda * (ii + 3) + l);
+                 for (int64_t j = 0; j < RN; ++j) {
++                        const __m256i bvec = load(B + ldb * (jj + j) + l);
+                         __m128 db = _mm_set1_ps(unhalf(B[ldb * (jj + j) + l].d));
+                         // Computation of product of delta values for four blocks and replicate it across 256 bit lane
+                         __m256 dvec =  _mm256_castps128_ps256(_mm_mul_ps(da, db));
+@@ -1641,19 +1642,19 @@
+                         // Computation of dot product and multiplication with appropriate delta value products
+                         Cv[j][0] = madd(_mm256_shuffle_ps(dvec, dvec, 0),
+                                     updot(_mm256_sign_epi8(avec0, avec0),
+-                                          _mm256_sign_epi8(load(B + ldb * (jj + j) + l), avec0)),
++                                          _mm256_sign_epi8(bvec, avec0)),
+                                     Cv[j][0]);
+                         Cv[j][1] = madd(_mm256_shuffle_ps(dvec, dvec, 85),
+                                     updot(_mm256_sign_epi8(avec1, avec1),
+-                                            _mm256_sign_epi8(load(B + ldb * (jj + j) + l), avec1)),
++                                            _mm256_sign_epi8(bvec, avec1)),
+                                     Cv[j][1]);
+                         Cv[j][2] = madd(_mm256_shuffle_ps(dvec, dvec, 170),
+                                     updot(_mm256_sign_epi8(avec2, avec2),
+-                                            _mm256_sign_epi8(load(B + ldb * (jj + j) + l), avec2)),
++                                            _mm256_sign_epi8(bvec, avec2)),
+                                     Cv[j][2]);
+                         Cv[j][3] = madd(_mm256_shuffle_ps(dvec, dvec, 255),
+                                     updot(_mm256_sign_epi8(avec3, avec3),
+-                                            _mm256_sign_epi8(load(B + ldb * (jj + j) + l), avec3)),
++                                            _mm256_sign_epi8(bvec, avec3)),
+                                     Cv[j][3]);
+                 }
+             }

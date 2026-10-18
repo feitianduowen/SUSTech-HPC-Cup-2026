@@ -1,0 +1,20 @@
+#!/bin/bash
+#BSUB -J qwen38_q8_real_shapes
+#BSUB -q ssc-cpu
+#BSUB -m hg_6148
+#BSUB -n 40
+#BSUB -R "span[ptile=40]"
+#BSUB -W 00:15
+#BSUB -o /work/apac2602/qwen38-cpu/logs/%J.q8_shapes.out
+#BSUB -e /work/apac2602/qwen38-cpu/logs/%J.q8_shapes.err
+set -euo pipefail
+source /work/apac2602/qwen38-cpu/scripts/env.sh
+ROOT=/work/apac2602/qwen38-cpu/optimization/20261018-v1
+OUT="$ROOT/results/q8_micro_shapes_${LSB_JOBID}"
+mkdir -p "$OUT"
+trap 'echo FAILED > "$OUT/status"' ERR
+for nb in 80 192; do
+    numactl --physcpubind=0 --membind=0 "$ROOT/results/q8_micro_4335817/q8-microbench" "$LLAMA_CPP_DIR/build/bin/libggml-cpu.so" "$nb" 256 > "$OUT/nb${nb}.csv" 2> "$OUT/nb${nb}.log"
+    python3 "$ROOT/scripts/analyze_q8.py" "$OUT/nb${nb}.csv" > "$OUT/nb${nb}.summary.json"
+done
+echo READY > "$OUT/status"

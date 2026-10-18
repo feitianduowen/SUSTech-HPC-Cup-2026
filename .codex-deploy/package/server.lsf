@@ -1,0 +1,19 @@
+#!/bin/bash
+#BSUB -J qwen38_server
+#BSUB -q ssc-cpu
+#BSUB -m hg_6148
+#BSUB -n 40
+#BSUB -R "span[ptile=40]"
+#BSUB -W 04:00
+#BSUB -o /work/apac2602/qwen38-cpu/logs/%J.server.out
+#BSUB -e /work/apac2602/qwen38-cpu/logs/%J.server.err
+set -euo pipefail
+cd /work/apac2602/qwen38-cpu
+source scripts/env.sh
+python3 scripts/check_assets.py > "logs/assets_server_${LSB_JOBID}.json"
+echo "Node: $(hostname); loopback endpoint: http://127.0.0.1:18080"
+echo "Job: $LSB_JOBID; stop with: bkill $LSB_JOBID"
+exec "$LLAMA_CPP_DIR/build/bin/llama-server" \
+  -m "$MODEL" -t 38 -tb 38 -ngl 0 --numa distribute \
+  -c 2048 -b 512 -ub 256 -ctk f16 -ctv f16 -np 1 \
+  --host 127.0.0.1 --port 18080 --no-webui --no-warmup

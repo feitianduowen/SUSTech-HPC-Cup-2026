@@ -1,0 +1,56 @@
+--- a/ggml/src/ggml-cpu/arch/x86/quants.c
++++ b/ggml/src/ggml-cpu/arch/x86/quants.c
+@@ -1323,20 +1323,43 @@
+     float sumf = 0;
+ 
+ #if defined(__AVX2__)
+-    // Initialize accumulator with zeros
+     __m256 acc = _mm256_setzero_ps();
+-
+-    // Main loop
++    __m256 acc1 = _mm256_setzero_ps();
++    __m256 acc2 = _mm256_setzero_ps();
++    __m256 acc3 = _mm256_setzero_ps();
++
++    for (; ib + 3 < nb; ib += 4) {
++        const __m256 d0 = _mm256_set1_ps(GGML_CPU_FP16_TO_FP32(x[ib].d) * GGML_CPU_FP16_TO_FP32(y[ib].d));
++        const __m256 d1 = _mm256_set1_ps(GGML_CPU_FP16_TO_FP32(x[ib + 1].d) * GGML_CPU_FP16_TO_FP32(y[ib + 1].d));
++        const __m256 d2 = _mm256_set1_ps(GGML_CPU_FP16_TO_FP32(x[ib + 2].d) * GGML_CPU_FP16_TO_FP32(y[ib + 2].d));
++        const __m256 d3 = _mm256_set1_ps(GGML_CPU_FP16_TO_FP32(x[ib + 3].d) * GGML_CPU_FP16_TO_FP32(y[ib + 3].d));
++        const __m256i qx0 = _mm256_loadu_si256((const __m256i *) x[ib].qs);
++        const __m256i qy0 = _mm256_loadu_si256((const __m256i *) y[ib].qs);
++        const __m256 q0 = mul_sum_i8_pairs_float(qx0, qy0);
++        const __m256i qx1 = _mm256_loadu_si256((const __m256i *) x[ib + 1].qs);
++        const __m256i qy1 = _mm256_loadu_si256((const __m256i *) y[ib + 1].qs);
++        const __m256 q1 = mul_sum_i8_pairs_float(qx1, qy1);
++        const __m256i qx2 = _mm256_loadu_si256((const __m256i *) x[ib + 2].qs);
++        const __m256i qy2 = _mm256_loadu_si256((const __m256i *) y[ib + 2].qs);
++        const __m256 q2 = mul_sum_i8_pairs_float(qx2, qy2);
++        const __m256i qx3 = _mm256_loadu_si256((const __m256i *) x[ib + 3].qs);
++        const __m256i qy3 = _mm256_loadu_si256((const __m256i *) y[ib + 3].qs);
++        const __m256 q3 = mul_sum_i8_pairs_float(qx3, qy3);
++
++        acc = _mm256_fmadd_ps(d0, q0, acc);
++        acc1 = _mm256_fmadd_ps(d1, q1, acc1);
++        acc2 = _mm256_fmadd_ps(d2, q2, acc2);
++        acc3 = _mm256_fmadd_ps(d3, q3, acc3);
++    }
++
++    acc = _mm256_add_ps(_mm256_add_ps(acc, acc1), _mm256_add_ps(acc2, acc3));
++
+     for (; ib < nb; ++ib) {
+-        // Compute combined scale for the block
+         const __m256 d = _mm256_set1_ps(GGML_CPU_FP16_TO_FP32(x[ib].d) * GGML_CPU_FP16_TO_FP32(y[ib].d));
+-        __m256i qx = _mm256_loadu_si256((const __m256i *)x[ib].qs);
+-        __m256i qy = _mm256_loadu_si256((const __m256i *)y[ib].qs);
+-
++        const __m256i qx = _mm256_loadu_si256((const __m256i *) x[ib].qs);
++        const __m256i qy = _mm256_loadu_si256((const __m256i *) y[ib].qs);
+         const __m256 q = mul_sum_i8_pairs_float(qx, qy);
+-
+-        // Multiply q with scale and accumulate
+-        acc = _mm256_fmadd_ps( d, q, acc );
++        acc = _mm256_fmadd_ps(d, q, acc);
+     }
+ 
+     sumf = hsum_float_8(acc);

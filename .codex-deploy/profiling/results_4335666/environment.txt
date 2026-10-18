@@ -1,0 +1,50 @@
+2026-10-18T21:46:24+08:00
+r13n16
+Architecture:        x86_64
+CPU op-mode(s):      32-bit, 64-bit
+Byte Order:          Little Endian
+CPU(s):              40
+On-line CPU(s) list: 0-39
+Thread(s) per core:  1
+Core(s) per socket:  20
+Socket(s):           2
+NUMA node(s):        2
+Vendor ID:           GenuineIntel
+CPU family:          6
+Model:               85
+Model name:          Intel(R) Xeon(R) Gold 6148 CPU @ 2.40GHz
+Stepping:            4
+CPU MHz:             2400.000
+CPU max MHz:         3700.0000
+CPU min MHz:         1000.0000
+BogoMIPS:            4800.00
+Virtualization:      VT-x
+L1d cache:           32K
+L1i cache:           32K
+L2 cache:            1024K
+L3 cache:            28160K
+NUMA node0 CPU(s):   0-19
+NUMA node1 CPU(s):   20-39
+Flags:               fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid dca sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb cat_l3 cdp_l3 invpcid_single pti intel_ppin ssbd mba ibrs ibpb stibp tpr_shadow vnmi flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm cqm mpx rdt_a avx512f avx512dq rdseed adx smap clflushopt clwb intel_pt avx512cd avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local dtherm ida arat pln pts hwp hwp_act_window hwp_epp hwp_pkg_req pku ospke md_clear flush_l1d arch_capabilities
+available: 2 nodes (0-1)
+node 0 cpus: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19
+node 0 size: 96084 MB
+node 0 free: 89553 MB
+node 1 cpus: 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39
+node 1 size: 96762 MB
+node 1 free: 95378 MB
+node distances:
+node   0   1 
+  0:  10  21 
+  1:  21  10 
+              total        used        free      shared  buff/cache   available
+Mem:          188Gi       6.7Gi       180Gi       391Mi       1.0Gi       180Gi
+Swap:         4.0Gi        79Mi       3.9Gi
+Currently Loaded Modulefiles:
+ 1) cmake/3.28.1   2) gcc/11.2.0   3) compiler-rt/latest   4) icc/2023.1.0  
+icc: remark #10441: The Intel(R) C++ Compiler Classic (ICC) is deprecated and will be removed from product release in the second half of 2023. The Intel(R) oneAPI DPC++/C++ Compiler (ICX) is the recommended compiler moving forward. Please transition to use this compiler. Use '-diag-disable=10441' to disable this message.
+icc (ICC) 2021.9.0 20230302
+Copyright (C) 1985-2023 Intel Corporation.  All rights reserved.
+
+b7009175033685a35b3f26cedf3d60474b47371a2b1d1a2fb9db847f77b98556  llama.cpp/build/bin/llama-bench
+be71251ce20e2330364d43dfeb684a8b031371a8835dee43f2eb4ad6e87d9176  llama.cpp/build/bin/libggml-cpu.so

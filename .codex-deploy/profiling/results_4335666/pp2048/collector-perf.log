@@ -1,0 +1,236 @@
+FILE: amplxe-perf.2007663.log
+callchain: type DWARF
+callchain: stack dump size 2048
+Using CPUID GenuineIntel-6-55-4
+DEBUGINFOD_URLS=
+Compression enabled, disabling build id collection at the end of the session.
+nr_cblocks: 0
+affinity: SYS
+mmap flush: 1
+comp level: 1
+Problems creating module maps, continuing anyway...
+WARNING: The use of --call-graph=dwarf may require all the user registers, specifying a subset with --user-regs may render DWARF unwinding unreliable, so the minimal registers set (IP, SP) is explicitly forced.
+WARNING: The use of --call-graph=dwarf may require all the user registers, specifying a subset with --user-regs may render DWARF unwinding unreliable, so the minimal registers set (IP, SP) is explicitly forced.
+WARNING: The use of --call-graph=dwarf may require all the user registers, specifying a subset with --user-regs may render DWARF unwinding unreliable, so the minimal registers set (IP, SP) is explicitly forced.
+WARNING: The use of --call-graph=dwarf may require all the user registers, specifying a subset with --user-regs may render DWARF unwinding unreliable, so the minimal registers set (IP, SP) is explicitly forced.
+WARNING: The use of --call-graph=dwarf may require all the user registers, specifying a subset with --user-regs may render DWARF unwinding unreliable, so the minimal registers set (IP, SP) is explicitly forced.
+WARNING: The use of --call-graph=dwarf may require all the user registers, specifying a subset with --user-regs may render DWARF unwinding unreliable, so the minimal registers set (IP, SP) is explicitly forced.
+WARNING: The use of --call-graph=dwarf may require all the user registers, specifying a subset with --user-regs may render DWARF unwinding unreliable, so the minimal registers set (IP, SP) is explicitly forced.
+WARNING: The use of --call-graph=dwarf may require all the user registers, specifying a subset with --user-regs may render DWARF unwinding unreliable, so the minimal registers set (IP, SP) is explicitly forced.
+WARNING: The use of --call-graph=dwarf may require all the user registers, specifying a subset with --user-regs may render DWARF unwinding unreliable, so the minimal registers set (IP, SP) is explicitly forced.
+WARNING: The use of --call-graph=dwarf may require all the user registers, specifying a subset with --user-regs may render DWARF unwinding unreliable, so the minimal registers set (IP, SP) is explicitly forced.
+WARNING: The use of --call-graph=dwarf may require all the user registers, specifying a subset with --user-regs may render DWARF unwinding unreliable, so the minimal registers set (IP, SP) is explicitly forced.
+WARNING: The use of --call-graph=dwarf may require all the user registers, specifying a subset with --user-regs may render DWARF unwinding unreliable, so the minimal registers set (IP, SP) is explicitly forced.
+WARNING: The use of --call-graph=dwarf may require all the user registers, specifying a subset with --user-regs may render DWARF unwinding unreliable, so the minimal registers set (IP, SP) is explicitly forced.
+WARNING: The use of --call-graph=dwarf may require all the user registers, specifying a subset with --user-regs may render DWARF unwinding unreliable, so the minimal registers set (IP, SP) is explicitly forced.
+WARNING: The use of --call-graph=dwarf may require all the user registers, specifying a subset with --user-regs may render DWARF unwinding unreliable, so the minimal registers set (IP, SP) is explicitly forced.
+WARNING: The use of --call-graph=dwarf may require all the user registers, specifying a subset with --user-regs may render DWARF unwinding unreliable, so the minimal registers set (IP, SP) is explicitly forced.
+mmap size 528384B
+Control descriptor is not initialized
+
+2007664:perf-sync:ready:SYS=2160703346831596
+[ perf record: Woken up 8 times to write data ]
+failed to write feature HYBRID_TOPOLOGY
+[ perf record: Captured and wrote 0.028 MB /tmp/amplxe-tmp-uid-2301/amplxe-res-2007657-5257506585351522/data.0/temp.dryrun.perf, compressed (original 0.008 MB, ratio is 5.790) ]
+
+FILE: amplxe-perf.2007684.log
+callchain: type DWARF
+callchain: stack dump size 2048
+threads_spec: cpu
+Using CPUID GenuineIntel-6-55-4
+DEBUGINFOD_URLS=
+Compression enabled, disabling build id collection at the end of the session.
+nr_threads: 40
+thread_masks[0]: 0x55e98d3a6ba0: maps mask[40]: 0
+thread_masks[0]: 0x55e98d3a6bb0: affinity mask[40]: 0
+thread_masks[1]: 0x55e98d3a6bc0: maps mask[40]: 1
+thread_masks[1]: 0x55e98d3a6bd0: affinity mask[40]: 1
+thread_masks[2]: 0x55e98d3a6be0: maps mask[40]: 2
+thread_masks[2]: 0x55e98d3a6bf0: affinity mask[40]: 2
+thread_masks[3]: 0x55e98d3a6c00: maps mask[40]: 3
+thread_masks[3]: 0x55e98d3a6c10: affinity mask[40]: 3
+thread_masks[4]: 0x55e98d3a6c20: maps mask[40]: 4
+thread_masks[4]: 0x55e98d3a6c30: affinity mask[40]: 4
+thread_masks[5]: 0x55e98d3a6c40: maps mask[40]: 5
+thread_masks[5]: 0x55e98d3a6c50: affinity mask[40]: 5
+thread_masks[6]: 0x55e98d3a6c60: maps mask[40]: 6
+thread_masks[6]: 0x55e98d3a6c70: affinity mask[40]: 6
+thread_masks[7]: 0x55e98d3a6c80: maps mask[40]: 7
+thread_masks[7]: 0x55e98d3a6c90: affinity mask[40]: 7
+thread_masks[8]: 0x55e98d3a6ca0: maps mask[40]: 8
+thread_masks[8]: 0x55e98d3a6cb0: affinity mask[40]: 8
+thread_masks[9]: 0x55e98d3a6cc0: maps mask[40]: 9
+thread_masks[9]: 0x55e98d3a6cd0: affinity mask[40]: 9
+thread_masks[10]: 0x55e98d3a6ce0: maps mask[40]: 10
+thread_masks[10]: 0x55e98d3a6cf0: affinity mask[40]: 10
+thread_masks[11]: 0x55e98d3a6d00: maps mask[40]: 11
+thread_masks[11]: 0x55e98d3a6d10: affinity mask[40]: 11
+thread_masks[12]: 0x55e98d3a6d20: maps mask[40]: 12
+thread_masks[12]: 0x55e98d3a6d30: affinity mask[40]: 12
+thread_masks[13]: 0x55e98d3a6d40: maps mask[40]: 13
+thread_masks[13]: 0x55e98d3a6d50: affinity mask[40]: 13
+thread_masks[14]: 0x55e98d3a6d60: maps mask[40]: 14
+thread_masks[14]: 0x55e98d3a6d70: affinity mask[40]: 14
+thread_masks[15]: 0x55e98d3a6d80: maps mask[40]: 15
+thread_masks[15]: 0x55e98d3a6d90: affinity mask[40]: 15
+thread_masks[16]: 0x55e98d3a6da0: maps mask[40]: 16
+thread_masks[16]: 0x55e98d3a6db0: affinity mask[40]: 16
+thread_masks[17]: 0x55e98d3a6dc0: maps mask[40]: 17
+thread_masks[17]: 0x55e98d3a6dd0: affinity mask[40]: 17
+thread_masks[18]: 0x55e98d3a6de0: maps mask[40]: 18
+thread_masks[18]: 0x55e98d3a6df0: affinity mask[40]: 18
+thread_masks[19]: 0x55e98d3a6e00: maps mask[40]: 19
+thread_masks[19]: 0x55e98d3a6e10: affinity mask[40]: 19
+thread_masks[20]: 0x55e98d3a6e20: maps mask[40]: 20
+thread_masks[20]: 0x55e98d3a6e30: affinity mask[40]: 20
+thread_masks[21]: 0x55e98d3a6e40: maps mask[40]: 21
+thread_masks[21]: 0x55e98d3a6e50: affinity mask[40]: 21
+thread_masks[22]: 0x55e98d3a6e60: maps mask[40]: 22
+thread_masks[22]: 0x55e98d3a6e70: affinity mask[40]: 22
+thread_masks[23]: 0x55e98d3a6e80: maps mask[40]: 23
+thread_masks[23]: 0x55e98d3a6e90: affinity mask[40]: 23
+thread_masks[24]: 0x55e98d3a6ea0: maps mask[40]: 24
+thread_masks[24]: 0x55e98d3a6eb0: affinity mask[40]: 24
+thread_masks[25]: 0x55e98d3a6ec0: maps mask[40]: 25
+thread_masks[25]: 0x55e98d3a6ed0: affinity mask[40]: 25
+thread_masks[26]: 0x55e98d3a6ee0: maps mask[40]: 26
+thread_masks[26]: 0x55e98d3a6ef0: affinity mask[40]: 26
+thread_masks[27]: 0x55e98d3a6f00: maps mask[40]: 27
+thread_masks[27]: 0x55e98d3a6f10: affinity mask[40]: 27
+thread_masks[28]: 0x55e98d3a6f20: maps mask[40]: 28
+thread_masks[28]: 0x55e98d3a6f30: affinity mask[40]: 28
+thread_masks[29]: 0x55e98d3a6f40: maps mask[40]: 29
+thread_masks[29]: 0x55e98d3a6f50: affinity mask[40]: 29
+thread_masks[30]: 0x55e98d3a6f60: maps mask[40]: 30
+thread_masks[30]: 0x55e98d3a6f70: affinity mask[40]: 30
+thread_masks[31]: 0x55e98d3a6f80: maps mask[40]: 31
+thread_masks[31]: 0x55e98d3a6f90: affinity mask[40]: 31
+thread_masks[32]: 0x55e98d3a6fa0: maps mask[40]: 32
+thread_masks[32]: 0x55e98d3a6fb0: affinity mask[40]: 32
+thread_masks[33]: 0x55e98d3a6fc0: maps mask[40]: 33
+thread_masks[33]: 0x55e98d3a6fd0: affinity mask[40]: 33
+thread_masks[34]: 0x55e98d3a6fe0: maps mask[40]: 34
+thread_masks[34]: 0x55e98d3a6ff0: affinity mask[40]: 34
+thread_masks[35]: 0x55e98d3a7000: maps mask[40]: 35
+thread_masks[35]: 0x55e98d3a7010: affinity mask[40]: 35
+thread_masks[36]: 0x55e98d3a7020: maps mask[40]: 36
+thread_masks[36]: 0x55e98d3a7030: affinity mask[40]: 36
+thread_masks[37]: 0x55e98d3a7040: maps mask[40]: 37
+thread_masks[37]: 0x55e98d3a7050: affinity mask[40]: 37
+thread_masks[38]: 0x55e98d3a7060: maps mask[40]: 38
+thread_masks[38]: 0x55e98d3a7070: affinity mask[40]: 38
+thread_masks[39]: 0x55e98d3a7080: maps mask[40]: 39
+thread_masks[39]: 0x55e98d3a7090: affinity mask[40]: 39
+nr_cblocks: 0
+affinity: SYS
+mmap flush: 1
+comp level: 1
+Problems creating module maps, continuing anyway...
+WARNING: The use of --call-graph=dwarf may require all the user registers, specifying a subset with --user-regs may render DWARF unwinding unreliable, so the minimal registers set (IP, SP) is explicitly forced.
+WARNING: The use of --call-graph=dwarf may require all the user registers, specifying a subset with --user-regs may render DWARF unwinding unreliable, so the minimal registers set (IP, SP) is explicitly forced.
+WARNING: The use of --call-graph=dwarf may require all the user registers, specifying a subset with --user-regs may render DWARF unwinding unreliable, so the minimal registers set (IP, SP) is explicitly forced.
+WARNING: The use of --call-graph=dwarf may require all the user registers, specifying a subset with --user-regs may render DWARF unwinding unreliable, so the minimal registers set (IP, SP) is explicitly forced.
+WARNING: The use of --call-graph=dwarf may require all the user registers, specifying a subset with --user-regs may render DWARF unwinding unreliable, so the minimal registers set (IP, SP) is explicitly forced.
+WARNING: The use of --call-graph=dwarf may require all the user registers, specifying a subset with --user-regs may render DWARF unwinding unreliable, so the minimal registers set (IP, SP) is explicitly forced.
+WARNING: The use of --call-graph=dwarf may require all the user registers, specifying a subset with --user-regs may render DWARF unwinding unreliable, so the minimal registers set (IP, SP) is explicitly forced.
+WARNING: The use of --call-graph=dwarf may require all the user registers, specifying a subset with --user-regs may render DWARF unwinding unreliable, so the minimal registers set (IP, SP) is explicitly forced.
+WARNING: The use of --call-graph=dwarf may require all the user registers, specifying a subset with --user-regs may render DWARF unwinding unreliable, so the minimal registers set (IP, SP) is explicitly forced.
+WARNING: The use of --call-graph=dwarf may require all the user registers, specifying a subset with --user-regs may render DWARF unwinding unreliable, so the minimal registers set (IP, SP) is explicitly forced.
+WARNING: The use of --call-graph=dwarf may require all the user registers, specifying a subset with --user-regs may render DWARF unwinding unreliable, so the minimal registers set (IP, SP) is explicitly forced.
+WARNING: The use of --call-graph=dwarf may require all the user registers, specifying a subset with --user-regs may render DWARF unwinding unreliable, so the minimal registers set (IP, SP) is explicitly forced.
+WARNING: The use of --call-graph=dwarf may require all the user registers, specifying a subset with --user-regs may render DWARF unwinding unreliable, so the minimal registers set (IP, SP) is explicitly forced.
+WARNING: The use of --call-graph=dwarf may require all the user registers, specifying a subset with --user-regs may render DWARF unwinding unreliable, so the minimal registers set (IP, SP) is explicitly forced.
+WARNING: The use of --call-graph=dwarf may require all the user registers, specifying a subset with --user-regs may render DWARF unwinding unreliable, so the minimal registers set (IP, SP) is explicitly forced.
+WARNING: The use of --call-graph=dwarf may require all the user registers, specifying a subset with --user-regs may render DWARF unwinding unreliable, so the minimal registers set (IP, SP) is explicitly forced.
+WARNING: The use of --call-graph=dwarf may require all the user registers, specifying a subset with --user-regs may render DWARF unwinding unreliable, so the minimal registers set (IP, SP) is explicitly forced.
+Warning:
+kernel.perf_event_paranoid=2, trying to fall back to excluding kernel and hypervisor  samples
+mmap size 528384B
+threads[2007686]: started on cpu1
+threads[2007687]: started on cpu2
+threads[2007688]: started on cpu3
+threads[2007689]: started on cpu4
+threads[2007690]: started on cpu5
+threads[2007691]: started on cpu6
+threads[2007692]: started on cpu7
+threads[2007693]: started on cpu8
+threads[2007694]: started on cpu9
+threads[2007695]: started on cpu10
+threads[2007696]: started on cpu11
+threads[2007697]: started on cpu12
+threads[2007698]: started on cpu13
+threads[2007699]: started on cpu14
+threads[2007700]: started on cpu15
+threads[2007701]: started on cpu16
+threads[2007702]: started on cpu17
+threads[2007703]: started on cpu18
+threads[2007704]: started on cpu19
+threads[2007705]: started on cpu20
+threads[2007706]: started on cpu21
+threads[2007707]: started on cpu22
+threads[2007708]: started on cpu23
+threads[2007709]: started on cpu24
+threads[2007710]: started on cpu25
+threads[2007711]: started on cpu26
+threads[2007712]: started on cpu27
+threads[2007713]: started on cpu28
+threads[2007714]: started on cpu29
+threads[2007715]: started on cpu30
+threads[2007716]: started on cpu31
+threads[2007717]: started on cpu32
+threads[2007718]: started on cpu33
+threads[2007719]: started on cpu34
+threads[2007720]: started on cpu35
+threads[2007721]: started on cpu36
+threads[2007722]: started on cpu37
+threads[2007723]: started on cpu38
+threads[2007724]: started on cpu39
+threads[2007684]: started on cpu0
+Events disabled
+
+2007685:perf-sync:ready:SYS=2160704199933340
+Message from ctl_fd: "enable\0"
+Events enabled
+[ perf record: Woken up 62544 times to write data ]
+threads[2007684]: samples=2618, wakes=1864, transferred=457221232, compressed=55823232
+threads[2007686]: samples=2059, wakes=1374, transferred=359869704, compressed=43268765
+threads[2007687]: samples=2002, wakes=1336, transferred=349913008, compressed=42151373
+threads[2007688]: samples=2027, wakes=1353, transferred=354354704, compressed=42429256
+threads[2007689]: samples=2036, wakes=1505, transferred=355738088, compressed=42636256
+threads[2007690]: samples=1992, wakes=1390, transferred=348008944, compressed=41895561
+threads[2007691]: samples=2009, wakes=1383, transferred=350943456, compressed=42200817
+threads[2007692]: samples=2035, wakes=1357, transferred=355530432, compressed=42528818
+threads[2007693]: samples=2044, wakes=1536, transferred=357130456, compressed=42842713
+threads[2007694]: samples=2038, wakes=1527, transferred=356055664, compressed=42660183
+threads[2007695]: samples=2053, wakes=1600, transferred=358613504, compressed=43241382
+threads[2007696]: samples=2024, wakes=1349, transferred=353335904, compressed=42563213
+threads[2007697]: samples=1998, wakes=1385, transferred=349118536, compressed=42148057
+threads[2007698]: samples=2013, wakes=1444, transferred=351446360, compressed=42163164
+threads[2007699]: samples=2047, wakes=1608, transferred=357626056, compressed=42887313
+threads[2007700]: samples=2056, wakes=1607, transferred=359227408, compressed=42996828
+threads[2007701]: samples=2051, wakes=1448, transferred=358591928, compressed=42989709
+threads[2007702]: samples=2042, wakes=1660, transferred=356810024, compressed=42711526
+threads[2007703]: samples=2011, wakes=1636, transferred=351327392, compressed=42107305
+threads[2007704]: samples=2037, wakes=1676, transferred=355766648, compressed=42852951
+threads[2007705]: samples=2029, wakes=1664, transferred=354422024, compressed=42844742
+threads[2007706]: samples=1988, wakes=1438, transferred=347592984, compressed=42048745
+threads[2007707]: samples=2013, wakes=1674, transferred=351071168, compressed=42184269
+threads[2007708]: samples=2011, wakes=1595, transferred=351144416, compressed=42283272
+threads[2007709]: samples=1970, wakes=1676, transferred=343953616, compressed=41276091
+threads[2007710]: samples=2037, wakes=1691, transferred=355831408, compressed=42759867
+threads[2007711]: samples=2038, wakes=1538, transferred=355958816, compressed=42860464
+threads[2007712]: samples=2012, wakes=1551, transferred=351505784, compressed=42334392
+threads[2007713]: samples=2016, wakes=1701, transferred=351885984, compressed=42243595
+threads[2007714]: samples=2022, wakes=1612, transferred=353245448, compressed=42424517
+threads[2007715]: samples=2022, wakes=1615, transferred=353005600, compressed=42588716
+threads[2007716]: samples=2002, wakes=1720, transferred=349716032, compressed=42174701
+threads[2007717]: samples=2020, wakes=1586, transferred=353054928, compressed=42458571
+threads[2007718]: samples=1956, wakes=1509, transferred=341818528, compressed=40936899
+threads[2007719]: samples=2045, wakes=1600, transferred=357528680, compressed=43116672
+threads[2007720]: samples=2018, wakes=1550, transferred=352841376, compressed=42299679
+threads[2007721]: samples=2017, wakes=1591, transferred=352562464, compressed=42389782
+threads[2007722]: samples=2015, wakes=1747, transferred=351855424, compressed=42196390
+threads[2007723]: samples=2028, wakes=1752, transferred=354241840, compressed=42710831
+threads[2007724]: samples=1969, wakes=1701, transferred=343994912, compressed=41474617
+failed to write feature HYBRID_TOPOLOGY
+[ perf record: Captured and wrote 1631.512 MB /tmp/amplxe-tmp-uid-2301/amplxe-res-2007657-5257506585351522/data.0/2007666.perf, compressed (original 13564.931 MB, ratio is 8.315) ]

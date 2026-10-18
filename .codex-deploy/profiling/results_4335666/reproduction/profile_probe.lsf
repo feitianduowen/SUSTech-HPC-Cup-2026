@@ -1,0 +1,45 @@
+#!/bin/bash
+#BSUB -J qwen38_profile_probe
+#BSUB -q ssc-cpu
+#BSUB -m hg_6148
+#BSUB -n 40
+#BSUB -R "span[ptile=40]"
+#BSUB -W 00:15
+#BSUB -o /work/apac2602/qwen38-cpu/logs/%J.profile_probe.out
+#BSUB -e /work/apac2602/qwen38-cpu/logs/%J.profile_probe.err
+set -euo pipefail
+cd /work/apac2602/qwen38-cpu
+source scripts/env.sh
+export LC_ALL=C
+VTUNE=/share/intel/oneapi-2023.1/vtune/2023.1.0/bin64/vtune
+OUT="$PWD/profiling/probe_${LSB_JOBID}"
+mkdir -p "$OUT"
+printf 'PROBING job=%s host=%s\n' "$LSB_JOBID" "$(hostname)" > profiling.status
+{
+    date -Is
+    hostname
+    lscpu
+    free -h
+    cat /proc/sys/kernel/perf_event_paranoid
+    cat /proc/sys/kernel/yama/ptrace_scope
+    command -v perf numastat pidstat || true
+    ls -l /dev/sep* /dev/socperf* 2>/dev/null || true
+} > "$OUT/environment.txt" 2>&1
+for mode in hpc hw sw; do
+    case "$mode" in
+        hpc) args=(-collect hpc-performance -knob collect-memory-bandwidth=true -knob dram-bandwidth-limits=false -knob collect-affinity=true -knob analyze-openmp=true -knob enable-stack-collection=true -knob stack-size=2048 -knob sampling-interval=10);;
+        hw) args=(-collect hotspots -knob sampling-mode=hw -knob enable-stack-collection=true -knob stack-size=2048 -knob sampling-interval=10);;
+        sw) args=(-collect hotspots -knob sampling-mode=sw -knob enable-characterization-insights=false);;
+    esac
+    if timeout --kill-after=15s 200s "$VTUNE" "${args[@]}" -data-limit=128 -r "$OUT/$mode" -- python3 scripts/profile_probe.py > "$OUT/$mode.log" 2>&1; then
+        if "$VTUNE" -report summary -r "$OUT/$mode" > "$OUT/$mode.summary.txt" 2> "$OUT/$mode.report.err"; then
+            printf '%s\n' "$mode" > "$OUT/selected_mode"
+            printf '%s\n' "$OUT" > profiling/last_probe
+            printf 'PROBE_READY mode=%s job=%s host=%s\n' "$mode" "$LSB_JOBID" "$(hostname)" > profiling.status
+            cat profiling.status
+            exit 0
+        fi
+    fi
+done
+printf 'PROBE_FAILED job=%s\n' "$LSB_JOBID" > profiling.status
+exit 1

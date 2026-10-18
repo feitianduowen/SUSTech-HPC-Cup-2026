@@ -1,0 +1,22 @@
+{"time": 1792332420.6377378, "text": "llama-bench: benchmark 1/1: starting"}
+{"time": 1792332457.1031682, "text": "llama-bench: benchmark 1/1: warmup generation run"}
+{"time": 1792332458.2806041, "text": "llama-bench: benchmark 1/1: depth run 1/10"}
+{"time": 1792332500.0456054, "text": "llama-bench: benchmark 1/1: generation run 1/10"}
+{"time": 1792332544.4956007, "text": "llama-bench: benchmark 1/1: depth run 2/10 (cached)"}
+{"time": 1792332544.4956703, "text": "llama-bench: benchmark 1/1: generation run 2/10"}
+{"time": 1792332587.1366382, "text": "llama-bench: benchmark 1/1: depth run 3/10 (cached)"}
+{"time": 1792332587.1371691, "text": "llama-bench: benchmark 1/1: generation run 3/10"}
+{"time": 1792332629.4216175, "text": "llama-bench: benchmark 1/1: depth run 4/10 (cached)"}
+{"time": 1792332629.4270573, "text": "llama-bench: benchmark 1/1: generation run 4/10"}
+{"time": 1792332671.6261132, "text": "llama-bench: benchmark 1/1: depth run 5/10 (cached)"}
+{"time": 1792332671.6265204, "text": "llama-bench: benchmark 1/1: generation run 5/10"}
+{"time": 1792332713.9776177, "text": "llama-bench: benchmark 1/1: depth run 6/10 (cached)"}
+{"time": 1792332713.9879982, "text": "llama-bench: benchmark 1/1: generation run 6/10"}
+{"time": 1792332756.1459103, "text": "llama-bench: benchmark 1/1: depth run 7/10 (cached)"}
+{"time": 1792332756.146004, "text": "llama-bench: benchmark 1/1: generation run 7/10"}
+{"time": 1792332798.2011013, "text": "llama-bench: benchmark 1/1: depth run 8/10 (cached)"}
+{"time": 1792332798.201196, "text": "llama-bench: benchmark 1/1: generation run 8/10"}
+{"time": 1792332840.3166206, "text": "llama-bench: benchmark 1/1: depth run 9/10 (cached)"}
+{"time": 1792332840.317091, "text": "llama-bench: benchmark 1/1: generation run 9/10"}
+{"time": 1792332882.527626, "text": "llama-bench: benchmark 1/1: depth run 10/10 (cached)"}
+{"time": 1792332882.5281022, "text": "llama-bench: benchmark 1/1: generation run 10/10"}

@@ -1,0 +1,12 @@
+{"time": 1792331187.595452, "text": "llama-bench: benchmark 1/1: starting"}
+{"time": 1792331262.3489945, "text": "llama-bench: benchmark 1/1: warmup prompt run"}
+{"time": 1792331486.9271755, "text": "llama-bench: benchmark 1/1: prompt run 1/10"}
+{"time": 1792331582.4361277, "text": "llama-bench: benchmark 1/1: prompt run 2/10"}
+{"time": 1792331676.9679155, "text": "llama-bench: benchmark 1/1: prompt run 3/10"}
+{"time": 1792331786.6369352, "text": "llama-bench: benchmark 1/1: prompt run 4/10"}
+{"time": 1792331863.072743, "text": "llama-bench: benchmark 1/1: prompt run 5/10"}
+{"time": 1792331926.4959848, "text": "llama-bench: benchmark 1/1: prompt run 6/10"}
+{"time": 1792331995.945536, "text": "llama-bench: benchmark 1/1: prompt run 7/10"}
+{"time": 1792332066.8596797, "text": "llama-bench: benchmark 1/1: prompt run 8/10"}
+{"time": 1792332129.5116122, "text": "llama-bench: benchmark 1/1: prompt run 9/10"}
+{"time": 1792332193.760677, "text": "llama-bench: benchmark 1/1: prompt run 10/10"}

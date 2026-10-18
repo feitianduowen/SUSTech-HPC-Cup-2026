@@ -1,0 +1,228 @@
+#!/bin/bash
+#BSUB -J build_llama_cpp
+#BSUB -q ssc-cpu
+#BSUB -n 40
+#BSUB -e %J.err
+#BSUB -o %J.out
+#BSUB -R "span[ptile=40]"
+
+set -euo pipefail
+
+# =============================================================================
+# USER CONFIGURATION
+# =============================================================================
+# Set this to the directory where the offline llama.cpp repository is located.
+# Example:
+#   /your/path/llama.cpp
+#
+# If your repository is:
+#   /home/user/software/llama.cpp
+# then change the line below to:
+#   LLAMA_CPP_DIR="/home/user/software/llama.cpp"
+# =============================================================================
+LLAMA_CPP_DIR="/work/ssc-202621/llama.cpp" # 改成你的llama.cpp路径
+
+# All paths below are derived automatically from LLAMA_CPP_DIR.
+BUILD_DIR="${LLAMA_CPP_DIR}/build"
+BUILD_JOBS="${LSB_DJOB_NUMPROC:-40}"
+LOG_DIR="${LLAMA_CPP_DIR}/build_logs/${LSB_JOBID:-manual}"
+
+# 1 = remove any previous build directory and rebuild from scratch.
+# 0 = reuse the existing build directory.
+CLEAN_BUILD=1
+
+# =============================================================================
+# Environment
+# =============================================================================
+module load cmake/3.28.1
+module load gcc/12.2.0
+
+mkdir -p "${LOG_DIR}"
+
+# =============================================================================
+# Pre-flight checks
+# =============================================================================
+echo "===== llama.cpp offline build ====="
+echo "Host              : $(hostname)"
+echo "LSF job ID        : ${LSB_JOBID:-N/A}"
+echo "LSF allocated CPUs: ${LSB_DJOB_NUMPROC:-N/A}"
+echo "Source directory  : ${LLAMA_CPP_DIR}"
+echo "Build directory   : ${BUILD_DIR}"
+echo "Parallel jobs     : ${BUILD_JOBS}"
+echo "Clean build       : ${CLEAN_BUILD}"
+echo "Log directory     : ${LOG_DIR}"
+echo
+
+if [[ ! -d "${LLAMA_CPP_DIR}" ]]; then
+    echo "ERROR: llama.cpp source directory does not exist:" >&2
+    echo "       ${LLAMA_CPP_DIR}" >&2
+    echo >&2
+    echo "Please clone/copy llama.cpp on the login node first, then edit" >&2
+    echo "LLAMA_CPP_DIR at the top of this script." >&2
+    exit 1
+fi
+
+if [[ ! -f "${LLAMA_CPP_DIR}/CMakeLists.txt" ]]; then
+    echo "ERROR: this directory does not look like a llama.cpp source tree:" >&2
+    echo "       ${LLAMA_CPP_DIR}" >&2
+    echo "Missing: ${LLAMA_CPP_DIR}/CMakeLists.txt" >&2
+    exit 1
+fi
+
+if ! [[ "${BUILD_JOBS}" =~ ^[1-9][0-9]*$ ]]; then
+    echo "ERROR: BUILD_JOBS must be a positive integer; got: ${BUILD_JOBS}" >&2
+    exit 1
+fi
+
+if [[ -n "${LSB_DJOB_NUMPROC:-}" ]] && (( BUILD_JOBS > LSB_DJOB_NUMPROC )); then
+    echo "ERROR: BUILD_JOBS=${BUILD_JOBS} exceeds allocated slots=${LSB_DJOB_NUMPROC}." >&2
+    exit 1
+fi
+
+{
+    echo "===== Toolchain ====="
+    module list 2>&1 || true
+    echo
+    gcc --version | head -n 1
+    g++ --version | head -n 1
+    cmake --version | head -n 1
+    echo
+    echo "===== CPU ====="
+    lscpu
+    echo
+    echo "===== Memory ====="
+    free -h
+    echo
+    echo "===== Source revision ====="
+    if command -v git >/dev/null 2>&1 && [[ -d "${LLAMA_CPP_DIR}/.git" ]]; then
+        git -C "${LLAMA_CPP_DIR}" rev-parse HEAD || true
+        git -C "${LLAMA_CPP_DIR}" describe --tags --always --dirty || true
+        git -C "${LLAMA_CPP_DIR}" status --short || true
+    else
+        echo "Git metadata unavailable; continuing with existing source tree."
+    fi
+} | tee "${LOG_DIR}/environment.txt"
+
+# =============================================================================
+# Clean previous build if requested
+# =============================================================================
+if [[ "${CLEAN_BUILD}" == "1" ]]; then
+    echo
+    echo "===== Removing old build directory ====="
+    rm -rf -- "${BUILD_DIR}"
+fi
+
+# =============================================================================
+# Configure
+# CPU-only build, native CPU optimization, OpenMP enabled.
+# No network access is required on the compute node.
+# =============================================================================
+echo
+echo "===== CMake configure ====="
+
+cmake \
+    -S "${LLAMA_CPP_DIR}" \
+    -B "${BUILD_DIR}" \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DGGML_NATIVE=ON \
+    -DGGML_OPENMP=ON \
+    -DGGML_OPENMP_FETCH=OFF \
+    -DGGML_BLAS=OFF \
+    -DLLAMA_BUILD_TESTS=OFF \
+    -DLLAMA_BUILD_EXAMPLES=ON \
+    -DLLAMA_BUILD_TOOLS=ON \
+    -DLLAMA_BUILD_SERVER=ON \
+    -DLLAMA_BUILD_APP=OFF \
+    -DLLAMA_BUILD_UI=OFF \
+    -DLLAMA_USE_PREBUILT_UI=OFF \
+    -DLLAMA_OPENSSL=OFF \
+    -DFETCHCONTENT_FULLY_DISCONNECTED=ON \
+    2>&1 | tee "${LOG_DIR}/cmake_configure.log"
+
+# =============================================================================
+# Build only the binaries needed for validation and later benchmarking
+# =============================================================================
+echo
+echo "===== Build llama-cli + llama-server + llama-bench + llama-perplexity ====="
+
+cmake --build "${BUILD_DIR}" --config Release \
+    --target llama-cli llama-server llama-bench llama-perplexity \
+    -j "${BUILD_JOBS}" \
+    2>&1 | tee "${LOG_DIR}/cmake_build.log"
+
+# =============================================================================
+# Validation
+# =============================================================================
+echo
+echo "===== Validation ====="
+
+REQUIRED_BINS=(
+    "llama-cli"
+    "llama-server"
+    "llama-bench"
+    "llama-perplexity"
+)
+
+for name in "${REQUIRED_BINS[@]}"; do
+    exe="${BUILD_DIR}/bin/${name}"
+    if [[ ! -x "${exe}" ]]; then
+        echo "ERROR: expected executable was not produced: ${exe}" >&2
+        exit 1
+    fi
+    echo "[OK] executable exists: ${exe}"
+done
+
+# Check dynamic-library resolution.
+for name in "${REQUIRED_BINS[@]}"; do
+    exe="${BUILD_DIR}/bin/${name}"
+    if command -v ldd >/dev/null 2>&1; then
+        ldd_out=$(ldd "${exe}" 2>&1 || true)
+        if grep -q "not found" <<< "${ldd_out}"; then
+            echo "ERROR: unresolved shared library dependency for ${name}:" >&2
+            echo "${ldd_out}" >&2
+            exit 1
+        fi
+    fi
+done
+
+echo
+echo "----- llama-cli --version -----"
+"${BUILD_DIR}/bin/llama-cli" --version 2>&1 | tee "${LOG_DIR}/llama-cli.version.txt"
+
+echo
+echo "----- llama-server --version -----"
+"${BUILD_DIR}/bin/llama-server" --version 2>&1 | tee "${LOG_DIR}/llama-server.version.txt"
+
+echo
+echo "----- llama-bench --version -----"
+"${BUILD_DIR}/bin/llama-bench" --version 2>&1 | tee "${LOG_DIR}/llama-bench.version.txt"
+
+echo
+echo "----- llama-perplexity --version -----"
+"${BUILD_DIR}/bin/llama-perplexity" --version 2>&1 | tee "${LOG_DIR}/llama-perplexity.version.txt"
+
+echo
+echo "----- llama-bench --list-devices -----"
+"${BUILD_DIR}/bin/llama-bench" --list-devices 2>&1 | tee "${LOG_DIR}/llama-bench.devices.txt"
+
+# Save selected CMake settings for reproducibility.
+if [[ -f "${BUILD_DIR}/CMakeCache.txt" ]]; then
+    grep -E \
+        '^(CMAKE_BUILD_TYPE|CMAKE_C_COMPILER|CMAKE_CXX_COMPILER|GGML_NATIVE|GGML_OPENMP|GGML_OPENMP_FETCH|GGML_BLAS|LLAMA_BUILD_TESTS|LLAMA_BUILD_EXAMPLES|LLAMA_BUILD_TOOLS|LLAMA_BUILD_SERVER|LLAMA_BUILD_APP|LLAMA_BUILD_UI|LLAMA_USE_PREBUILT_UI|LLAMA_OPENSSL):' \
+        "${BUILD_DIR}/CMakeCache.txt" \
+        | tee "${LOG_DIR}/selected_cmake_cache.txt" || true
+fi
+
+echo
+echo "=================================================================="
+echo "llama.cpp BUILD/VALIDATION: SUCCESS"
+echo "=================================================================="
+echo "Source directory : ${LLAMA_CPP_DIR}"
+echo "Build directory  : ${BUILD_DIR}"
+echo "Binary directory : ${BUILD_DIR}/bin"
+echo "llama-cli        : ${BUILD_DIR}/bin/llama-cli"
+echo "llama-server     : ${BUILD_DIR}/bin/llama-server"
+echo "llama-bench      : ${BUILD_DIR}/bin/llama-bench"
+echo "llama-perplexity : ${BUILD_DIR}/bin/llama-perplexity"
+echo "Build logs       : ${LOG_DIR}"
+echo "NOTE: this job validates installation; model-dependent PPL is tested by llama_bench_38t_ppl.lsf."

@@ -1,0 +1,19 @@
+#!/bin/bash
+#BSUB -J qwen38_pp_diff
+#BSUB -q ssc-cpu
+#BSUB -m hg_6148
+#BSUB -n 40
+#BSUB -R "span[ptile=40]"
+#BSUB -W 00:30
+#BSUB -o /work/apac2602/qwen38-cpu/logs/%J.pp_diff.out
+#BSUB -e /work/apac2602/qwen38-cpu/logs/%J.pp_diff.err
+set -euo pipefail
+source /work/apac2602/qwen38-cpu/scripts/env.sh
+ROOT=/work/apac2602/qwen38-cpu/optimization/20261018-v1
+OUT="$ROOT/results/pp_diff_${LSB_JOBID}"
+mkdir -p "$OUT"
+trap 'echo FAILED > "$OUT/status"' ERR
+echo RUNNING > "$OUT/status"
+python3 "$ROOT/scripts/build_pp_diff.py" "$OUT" > "$OUT/build-test.log" 2>&1
+echo READY > "$OUT/status"
+printf '%s\n' "$OUT" > "$ROOT/results/pp_diff.last"

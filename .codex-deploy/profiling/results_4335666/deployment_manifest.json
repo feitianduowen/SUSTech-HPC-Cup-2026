@@ -1,0 +1,62 @@
+{
+  "status": "READY",
+  "validation_job": "4335636",
+  "validation_host": "r13n16",
+  "source_revision": "d81235049384534c167caea52b85a694f6103d14 grafted, HEAD, tag: v0.6.0, tag: b11429 llama.cpp : bump version to 0.6.0 (#29997)",
+  "compiler": "Intel 2021.9.0.20230302",
+  "c_compiler": "/share/intel/oneapi-2023.1/compiler/2023.1.0/linux/bin/intel64/icc",
+  "cxx_compiler": "/share/intel/oneapi-2023.1/compiler/2023.1.0/linux/bin/intel64/icpc",
+  "c_flags": "-gcc-name=/share/base/e5/gcc/11.2.0/bin/gcc -fp-model precise -no-ftz -xCORE-AVX512 -qsimd-honor-fp-model -diag-disable=10441",
+  "cxx_flags": "-gxx-name=/share/base/e5/gcc/11.2.0/bin/g++ -fp-model precise -no-ftz -xCORE-AVX512 -qsimd-honor-fp-model -diag-disable=10441",
+  "exe_linker_flags": "-Wl,--no-as-needed,/lib64/libm.so.6,--as-needed",
+  "shared_linker_flags": "-Wl,--no-as-needed,/lib64/libm.so.6,--as-needed",
+  "cpu_only": true,
+  "ppl": 2.7767,
+  "ppl_status": "PASS",
+  "ppl_relative_difference_percent": 0.2563547082611084,
+  "server_status": "PASS",
+  "completion_sample": " Paris. The capital of Germany is Berlin. The capital of",
+  "model_assets": {
+    "model_shards": [
+      {
+        "path": "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+        "size": 10946624,
+        "gguf_version": 3
+      },
+      {
+        "path": "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00002-of-00004.gguf",
+        "size": 49859583136,
+        "gguf_version": 3
+      },
+      {
+        "path": "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00003-of-00004.gguf",
+        "size": 49376141504,
+        "gguf_version": 3
+      },
+      {
+        "path": "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00004-of-00004.gguf",
+        "size": 12087983520,
+        "gguf_version": 3
+      }
+    ],
+    "data_sha256": "173c87a53759e0201f33e0ccf978e510c2042d7f2cb78229d9a50d79b9e7dd08",
+    "baseline_ppl": 2.7696
+  },
+  "artifact_sha256": {
+    "libllama-common.so": "3f830414f7324d745f281132a3cce73352cdaef5a301e6b64537bf0ff0369f5e",
+    "libllama-perplexity-impl.so": "3c60c901fcb4ece8bb4009af5286b90c0b6e30a470bed673730bf703641a1047",
+    "libggml-base.so": "57e9343613abb27ec839911ab8260bf3d0bf3b24ff7c554c9e9d3dac032f4c90",
+    "libllama-bench-impl.so": "ae43936d7633bd631527488ebbb10e4041abe1c98f98dca4e93ddca8d41339df",
+    "libggml.so": "a31475642d986f0b4f1f6c9459b148bf776900ed5192533bb90bf80a19ea3b57",
+    "libllama-cli-impl.so": "e22ac565f26f4385049c4c19618f900c979cd28ec8fc3625f724f1e68c6977c7",
+    "libllama-server-impl.so": "52823264b269d90772d6917b23cb77dc6ece27d98d099a43a94db224f2b7a808",
+    "libggml-cpu.so": "be71251ce20e2330364d43dfeb684a8b031371a8835dee43f2eb4ad6e87d9176",
+    "libllama.so": "b4dc2971839a8e7971d875e79eec8f9a2f274e20f76da953402f87514866e986",
+    "libmtmd.so": "2f4cb553712bfcfbd02352f1044e7d40310ec301d067f5a5f86248c846a13025",
+    "llama-cli": "b34207ad210510f580f172cba7f903b2b313937169c52b9995d70d2bb09f2b21",
+    "llama-server": "2e8349085bd3c1765cc3f659717e2f43b92ced59213a35e444792a071b798e14",
+    "llama-bench": "b7009175033685a35b3f26cedf3d60474b47371a2b1d1a2fb9db847f77b98556",
+    "llama-perplexity": "427425040a186a18410d43a42bf21d4c67880b21a78e68d1478995604a2b8e9f"
+  },
+  "full_performance_benchmark_run": false
+}

@@ -1,0 +1,41 @@
+Function/Function Stack,CPU Time,CPU Time:Effective Time,CPU Time:Spin Time,CPU Time:Spin Time:Imbalance or Serial Spinning,CPU Time:Spin Time:Lock Contention,CPU Time:Spin Time:Other,CPU Time:Overhead Time,CPU Time:Overhead Time:Creation,CPU Time:Overhead Time:Scheduling,CPU Time:Overhead Time:Reduction,CPU Time:Overhead Time:Atomics,CPU Time:Overhead Time:Other,Instructions Retired,Microarchitecture Usage(%),Microarchitecture Usage:Microarchitecture Usage(%),Microarchitecture Usage:CPI Rate,Module,Function (Full),Source File,Start Address
+ggml_vec_dot_q8_0_q8_0,8392.643658,8392.643658,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,3050808000000,0.0,0.0,7.069243,libggml-cpu.so.0.26.0,ggml_vec_dot_q8_0_q8_0,[Unknown],0x183d10
+ ggml_vec_dot_q8_0_q8_0,8392.643658,8392.643658,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,3050808000000,0.0,0.0,7.069243,libggml-cpu.so.0.26.0,ggml_vec_dot_q8_0_q8_0,[Unknown],0x183d10
+  ggml_compute_forward_mul_mat_one_chunk,8360.768938,8360.768938,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2989056000000,0.0,0.0,7.188696,libggml-cpu.so.0.26.0,ggml_compute_forward_mul_mat_one_chunk,[Unknown],0x1bc70
+   ggml_compute_forward_mul_mat,8360.768938,8360.768938,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2989056000000,0.0,0.0,7.188696,libggml-cpu.so.0.26.0,ggml_compute_forward_mul_mat,[Unknown],0x1abe0
+    ggml_graph_compute_thread,8360.768938,8360.768938,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2989056000000,0.0,0.0,7.188696,libggml-cpu.so.0.26.0,ggml_graph_compute_thread,[Unknown],0x19e50
+     ggml_graph_compute,8360.768938,8360.768938,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2989056000000,0.0,0.0,7.188696,libggml-cpu.so.0.26.0,ggml_graph_compute,[Unknown],0x19520
+      [OpenMP dispatcher],4188.247902,4188.247902,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1497456000000,0.0,0.0,7.177052,libiomp5.so,__kmp_invoke_task_func,kmp_runtime.cpp,0xcedc0
+       [Skipped stack frame(s)],4188.247902,4188.247902,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1497456000000,0.0,0.0,7.177052,[Unknown],[Skipped stack frame(s)],[Unknown],0x0
+      __kmp_invoke_microtask,4170.426125,4170.426125,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1490688000000,0.0,0.0,7.201024,libiomp5.so,__kmp_invoke_microtask,[Unknown],0x15fe80
+       [Skipped stack frame(s)],4170.125420,4170.125420,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1490496000000,0.0,0.0,7.201404,[Unknown],[Skipped stack frame(s)],[Unknown],0x0
+  ggml_compute_forward_mul_mat_id_one_chunk,31.874719,31.874719,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,61752000000,0.0,0.0,1.287213,libggml-cpu.so.0.26.0,ggml_compute_forward_mul_mat_id_one_chunk,[Unknown],0x1cf80
+   ggml_compute_forward_mul_mat_id,31.874719,31.874719,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,61752000000,0.0,0.0,1.287213,libggml-cpu.so.0.26.0,ggml_compute_forward_mul_mat_id,[Unknown],0x1c3e0
+    ggml_graph_compute_thread,31.874719,31.874719,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,61752000000,0.0,0.0,1.287213,libggml-cpu.so.0.26.0,ggml_graph_compute_thread,[Unknown],0x19e50
+     ggml_graph_compute,31.874719,31.874719,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,61752000000,0.0,0.0,1.287213,libggml-cpu.so.0.26.0,ggml_graph_compute,[Unknown],0x19520
+      [OpenMP dispatcher],31.864696,31.864696,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,61752000000,0.0,0.0,1.286825,libiomp5.so,__kmp_invoke_task_func,kmp_runtime.cpp,0xcedc0
+       __kmp_launch_thread,31.002675,31.002675,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,60288000000,0.0,0.0,1.286624,libiomp5.so,__kmp_launch_thread,kmp_runtime.cpp,0xcdc80
+        _INTERNAL7b50d17b::[OpenMP worker],31.002675,31.002675,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,60288000000,0.0,0.0,1.286624,libiomp5.so,_INTERNAL7b50d17b::__kmp_launch_worker(void*),z_Linux_util.cpp,0x160a80
+         [Skipped stack frame(s)],31.002675,31.002675,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,60288000000,0.0,0.0,1.286624,[Unknown],[Skipped stack frame(s)],[Unknown],0x0
+       __kmp_fork_call,0.862021,0.862021,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1464000000,0.0,0.0,1.295082,libiomp5.so,__kmp_fork_call,kmp_runtime.cpp,0xcf240
+        [Skipped stack frame(s)],0.862021,0.862021,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1464000000,0.0,0.0,1.295082,[Unknown],[Skipped stack frame(s)],[Unknown],0x0
+__kmpc_barrier,4323.254378,0.0,4242.424902,4241.091776,0.0,1.333125,80.829477,0.0,0.0,0.0,0.0,80.829477,4529520000000,0.0,0.0,2.526376,libiomp5.so,__kmpc_barrier,kmp_csupport.cpp,0x896c0
+ __kmpc_barrier,4323.254378,0.0,4242.424902,4241.091776,0.0,1.333125,80.829477,0.0,0.0,0.0,0.0,80.829477,4529520000000,0.0,0.0,2.526376,libiomp5.so,__kmpc_barrier,kmp_csupport.cpp,0x896c0
+  ggml_graph_compute_thread,4009.759498,0.0,3945.899801,3944.596746,0.0,1.303055,63.859697,0.0,0.0,0.0,0.0,63.859697,4220856000000,0.0,0.0,2.519335,libggml-cpu.so.0.26.0,ggml_graph_compute_thread,[Unknown],0x19e50
+   ggml_graph_compute,4009.759498,0.0,3945.899801,3944.596746,0.0,1.303055,63.859697,0.0,0.0,0.0,0.0,63.859697,4220856000000,0.0,0.0,2.519335,libggml-cpu.so.0.26.0,ggml_graph_compute,[Unknown],0x19520
+    [OpenMP dispatcher],4008.546655,0.0,3944.696981,3943.393927,0.0,1.303055,63.849674,0.0,0.0,0.0,0.0,63.849674,4219512000000,0.0,0.0,2.519455,libiomp5.so,__kmp_invoke_task_func,kmp_runtime.cpp,0xcedc0
+     __kmp_launch_thread,3951.873805,0.0,3895.451542,3894.158511,0.0,1.293031,56.422263,0.0,0.0,0.0,0.0,56.422263,4170864000000,0.0,0.0,2.515099,libiomp5.so,__kmp_launch_thread,kmp_runtime.cpp,0xcdc80
+      [Skipped stack frame(s)],2049.594567,0.000000,2031.431991,2030.670206,0.0,0.761786,18.162576,0.0,0.0,0.0,0.0,18.162576,2123544000000,0.0,0.0,2.555814,[Unknown],[Skipped stack frame(s)],[Unknown],0x0
+      _INTERNAL7b50d17b::[OpenMP worker],1902.279237,0.0,1864.019551,1863.488305,0.0,0.531245,38.259687,0.0,0.0,0.0,0.0,38.259687,2047320000000,0.0,0.0,2.472868,libiomp5.so,_INTERNAL7b50d17b::__kmp_launch_worker(void*),z_Linux_util.cpp,0x160a80
+       [Skipped stack frame(s)],1902.219096,0.0,1863.959410,1863.428164,0.0,0.531245,38.259687,0.0,0.0,0.0,0.0,38.259687,2047104000000,0.0,0.0,2.473035,[Unknown],[Skipped stack frame(s)],[Unknown],0x0
+       KMPNativeAffinity::Mask::set_system_affinity,0.040094,0.0,0.040094,0.040094,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,216000000,0.0,0.0,0.555556,libiomp5.so,KMPNativeAffinity::Mask::set_system_affinity(bool) const,kmp_affinity.h,0x54b40
+        __kmp_affinity_bind_init_mask,0.040094,0.0,0.040094,0.040094,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,192000000,0.0,0.0,0.250000,libiomp5.so,__kmp_affinity_bind_init_mask,kmp_affinity.cpp,0x49380
+         [Skipped stack frame(s)],0.010023,0.0,0.010023,0.010023,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,72000000,0.0,0.0,0.333333,[Unknown],[Skipped stack frame(s)],[Unknown],0x0
+        [Skipped stack frame(s)],0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,24000000,0.0,0.0,3.000000,[Unknown],[Skipped stack frame(s)],[Unknown],0x0
+       start_thread,0.020047,0.0,0.020047,0.020047,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0,0.0,0.0,,libpthread-2.28.so,start_thread,[Unknown],0x80e0
+        [Skipped stack frame(s)],0.020047,0.0,0.020047,0.020047,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0,0.0,0.0,,[Unknown],[Skipped stack frame(s)],[Unknown],0x0
+     __kmp_fork_call,56.602685,0.0,49.175274,49.165251,0.0,0.010023,7.427411,0.0,0.0,0.0,0.0,7.427411,48576000000,0.0,0.0,2.891304,libiomp5.so,__kmp_fork_call,kmp_runtime.cpp,0xcf240
+      [Skipped stack frame(s)],56.522497,0.0,49.115133,49.105110,0.0,0.010023,7.407364,0.0,0.0,0.0,0.0,7.407364,48312000000,0.0,0.0,2.904620,[Unknown],[Skipped stack frame(s)],[Unknown],0x0
+      [OpenMP fork],0.080188,0.0,0.060141,0.060141,0.0,0.0,0.020047,0.0,0.0,0.0,0.0,0.020047,264000000,0.0,0.0,0.454545,libiomp5.so,__kmpc_fork_call,kmp.h,0x88b80
+       [Skipped stack frame(s)],0.070164,0.0,0.050117,0.050117,0.0,0.0,0.020047,0.0,0.0,0.0,0.0,0.020047,240000000,0.0,0.0,0.300000,[Unknown],[Skipped stack frame(s)],[Unknown],0x0
+       ggml_graph_compute,0.010023,0.0,0.010023,0.010023,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,24000000,0.0,0.0,2.000000,libggml-cpu.so.0.26.0,ggml_graph_compute,[Unknown],0x19520

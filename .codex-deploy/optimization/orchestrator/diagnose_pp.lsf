@@ -1,0 +1,24 @@
+#!/bin/bash
+#BSUB -J qwen38_pp_node_diagnostic
+#BSUB -q ssc-cpu
+#BSUB -m hg_6148
+#BSUB -n 40
+#BSUB -R "span[ptile=40]"
+#BSUB -W 01:00
+#BSUB -o /work/apac2602/qwen38-cpu/logs/%J.pp_nodes.out
+#BSUB -e /work/apac2602/qwen38-cpu/logs/%J.pp_nodes.err
+set -euo pipefail
+source /work/apac2602/qwen38-cpu/scripts/env.sh
+ROOT=/work/apac2602/qwen38-cpu/optimization/20261018-v1
+OUT="$ROOT/results/diagnostic-pp_${LSB_JOBID}"
+mkdir -p "$OUT"
+trap 'echo FAILED > "$OUT/status"' ERR
+echo RUNNING > "$OUT/status"
+export GGML_NODE_STATS_PREFIX="$OUT/pp_nodes"
+export GGML_NODE_STATS_SKIP=4 GGML_NODE_STATS_GRAPHS=4
+export GGML_TINYBLAS_DIAG="$OUT/pp_shapes.csv"
+"$ROOT/sources/diagnostic/build/bin/llama-bench" \
+    -m "$MODEL" -t 38 -ngl 0 -b 2048 -ub 512 -ctk f16 -ctv f16 --numa distribute -r 10 \
+    -p 2048 -n 0 -o json --progress > "$OUT/pp2048.json" 2> "$OUT/bench.log"
+python3 "$ROOT/scripts/analyze_nodes.py" "$OUT" > "$OUT/node_analysis.log"
+echo READY > "$OUT/status"

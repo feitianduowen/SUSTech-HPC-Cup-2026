@@ -1,0 +1,349 @@
+根据你这份 VTune Profiling 报告（作业 4335666），我认为现在可以明确调整优化方向了：
+
+当前比赛最值得投入的是：OpenMP 同步与任务划分、Q8_0 量化计算、PP 的 tinyBLAS GEMM，以及 NUMA 内存布局。
+
+相比之前我们讨论的 `q4_K × q8_K` 和 `quantize_row_q8_K`，新的 profiling 已经表明：TG 的真正头号热点是 `ggml_vec_dot_q8_0_q8_0()`，PP 则是 `tinyBLAS` 的 Q8_0 GEMM。 所以不能继续把 Q4_K kernel 当作唯一的主攻方向。
+
+## 一、先看 profiling 给出的明确信号
+
+PP2048 · CPU 时间采样
+
+# 30.79%
+
+OpenMP Barrier
+
+tinyBLAS 29.67%
+
+Q5_1 dot 11.25%
+
+Q4_K repack 9.55%
+
+TG128\@D2048 · CPU 时间采样
+
+# 54.49%
+
+Q8_0 Dot Product
+
+OpenMP Barrier 28.07%
+
+F32 Dot Product 7.03%
+
+Q4_K repack 2.92%
+
+注意：这些是采样 CPU 时间占比，而非端到端墙钟时间占比。尤其 barrier 百分比不能直接当成可回收的加速空间。
+
+PP 与 TG 的主要 CPU 采样热点
+
+各函数自身采样 CPU 时间占比；PP 和 TG 的第一计算热点不同。
+
+PP2048
+
+TG128\@D2048
+
+0%15%30%45%60%BarrierQ8_0 dottinyBLAS Q8_0Q5_1 dotQ4_K repackF32 dot
+
+另外三个信号非常重要：
+
+- PP 有效计算等效核心只有 12.84 个，TG 为 25.80 个，而配置是 38 个线程。需要调查工作划分、同步和串行节点。
+- TG 的 Q8_0 dot CPI 为 7.069，存在明显停顿，但目前无法判断究竟是远程 NUMA、LLC miss、DRAM 延迟还是指令依赖。
+- 模型内存驻留约 72% 在 NUMA 1，CPU 时间却几乎 50/50 分布。这值得做内存放置对照实验，但不能据此断定已经有 50% 远程访存。
+
+我的优先级会是：
+
+| 优先级 | 方向                                  | 策略             |
+| --- | ----------------------------------- | -------------- |
+| P0  | 线程调度、Barrier、工作划分                   | 第一轮就做          |
+| P0  | TG `Q8_0 × Q8_0`                    | 第一轮 kernel 优化  |
+| P0  | PP tinyBLAS Q8_0 GEMM               | 与 TG 并行推进      |
+| P1  | NUMA / First-touch / 内存分布           | 先做不修改代码的对照实验   |
+| P1  | PP Q5_1 dot / Q4_K repack           | 专项优化           |
+| P2  | 编译器 / LTO / 数学库                     | 对照筛选，不要盲目替换    |
+| P2  | F32 / BF16 dot、DeltaNet / Attention | 看进一步 profiling |
+
+## 二、编译器、数学库、线程策略具体怎么优化
+
+### 1. OpenMP 与线程调度：最高优先级
+
+当前 Intel 构建：
+
+```
+Compiler:  icc/icpc 2021.9
+OpenMP:    ON
+Threads:   38
+Binding:   close
+NUMA:      distribute
+```
+
+我会做两类实验。
+
+实验 A：Intel OpenMP vs ggml 原生线程池
+
+| 方案 | 编译配置              | 目的              |
+| -- | ----------------- | --------------- |
+| A0 | `GGML_OPENMP=ON`  | 现有基线            |
+| A1 | `GGML_OPENMP=OFF` | 测试原生线程池是否减少同步开销 |
+
+这可能是整个优化过程中投入产出比最高的一项实验，因为它能直接验证 Intel OpenMP runtime 是否适合这种频繁执行 GGML 图节点的 workload。
+
+但结果不一定是原生线程池胜出。需要比较 PP/TG 的实际吞吐、CPU 有效计算时间和同步开销，不能只看 `__kmpc_barrier` 是否消失。
+
+实验 B：Intel OpenMP 等待参数
+
+首先固定代码及编译器，只调整下面的策略：
+
+| 参数                | 建议尝试值             | 研究目的           |
+| ----------------- | ----------------- | -------------- |
+| `KMP_BLOCKTIME`   | `0, 1, 20, 200`   | 调整线程进入休眠前的等待时间 |
+| `OMP_WAIT_POLICY` | `ACTIVE, PASSIVE` | 比较主动等待与被动等待    |
+| `OMP_PROC_BIND`   | `close, spread`   | 比较线程放置         |
+| `OMP_PLACES`      | `cores`           | 固定以物理核为放置单位    |
+
+Intel 文档确认 `KMP_BLOCKTIME` 控制 OpenMP 线程进入休眠前的等待时间。
+
+[image](https://www.google.com/s2/favicons?domain=https://www.intel.com\&sz=32)
+
+Intel
+
++1
+
+
+
+这里需要特别防止一个误判：
+
+降低 `KMP_BLOCKTIME` 可能把 30% 的自旋 CPU 时间变成休眠时间，却完全没有提升 tokens/s，甚至因为线程唤醒而变慢。
+
+因此，我会优先做原生线程池 A/B 测试，之后再考虑调节 Intel OpenMP 的等待策略。
+
+### 2. NUMA：第二条非常值得做的系统实验
+
+当前内存驻留大约：
+
+NUMA 0
+
+约 28%
+
+NUMA 1
+
+约 72%
+
+Profiling 报告中测量末期的近似驻留比例
+
+而执行 CPU 时间两侧各约 50%。
+
+可以安排下面的对照：
+
+- 现有 `--numa distribute`。
+- interleave 内存放置。
+- NUMA-aware first-touch，让初始化或内存触页策略与后续线程分工更匹配。
+- 合法的 Socket 亲和性与线程绑定组合。
+
+这里我不建议立即改 `ggml` 内存分配源码。先用运行时策略验证内存局部性有没有收益，再决定是否实现 NUMA-aware allocation。
+
+由于目前缺少 DRAM bandwidth 和远程访问计数，不能断言 NUMA 就是 TG 高 CPI 的原因。
+
+而且官方规则要求 PP/TG 的新运行时配置提前申报，PPL 的 `--numa distribute` 仍然固定。
+
+### 3. 编译器：值得对照，但不是现在最有证据的瓶颈
+
+目前只有 Intel Classic ICC 的 profiling，并没有足够证据证明它比 GCC 或 Clang 更快。
+
+我会保留三组独立构建：
+
+| 方案               | 配置                                        | 优先级 |
+| ---------------- | ----------------------------------------- | --- |
+| Intel ICC 2021.9 | 当前 precise 数值选项                           | 基线  |
+| GCC 12.2         | Release / `-O3` / `-march=skylake-avx512` | P1  |
+| Clang            | Release / `-O3` / Skylake AVX-512 目标      | P2  |
+
+建议先不要使用 `-ffast-math` 这类激进的浮点语义变更，而是观察不同编译器生成的 SIMD 指令、寄存器分配和循环展开。
+
+尤其应该比较 `quants.c` 和 `sgemm.cpp` 的反汇编，而不只是更换全局编译参数。
+
+可以将 LTO/IPO 单独作为实验变量。
+
+现有 PPL 为 2.7767，距离允许上限 2.783448 仅有 0.006748。修改浮点计算路径时要特别注意 correctness margin。
+
+### 4. 数学库：oneMKL / BLAS 暂时排在后面
+
+当前编译 `GGML_BLAS=OFF`，但 PP 主要热点已经在量化 tinyBLAS 路径里。
+
+oneMKL 很擅长常规 GEMM，不代表能够直接替代 `Q8_0 × Q8_0` 的专用量化计算。
+
+让 MKL 接管某些算子，可能需要先 dequantize，额外的内存流量反而抵消矩阵计算收益。历史上的 ggml BLAS 实现也存在量化权重转浮点的路径。
+
+[image](https://www.google.com/s2/favicons?domain=https://github.com\&sz=32)
+
+GitHub
+
+
+
+我会做一次 `GGML_BLAS=ON` + oneMKL 对照，但有两个判断条件：
+
+1. 性能上必须真实提升 PP2048，而不是只改善一个 isolated GEMM。
+2. Profiling 必须确认主要热点确实转移到了优化后的路径，而非仍运行原来的 `tinyBLAS_Q0_AVX`。
+
+如果收益不明显，就回到量化 kernel 优化，没必要在 BLAS 接入上投入太多时间。
+
+## 三、源码应该重点改哪些文件？
+
+我现在会把代码优化分成四个独立分支。
+
+1\. Q8_0 Dot Kernel
+
+TG 首选
+
+`ggml/src/ggml-cpu/arch/x86/quants.c`
+
+`ggml_vec_dot_q8_0_q8_0()`
+
+修改方向：AVX2 循环展开、多累加器、向量加载调度、软件预取实验，以及 AVX-512BW 对照实现。
+
+2\. tinyBLAS GEMM
+
+PP 首选
+
+`ggml/src/ggml-cpu/llamafile/sgemm.cpp`
+
+`tinyBLAS_Q0_AVX...gemm4xN<4>()`
+
+修改方向：register blocking、tile size、数据复用、内层循环展开、kernel 内线程工作划分。
+
+3\. GGML Graph Execution
+
+PP + TG
+
+`ggml/src/ggml-cpu/ggml-cpu.c`
+
+`ggml_graph_compute_thread()` / `ggml_barrier()`
+
+修改方向：减少不必要的同步、优化节点任务划分、避免大量线程等待低并行度算子。
+
+4\. Q4_K Repack + Q5_1
+
+PP 次重点
+
+`arch/x86/repack.cpp` + `arch/x86/quants.c`
+
+`ggml_gemv_q4_K_8x8_q8_K()` / `ggml_vec_dot_q5_1_q8_1()`
+
+修改方向：数据 packing、shuffle 减少、block 复用和 AVX2 指令调度。
+
+### 1. `quants.c` 的 Q8_0：我建议先做一个很小的 Patch
+
+你上传的代码里：
+
+```
+for (; ib < nb; ++ib) {
+    const __m256 d = _mm256_set1_ps(
+        GGML_CPU_FP16_TO_FP32(x[ib].d) *
+        GGML_CPU_FP16_TO_FP32(y[ib].d)
+    );
+
+    __m256i qx = _mm256_loadu_si256(
+        (const __m256i *) x[ib].qs
+    );
+
+    __m256i qy = _mm256_loadu_si256(
+        (const __m256i *) y[ib].qs
+    );
+
+    const __m256 q = mul_sum_i8_pairs_float(qx, qy);
+
+    acc = _mm256_fmadd_ps(d, q, acc);
+}
+```
+
+它每个 block 都有一条 FP32 累加依赖链。
+
+第一版可以先尝试 2 路或 4 路循环展开，以及多个独立 accumulator。
+
+不过要注意，`mul_sum_i8_pairs_float()` 已经使用 SIMD 指令组合进行点积。Xeon Gold 6148 没有 AVX-512 VNNI，所以不能指望把它替换成一条 VNNI 指令就获得提速。
+
+我认为最值得实验的是：
+
+- 展开 2/4 个 block，隐藏 load 和整数计算延迟。
+- 测试不同数量的独立 accumulator。
+- 分别测试不加 prefetch、提前 1/2/4 cache line 的方案。
+- 比较 AVX2 与 AVX-512BW 实现的真实吞吐。
+
+但 TG 的 CPI 很高，因此还应该先确认是计算受限还是访存受限。 如果大部分停顿来自内存延迟，再减少几条 SIMD 指令也可能效果很有限。
+
+### 2. `sgemm.cpp`：可能是 PP 最大的代码级突破点
+
+`tinyBLAS_Q0_AVX<block_q8_0, block_q8_0, float>::gemm4xN<4>` 占 PP 采样 CPU 时间 29.67%。
+
+我建议先检查：
+
+1. `gemm4xN<4>` 中寄存器 block 的大小是否适合 Skylake-SP。
+2. 内层 `Q8_0` 数据是否被充分复用。
+3. 当前 tile 是否导致重复读入 activation 或 weight。
+4. 是否存在不均衡的 tile 分配，让部分线程先结束并等待其他线程。
+
+如果这里可以同时改进数据复用和任务分配，就有机会一边降低 GEMM 计算开销，一边减少外部 barrier 等待。
+
+不过改 tile size 前必须量出形状分布：真正热点是哪些矩阵维度、多少个 token，以及一次运算有多少个 tile，而不是根据模板名直接改参数。
+
+### 3. `ggml-cpu.c`：不要直接删除 `#pragma omp barrier`
+
+报告表明 `__kmpc_barrier` 的调用栈多数通向 `ggml_graph_compute_thread()`。
+
+这里最重要的问题不是“Barrier 指令是否慢”，而是：
+
+为什么一些线程先到 Barrier，而另一些线程仍在计算？
+
+可能来自低并行度节点、任务分配不均或者不同 tensor op 的耗时差异。
+
+我建议先给每个图节点增加轻量计时/统计，记录：
+
+- 算子类型、输入 shape、实际 `n_tasks`。
+- 节点墙钟耗时。
+- 各线程执行的工作量及到达 Barrier 的时间差。
+- 每种算子累计导致的等待时间。
+
+这一步最好只在诊断构建中启用，不把统计开销放进正式优化版本。
+
+有数据后再考虑调整 work partition、优化串行节点或者融合相邻且合法的操作。不能因为看到 30% Barrier 就直接移除同步，否则容易破坏 GGML 图执行依赖。
+
+## 四、实验顺序我会这样排
+
+阶段 1 — 无源码优化，先找执行策略收益
+
+1. 重新建立不带 VTune 的 Intel Baseline，执行 PPL → PP/TG。
+2. 对比 OpenMP ON/OFF，判断同步 runtime 的实际影响。
+3. 测试 Intel `KMP_BLOCKTIME`、线程绑定与等待策略。
+4. 做 NUMA interleave / first-touch 对照。
+
+阶段 2 — 源码 Kernel 优化
+
+1. TG：`quants.c` 的 Q8_0 dot 优化。
+2. PP：`sgemm.cpp` 的 tinyBLAS tile/kernel 优化。
+3. PP：Q5_1 和 Q4_K repack 独立 Patch。
+4. 根据节点计时结果优化 `ggml-cpu.c` 的任务划分。
+
+阶段 3 — 编译器与数学库组合
+
+1. 比较 ICC / GCC / Clang，分别尝试 LTO。
+2. 只对 PP 做 oneMKL BLAS 的初步实验。
+3. 合并有真实收益的 Patch，再完整进行 PPL 与 Score 验证。
+
+每轮实验都应保留 38 线程与官方固定 workload。对于需要改变 NUMA/OMP 正式运行时配置的方案，必须按赛题要求经组委会确认。
+
+还有一件事我会提前处理：PP 的前 3 次诊断测量明显偏慢，且 minor faults 达到约 230 万次。 这意味着当前 PP 还有明显的工作集驻留或页面分配问题。应先解释这种波动，否则小幅 kernel 收益很可能淹没在噪声里。正式 benchmark 仍必须完整计算 10 次，不能人为排除较慢的前几次。
+
+## 五、最终建议：把团队工作拆成三条主线
+
+| 工作组         | 首要任务                             | 预期目标                  |
+| ----------- | -------------------------------- | --------------------- |
+| Runtime 组   | OpenMP vs 原生线程池、NUMA、线程绑定        | 提升核心利用率，减少关键路径等待      |
+| TG Kernel 组 | `quants.c` Q8_0 dot              | 降低 Decode 关键计算与访存开销   |
+| PP Kernel 组 | `sgemm.cpp` tinyBLAS、Q5_1、repack | 提高 Prefill 的计算和数据复用效率 |
+
+如果只能让我选两个最先执行的任务，我会选：
+
+第一，对照 `GGML_OPENMP=ON/OFF`。因为 PP/TG 都有接近 30% 的自旋等待采样时间，这个实验成本低、能快速判断方向。
+
+第二，针对 `ggml_vec_dot_q8_0_q8_0()` 做定向 profiling 与 AVX2 小 Patch。TG 的 54.49% 是当前最明确的计算热点。
+
+至于数学库和更换编译器，我会放在上述两项之后。现在没有证据证明它们是核心问题。
+
+最关键的技术方向已经比较明确：不是通用地调一堆编译参数，而是围绕“量化计算效率 + GGML 线程工作划分 + NUMA 局部性”做有测量支撑的优化。

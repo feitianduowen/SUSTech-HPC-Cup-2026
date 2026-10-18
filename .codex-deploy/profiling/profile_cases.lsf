@@ -1,0 +1,60 @@
+#!/bin/bash
+#BSUB -J qwen38_profile
+#BSUB -q ssc-cpu
+#BSUB -m hg_6148
+#BSUB -n 40
+#BSUB -R "span[ptile=40]"
+#BSUB -W 04:00
+#BSUB -o /work/apac2602/qwen38-cpu/logs/%J.profile.out
+#BSUB -e /work/apac2602/qwen38-cpu/logs/%J.profile.err
+set -euo pipefail
+cd /work/apac2602/qwen38-cpu
+source scripts/env.sh
+export LC_ALL=C
+VTUNE=/share/intel/oneapi-2023.1/vtune/2023.1.0/bin64/vtune
+OUT="$PWD/profiling/results_${LSB_JOBID}"
+mkdir -p "$OUT"
+trap 'printf "PROFILE_FAILED job=%s line=%s\n" "$LSB_JOBID" "$LINENO" > profiling.status' ERR
+grep -q READY deployment.status
+cp deployment_manifest.json "$OUT/deployment_manifest.json"
+{
+    date -Is
+    hostname
+    lscpu
+    numactl --hardware
+    free -h
+    module list
+    icc --version
+    sha256sum llama.cpp/build/bin/llama-bench llama.cpp/build/bin/libggml-cpu.so
+} > "$OUT/environment.txt" 2>&1
+printf '%s\n' "$OUT" > profiling/last_result
+args=(-collect hotspots -knob sampling-mode=hw -knob enable-stack-collection=true -knob stack-size=2048 -knob sampling-interval=10)
+common=(-m "$MODEL" -t 38 -ngl 0 -b 2048 -ub 512 -ctk f16 -ctv f16 --numa distribute -r 10 -o json --progress)
+for name in pp2048 tg128_d2048; do
+    case_dir="$OUT/$name"
+    mkdir -p "$case_dir"
+    if [[ "$name" == pp2048 ]]; then
+        workload=(-p 2048 -n 0)
+        marker='prompt run 1/10'
+    else
+        workload=(-p 0 -n 128 -d 2048)
+        marker='generation run 1/10'
+    fi
+    printf 'PROFILING case=%s job=%s host=%s\n' "$name" "$LSB_JOBID" "$(hostname)" > profiling.status
+    "$VTUNE" "${args[@]}" -data-limit=4096 -start-paused -r "$case_dir/vtune" -- python3 scripts/profile_exec.py "$case_dir" "$LLAMA_CPP_DIR/build/bin/llama-bench" "${common[@]}" "${workload[@]}" > "$case_dir/vtune.log" 2>&1 &
+    collector=$!
+    python3 scripts/profile_monitor.py "$case_dir" "$VTUNE" "$marker" > "$case_dir/monitor.log" 2>&1 &
+    monitor=$!
+    set +e
+    wait "$collector"
+    rc=$?
+    printf '%s\n' "$rc" > "$case_dir/collector.exit"
+    wait "$monitor"
+    monitor_rc=$?
+    set -e
+    [[ "$rc" == 0 && "$monitor_rc" == 0 ]]
+    "$VTUNE" -report summary -r "$case_dir/vtune" -report-output "$case_dir/summary.txt" > "$case_dir/report.log" 2>&1
+    "$VTUNE" -report hotspots -r "$case_dir/vtune" -group-by function -format csv -csv-delimiter comma -limit 100 -report-output "$case_dir/hotspots.csv" >> "$case_dir/report.log" 2>&1
+    "$VTUNE" -report hotspots -r "$case_dir/vtune" -group-by thread -format csv -csv-delimiter comma -limit 100 -report-output "$case_dir/threads.csv" >> "$case_dir/report.log" 2>&1
+done
+printf 'PROFILE_READY job=%s host=%s\n' "$LSB_JOBID" "$(hostname)" > profiling.status

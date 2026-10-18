@@ -1,0 +1,34 @@
+# Local Python environments and caches
+.venv/
+venv/
+env/
+ENV/
+.conda/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Installed dependencies and generated build products
+node_modules/
+CMakeFiles/
+CMakeCache.txt
+*.exe
+*.dll
+*.so
+*.so.*
+*.dylib
+*.o
+*.obj
+*.a
+*.lib
+
+# Local credentials
+.env
+.env.*
+!.env.example
+
+# OS metadata
+.DS_Store
+Thumbs.db
