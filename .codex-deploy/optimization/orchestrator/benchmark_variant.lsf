@@ -43,7 +43,7 @@ PPL_CTX=512
 PPL_CHUNKS=2
 PPL_BATCH=512
 PPL_UBATCH=256
-PPL_MAX_REL_DIFF_PERCENT=0.5  # Example engineering threshold, NOT an official standard
+PPL_MAX_REL_DIFF_PERCENT=5.0  # Official amendment: inclusive [2.63112, 2.90808]
 PPL_TIMEOUT_SECONDS=590     # timeout(1) + 2-sec kill grace < 600s; includes model loading
 
 # Preserve the performance benchmark's original settings.
@@ -270,7 +270,11 @@ if reference_path:
     diff_pct = 100.0 * (ppl / base_ppl - 1.0)
     result["baseline_ppl"] = base_ppl
     result["relative_difference_percent"] = diff_pct
-    status = "PASS" if abs(diff_pct) <= tolerance else "FAIL"
+    if base_ppl != 2.7696 or tolerance != 5.0:
+        sys.exit("PPL INVALID: amended policy requires baseline 2.7696 and tolerance 5%")
+    result["accepted_ppl_interval"] = [2.63112, 2.90808]
+    result["policy_id"] = "20261019-ppl-tolerance-5pct"
+    status = "PASS" if 2.63112 <= ppl <= 2.90808 else "FAIL"
     print(f"Baseline PPL:   {base_ppl:.6f}")
     print(f"Optimized PPL:  {ppl:.6f}")
     print(f"Relative delta: {diff_pct:+.6f}% (allowed +/- {tolerance:.3f}%)")

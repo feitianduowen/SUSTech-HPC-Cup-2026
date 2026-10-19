@@ -1,0 +1,6 @@
+c0f3a2aeeeca4a36eee64751be695c1852e125e08eb2c301fe0e7827c0e4d494  /work/apac2602/qwen38-cpu/optimization/20261019-q8-avx2-v2/sources/schedule4/build/bin/llama-bench
+8b09b2a13eb0645219e0469245aa537bf074d234f0e6916ca9848529b319925f  /work/apac2602/qwen38-cpu/optimization/20261019-q8-avx2-v2/sources/schedule4/build/bin/llama-perplexity
+b485d754a6e8e6bc1ec400c005eaa24cb9975be97cdd09df23a789011e375dae  /work/apac2602/qwen38-cpu/optimization/20261019-q8-avx2-v2/sources/schedule4/build/bin/libggml-cpu.so
+c0f3a2aeeeca4a36eee64751be695c1852e125e08eb2c301fe0e7827c0e4d494  /work/apac2602/qwen38-cpu/optimization/20261019-q8-avx2-v2/sources/schedule4/build/bin/llama-bench
+8b09b2a13eb0645219e0469245aa537bf074d234f0e6916ca9848529b319925f  /work/apac2602/qwen38-cpu/optimization/20261019-q8-avx2-v2/sources/schedule4/build/bin/llama-perplexity
+b485d754a6e8e6bc1ec400c005eaa24cb9975be97cdd09df23a789011e375dae  /work/apac2602/qwen38-cpu/optimization/20261019-q8-avx2-v2/sources/schedule4/build/bin/libggml-cpu.so

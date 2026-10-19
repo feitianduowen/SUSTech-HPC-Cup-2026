@@ -1,0 +1,341 @@
+
+Job <4337219>, Job Name <qwen38_q8_avx2_reverse>, User <apac2602>, Project <def
+                     ault>, Status <RUN>, Queue <ssc-cpu>, Command <#!/bin/bash
+                     ;#BSUB -J qwen38_q8_avx2_reverse;#BSUB -q ssc-cpu;#BSUB -m
+                      hg_6148;#BSUB -n 40;#BSUB -R "span[ptile=40]";#BSUB -W 03
+                     :00;#BSUB -o /work/apac2602/qwen38-cpu/logs/%J.q8_avx2_rev
+                     erse.out;#BSUB -e /work/apac2602/qwen38-cpu/logs/%J.q8_avx
+                     2_reverse.err;set -Eeuo pipefail;source /work/apac2602/qwe
+                     n38-cpu/scripts/env.sh;ROOT=/work/apac2602/qwen38-cpu/opti
+                     mization/20261019-q8-avx2-v2;VARIANT=${Q8_VARIANT:?set var
+                     iant};PARENT=${Q8_BUILD_JOB:?set successful build};[[ "$VA
+                     RIANT" == schedule4 && "$PARENT" == 4336892 || "$VARIANT" 
+                     == schedule4_prefetch16 && "$PARENT" == 4336891 ]];OUT="$R
+                     OOT/results/$LSB_JOBID";mkdir -p "$OUT/01_baseline" "$OUT/
+                     02_candidate";phase=VERIFY;trap 'rc=$?; echo "FAILED phase
+                     =$phase exit=$rc" > "$OUT/job.status"; exit "$rc"' ERR;sta
+                     ge() { phase=$1; echo "$phase time=$(date -Is)" > "$OUT/jo
+                     b.status"; };[[ "${LSB_DJOB_NUMPROC:?}" == 40 ]];[[ $(getc
+                     onf _NPROCESSORS_ONLN) == 40 ]];lscpu | grep -q 'Intel(R) 
+                     Xeon(R) Gold 6148';grep -q BUILD_PPL_PASS "$ROOT/results/$
+                     PARENT/job.status";sha256sum -c "$ROOT/results/$PARENT/sha
+                     256.txt" > "$OUT/build-input-verification.txt";BASE=/work/
+                     apac2602/qwen38-cpu/llama.cpp;SRC="$ROOT/sources/$VARIANT"
+                     ;cp /work/apac2602/qwen38-cpu/llama_bench_results_4335636/
+                     perplexity_result.json "$OUT/01_baseline/perplexity_result
+                     .json";cp "$ROOT/results/$PARENT/01_$VARIANT/perplexity_re
+                     sult.json" "$OUT/02_candidate/perplexity_result.json";pyth
+                     on3 "$ROOT/scripts/verify_reverse.py" "$OUT" "$VARIANT" "$
+                     PARENT";unset KMP_AFFINITY GOMP_CPU_AFFINITY KMP_BLOCKTIME
+                      OMP_WAIT_POLICY;export OMP_NUM_THREADS=38 OMP_DYNAMIC=FAL
+                     SE OMP_PROC_BIND=close OMP_PLACES=cores;export OPENBLAS_NU
+                     M_THREADS=38 MKL_NUM_THREADS=38 BLIS_NUM_THREADS=38;MODEL=
+                     /work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GG
+                     UF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004
+                     .gguf;COMMON=(-m "$MODEL" -t 38 -ngl 0 -b 2048 -ub 512 -ct
+                     k f16 -ctv f16 --numa distribute -r 10);{ date -Is; hostna
+                     me; lscpu; icc --version; module list; for key in OMP_NUM_
+                     THREADS OMP_DYNAMIC OMP_PROC_BIND OMP_PLACES OPENBLAS_NUM_
+                     THREADS MKL_NUM_THREADS BLIS_NUM_THREADS; do printf '%s=%s
+                     \n' "$key" "${!key}"; done; } > "$OUT/environment.txt" 2>&
+                     1;stage PP_CANDIDATE;"$SRC/build/bin/llama-bench" "${COMMO
+                     N[@]}" -p 2048 -n 0 -o json > "$OUT/02_candidate/pp.json" 
+                     2> "$OUT/02_candidate/pp.log";stage PP_BASELINE;"$BASE/bui
+                     ld/bin/llama-bench" "${COMMON[@]}" -p 2048 -n 0 -o json > 
+                     "$OUT/01_baseline/pp.json" 2> "$OUT/01_baseline/pp.log";st
+                     age TG_BASELINE;"$BASE/build/bin/llama-bench" "${COMMON[@]
+                     }" -p 0 -n 128 -d 2048 -o json > "$OUT/01_baseline/tg.json
+                     " 2> "$OUT/01_baseline/tg.log";stage TG_CANDIDATE;"$SRC/bu
+                     ild/bin/llama-bench" "${COMMON[@]}" -p 0 -n 128 -d 2048 -o
+                      json > "$OUT/02_candidate/tg.json" 2> "$OUT/02_candidate/
+                     tg.log";stage PAIRED_COMPLETE>, Share group charged </apac
+                     2602>
+Mon Oct 19 15:28:44: Submitted from host <b04u17l>, CWD <$HOME>, Output File </
+                     work/apac2602/qwen38-cpu/logs/4337219.q8_avx2_reverse.out>
+                     , Error File </work/apac2602/qwen38-cpu/logs/4337219.q8_av
+                     x2_reverse.err>, 40 Task(s), Requested Resources <span[pti
+                     le=40]>, Specified Hosts <hg_6148>;
+Mon Oct 19 15:28:45: Started 40 Task(s) on Host(s) <40*r13n38>, Allocated 40 Sl
+                     ot(s) on Host(s) <40*r13n38>, Execution Home </work/apac26
+                     02>, Execution CWD </work/apac2602>;
+Mon Oct 19 16:11:11: Resource usage collected.
+                     The CPU time used is 50366 seconds.
+                     MEM: 269 Mbytes;  SWAP: 0 Mbytes;  NTHREAD: 42
+                     PGID: 2289445;  PIDs: 2289445 2289446 2289450 2295101 
+
+ RUNLIMIT                
+ 180.0 min
+
+ MEMORY USAGE:
+ MAX MEM: 41.9 Gbytes;  AVG MEM: 39.9 Gbytes; MEM Efficiency: 0.00%
+
+ CPU USAGE:
+ CPU PEAK: 37.71 ;  CPU PEAK DURATION: 63 second(s)
+ CPU AVERAGE EFFICIENCY: 49.13% ;  CPU PEAK EFFICIENCY: 94.29%
+
+ SCHEDULING PARAMETERS:
+           r15s   r1m  r15m   ut      pg    io   ls    it    tmp    swp    mem
+ loadSched   -     -     -     -       -     -    -     -     -      -      -  
+ loadStop    -     -     -     -       -     -    -     -     -      -      -  
+
+ RESOURCE REQUIREMENT DETAILS:
+ Combined: select[type == any] order[-slots] span[ptile=40]
+ Effective: select[type == any] order[-slots] span[ptile=40] 
+------------------------------------------------------------------------------
+
+Job <4337220>, Job Name <qwen38_q8_avx2_reverse>, User <apac2602>, Project <def
+                     ault>, Status <RUN>, Queue <ssc-cpu>, Command <#!/bin/bash
+                     ;#BSUB -J qwen38_q8_avx2_reverse;#BSUB -q ssc-cpu;#BSUB -m
+                      hg_6148;#BSUB -n 40;#BSUB -R "span[ptile=40]";#BSUB -W 03
+                     :00;#BSUB -o /work/apac2602/qwen38-cpu/logs/%J.q8_avx2_rev
+                     erse.out;#BSUB -e /work/apac2602/qwen38-cpu/logs/%J.q8_avx
+                     2_reverse.err;set -Eeuo pipefail;source /work/apac2602/qwe
+                     n38-cpu/scripts/env.sh;ROOT=/work/apac2602/qwen38-cpu/opti
+                     mization/20261019-q8-avx2-v2;VARIANT=${Q8_VARIANT:?set var
+                     iant};PARENT=${Q8_BUILD_JOB:?set successful build};[[ "$VA
+                     RIANT" == schedule4 && "$PARENT" == 4336892 || "$VARIANT" 
+                     == schedule4_prefetch16 && "$PARENT" == 4336891 ]];OUT="$R
+                     OOT/results/$LSB_JOBID";mkdir -p "$OUT/01_baseline" "$OUT/
+                     02_candidate";phase=VERIFY;trap 'rc=$?; echo "FAILED phase
+                     =$phase exit=$rc" > "$OUT/job.status"; exit "$rc"' ERR;sta
+                     ge() { phase=$1; echo "$phase time=$(date -Is)" > "$OUT/jo
+                     b.status"; };[[ "${LSB_DJOB_NUMPROC:?}" == 40 ]];[[ $(getc
+                     onf _NPROCESSORS_ONLN) == 40 ]];lscpu | grep -q 'Intel(R) 
+                     Xeon(R) Gold 6148';grep -q BUILD_PPL_PASS "$ROOT/results/$
+                     PARENT/job.status";sha256sum -c "$ROOT/results/$PARENT/sha
+                     256.txt" > "$OUT/build-input-verification.txt";BASE=/work/
+                     apac2602/qwen38-cpu/llama.cpp;SRC="$ROOT/sources/$VARIANT"
+                     ;cp /work/apac2602/qwen38-cpu/llama_bench_results_4335636/
+                     perplexity_result.json "$OUT/01_baseline/perplexity_result
+                     .json";cp "$ROOT/results/$PARENT/01_$VARIANT/perplexity_re
+                     sult.json" "$OUT/02_candidate/perplexity_result.json";pyth
+                     on3 "$ROOT/scripts/verify_reverse.py" "$OUT" "$VARIANT" "$
+                     PARENT";unset KMP_AFFINITY GOMP_CPU_AFFINITY KMP_BLOCKTIME
+                      OMP_WAIT_POLICY;export OMP_NUM_THREADS=38 OMP_DYNAMIC=FAL
+                     SE OMP_PROC_BIND=close OMP_PLACES=cores;export OPENBLAS_NU
+                     M_THREADS=38 MKL_NUM_THREADS=38 BLIS_NUM_THREADS=38;MODEL=
+                     /work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GG
+                     UF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004
+                     .gguf;COMMON=(-m "$MODEL" -t 38 -ngl 0 -b 2048 -ub 512 -ct
+                     k f16 -ctv f16 --numa distribute -r 10);{ date -Is; hostna
+                     me; lscpu; icc --version; module list; for key in OMP_NUM_
+                     THREADS OMP_DYNAMIC OMP_PROC_BIND OMP_PLACES OPENBLAS_NUM_
+                     THREADS MKL_NUM_THREADS BLIS_NUM_THREADS; do printf '%s=%s
+                     \n' "$key" "${!key}"; done; } > "$OUT/environment.txt" 2>&
+                     1;stage PP_CANDIDATE;"$SRC/build/bin/llama-bench" "${COMMO
+                     N[@]}" -p 2048 -n 0 -o json > "$OUT/02_candidate/pp.json" 
+                     2> "$OUT/02_candidate/pp.log";stage PP_BASELINE;"$BASE/bui
+                     ld/bin/llama-bench" "${COMMON[@]}" -p 2048 -n 0 -o json > 
+                     "$OUT/01_baseline/pp.json" 2> "$OUT/01_baseline/pp.log";st
+                     age TG_BASELINE;"$BASE/build/bin/llama-bench" "${COMMON[@]
+                     }" -p 0 -n 128 -d 2048 -o json > "$OUT/01_baseline/tg.json
+                     " 2> "$OUT/01_baseline/tg.log";stage TG_CANDIDATE;"$SRC/bu
+                     ild/bin/llama-bench" "${COMMON[@]}" -p 0 -n 128 -d 2048 -o
+                      json > "$OUT/02_candidate/tg.json" 2> "$OUT/02_candidate/
+                     tg.log";stage PAIRED_COMPLETE>, Share group charged </apac
+                     2602>
+Mon Oct 19 15:28:44: Submitted from host <b04u17l>, CWD <$HOME>, Output File </
+                     work/apac2602/qwen38-cpu/logs/4337220.q8_avx2_reverse.out>
+                     , Error File </work/apac2602/qwen38-cpu/logs/4337220.q8_av
+                     x2_reverse.err>, 40 Task(s), Requested Resources <span[pti
+                     le=40]>, Specified Hosts <hg_6148>;
+Mon Oct 19 15:28:45: Started 40 Task(s) on Host(s) <40*r13n06>, Allocated 40 Sl
+                     ot(s) on Host(s) <40*r13n06>, Execution Home </work/apac26
+                     02>, Execution CWD </work/apac2602>;
+Mon Oct 19 16:11:11: Resource usage collected.
+                     The CPU time used is 54339 seconds.
+                     MEM: 41.9 Gbytes;  SWAP: 0 Mbytes;  NTHREAD: 42
+                     PGID: 3585229;  PIDs: 3585229 3585230 3585234 3591571 
+
+ RUNLIMIT                
+ 180.0 min
+
+ MEMORY USAGE:
+ MAX MEM: 41.9 Gbytes;  AVG MEM: 39.7 Gbytes; MEM Efficiency: 0.00%
+
+ CPU USAGE:
+ CPU PEAK: 37.76 ;  CPU PEAK DURATION: 63 second(s)
+ CPU AVERAGE EFFICIENCY: 53.07% ;  CPU PEAK EFFICIENCY: 94.40%
+
+ SCHEDULING PARAMETERS:
+           r15s   r1m  r15m   ut      pg    io   ls    it    tmp    swp    mem
+ loadSched   -     -     -     -       -     -    -     -     -      -      -  
+ loadStop    -     -     -     -       -     -    -     -     -      -      -  
+
+ RESOURCE REQUIREMENT DETAILS:
+ Combined: select[type == any] order[-slots] span[ptile=40]
+ Effective: select[type == any] order[-slots] span[ptile=40] 
+------------------------------------------------------------------------------
+
+Job <4337448>, Job Name <qwen38_O3_ggml_pgo_v4>, User <apac2602>, Project <defa
+                     ult>, Status <RUN>, Queue <ssc-cpu>, Command <#!/bin/bash;
+                     #BSUB -J qwen38_compiler_pgo;#BSUB -q ssc-cpu;#BSUB -m hg_
+                     6148;#BSUB -n 40;#BSUB -R "span[ptile=40]";#BSUB -W 04:00;
+                     #BSUB -o /work/apac2602/qwen38-cpu/logs/%J.compiler_pgo.ou
+                     t;#BSUB -e /work/apac2602/qwen38-cpu/logs/%J.compiler_pgo.
+                     err;set -Eeuo pipefail;source /work/apac2602/qwen38-cpu/sc
+                     ripts/env.sh;ROOT=/work/apac2602/qwen38-cpu/optimization/2
+                     0261019-compiler-pgo;SRC=/work/apac2602/qwen38-cpu/optimiz
+                     ation/20261018-v1/sources/native;LEVEL=${PGO_OPT_LEVEL:?se
+                     t PGO_OPT_LEVEL};[[ "$LEVEL" == 2 || "$LEVEL" == 3 ]];OUT=
+                     "$ROOT/results/$LSB_JOBID";BUILDS="$ROOT/builds/$LSB_JOBID
+                     ";PROFILE="$OUT/profiles";mkdir -p "$OUT" "$BUILDS" "$PROF
+                     ILE";phase=INIT;trap 'rc=$?; printf "FAILED phase=%s exit=
+                     %s time=%s\n" "$phase" "$rc" "$(date -Is)" > "$OUT/job.sta
+                     tus"; echo FAILED > "$OUT/training.watch"; exit "$rc"' ERR
+                     ;stage() { phase=$1; printf '%s time=%s\n' "$phase" "$(dat
+                     e -Is)" | tee "$OUT/job.status"; };unset KMP_BLOCKTIME OMP
+                     _WAIT_POLICY KMP_AFFINITY GOMP_CPU_AFFINITY KMP_HW_SUBSET;
+                     export OMP_NUM_THREADS=38 OMP_DYNAMIC=FALSE OMP_PROC_BIND=
+                     close OMP_PLACES=cores;export GIT_OPTIONAL_LOCKS=0;[[ "${L
+                     SB_DJOB_NUMPROC:?missing LSF allocated slots}" == 40 ]];ls
+                     cpu | grep -q 'Intel(R) Xeon(R) Gold 6148';[[ $(getconf _N
+                     PROCESSORS_ONLN) == 40 ]];python3 "$ROOT/verify_source.py"
+                      "$SRC" "$ROOT/source_identity.json" > "$OUT/source-verifi
+                     cation.json";{;    date -Is; hostname; lscpu; module list;
+                      icc --version; icpc --version;    printf 'SOURCE=%s\nOPT_
+                     LEVEL=%s\n' "$SRC" "$LEVEL";} > "$OUT/environment.txt" 2>&
+                     1;cp "$ROOT/pipeline_ggml_pgo_v4.lsf" "$OUT/pipeline.lsf";
+                     cp "$ROOT/ggml_pgo_targets_v2.cmake" "$OUT/ggml_pgo_target
+                     s_v2.cmake";cp "$ROOT/ppl_gate.lsf" "$OUT/ppl_gate.lsf";fl
+                     ags='-fp-model precise -no-ftz -xCORE-AVX512 -qsimd-honor-
+                     fp-model -diag-disable=10441';link='-Wl,--no-as-needed,/li
+                     b64/libm.so.6,--as-needed';build_stage() {;    local name=
+                     $1 mode=$2;    local dest="$BUILDS/$name/build" logs="$OUT
+                     /$name-build" pgo='';    mkdir -p "$logs";    case "$mode"
+                      in;        gen) pgo="-prof-gen=threadsafe -prof-dir $PROF
+                     ILE";;         use) pgo="-prof-use=nomerge -prof-dir $PROF
+                     ILE";;     esac;    local targets=(llama-cli llama-server 
+                     llama-bench llama-perplexity test-quantize-fns);    [[ "$m
+                     ode" != gen ]] || targets=(llama-bench);    local command=
+                     (cmake -S "$SRC" -B "$dest";        "-DCMAKE_PROJECT_INCLU
+                     DE=$OUT/ggml_pgo_targets_v2.cmake" "-DQWEN_PGO_PHASE=$mode
+                     ";        -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPIL
+                     E_COMMANDS=ON;        -DCMAKE_C_COMPILER=icc -DCMAKE_CXX_C
+                     OMPILER=icpc;        "-DCMAKE_C_FLAGS=-gcc-name=/share/bas
+                     e/e5/gcc/11.2.0/bin/gcc $flags $pgo";        "-DCMAKE_CXX_
+                     FLAGS=-gxx-name=/share/base/e5/gcc/11.2.0/bin/g++ $flags $
+                     pgo";        "-DCMAKE_C_FLAGS_RELEASE=-O$LEVEL -DNDEBUG"; 
+                            "-DCMAKE_CXX_FLAGS_RELEASE=-O$LEVEL -DNDEBUG";     
+                        "-DCMAKE_EXE_LINKER_FLAGS=$link";        "-DCMAKE_SHARE
+                     D_LINKER_FLAGS=$link";        -DGGML_NATIVE=ON -DGGML_OPEN
+                     MP=ON -DGGML_OPENMP_FETCH=OFF;        -DGGML_BLAS=OFF -DGG
+                     ML_CUDA=OFF -DGGML_HIP=OFF -DGGML_VULKAN=OFF;        -DGGM
+                     L_SYCL=OFF -DGGML_OPENCL=OFF -DGGML_RPC=OFF -DGGML_METAL=O
+                     FF -DGGML_MUSA=OFF;        -DLLAMA_BUILD_TESTS=ON -DLLAMA_
+                     BUILD_EXAMPLES=ON -DLLAMA_BUILD_TOOLS=ON;        -DLLAMA_B
+                     UILD_SERVER=ON -DLLAMA_BUILD_APP=OFF -DLLAMA_BUILD_UI=OFF;
+                             -DLLAMA_USE_PREBUILT_UI=OFF -DLLAMA_OPENSSL=OFF -D
+                     FETCHCONTENT_FULLY_DISCONNECTED=ON);    printf '%q ' "${co
+                     mmand[@]}" > "$logs/configure.command"; printf '\n' >> "$l
+                     ogs/configure.command";    "${command[@]}" > "$logs/config
+                     ure.log" 2>&1;    python3 "$ROOT/check_pgo_scope_v2.py" "$
+                     dest/compile_commands.json" "$mode" > "$logs/pgo-scope-pre
+                     build.json";    cmake --build "$dest" --target "${targets[
+                     @]}" -j 40 > "$logs/build.log" 2>&1;    cp "$dest/CMakeCac
+                     he.txt" "$logs/CMakeCache.txt";    cp "$dest/compile_comma
+                     nds.json" "$logs/compile_commands.json";    python3 "$ROOT
+                     /check_pgo_scope_v2.py" "$dest/compile_commands.json" "$mo
+                     de" > "$logs/pgo-scope.json";    sha256sum "$dest/bin/llam
+                     a-bench" "$dest/bin/libggml-cpu.so" > "$logs/sha256.txt"; 
+                        if [[ "$mode" != gen ]]; then;        "$dest/bin/test-q
+                     uantize-fns" > "$logs/quantize-tests.log" 2>&1;        for
+                      name in llama-cli llama-server llama-bench llama-perplexi
+                     ty; do;            test -x "$dest/bin/$name";            l
+                     dd "$dest/bin/$name" >> "$logs/ldd.txt";            sha256
+                     sum "$dest/bin/$name" >> "$logs/sha256.txt";        done; 
+                            ! grep -q 'not found' "$logs/ldd.txt";    fi;};gate
+                     () {;    local name=$1 ordinal=$2;    COMPILER_BUILD_ROOT=
+                     "$BUILDS/$name" EXPERIMENT_OUTPUT_DIR="$OUT/${ordinal}_$na
+                     me" RUN_BENCH=0 bash "$ROOT/ppl_gate.lsf" > "$OUT/$name-pp
+                     l-gate.log" 2>&1;};stage REUSE_VERIFIED_CONTROL;CONTROL_PA
+                     RENT=4337216;CONTROL_OUT="$ROOT/results/$CONTROL_PARENT";C
+                     ONTROL_BUILD="$ROOT/builds/$CONTROL_PARENT/control";sha256
+                     sum -c "$CONTROL_OUT/control-build/sha256.txt" > "$OUT/con
+                     trol-parent-sha256.txt";python3 - "$CONTROL_OUT/01_control
+                     /perplexity_result.json" <<'PY';import json,sys;p=json.loa
+                     d(open(sys.argv[1]));assert p['status']=='PASS' and 2.7557
+                     52 <= p['ppl'] <= 2.783448;c=p['conditions'];assert (c['pp
+                     l_ctx'],c['ppl_chunks'],c['ppl_batch'],c['ppl_ubatch'],c['
+                     threads'],c['kv_cache_k'],c['kv_cache_v'],c['numa'],c['war
+                     mup'],c['gpu_layers'])==(512,2,512,256,38,'f16','f16','dis
+                     tribute',False,0);PY;test ! -e "$BUILDS/control";ln -s "$C
+                     ONTROL_BUILD" "$BUILDS/control";mkdir -p "$OUT/01_control"
+                      "$OUT/control-build";cp "$CONTROL_OUT/01_control/perplexi
+                     ty_result.json" "$OUT/01_control/perplexity_result.json";f
+                     or file in configure.command CMakeCache.txt quantize-tests
+                     .log sha256.txt; do;    cp "$CONTROL_OUT/control-build/$fi
+                     le" "$OUT/control-build/$file";done;printf 'Reused immutab
+                     le control from job %s; no control rebuild or PPL rerun.\n
+                     ' "$CONTROL_PARENT" > "$OUT/control-reuse.txt";stage BUILD
+                     _GEN;build_stage gen gen;mkdir -p "$OUT/nontraining-profil
+                     es";shopt -s nullglob;probe_profiles=("$PROFILE"/*.dyn);if
+                      (( ${#probe_profiles[@]} )); then mv -- "${probe_profiles
+                     [@]}" "$OUT/nontraining-profiles/"; fi;export PROF_DIR="$P
+                     ROFILE";# Preserve counts even if the diagnostic training 
+                     run cannot reach normal exit.;export INTEL_PROF_DUMP_INTER
+                     VAL=60 INTEL_PROF_DUMP_CUMULATIVE=1;echo RUNNING > "$OUT/t
+                     raining.watch";python3 /work/apac2602/qwen38-cpu/optimizat
+                     ion/20261018-v1/scripts/monitor_runtime.py "$OUT/training-
+                     os.jsonl" "$OUT/training.watch" > "$OUT/training-monitor.l
+                     og" 2>&1 & monitor_pid=$!;common=(-m "$MODEL" -t 38 -b 204
+                     8 -ub 512 -ctk f16 -ctv f16 -ngl 0 --numa distribute -r 1 
+                     --no-warmup -v -o json);training() {;    local phase_name=
+                     $1 limit=$2; shift 2;    local command=(timeout --signal=T
+                     ERM --kill-after=10s "$limit" "$BUILDS/gen/build/bin/llama
+                     -bench" "${common[@]}" "$@");    printf '%q ' "${command[@
+                     ]}" > "$OUT/training-$phase_name.command"; printf '\n' >> 
+                     "$OUT/training-$phase_name.command";    INTEL_PROF_DYN_PRE
+                     FIX="$phase_name" "${command[@]}" > "$OUT/training-$phase_
+                     name.json" 2> "$OUT/training-$phase_name.log";};stage TRAI
+                     N_PP_UNSCORED;training pp 3600 -p 64 -n 0;stage TRAIN_TG_U
+                     NSCORED;training tg 3600 -p 0 -n 8 -d 64;echo READY > "$OU
+                     T/training.watch";wait "$monitor_pid";python3 "$ROOT/check
+                     _training.py" "$OUT";stage MERGE;profiles=("$PROFILE"/*.dy
+                     n);(( ${#profiles[@]} > 0 ));profmerge -prof_dir "$PROFILE
+                     " -thread_max 2 > "$OUT/profmerge.log" 2>&1;test -s "$PROF
+                     ILE/pgopti.dpi";sha256sum "${profiles[@]}" "$PROFILE/pgopt
+                     i.dpi" > "$OUT/profile-sha256.txt";stage BUILD_USE;build_s
+                     tage pgo use;# Retain all feedback-use warnings to verify 
+                     actual hot-source profile matching.;grep -Ei 'profile|prof
+                     iling|warning|error' "$OUT/pgo-build/build.log" > "$OUT/pg
+                     o-build/profile-diagnostics.txt" || true;stage PPL_USE;gat
+                     e pgo 02;python3 "$ROOT/write_manifest_ggml.py" "$LSB_JOBI
+                     D" "$LEVEL";stage READY_FOR_PAIRED_BENCH>, Share group cha
+                     rged </apac2602>
+Mon Oct 19 16:09:44: Submitted from host <b04u17l>, CWD <$HOME>, Output File </
+                     work/apac2602/qwen38-cpu/logs/4337448.compiler_pgo.out>, E
+                     rror File </work/apac2602/qwen38-cpu/logs/4337448.compiler
+                     _pgo.err>, 40 Task(s), Requested Resources <span[ptile=40]
+                     >, Specified Hosts <hg_6148>;
+Mon Oct 19 16:09:45: Started 40 Task(s) on Host(s) <40*r13n24>, Allocated 40 Sl
+                     ot(s) on Host(s) <40*r13n24>, Execution Home </work/apac26
+                     02>, Execution CWD </work/apac2602>;
+Mon Oct 19 16:11:19: Resource usage collected.
+                     The CPU time used is 690 seconds.
+                     MEM: 6.5 Gbytes;  SWAP: 0 Mbytes;  NTHREAD: 33
+                     PGID: 1898497;  PIDs: 1898497 1898498 1898502 1898825 
+                     1898826 1898828 1898831 1899905 1899953 1899961 1899967 
+                     1899973 1899984 1899985 1899992 1900001 1900050 1900078 
+                     1900098 1900104 1900106 1900115 1900116 1900125 1900141 
+                     1900145 1900172 1900176 1900208 1900212 1900214 1900218 
+
+ RUNLIMIT                
+ 240.0 min
+
+ MEMORY USAGE:
+ MAX MEM: 16.8 Gbytes;  AVG MEM: 3.5 Gbytes; MEM Efficiency: 0.00%
+
+ CPU USAGE:
+ CPU PEAK: 3.56 ;  CPU PEAK DURATION: 66 second(s)
+ CPU AVERAGE EFFICIENCY: 8.90% ;  CPU PEAK EFFICIENCY: 8.90%
+
+ SCHEDULING PARAMETERS:
+           r15s   r1m  r15m   ut      pg    io   ls    it    tmp    swp    mem
+ loadSched   -     -     -     -       -     -    -     -     -      -      -  
+ loadStop    -     -     -     -       -     -    -     -     -      -      -  
+
+ RESOURCE REQUIREMENT DETAILS:
+ Combined: select[type == any] order[-slots] span[ptile=40]
+ Effective: select[type == any] order[-slots] span[ptile=40] 
+

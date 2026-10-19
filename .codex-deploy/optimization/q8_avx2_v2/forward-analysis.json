@@ -1,0 +1,441 @@
+{
+  "status": "FORWARD_COMPLETE_REVERSE_REQUIRED",
+  "order": [
+    "baselinePP",
+    "candidatePP",
+    "candidateTG",
+    "baselineTG"
+  ],
+  "score_scope": "Development score only, not official performance. Each binary reused its independent fixed PPL pass with SHA256 verification; no PPL rerun in speed jobs.",
+  "results": [
+    {
+      "job_id": "4337011",
+      "variant": "schedule4",
+      "host": "40*r13n33",
+      "cases": {
+        "baseline": {
+          "ppl": {
+            "schema": "llama_cpp_ppl_regression_v1",
+            "ppl": 2.7767,
+            "elapsed_seconds": 277,
+            "conditions": {
+              "model_files_path_and_size": [
+                [
+                  "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+                  10946624
+                ],
+                [
+                  "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00002-of-00004.gguf",
+                  49859583136
+                ],
+                [
+                  "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00003-of-00004.gguf",
+                  49376141504
+                ],
+                [
+                  "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00004-of-00004.gguf",
+                  12087983520
+                ]
+              ],
+              "data_sha256": "173c87a53759e0201f33e0ccf978e510c2042d7f2cb78229d9a50d79b9e7dd08",
+              "ppl_ctx": 512,
+              "ppl_chunks": 2,
+              "ppl_batch": 512,
+              "ppl_ubatch": 256,
+              "threads": 38,
+              "kv_cache_k": "f16",
+              "kv_cache_v": "f16",
+              "numa": "distribute",
+              "warmup": false,
+              "gpu_layers": 0
+            },
+            "baseline_json": "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/perplexity_result.json",
+            "tolerance_percent": 0.5,
+            "baseline_ppl": 2.7696,
+            "relative_difference_percent": 0.2563547082611084,
+            "status": "PASS"
+          },
+          "path": "/work/apac2602/qwen38-cpu/optimization/20261019-q8-avx2-v2/results/4337011/01_baseline",
+          "pp": {
+            "avg_ts": 28.023191,
+            "cv": 0.09037189947426044,
+            "samples_ts": [
+              22.8161,
+              26.9556,
+              26.1254,
+              28.0026,
+              27.4868,
+              29.1822,
+              29.332,
+              31.7689,
+              27.649,
+              30.9133
+            ],
+            "samples_ns": [
+              89761090645,
+              75976912444,
+              78391101446,
+              73136064172,
+              74508596593,
+              70179680683,
+              69821279384,
+              64465611163,
+              74071342755,
+              66249822493
+            ]
+          },
+          "tg": {
+            "avg_ts": 2.866171,
+            "cv": 0.035273192004245384,
+            "samples_ts": [
+              2.87919,
+              2.88232,
+              2.74882,
+              2.81388,
+              2.79457,
+              2.92254,
+              2.7498,
+              2.81915,
+              3.03208,
+              3.01936
+            ],
+            "samples_ns": [
+              44456980300,
+              44408686822,
+              46565489192,
+              45488830347,
+              45803062140,
+              43797564936,
+              46548893112,
+              45403771864,
+              42215178417,
+              42393043306
+            ]
+          },
+          "development_score": 72.06540666881459
+        },
+        "candidate": {
+          "ppl": {
+            "schema": "llama_cpp_ppl_regression_v1",
+            "ppl": 2.7767,
+            "elapsed_seconds": 316,
+            "conditions": {
+              "model_files_path_and_size": [
+                [
+                  "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+                  10946624
+                ],
+                [
+                  "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00002-of-00004.gguf",
+                  49859583136
+                ],
+                [
+                  "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00003-of-00004.gguf",
+                  49376141504
+                ],
+                [
+                  "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00004-of-00004.gguf",
+                  12087983520
+                ]
+              ],
+              "data_sha256": "173c87a53759e0201f33e0ccf978e510c2042d7f2cb78229d9a50d79b9e7dd08",
+              "ppl_ctx": 512,
+              "ppl_chunks": 2,
+              "ppl_batch": 512,
+              "ppl_ubatch": 256,
+              "threads": 38,
+              "kv_cache_k": "f16",
+              "kv_cache_v": "f16",
+              "numa": "distribute",
+              "warmup": false,
+              "gpu_layers": 0
+            },
+            "baseline_json": "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/perplexity_result.json",
+            "tolerance_percent": 0.5,
+            "baseline_ppl": 2.7696,
+            "relative_difference_percent": 0.2563547082611084,
+            "status": "PASS"
+          },
+          "path": "/work/apac2602/qwen38-cpu/optimization/20261019-q8-avx2-v2/results/4337011/02_candidate",
+          "pp": {
+            "avg_ts": 50.748614,
+            "cv": 0.01750776878359673,
+            "samples_ts": [
+              50.3089,
+              51.1428,
+              49.8979,
+              49.2627,
+              50.6359,
+              52.0247,
+              50.3761,
+              50.6545,
+              51.0366,
+              52.1461
+            ],
+            "samples_ns": [
+              40708517034,
+              40044734720,
+              41043781968,
+              41573052551,
+              40445635875,
+              39365942544,
+              40654163856,
+              40430739172,
+              40128095129,
+              39274290331
+            ]
+          },
+          "tg": {
+            "avg_ts": 2.79638,
+            "cv": 0.19440955807150673,
+            "samples_ts": [
+              3.06616,
+              3.11452,
+              3.09068,
+              3.11726,
+              3.11565,
+              3.11916,
+              3.12949,
+              2.2475,
+              1.56302,
+              2.40036
+            ],
+            "samples_ns": [
+              41745986281,
+              41097777359,
+              41414883386,
+              41061763688,
+              41082872909,
+              41036736733,
+              40901283320,
+              56952136372,
+              81892896401,
+              53325265714
+            ]
+          },
+          "development_score": 95.7915467895329
+        }
+      },
+      "relative_to_same_job_baseline": {
+        "pp": 0.8109505801819643,
+        "tg": -0.024349907943385096
+      },
+      "interpretation": "PP baseline is unusually slow and unstable while candidate executes later; PP speed difference is not yet attributable to code. TG does not establish an improvement. Keep all samples, including the late TG slowdown in 4337011. Reverse order confirmation required."
+    },
+    {
+      "job_id": "4337012",
+      "variant": "schedule4_prefetch16",
+      "host": "40*r13n38",
+      "cases": {
+        "baseline": {
+          "ppl": {
+            "schema": "llama_cpp_ppl_regression_v1",
+            "ppl": 2.7767,
+            "elapsed_seconds": 277,
+            "conditions": {
+              "model_files_path_and_size": [
+                [
+                  "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+                  10946624
+                ],
+                [
+                  "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00002-of-00004.gguf",
+                  49859583136
+                ],
+                [
+                  "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00003-of-00004.gguf",
+                  49376141504
+                ],
+                [
+                  "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00004-of-00004.gguf",
+                  12087983520
+                ]
+              ],
+              "data_sha256": "173c87a53759e0201f33e0ccf978e510c2042d7f2cb78229d9a50d79b9e7dd08",
+              "ppl_ctx": 512,
+              "ppl_chunks": 2,
+              "ppl_batch": 512,
+              "ppl_ubatch": 256,
+              "threads": 38,
+              "kv_cache_k": "f16",
+              "kv_cache_v": "f16",
+              "numa": "distribute",
+              "warmup": false,
+              "gpu_layers": 0
+            },
+            "baseline_json": "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/perplexity_result.json",
+            "tolerance_percent": 0.5,
+            "baseline_ppl": 2.7696,
+            "relative_difference_percent": 0.2563547082611084,
+            "status": "PASS"
+          },
+          "path": "/work/apac2602/qwen38-cpu/optimization/20261019-q8-avx2-v2/results/4337012/01_baseline",
+          "pp": {
+            "avg_ts": 27.47282,
+            "cv": 0.1010678918290878,
+            "samples_ts": [
+              21.9849,
+              26.2851,
+              24.8751,
+              26.4395,
+              27.9743,
+              27.8432,
+              29.9937,
+              31.5717,
+              27.7541,
+              30.0065
+            ],
+            "samples_ns": [
+              93154769868,
+              77914920300,
+              82331171798,
+              77459783698,
+              73209950741,
+              73554817367,
+              68281089529,
+              64868148158,
+              73790917745,
+              68251837500
+            ]
+          },
+          "tg": {
+            "avg_ts": 3.037347,
+            "cv": 0.005420849181868256,
+            "samples_ts": [
+              3.01257,
+              3.03264,
+              3.03914,
+              3.0279,
+              3.02914,
+              3.03618,
+              3.04156,
+              3.02537,
+              3.06248,
+              3.06649
+            ],
+            "samples_ns": [
+              42488646033,
+              42207468510,
+              42117207458,
+              42273562490,
+              42256211206,
+              42158184436,
+              42083722925,
+              42308927194,
+              41796133748,
+              41741515843
+            ]
+          },
+          "development_score": 73.45406333870218
+        },
+        "candidate": {
+          "ppl": {
+            "schema": "llama_cpp_ppl_regression_v1",
+            "ppl": 2.7767,
+            "elapsed_seconds": 318,
+            "conditions": {
+              "model_files_path_and_size": [
+                [
+                  "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+                  10946624
+                ],
+                [
+                  "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00002-of-00004.gguf",
+                  49859583136
+                ],
+                [
+                  "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00003-of-00004.gguf",
+                  49376141504
+                ],
+                [
+                  "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00004-of-00004.gguf",
+                  12087983520
+                ]
+              ],
+              "data_sha256": "173c87a53759e0201f33e0ccf978e510c2042d7f2cb78229d9a50d79b9e7dd08",
+              "ppl_ctx": 512,
+              "ppl_chunks": 2,
+              "ppl_batch": 512,
+              "ppl_ubatch": 256,
+              "threads": 38,
+              "kv_cache_k": "f16",
+              "kv_cache_v": "f16",
+              "numa": "distribute",
+              "warmup": false,
+              "gpu_layers": 0
+            },
+            "baseline_json": "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/perplexity_result.json",
+            "tolerance_percent": 0.5,
+            "baseline_ppl": 2.7696,
+            "relative_difference_percent": 0.2563547082611084,
+            "status": "PASS"
+          },
+          "path": "/work/apac2602/qwen38-cpu/optimization/20261019-q8-avx2-v2/results/4337012/02_candidate",
+          "pp": {
+            "avg_ts": 53.802074,
+            "cv": 0.005817452316057557,
+            "samples_ts": [
+              53.2354,
+              53.4999,
+              53.5577,
+              53.6106,
+              53.76,
+              54.1439,
+              54.0666,
+              54.0628,
+              54.0151,
+              54.0687
+            ],
+            "samples_ns": [
+              38470610535,
+              38280430706,
+              38239099901,
+              38201371355,
+              38095215597,
+              37825155151,
+              37879219702,
+              37881872644,
+              37915350618,
+              37877767322
+            ]
+          },
+          "tg": {
+            "avg_ts": 3.044166,
+            "cv": 0.013671724866515165,
+            "samples_ts": [
+              3.00313,
+              3.00995,
+              3.01853,
+              2.99531,
+              3.02974,
+              3.02076,
+              3.09033,
+              3.10086,
+              3.08596,
+              3.08708
+            ],
+            "samples_ns": [
+              42622259789,
+              42525673517,
+              42404768110,
+              42733437240,
+              42247815330,
+              42373380680,
+              41419506228,
+              41278842960,
+              41478177985,
+              41463087384
+            ]
+          },
+          "development_score": 102.90836395554062
+        }
+      },
+      "relative_to_same_job_baseline": {
+        "pp": 0.9583746408268246,
+        "tg": 0.002245051355673322
+      },
+      "interpretation": "PP baseline is unusually slow and unstable while candidate executes later; PP speed difference is not yet attributable to code. TG does not establish an improvement. Keep all samples, including the late TG slowdown in 4337011. Reverse order confirmation required."
+    }
+  ],
+  "decision": "Preserve candidates but do not replace production. Submit reverse order comparisons before drawing a kernel speedup conclusion."
+}

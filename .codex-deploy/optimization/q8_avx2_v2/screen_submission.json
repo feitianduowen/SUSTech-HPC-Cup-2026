@@ -1,0 +1,8 @@
+{
+  "script": "/work/apac2602/qwen38-cpu/optimization/20261019-q8-avx2-v2/screen.lsf",
+  "kind": "Q8源码修改/同节点候选筛选",
+  "purpose": "独立V2：测试AVX2四块加载调度、X侧8/16/32块T0预取及四块调度+16块T0/T1预取；保留浮点累加次序和所有旧版本",
+  "config": "Intel Classic 2021.9, O3 precise/no-ftz CORE-AVX512 qsimd-honor-fp-model；hg_6148单节点40slots；7配置依次运行（含原函数control）；每配置204154例逐位差分、38线程并发；使用生产FP16查表；CPU0/membind0单核nb80/192 resident及256MiB stream各10轮AB/BA；不加载模型",
+  "baseline": "同节点同进程生产Intel libggml-cpu.so；control为原函数重新编译；没有完整模型PP/TG baseline",
+  "note": "所有配置分别记录，不删低速样本；非固定PP/TG，不计算Score；先筛选后决定完整库构建及固定PPL"
+}

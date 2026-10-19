@@ -1,0 +1,8 @@
+{
+  "base_commit": "d81235049384534c167caea52b85a694f6103d14",
+  "file": "ggml/src/ggml-cpu/arch/x86/quants.c",
+  "original_sha256": "3c489fdc77e3ab484a5f188bff9c60c0e9483c951ed65c1a562a04c249d5628e",
+  "modified_sha256": "eb2686732aec866475d6b8351cce2084007afee2ac3398460a69a34194ec585f",
+  "patch_sha256": "07291f2a1c0c02d901cd759d44df3fdd4bfb1ea639fbb194f3ffd209007c7583",
+  "scope": "Q8_0 two-block AVX-512BW integer path, ordered eight-lane AVX2 floating accumulation; odd block and non-AVX512/VNNI paths retained"
+}

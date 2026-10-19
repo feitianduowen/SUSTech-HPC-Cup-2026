@@ -1,0 +1,1 @@
+{"variant": "schedule4", "base_commit": "d81235049384534c167caea52b85a694f6103d14", "verified_files": 3687, "all_match": true, "changed_files": ["ggml/src/ggml-cpu/arch/x86/quants.c"], "independent_regular_files": true, "new_source": "/work/apac2602/qwen38-cpu/optimization/20261019-q8-avx2-v2/sources/schedule4", "original_unchanged": true}

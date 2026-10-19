@@ -1,0 +1,15 @@
+{
+  "active_job": "4337448",
+  "host": "r13n24",
+  "parent": "4337257",
+  "parent_status": "EXIT124: PP64 training reached1200s while model weights were still repacking at blk.41; no PP result, no TG training, no merge/feedback/pgo PPL. Actual gen compile/link passed.",
+  "change": "New V4 script and independent builds/profiles. Unscored PP64 and TG8@D64 each allow3600s. Fixed PPL590s and future fixed PP/TG parameters unchanged. No reuse of incomplete counters.",
+  "control_scope": "Read-only SHA256-verified control from4337216; fixed PPL2.7767 PASS reused, not rerun. PGO product requires a new independent fixed gate.",
+  "next": [
+    "Check actual LSF and job.status before resubmission. Keep this attempt while RUN/PEND.",
+    "Require both training commands to exit normally and check_training.py PASS; partial dyn files alone are insufficient.",
+    "Then require merge, feedback compile/scope/quant tests and independent fixed pgo PPL PASS before complete fixed PP/TG paired benchmarks.",
+    "If timeout recurs, inspect actual startup/repack versus inference progress before choosing a different instrumentation scope. Do not blindly reuse incomplete counters or call a training score formal.",
+    "Refresh collect_job_registry.py --recent and Excel, preserving all raw jobs and manual notes. Independent driver-PGO work is tracked separately; avoid duplicate submissions."
+  ]
+}

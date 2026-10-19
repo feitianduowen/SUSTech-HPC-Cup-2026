@@ -1,0 +1,18 @@
+{
+  "script": "/work/apac2602/qwen38-cpu/optimization/20261019-compiler-pgo/pipeline_ggml_pgo_v2.lsf",
+  "kind": "GGML定向PGO V2/链接修复/训练/PPL",
+  "purpose": "修复4336889选择性PGO链接失败及未排除静态库：递归处理全部非GGML目标的编译与链接，重新验证训练流程",
+  "config": "Gold6148单节点40 slots；Intel Classic2021.9 icc/icpc，Release -O3 -DNDEBUG；precise/no-ftz/CORE-AVX512/qsimd-honor-fp-model；未启用-ipo；官方原始源码d812350；OpenMP=ON,BLAS=OFF,CPU-only；构建-j40，推理38线程close/cores；gen=-prof-gen=threadsafe；use=-prof-use=nomerge；训练仅合成PP64/TG8@D64、r1、不计分；-v、15s OS记录；INTEL_PROF_DUMP_INTERVAL=60、INTEL_PROF_DUMP_CUMULATIVE=1；训练PP1200s/TG900s限时；control及pgo分别固定PPL t/tb38,c512,chunks2,b512,ub256,f16KV,ngl0,NUMA=distribute,no-warmup,timeout590s；本作业无完整PP/TG测速；PGO范围仅GGML后端；llama/common/tools在gen追加-no-prof-gen、use追加-no-prof-use；源代码/模型/固定PPL及正式PP/TG参数不改；V2递归枚举全部实际CMake目标，非GGML静态/对象库禁止插桩，非GGML动态库和可执行文件编译及链接均关闭PGO；配置后先检查全部compile_commands和动态link.txt；原始源码及此前构建保留",
+  "baseline": "同源码同Intel编译器同-O3的无PGO control；正确性官方PPL=2.7696",
+  "case_prefix": "compiler",
+  "baseline_case": "compiler-control_{job_id}",
+  "environment": {
+    "PGO_OPT_LEVEL": "3"
+  },
+  "lsf_args": [
+    "-J",
+    "qwen38_O3_ggml_pgo_v2"
+  ],
+  "note": "4336889 control固定PPL=2.7767 PASS；gen最终链接因__start___pgoseg_addr/DSO missing退出，未训练。本次不用未完成计数；全新作业构建目录。修复旧规则遗漏llama-common-base/cpp-httplib等目标及非GGML链接仍启用-prof-gen的问题。保留全部失败记录；训练正常退出、参数校验、计数合并、反馈编译及独立固定PPL后才能用于测速。O2仍等待公共流程验证。",
+  "retry_of": "4336889"
+}

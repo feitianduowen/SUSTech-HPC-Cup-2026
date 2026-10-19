@@ -1,0 +1,58 @@
+#!/bin/bash
+#BSUB -J qwen38_q8_avx2_screen
+#BSUB -q ssc-cpu
+#BSUB -m hg_6148
+#BSUB -n 40
+#BSUB -R "span[ptile=40]"
+#BSUB -W 00:30
+#BSUB -o /work/apac2602/qwen38-cpu/logs/%J.q8_avx2_screen.out
+#BSUB -e /work/apac2602/qwen38-cpu/logs/%J.q8_avx2_screen.err
+set -Eeuo pipefail
+source /work/apac2602/qwen38-cpu/scripts/env.sh
+ROOT=/work/apac2602/qwen38-cpu/optimization/20261019-q8-avx2-v2
+OUT="$ROOT/results/$LSB_JOBID"
+mkdir -p "$OUT"
+phase=COMPILE
+trap 'rc=$?; echo "FAILED phase=$phase exit=$rc" > "$OUT/job.status"; exit "$rc"' ERR
+stage() { phase=$1; echo "$phase time=$(date -Is)" > "$OUT/job.status"; }
+unset KMP_AFFINITY GOMP_CPU_AFFINITY KMP_BLOCKTIME OMP_WAIT_POLICY
+BASE=/work/apac2602/qwen38-cpu/llama.cpp/build/bin/libggml-cpu.so
+{ date -Is; hostname; lscpu; icc --version; module list; } > "$OUT/environment.txt" 2>&1
+flags=(-gcc-name=/share/base/e5/gcc/11.2.0/bin/gcc -std=gnu11 -O3 -g -fp-model precise -no-ftz -qsimd-honor-fp-model -diag-disable=10441 -qopenmp)
+stage COMPILE
+[[ "${LSB_DJOB_NUMPROC:?}" == 40 ]]
+lscpu | grep -q 'Intel(R) Xeon(R) Gold 6148'
+icc "${flags[@]}" -xCORE-AVX512 "$ROOT/scripts/test-q8.c" -ldl -Wl,--no-as-needed,/lib64/libm.so.6,--as-needed -o "$OUT/test-q8" > "$OUT/compile.log" 2>&1
+objdump -d "$OUT/test-q8" > "$OUT/full-assembly.txt"
+sha256sum "$BASE" "$ROOT/scripts/test-q8.c" "$ROOT/scripts/q8-candidate-kernels.c" "$ROOT/scripts/manifest.json" > "$OUT/sha256.txt"
+stage CHECK_control
+mkdir -p "$OUT/control"
+"$OUT/test-q8" "$BASE" - --check control > "$OUT/control/correctness.json" 2> "$OUT/control/correctness.log"
+stage CHECK_schedule4
+mkdir -p "$OUT/schedule4"
+"$OUT/test-q8" "$BASE" - --check schedule4 > "$OUT/schedule4/correctness.json" 2> "$OUT/schedule4/correctness.log"
+stage CHECK_prefetch8
+mkdir -p "$OUT/prefetch8"
+"$OUT/test-q8" "$BASE" - --check prefetch8 > "$OUT/prefetch8/correctness.json" 2> "$OUT/prefetch8/correctness.log"
+stage CHECK_prefetch16
+mkdir -p "$OUT/prefetch16"
+"$OUT/test-q8" "$BASE" - --check prefetch16 > "$OUT/prefetch16/correctness.json" 2> "$OUT/prefetch16/correctness.log"
+stage CHECK_prefetch32
+mkdir -p "$OUT/prefetch32"
+"$OUT/test-q8" "$BASE" - --check prefetch32 > "$OUT/prefetch32/correctness.json" 2> "$OUT/prefetch32/correctness.log"
+stage CHECK_schedule4_prefetch16
+mkdir -p "$OUT/schedule4_prefetch16"
+"$OUT/test-q8" "$BASE" - --check schedule4_prefetch16 > "$OUT/schedule4_prefetch16/correctness.json" 2> "$OUT/schedule4_prefetch16/correctness.log"
+stage CHECK_schedule4_prefetch16_t1
+mkdir -p "$OUT/schedule4_prefetch16_t1"
+"$OUT/test-q8" "$BASE" - --check schedule4_prefetch16_t1 > "$OUT/schedule4_prefetch16_t1/correctness.json" 2> "$OUT/schedule4_prefetch16_t1/correctness.log"
+stage MICROBENCH
+numactl --physcpubind=0 --membind=0 "$OUT/test-q8" "$BASE" - --bench control > "$OUT/control/kernel-times.csv" 2> "$OUT/control/kernel-times.log"
+numactl --physcpubind=0 --membind=0 "$OUT/test-q8" "$BASE" - --bench schedule4 > "$OUT/schedule4/kernel-times.csv" 2> "$OUT/schedule4/kernel-times.log"
+numactl --physcpubind=0 --membind=0 "$OUT/test-q8" "$BASE" - --bench prefetch8 > "$OUT/prefetch8/kernel-times.csv" 2> "$OUT/prefetch8/kernel-times.log"
+numactl --physcpubind=0 --membind=0 "$OUT/test-q8" "$BASE" - --bench prefetch16 > "$OUT/prefetch16/kernel-times.csv" 2> "$OUT/prefetch16/kernel-times.log"
+numactl --physcpubind=0 --membind=0 "$OUT/test-q8" "$BASE" - --bench prefetch32 > "$OUT/prefetch32/kernel-times.csv" 2> "$OUT/prefetch32/kernel-times.log"
+numactl --physcpubind=0 --membind=0 "$OUT/test-q8" "$BASE" - --bench schedule4_prefetch16 > "$OUT/schedule4_prefetch16/kernel-times.csv" 2> "$OUT/schedule4_prefetch16/kernel-times.log"
+numactl --physcpubind=0 --membind=0 "$OUT/test-q8" "$BASE" - --bench schedule4_prefetch16_t1 > "$OUT/schedule4_prefetch16_t1/kernel-times.csv" 2> "$OUT/schedule4_prefetch16_t1/kernel-times.log"
+python3 "$ROOT/scripts/analyze.py" "$OUT"
+stage UNIT_PASS

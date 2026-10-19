@@ -1,0 +1,67 @@
+{
+  "failure_reason": "TRAIN_PP_UNSCORED exit124：1200秒到限，仍在初始化权重重排，日志推进到blk.41，尚无PP64输出。gen编译/链接及范围验证已通过；TG训练、合并、反馈编译与pgo PPL均未执行。现有dyn仅为超时诊断，不作为完成训练或可评分产物。新独立V4将非计分PP/TG训练时限各调至3600s，正式PPL590s及正式测速不变。",
+  "training_json_bytes": 0,
+  "last_os_record": {
+    "time": 1792396791.756576,
+    "pid": 1582527,
+    "command": [
+      "/work/apac2602/qwen38-cpu/optimization/20261019-compiler-pgo/builds/4337257/gen/build/bin/llama-bench",
+      "-m",
+      "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+      "-t",
+      "38",
+      "-b",
+      "2048",
+      "-ub",
+      "512",
+      "-ctk",
+      "f16",
+      "-ctv",
+      "f16",
+      "-ngl",
+      "0",
+      "--numa",
+      "distribute",
+      "-r",
+      "1",
+      "--no-warmup",
+      "-v",
+      "-o",
+      "json",
+      "-p",
+      "64",
+      "-n",
+      "0"
+    ],
+    "status": {
+      "VmRSS": "75051652 kB",
+      "Threads": "1",
+      "Cpus_allowed_list": "0-39",
+      "Mems_allowed_list": "0-1"
+    },
+    "numa_kb": {
+      "N1": 9771756,
+      "N0": 65280440
+    },
+    "cpu_seconds": 1138.74,
+    "minor_faults": 9406884,
+    "major_faults": 0
+  },
+  "diagnostic_only_profiles": [
+    {
+      "name": "pp_6ad5c96e_1582527.dyn",
+      "bytes": 163848
+    },
+    {
+      "name": "pp_6ad5cdf2_1582527.dyn",
+      "bytes": 378728
+    },
+    {
+      "name": "pp_6ad5cdfa_1582527.dyn",
+      "bytes": 60704
+    }
+  ],
+  "profile_training_complete": false,
+  "gen_build_pass": true,
+  "log_tail": " blk.45.ffn_up_exps.scale\ncreate_tensor: loading tensor blk.45.ssm_out.scale\ncreate_tensor: loading tensor blk.45.ssm_alpha.scale\ncreate_tensor: loading tensor blk.45.ssm_beta.scale\ncreate_tensor: loading tensor blk.45.attn_qkv.input_scale\ncreate_tensor: loading tensor blk.45.attn_gate.input_scale\ncreate_tensor: loading tensor blk.45.ffn_gate_exps.input_scale\ncreate_tensor: loading tensor blk.45.ffn_down_exps.input_scale\ncreate_tensor: loading tensor blk.45.ffn_up_exps.input_scale\ncreate_tensor: loading tensor blk.45.ffn_gate_shexp.input_scale\ncreate_tensor: loading tensor blk.45.ffn_down_shexp.input_scale\ncreate_tensor: loading tensor blk.45.ffn_up_shexp.input_scale\ncreate_tensor: loading tensor blk.45.ssm_out.input_scale\ncreate_tensor: loading tensor blk.45.ssm_alpha.input_scale\ncreate_tensor: loading tensor blk.45.ssm_beta.input_scale\ncreate_tensor: loading tensor blk.46.attn_qkv.scale\ncreate_tensor: loading tensor blk.46.attn_gate.scale\ncreate_tensor: loading tensor blk.46.ffn_gate_shexp.scale\ncreate_tensor: loading tensor blk.46.ffn_down_shexp.scale\ncreate_tensor: loading tensor blk.46.ffn_up_shexp.scale\ncreate_tensor: loading tensor blk.46.ffn_gate_exps.scale\ncreate_tensor: loading tensor blk.46.ffn_down_exps.scale\ncreate_tensor: loading tensor blk.46.ffn_up_exps.scale\ncreate_tensor: loading tensor blk.46.ssm_out.scale\ncreate_tensor: loading tensor blk.46.ssm_alpha.scale\ncreate_tensor: loading tensor blk.46.ssm_beta.scale\ncreate_tensor: loading tensor blk.46.attn_qkv.input_scale\ncreate_tensor: loading tensor blk.46.attn_gate.input_scale\ncreate_tensor: loading tensor blk.46.ffn_gate_exps.input_scale\ncreate_tensor: loading tensor blk.46.ffn_down_exps.input_scale\ncreate_tensor: loading tensor blk.46.ffn_up_exps.input_scale\ncreate_tensor: loading tensor blk.46.ffn_gate_shexp.input_scale\ncreate_tensor: loading tensor blk.46.ffn_down_shexp.input_scale\ncreate_tensor: loading tensor blk.46.ffn_up_shexp.input_scale\ncreate_tensor: loading tensor blk.46.ssm_out.input_scale\ncreate_tensor: loading tensor blk.46.ssm_alpha.input_scale\ncreate_tensor: loading tensor blk.46.ssm_beta.input_scale\ncreate_tensor: loading tensor blk.47.attn_q.scale\ncreate_tensor: loading tensor blk.47.attn_k.scale\ncreate_tensor: loading tensor blk.47.attn_v.scale\ncreate_tensor: loading tensor blk.47.attn_output.scale\ncreate_tensor: loading tensor blk.47.ffn_gate_shexp.scale\ncreate_tensor: loading tensor blk.47.ffn_down_shexp.scale\ncreate_tensor: loading tensor blk.47.ffn_up_shexp.scale\ncreate_tensor: loading tensor blk.47.ffn_gate_exps.scale\ncreate_tensor: loading tensor blk.47.ffn_down_exps.scale\ncreate_tensor: loading tensor blk.47.ffn_up_exps.scale\ncreate_tensor: loading tensor blk.47.attn_q.input_scale\ncreate_tensor: loading tensor blk.47.attn_k.input_scale\ncreate_tensor: loading tensor blk.47.attn_v.input_scale\ncreate_tensor: loading tensor blk.47.attn_output.input_scale\ncreate_tensor: loading tensor blk.47.ffn_gate_exps.input_scale\ncreate_tensor: loading tensor blk.47.ffn_down_exps.input_scale\ncreate_tensor: loading tensor blk.47.ffn_up_exps.input_scale\ncreate_tensor: loading tensor blk.47.ffn_gate_shexp.input_scale\ncreate_tensor: loading tensor blk.47.ffn_down_shexp.input_scale\ncreate_tensor: loading tensor blk.47.ffn_up_shexp.input_scale\ndone_getting_tensors: tensor 'token_embd.weight' (q8_0) (and 1128 others) cannot be used with preferred buffer type CPU_REPACK, using CPU instead\nload_tensors: enabling prefetch for 'per_layer_token_embd.weight'\nload_tensors:   CPU_Mapped model buffer size = 47549.79 MiB\nload_tensors:   CPU_Mapped model buffer size = 46638.71 MiB\nload_tensors:   CPU_Mapped model buffer size = 11527.99 MiB\nload_tensors:   CPU_REPACK model buffer size = 42300.00 MiB\nload_tensors:   CPU_Mapped model buffer size = 27465.95 MiB\n..................................repack: repack tensor blk.0.ffn_gate_exps.weight with q4_K_8x8\nrepack: repack tensor blk.0.ffn_up_exps.weight with q4_K_8x8\n.repack: repack tensor blk.1.ffn_gate_exps.weight with q4_K_8x8\nrepack: repack tensor blk.1.ffn_up_exps.weight with q4_K_8x8\nrepack: repack tensor blk.3.ffn_gate_exps.weight with q4_K_8x8\n.repack: repack tensor blk.3.ffn_up_exps.weight with q4_K_8x8\nrepack: repack tensor blk.4.ffn_gate_exps.weight with q4_K_8x8\n.repack: repack tensor blk.4.ffn_up_exps.weight with q4_K_8x8\nrepack: repack tensor blk.5.ffn_gate_exps.weight with q4_K_8x8\n.repack: repack tensor blk.5.ffn_up_exps.weight with q4_K_8x8\nrepack: repack tensor blk.6.ffn_gate_exps.weight with q4_K_8x8\nrepack: repack tensor blk.6.ffn_up_exps.weight with q4_K_8x8\n.repack: repack tensor blk.7.ffn_gate_exps.weight with q4_K_8x8\nrepack: repack tensor blk.7.ffn_up_exps.weight with q4_K_8x8\n.repack: repack tensor blk.8.ffn_gate_exps.weight with q4_K_8x8\nrepack: repack tensor blk.8.ffn_up_exps.weight with q4_K_8x8\n.repack: repack tensor blk.9.ffn_gate_exps.weight with q4_K_8x8\nrepack: repack tensor blk.9.ffn_up_exps.weight with q4_K_8x8\nrepack: repack tensor blk.10.ffn_gate_exps.weight with q4_K_8x8\n.repack: repack tensor blk.10.ffn_up_exps.weight with q4_K_8x8\nrepack: repack tensor blk.11.ffn_gate_exps.weight with q4_K_8x8\n.repack: repack tensor blk.11.ffn_up_exps.weight with q4_K_8x8\nrepack: repack tensor blk.12.ffn_gate_exps.weight with q4_K_8x8\n.repack: repack tensor blk.12.ffn_up_exps.weight with q4_K_8x8\nrepack: repack tensor blk.13.ffn_gate_exps.weight with q4_K_8x8\nrepack: repack tensor blk.13.ffn_up_exps.weight with q4_K_8x8\n.repack: repack tensor blk.14.ffn_gate_exps.weight with q4_K_8x8\nrepack: repack tensor blk.14.ffn_up_exps.weight with q4_K_8x8\n.repack: repack tensor blk.15.ffn_gate_exps.weight with q4_K_8x8\nrepack: repack tensor blk.15.ffn_up_exps.weight with q4_K_8x8\n.repack: repack tensor blk.16.ffn_gate_exps.weight with q4_K_8x8\nrepack: repack tensor blk.16.ffn_up_exps.weight with q4_K_8x8\nrepack: repack tensor blk.17.ffn_gate_exps.weight with q4_K_8x8\n.repack: repack tensor blk.17.ffn_up_exps.weight with q4_K_8x8\nrepack: repack tensor blk.18.ffn_gate_exps.weight with q4_K_8x8\n.repack: repack tensor blk.18.ffn_up_exps.weight with q4_K_8x8\nrepack: repack tensor blk.19.ffn_gate_exps.weight with q4_K_8x8\nrepack: repack tensor blk.19.ffn_up_exps.weight with q4_K_8x8\n.repack: repack tensor blk.20.ffn_gate_exps.weight with q4_K_8x8\nrepack: repack tensor blk.20.ffn_up_exps.weight with q4_K_8x8\n.repack: repack tensor blk.21.ffn_gate_exps.weight with q4_K_8x8\nrepack: repack tensor blk.21.ffn_up_exps.weight with q4_K_8x8\n.repack: repack tensor blk.22.ffn_gate_exps.weight with q4_K_8x8\nrepack: repack tensor blk.22.ffn_up_exps.weight with q4_K_8x8\nrepack: repack tensor blk.23.ffn_gate_exps.weight with q4_K_8x8\n.repack: repack tensor blk.23.ffn_up_exps.weight with q4_K_8x8\nrepack: repack tensor blk.24.ffn_gate_exps.weight with q4_K_8x8\n.repack: repack tensor blk.24.ffn_up_exps.weight with q4_K_8x8\nrepack: repack tensor blk.25.ffn_gate_exps.weight with q4_K_8x8\n.repack: repack tensor blk.25.ffn_up_exps.weight with q4_K_8x8\nrepack: repack tensor blk.26.ffn_gate_exps.weight with q4_K_8x8\nrepack: repack tensor blk.26.ffn_up_exps.weight with q4_K_8x8\n.repack: repack tensor blk.27.ffn_gate_exps.weight with q4_K_8x8\nrepack: repack tensor blk.27.ffn_up_exps.weight with q4_K_8x8\n.repack: repack tensor blk.28.ffn_gate_exps.weight with q4_K_8x8\nrepack: repack tensor blk.28.ffn_up_exps.weight with q4_K_8x8\n.repack: repack tensor blk.29.ffn_gate_exps.weight with q4_K_8x8\nrepack: repack tensor blk.29.ffn_up_exps.weight with q4_K_8x8\nrepack: repack tensor blk.30.ffn_gate_exps.weight with q4_K_8x8\n.repack: repack tensor blk.30.ffn_up_exps.weight with q4_K_8x8\nrepack: repack tensor blk.31.ffn_gate_exps.weight with q4_K_8x8\n.repack: repack tensor blk.31.ffn_up_exps.weight with q4_K_8x8\nrepack: repack tensor blk.32.ffn_gate_exps.weight with q4_K_8x8\nrepack: repack tensor blk.32.ffn_up_exps.weight with q4_K_8x8\n.repack: repack tensor blk.33.ffn_gate_exps.weight with q4_K_8x8\nrepack: repack tensor blk.33.ffn_up_exps.weight with q4_K_8x8\n.repack: repack tensor blk.34.ffn_gate_exps.weight with q4_K_8x8\nrepack: repack tensor blk.34.ffn_up_exps.weight with q4_K_8x8\n.repack: repack tensor blk.35.ffn_gate_exps.weight with q4_K_8x8\nrepack: repack tensor blk.35.ffn_up_exps.weight with q4_K_8x8\nrepack: repack tensor blk.36.ffn_gate_exps.weight with q4_K_8x8\n.repack: repack tensor blk.36.ffn_up_exps.weight with q4_K_8x8\nrepack: repack tensor blk.37.ffn_gate_exps.weight with q4_K_8x8\n.repack: repack tensor blk.37.ffn_up_exps.weight with q4_K_8x8\nrepack: repack tensor blk.38.ffn_gate_exps.weight with q4_K_8x8\n.repack: repack tensor blk.38.ffn_up_exps.weight with q4_K_8x8\nrepack: repack tensor blk.39.ffn_gate_exps.weight with q4_K_8x8\nrepack: repack tensor blk.39.ffn_up_exps.weight with q4_K_8x8\n.repack: repack tensor blk.40.ffn_gate_exps.weight with q4_K_8x8\nrepack: repack tensor blk.40.ffn_up_exps.weight with q4_K_8x8\n.repack: repack tensor blk.41.ffn_gate_exps.weight with q4_K_8x8\nrepack: repack tensor blk.41.ffn_up_exps.weight with q4_K_8x8\n"
+}

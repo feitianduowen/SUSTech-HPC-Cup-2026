@@ -1,0 +1,117 @@
+{
+  "policy_id": "20261019-ppl-tolerance-5pct",
+  "applied_at_hkt": "2026-10-19T16:53:27.712284+08:00",
+  "baseline_ppl": 2.7696,
+  "tolerance_percent": 5.0,
+  "accepted_interval_inclusive": [
+    2.63112,
+    2.90808
+  ],
+  "source": "User provided official rule amendment in this conversation",
+  "unchanged": "Model/data, all PPL conditions and 590s timeout, PP/TG parameters, compiler requirement, score formula",
+  "historical_evidence": "Original reference/rules, result JSON, logs, completed-job snapshots remain unchanged",
+  "changes": [
+    {
+      "path": "D:\\compete\\.codex-deploy\\package\\benchmark.lsf",
+      "backup": "D:\\compete\\.codex-deploy\\optimization\\ppl_policy_20261019\\local-audit\\backups\\package\\benchmark.lsf",
+      "before_sha256": "8816a3fb02f5f41ae6a6a053d2fb4afd05a830707cf3edee36aa92c4085c407e",
+      "after_sha256": "765791b9dd8a3270b2d0e579b5345bc6649f189d452edd5529fd04771c20c8bb"
+    },
+    {
+      "path": "D:\\compete\\.codex-deploy\\optimization\\orchestrator\\benchmark_diagnostic.lsf",
+      "backup": "D:\\compete\\.codex-deploy\\optimization\\ppl_policy_20261019\\local-audit\\backups\\optimization\\orchestrator\\benchmark_diagnostic.lsf",
+      "before_sha256": "6a235c7574a234f2571069b18c78f9a0c141775493be6d172cf28d41ae8b3b6a",
+      "after_sha256": "b72ee0bbabcb87e50c1591b120a6bc343ed05f4d7ccb71a03bc9f94f4fa72c2a"
+    },
+    {
+      "path": "D:\\compete\\.codex-deploy\\optimization\\orchestrator\\benchmark_load_mode.lsf",
+      "backup": "D:\\compete\\.codex-deploy\\optimization\\ppl_policy_20261019\\local-audit\\backups\\optimization\\orchestrator\\benchmark_load_mode.lsf",
+      "before_sha256": "cc3f22514c31d93010506e5e00e6a941ea4a7e2f830dd78924df499f31ee196d",
+      "after_sha256": "7f5532efb6a70f91e398e6090f4ed8872838dba31fc00dc391b60940b9866d2a"
+    },
+    {
+      "path": "D:\\compete\\.codex-deploy\\optimization\\orchestrator\\benchmark_runtime.lsf",
+      "backup": "D:\\compete\\.codex-deploy\\optimization\\ppl_policy_20261019\\local-audit\\backups\\optimization\\orchestrator\\benchmark_runtime.lsf",
+      "before_sha256": "c2a992a86eca5e9f5b5b47f7ed55f138b89d7fd83b5ac08adaa9163d8b821c3c",
+      "after_sha256": "0ec6eb3d6141365deaac3eea1e812616cde05a5fc5e732a254e75e606700d848"
+    },
+    {
+      "path": "D:\\compete\\.codex-deploy\\optimization\\orchestrator\\benchmark_variant.lsf",
+      "backup": "D:\\compete\\.codex-deploy\\optimization\\ppl_policy_20261019\\local-audit\\backups\\optimization\\orchestrator\\benchmark_variant.lsf",
+      "before_sha256": "d3499659647da11ce6a2d6a1dfb047fcb9a1faf292c10a68ae27c9cd7b51f91e",
+      "after_sha256": "dd013654ec71790dd8e4c558e0b09f46725891e88f827568a5fac446b6987605"
+    },
+    {
+      "path": "D:\\compete\\.codex-deploy\\optimization\\orchestrator\\write_excel_log.py",
+      "backup": "D:\\compete\\.codex-deploy\\optimization\\ppl_policy_20261019\\local-audit\\backups\\optimization\\orchestrator\\write_excel_log.py",
+      "before_sha256": "4cf63dff5c0245ac833027cb58f981438e6b7dfe27b55f9991bbe4eda7ca2221",
+      "after_sha256": "a2d445664d498d105294d595b607cc7fb94a87a508b09d64408720c47b688c25"
+    },
+    {
+      "path": "D:\\compete\\.codex-deploy\\optimization\\orchestrator\\write_report.py",
+      "backup": "D:\\compete\\.codex-deploy\\optimization\\ppl_policy_20261019\\local-audit\\backups\\optimization\\orchestrator\\write_report.py",
+      "before_sha256": "6b09a116d598da995aff6d1f6469393e8d3e010b69b075e7cf2c3f914e8907ba",
+      "after_sha256": "72379553139b78a53ce63a836605927d845ba8bd0f42245ddc5e6134bdf3e6ef"
+    },
+    {
+      "path": "D:\\compete\\.codex-deploy\\optimization\\compiler_pgo\\pipeline_driver_long_train.lsf",
+      "backup": "D:\\compete\\.codex-deploy\\optimization\\ppl_policy_20261019\\local-audit\\backups\\optimization\\compiler_pgo\\pipeline_driver_long_train.lsf",
+      "before_sha256": "9535b6fa480eb66281965ec55c4769383ec83a7615f057696cb2602d792ac8f6",
+      "after_sha256": "df2478357ab7c5c9f4b37091d868ffeeba2a143e6b2c92a01f3a3a4d730f928d"
+    },
+    {
+      "path": "D:\\compete\\.codex-deploy\\optimization\\compiler_pgo\\pipeline_driver_no_as_needed.lsf",
+      "backup": "D:\\compete\\.codex-deploy\\optimization\\ppl_policy_20261019\\local-audit\\backups\\optimization\\compiler_pgo\\pipeline_driver_no_as_needed.lsf",
+      "before_sha256": "d801438c9181d5e279a88e9cca15eb94968bc307083b7909f783ef7be7284af7",
+      "after_sha256": "415fa9e7a3b84bcd7d96ecde611f18e664081069f67c3bc092ee7645dde1c5ce"
+    },
+    {
+      "path": "D:\\compete\\.codex-deploy\\optimization\\compiler_pgo\\pipeline_ggml_pgo_v3.lsf",
+      "backup": "D:\\compete\\.codex-deploy\\optimization\\ppl_policy_20261019\\local-audit\\backups\\optimization\\compiler_pgo\\pipeline_ggml_pgo_v3.lsf",
+      "before_sha256": "6c6c399552507da5fb381aaa4031c9b35c26144efda9fefc146b4f7570900878",
+      "after_sha256": "3d00842c0a1746535dc681141741195adda4ca7db09fee9215473ed71478317b"
+    },
+    {
+      "path": "D:\\compete\\.codex-deploy\\optimization\\compiler_pgo\\pipeline_ggml_pgo_v4.lsf",
+      "backup": "D:\\compete\\.codex-deploy\\optimization\\ppl_policy_20261019\\local-audit\\backups\\optimization\\compiler_pgo\\pipeline_ggml_pgo_v4.lsf",
+      "before_sha256": "e96264cfe27cf324968c44cede9ea7f760c7f8c8ef56e66d4c56bdf917f545c4",
+      "after_sha256": "cc87f4fa5536bd971067d33fa5c700ce8d7957c217c73c565ebe02d53d3d1fc2"
+    },
+    {
+      "path": "D:\\compete\\.codex-deploy\\optimization\\compiler_pgo\\ppl_gate.lsf",
+      "backup": "D:\\compete\\.codex-deploy\\optimization\\ppl_policy_20261019\\local-audit\\backups\\optimization\\compiler_pgo\\ppl_gate.lsf",
+      "before_sha256": "5a6bf68dc5cf47a7a2cda2034824c5ae5778c0b189dc0ef9649067bf04bd86ce",
+      "after_sha256": "5184be2d62e47e31f116ef724b599c0853395bbe6bfcab106aab41b67572326b"
+    },
+    {
+      "path": "D:\\compete\\.codex-deploy\\optimization\\compiler_pgo\\prepare_ggml_v3.py",
+      "backup": "D:\\compete\\.codex-deploy\\optimization\\ppl_policy_20261019\\local-audit\\backups\\optimization\\compiler_pgo\\prepare_ggml_v3.py",
+      "before_sha256": "1cc97baff1949cf9abfee700594c9f9fdb2b7947a69d4ba703d0b18bc4329fd1",
+      "after_sha256": "44825616456162d0210363d414fe1fa993dfeefb377d53f1dc58f8149647b7e1"
+    },
+    {
+      "path": "D:\\compete\\.codex-deploy\\optimization\\source_v2\\ppl_gate.lsf",
+      "backup": "D:\\compete\\.codex-deploy\\optimization\\ppl_policy_20261019\\local-audit\\backups\\optimization\\source_v2\\ppl_gate.lsf",
+      "before_sha256": "5a6bf68dc5cf47a7a2cda2034824c5ae5778c0b189dc0ef9649067bf04bd86ce",
+      "after_sha256": "5184be2d62e47e31f116ef724b599c0853395bbe6bfcab106aab41b67572326b"
+    },
+    {
+      "path": "D:\\compete\\.codex-deploy\\optimization\\q8_avx2_v2\\ppl_gate.lsf",
+      "backup": "D:\\compete\\.codex-deploy\\optimization\\ppl_policy_20261019\\local-audit\\backups\\optimization\\q8_avx2_v2\\ppl_gate.lsf",
+      "before_sha256": "5a6bf68dc5cf47a7a2cda2034824c5ae5778c0b189dc0ef9649067bf04bd86ce",
+      "after_sha256": "5184be2d62e47e31f116ef724b599c0853395bbe6bfcab106aab41b67572326b"
+    },
+    {
+      "path": "D:\\compete\\.codex-deploy\\optimization\\q8_avx2_v2\\verify_pair.py",
+      "backup": "D:\\compete\\.codex-deploy\\optimization\\ppl_policy_20261019\\local-audit\\backups\\optimization\\q8_avx2_v2\\verify_pair.py",
+      "before_sha256": "7bee8ee71f1154e59f2df11394b14e7d0f1eab19c227d6a11d3fe4f3d8d2c433",
+      "after_sha256": "4565e9f6a70d0814d83fd624b8286db4ae76fb0789ac8bd6786929521aa161bf"
+    },
+    {
+      "path": "D:\\compete\\.codex-deploy\\optimization\\q8_avx2_v2\\verify_reverse.py",
+      "backup": "D:\\compete\\.codex-deploy\\optimization\\ppl_policy_20261019\\local-audit\\backups\\optimization\\q8_avx2_v2\\verify_reverse.py",
+      "before_sha256": "78c53e1884e4433a489b14854f49be6b7d2c1de04ceaba7b50e772ab12632186",
+      "after_sha256": "74a7975274ca009a3811eb4a0d56640b3ab2089056a4ff88fe07ff06be8867b0"
+    }
+  ]
+}

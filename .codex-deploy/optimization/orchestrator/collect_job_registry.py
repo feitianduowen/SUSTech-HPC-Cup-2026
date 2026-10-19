@@ -3,6 +3,7 @@ import fcntl
 import json
 import re
 import subprocess
+import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -17,20 +18,36 @@ def parse_date(value):
     return datetime.strptime(value,'%a %b %d %H:%M:%S %Y').replace(tzinfo=tz).isoformat()
 
 jobs = {}
+cached = {}
+cache_path = root/'results/job_registry.json'
+if '--recent' in sys.argv and cache_path.is_file():
+    previous = json.loads(cache_path.read_text())
+    cached = {row['job_id']:row for row in previous['jobs'] if row.get('state') in ['DONE','EXIT'] and row.get('finish_time')}
+for index,arg in enumerate(sys.argv[:-1]):
+    if arg == '--refresh-job':
+        cached.pop(sys.argv[index+1],None)
 rejected = []
 submissions = root/'results/submission_registry.jsonl'
 if submissions.exists():
     for line in submissions.read_text().splitlines():
         spec = json.loads(line)
         if 'job_id' in spec:
-            jobs[spec['job_id']] = {'job_id':spec['job_id'],'submission':spec,'logs':[],'measurements':[],'evidence':[],'submit_time':spec['submitted_at_client'],'state':'PEND'}
+            if spec['job_id'] in cached:
+                jobs[spec['job_id']]=cached[spec['job_id']]
+                jobs[spec['job_id']]['submission']=spec
+            else:
+                jobs[spec['job_id']] = {'job_id':spec['job_id'],'submission':spec,'logs':[],'measurements':[],'evidence':[],'submit_time':spec['submitted_at_client'],'state':'PEND'}
         else:
             rejected.append(spec)
+for jid,row in cached.items():
+    jobs.setdefault(jid,row)
 for path in sorted((deploy/'logs').glob('*.out')):
     match = re.match(r'(\d+)\.',path.name)
     if not match:
         continue
     jid = match[1]
+    if jid in cached:
+        continue
     raw = path.read_bytes()
     text = raw.decode('utf-8',errors='replace')
     row = jobs.setdefault(jid, {'job_id':jid,'logs':[],'measurements':[],'evidence':[]})
@@ -54,12 +71,16 @@ active = [jid for jid,r in jobs.items() if 'finish_time' not in r]
 if active:
     result = subprocess.run(['bjobs','-l',*active],stdout=subprocess.PIPE,stderr=subprocess.STDOUT,universal_newlines=True,timeout=30)
     (root/'results/active_jobs_detail.txt').write_text(result.stdout)
-    for fragment in result.stdout.split('\nJob <')[1:]:
+    for fragment in re.split(r'(?m)^Job <',result.stdout)[1:]:
         block = 'Job <'+fragment
         m = re.search(r'Job <(\d+)>',block)
         if not m or m[1] not in jobs:
             continue
         row = jobs[m[1]]
+        row['evidence'].append({'path':'LSF bjobs -l','text':block[:100000]})
+        job_name = re.search(r'Job Name <([^>]+)>',block)
+        if job_name:
+            row['job_name'] = job_name[1]
         state = re.search(r'Status <(\w+)>',block)
         if state:
             row['state'] = state[1]
@@ -75,7 +96,7 @@ if active:
 directories = list(deploy.glob('llama_bench_results_*')) + list((root/'results').iterdir())
 for d in directories:
     m = re.search(r'_(\d+)$',d.name)
-    if not d.is_dir() or not m or m[1] not in jobs:
+    if not m or m[1] in cached or m[1] not in jobs or not d.is_dir():
         continue
     row = jobs[m[1]]
     record = {'name':d.name,'path':str(d),'ppl':None,'pp':None,'tg':None}
@@ -92,6 +113,8 @@ for d in directories:
             row['evidence'].append({'path':str(p),'text':p.read_text(errors='replace')[:100000]})
 
 for jid, row in jobs.items():
+    if jid in cached:
+        continue
     d = deploy/'llama.cpp/build_logs'/jid
     for filename in ['environment.txt','selected_cmake_cache.txt']:
         p = d/filename
@@ -100,7 +123,7 @@ for jid, row in jobs.items():
 
 for d in (root/'logs').glob('build_*'):
     jid = d.name.rsplit('_',1)[-1]
-    if jid not in jobs:
+    if jid not in jobs or jid in cached:
         continue
     row = jobs[jid]
     for filename in ['status','CMakeCache.txt','quantize-tests.log']:
@@ -109,6 +132,8 @@ for d in (root/'logs').glob('build_*'):
             row['evidence'].append({'path':str(p),'text':p.read_text(errors='replace')[:100000]})
 
 for jid,row in jobs.items():
+    if jid in cached:
+        continue
     spec=row.get('submission',{})
     if not spec.get('script'):
         continue
@@ -126,6 +151,8 @@ for jid,row in jobs.items():
         case_ppl=json.loads(own_gate.read_text()) if own_gate.is_file() else ppl
         record={'name':prefix+'-'+name+'_'+jid,'path':str(case),'ppl':case_ppl,'pp':None,'tg':None,'ppl_gate_path':str(own_gate if own_gate.is_file() else gate),'ppl_scope':'每个构建独立固定PPL校验' if own_gate.is_file() else '同作业同一Intel构建共享固定PPL门槛，不是每case独立重跑','baseline_name':spec.get('baseline_case','memory-auto-default_{job_id}').format(job_id=jid)}
         record['os_monitoring'] = prefix=='memory'
+        if spec.get('ppl_scope'):
+            record['ppl_scope'] = spec['ppl_scope']
         for key in ['pp','tg']:
             path=case/(key+'.json')
             if not path.exists(): path=case/('pp2048.json' if key=='pp' else 'tg128_d2048.json')
@@ -136,12 +163,12 @@ for jid,row in jobs.items():
         for filename in ['result.json','pp.command.json','tg.command.json']:
             p=case/filename
             if p.is_file():row['evidence'].append({'path':str(p),'text':p.read_text(errors='replace')[:100000]})
-    for filename in ['plan.json','summary.json','status.json','job.status','binary_sha256.json','environment.txt','manifest.json','source-verification.json','profile-sha256.txt','profmerge.log','control-build/configure.command','control-build/quantize-tests.log','pgo-build/configure.command','pgo-build/profile-diagnostics.txt','pgo-build/quantize-tests.log','training-pp.command','training-tg.command']:
+    for filename in ['plan.json','summary.json','status.json','job.status','binary_sha256.json','environment.txt','manifest.json','source-verification.json','profile-sha256.txt','profmerge.log','control-build/configure.command','control-build/quantize-tests.log','pgo-build/configure.command','pgo-build/profile-diagnostics.txt','pgo-build/quantize-tests.log','training-pp.command','training-tg.command','correctness.json','fallback-correctness.json','library-correctness.json','compile.log','compile-avx2.log','sha256.txt','avx512-assembly.txt']:
         p=run/filename
         if p.is_file():row['evidence'].append({'path':str(p),'text':p.read_text(errors='replace')[:100000]})
 
 data = {'updated_at':datetime.now(tz).isoformat(),'timezone':'Asia/Hong_Kong UTC+08:00','source':'LSF stdout completion summaries; active bjobs -l; original result JSON; diagnostic logs','jobs':sorted(jobs.values(),key=lambda r:int(r['job_id'])),'rejected_submissions':rejected}
-if '4336625' in jobs:
+if '4336625' in jobs and '4336625' not in cached:
     extra=deploy/'optimization/20261019-user-hc-numa/results/4336625'
     for filename in ['status','environment.txt','hc_compile.log','hc_test.log','numa_compile.log','numa_test.log']:
         path=extra/filename

@@ -1,0 +1,25 @@
+{
+  "variant": "schedule4",
+  "build_job": "4336892",
+  "ppl_reused": {
+    "baseline": "4335636",
+    "candidate": "4336892"
+  },
+  "order": [
+    "baselinePP",
+    "candidatePP",
+    "candidateTG",
+    "baselineTG"
+  ],
+  "scope": "Same host sequential comparison. Each binary reuses its independent fixed PPL result. No PPL rerun in this job. Development score only.",
+  "fingerprints": {
+    "baseline/llama-bench": "b7009175033685a35b3f26cedf3d60474b47371a2b1d1a2fb9db847f77b98556",
+    "baseline/libggml-cpu.so": "be71251ce20e2330364d43dfeb684a8b031371a8835dee43f2eb4ad6e87d9176",
+    "baseline/libggml.so": "a31475642d986f0b4f1f6c9459b148bf776900ed5192533bb90bf80a19ea3b57",
+    "baseline/libggml-base.so": "57e9343613abb27ec839911ab8260bf3d0bf3b24ff7c554c9e9d3dac032f4c90",
+    "candidate/llama-bench": "c0f3a2aeeeca4a36eee64751be695c1852e125e08eb2c301fe0e7827c0e4d494",
+    "candidate/libggml-cpu.so": "b485d754a6e8e6bc1ec400c005eaa24cb9975be97cdd09df23a789011e375dae",
+    "candidate/libggml.so": "20bb947ab82f162c1311e6204124504966f4cb3e5dcf6156469d75287be7a543",
+    "candidate/libggml-base.so": "f637e9dc62efbd3736267bc0e0601da41e2db599f4190cddc861040df7be167d"
+  }
+}

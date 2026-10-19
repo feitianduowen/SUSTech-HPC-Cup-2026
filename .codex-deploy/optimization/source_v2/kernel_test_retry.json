@@ -1,0 +1,9 @@
+{
+  "script": "/work/apac2602/qwen38-cpu/optimization/20261019-q8-avx512/kernel_test.lsf",
+  "kind": "Q8源码修改/差分/微基准",
+  "purpose": "验证新独立目录中的Q8_0两block AVX-512BW候选；保持八lane浮点累加顺序，保留奇数尾块与AVX2回退",
+  "config": "Intel Classic icc2021.9, O3/precise/no-ftz/CORE-AVX512/qsimd-honor-fp-model；单节点Gold6148，40slots；候选函数来自修改源码的精确摘取，比较实际已部署Intel libggml-cpu.so；204154组逐位测试，含65536种int8输入组合的三种block缩放、奇偶长度、不同对齐、66组保护页、760组38线程并发；另用CORE-AVX2编译并复测回退；单核心绑定CPU0/内存node0做nb80/192 resident及256MiB stream微基准，各10轮AB/BA；不加载完整模型，不是固定PP/TG",
+  "baseline": "现有Intel原版libggml-cpu.so（同节点同进程）；无完整模型性能baseline",
+  "note": "源码独立目录optimization/20261019-q8-avx512/source，不覆盖原源码和PGO构建。此阶段验证源码摘取，后续须对完整新动态库重跑差分、固定PPL及PP/TG；微基准不得当作正式成绩，不计算Score。 重提仅修复旧版objdump不支持--disassemble=SYMBOL，改为整体反汇编后提取函数；保留4336672工具检查失败。",
+  "retry_of": "4336672"
+}

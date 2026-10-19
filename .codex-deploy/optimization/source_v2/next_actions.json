@@ -1,0 +1,12 @@
+{
+  "phase": "Q8_0 source modification V1",
+  "local_source": "D:/compete/q8-avx512-v1/source",
+  "remote_source": "/work/apac2602/qwen38-cpu/optimization/20261019-q8-avx512/source-v2",
+  "base_commit": "d81235049384534c167caea52b85a694f6103d14",
+  "changed_files": ["ggml/src/ggml-cpu/arch/x86/quants.c"],
+  "jobs": {"tooling_failure":"4336672","unit_pass":"4336681","full_library_and_ppl_pass":"4336694"},
+  "correctness": "Standalone AVX512 and AVX2 fallback each 204154 cases; actual candidate library 204154 cases; all bit mismatches zero. Quantize tests PASS. Fixed PPL 2.7767 PASS.",
+  "performance": "Actual-library single-core medians: nb80 resident -7.795%, stream -12.606%; nb192 resident -6.465%, stream -14.447%. Excerpt timings additionally confounded by different FP16 helper; preserve raw data.",
+  "decision": "Do not promote or run full PP/TG for this regressing V1. Preserve code and evidence. Production and previous sources unchanged.",
+  "next": "For future source work, create a separate V2 directory and retain V1. Favor AVX2 memory/prefetch scheduling experiments with the exact original FP16 lookup helper. Validate against actual original library, then actual rebuilt candidate library, fixed PPL and full paired PP/TG only if evidence supports it. Submit via submit_logged.py and update Excel immediately. Bulk shared-filesystem source copies should run on allocated compute nodes; login-node copies stalled. Also check existing Intel PGO job statuses before resubmitting anything."
+}

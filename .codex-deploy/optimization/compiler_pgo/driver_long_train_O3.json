@@ -1,0 +1,19 @@
+{
+  "script": "/work/apac2602/qwen38-cpu/optimization/20261019-compiler-pgo/pipeline_driver_long_train.lsf",
+  "kind": "Intel PGO薄入口方案/训练时限修复/PPL",
+  "purpose": "4337427链接修复成功但合成PP训练1200秒超时；延长非计分PP和TG训练至各3600秒，验证完整独立PGO流程",
+  "config": "Gold6148单节点40 slots；Intel Classic2021.9 icc/icpc，Release -O3 -DNDEBUG；precise/no-ftz/CORE-AVX512/qsimd-honor-fp-model；未启用-ipo；官方原始源码d812350；OpenMP=ON,BLAS=OFF,CPU-only；构建-j40，推理38线程close/cores；gen=-prof-gen=threadsafe；use=-prof-use=nomerge；训练仅合成PP64/TG8@D64、r1、不计分；-v、15s OS记录；INTEL_PROF_DUMP_INTERVAL=60、INTEL_PROF_DUMP_CUMULATIVE=1；训练PP3600s/TG3600s限时；control及pgo分别固定PPL t/tb38,c512,chunks2,b512,ub256,f16KV,ngl0,NUMA=distribute,no-warmup,timeout590s；本作业无完整PP/TG测速；PGO范围仅GGML后端；llama/common/tools在gen追加-no-prof-gen、use追加-no-prof-use；源代码/模型/固定PPL及正式PP/TG参数不改；薄llama-bench/main.cpp保留PGO编译和链接；冷llama/common/bench-impl等同时compile+link禁用PGO；开始先进行main→cold DSO→hot DSO链接/正常退出/非空dyn探针（不加载模型、不计分）；gen全局EXE/SHARED链接选项去除重复PGO选项，最终追加-Wl,--no-as-needed；冷目标末尾-no-prof-*；构建前后均检查实际插桩范围；control只读复用4337222经SHA核验的产物及固定PPL2.7767 PASS，不重建或重跑control；gen/use和计数使用新目录",
+  "baseline": "同源码同Intel编译器同-O3的无PGO control；正确性官方PPL=2.7696",
+  "case_prefix": "compiler",
+  "baseline_case": "compiler-control_{job_id}",
+  "environment": {
+    "PGO_OPT_LEVEL": "3"
+  },
+  "lsf_args": [
+    "-J",
+    "qwen38_O3_pgo_driver_60m"
+  ],
+  "note": "4337427于16:07:42在TRAIN_PP_UNSCORED退出124；已完成模型加载与图预留，末尾attach_threadpool/set_n_threads=38，训练JSON未完成，TG/merge/use/PPL未运行。失败的周期计数只作诊断，绝不复用。新作业重新构建gen并使用独立计数目录；只延长非计分合成训练时限至各3600秒；PP64/TG8@D64各r1、38线程及固定PPL590秒、正式十次测速参数不变。control仍只读复用4337222的SHA核验产物及PPL2.7767 PASS。4337448是另一递归关闭main插桩方案的60分钟验证，保持独立，不修改或重复提交。尚无PGO性能结论。",
+  "retry_of": "4337427",
+  "ppl_scope": "control按SHA256及全部固定条件核验后复用4337222的PPL，未重跑；新PGO反馈构建独立固定PPL"
+}

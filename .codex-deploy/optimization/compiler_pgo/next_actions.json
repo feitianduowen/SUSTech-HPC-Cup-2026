@@ -1,13 +1,51 @@
 {
   "phase": "Intel Classic O3/O2 PGO",
-  "status": "2026-10-19T10:41:20+08:00: both resubmissions RUN; O3 4336626 r13n05, O2 4336627 r13n45",
-  "active_jobs": {"O3": "4336626", "O2": "4336627"},
-  "failed_jobs": {"O3": "4336529", "O2": "4336530"},
+  "status": "2026-10-19T16:42:19.041976+08:00: 4337257 and 4337427 both EXIT124 in synthetic PP training; new 4337488 RUN r13n38, independent 4337448 RUN r13n24. No PGO PPL/performance conclusion.",
+  "active_jobs": {
+    "O3_recursive_unprofiled_main_3600s": "4337448",
+    "O3_profiled_driver_keep_dso_3600s": "4337488"
+  },
+  "link_failure": {
+    "job_id": "4336889",
+    "stage": "BUILD_GEN",
+    "error": "libipgo.a references __start___pgoseg_addr; DSO missing from command line; no training/PGO product"
+  },
+  "link_probe": {
+    "job_id": "4337425",
+    "status": "DONE",
+    "results": {
+      "original": "link FAIL rc1",
+      "no_as_needed": "link PASS rc0",
+      "shared_intel": "link FAIL rc1"
+    },
+    "scope": "Real 4337222 existing objects relinked into new result directory only; no executable run, no model, no PPL or performance claim"
+  },
+  "training_timeouts": {
+    "4336626": "PP1024 900s exit124; control PPL2.7767 PASS",
+    "4336627": "PP1024 900s exit124; control PPL2.7767 PASS",
+    "4336716": "PP64 1200s exit124; verbose stopped init_tokenizer; one thread about200MB RSS; partial periodic profiles diagnosis only",
+    "4337257": "TRAIN_PP_UNSCORED exit124 at15:59:54; repacking block41; no complete PP JSON",
+    "4337427": "TRAIN_PP_UNSCORED exit124 at16:07:42; load and graph reserve done, last attach_threadpool/set_n_threads38; no complete PP JSON"
+  },
+  "failed_jobs": {
+    "O3": "4336529",
+    "O2": "4336530"
+  },
   "failure_fixed": "Compute nodes lack git. Login-side revision and clean diff verified; 3687 tracked SHA256 entries saved. Compute-side verification uses Python.",
-  "completed_rejected_retries": {"O3": "2026-10-19T10:27:03+08:00", "O2": "2026-10-19T10:32:22+08:00"},
+  "completed_rejected_retries": {
+    "O3": "2026-10-19T10:27:03+08:00",
+    "O2": "2026-10-19T10:32:22+08:00"
+  },
   "rejected_retry_job_ids": [],
   "lsf_reason": "u-ssc pending slots reached MPEND3000. Five retries per request; return255, job not submitted.",
   "resource_snapshot": "2026-10-19T10:30:04+08:00: group PEND3012, MPEND3000; own NJOBS0; matching r13n04..17 nodes idle",
-  "next": "Check bjobs and results/4336626/job.status and results/4336627/job.status first. Do not duplicate these submissions while RUN/PEND. Collect/download/write Excel at each stage. On READY plus both PPL PASS and usable hot-source profile feedback, run prepare_paired_specs.py PARENT and submit paired fixed PPL->PP10->TG10, forward/reverse on matching free r13n Gold6148 nodes. Failed => inspect stage and repair before resubmission via submit_logged.py; check group admission and free matching nodes. Preserve all prior failed jobs, rejection records and samples. Do not alter fixed workloads or production.",
-  "readme": "/work/apac2602/qwen38-cpu/optimization/20261019-compiler-pgo/README.md"
+  "next": "Inspect 4337488 and 4337448 before any resubmission. On training normal exit and parameter validation, inspect useful GGML profile counts, merged dpi, feedback build diagnostics and independent fixed PPL. Only after READY and PASS prepare PP10/TG10 paired comparisons. O2 waits. Both jobs use Intel Classic2021.9, original source/model and precise floating flags. 4337488 control is SHA-checked 4337222 PPL2.7767 reused; 4337448 control from4337216 likewise. No control PPL reruns. Never reuse timed-out partial counters. Register every acquired job ID immediately and update Excel; preserve manual notes and all failed/raw samples. Metadata encoding correction file remains required for4337425/4337427 display.",
+  "readme": "/work/apac2602/qwen38-cpu/optimization/20261019-compiler-pgo/README.md",
+  "failed_pgo_jobs": {
+    "4336889": "BUILD_GEN DSO missing/__start___pgoseg_addr",
+    "4337216": "BUILD_GEN precheck: global PGO link flags override target disable flag",
+    "4337222": "BUILD_GEN: cold disable precedence fixed, but --as-needed still drops DSO needed by Intel PGO runtime"
+  },
+  "latest_observation": "2026-10-19T16:43+08:00: 4337488 BUILD_GEN PASS and TRAIN_PP_UNSCORED since16:42:59 onr13n38. 4337448 continues TRAIN_PP_UNSCORED onr13n24, 38 active threads observed. Both no complete PGO PPL/perf result.",
+  "timeout_contingency": "Both synthetic training limits now3600s. Do not extend or repeat blindly on another timeout: inspect latest OS and actual runtime hotspot first; fixed PPL590s and formal benchmark parameters must remain unchanged."
 }

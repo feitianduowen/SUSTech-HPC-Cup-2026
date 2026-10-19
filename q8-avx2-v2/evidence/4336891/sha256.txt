@@ -1,0 +1,6 @@
+41568f6a76817f9539c88227506e46cc3a474e0d6fd26b22ec043f2ca44ea048  /work/apac2602/qwen38-cpu/optimization/20261019-q8-avx2-v2/sources/schedule4_prefetch16/build/bin/llama-bench
+c60859e9e874a88a45babe29e63d64fdbe0527139a7345075c82b086727440b2  /work/apac2602/qwen38-cpu/optimization/20261019-q8-avx2-v2/sources/schedule4_prefetch16/build/bin/llama-perplexity
+574eec631f55a710ca100ab2a5553d247eab0f7a7ba3d8c56482b45b7de1e955  /work/apac2602/qwen38-cpu/optimization/20261019-q8-avx2-v2/sources/schedule4_prefetch16/build/bin/libggml-cpu.so
+41568f6a76817f9539c88227506e46cc3a474e0d6fd26b22ec043f2ca44ea048  /work/apac2602/qwen38-cpu/optimization/20261019-q8-avx2-v2/sources/schedule4_prefetch16/build/bin/llama-bench
+c60859e9e874a88a45babe29e63d64fdbe0527139a7345075c82b086727440b2  /work/apac2602/qwen38-cpu/optimization/20261019-q8-avx2-v2/sources/schedule4_prefetch16/build/bin/llama-perplexity
+574eec631f55a710ca100ab2a5553d247eab0f7a7ba3d8c56482b45b7de1e955  /work/apac2602/qwen38-cpu/optimization/20261019-q8-avx2-v2/sources/schedule4_prefetch16/build/bin/libggml-cpu.so

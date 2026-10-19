@@ -1,0 +1,22 @@
+#!/bin/bash
+#BSUB -J qwen38_pgo_relink_probe
+#BSUB -q ssc-cpu
+#BSUB -m hg_6148
+#BSUB -n 40
+#BSUB -R "span[ptile=40]"
+#BSUB -W 00:10
+#BSUB -o /work/apac2602/qwen38-cpu/logs/%J.compiler_pgo.out
+#BSUB -e /work/apac2602/qwen38-cpu/logs/%J.compiler_pgo.err
+set -Eeuo pipefail
+source /work/apac2602/qwen38-cpu/scripts/env.sh
+ROOT=/work/apac2602/qwen38-cpu/optimization/20261019-compiler-pgo
+OUT="$ROOT/results/$LSB_JOBID"
+mkdir -p "$OUT"
+trap 'rc=$?; printf "FAILED phase=RELINK_PROBE exit=%s time=%s\n" "$rc" "$(date -Is)" > "$OUT/job.status"; exit "$rc"' ERR
+printf 'RELINK_PROBE time=%s\n' "$(date -Is)" > "$OUT/job.status"
+{ date -Is; hostname; lscpu; module list; icpc --version; } > "$OUT/environment.txt" 2>&1
+lscpu | grep -q 'Intel(R) Xeon(R) Gold 6148'
+[[ "$LSB_DJOB_NUMPROC" == 40 ]]
+cp "$ROOT/relink_probe.lsf" "$OUT/pipeline.lsf"
+python3 "$ROOT/relink_probe.py" "$OUT"
+printf 'RELINK_PROBE_COMPLETE time=%s\n' "$(date -Is)" > "$OUT/job.status"

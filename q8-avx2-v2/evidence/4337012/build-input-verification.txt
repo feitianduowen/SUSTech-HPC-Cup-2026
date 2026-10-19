@@ -1,0 +1,6 @@
+/work/apac2602/qwen38-cpu/optimization/20261019-q8-avx2-v2/sources/schedule4_prefetch16/build/bin/llama-bench: OK
+/work/apac2602/qwen38-cpu/optimization/20261019-q8-avx2-v2/sources/schedule4_prefetch16/build/bin/llama-perplexity: OK
+/work/apac2602/qwen38-cpu/optimization/20261019-q8-avx2-v2/sources/schedule4_prefetch16/build/bin/libggml-cpu.so: OK
+/work/apac2602/qwen38-cpu/optimization/20261019-q8-avx2-v2/sources/schedule4_prefetch16/build/bin/llama-bench: OK
+/work/apac2602/qwen38-cpu/optimization/20261019-q8-avx2-v2/sources/schedule4_prefetch16/build/bin/llama-perplexity: OK
+/work/apac2602/qwen38-cpu/optimization/20261019-q8-avx2-v2/sources/schedule4_prefetch16/build/bin/libggml-cpu.so: OK

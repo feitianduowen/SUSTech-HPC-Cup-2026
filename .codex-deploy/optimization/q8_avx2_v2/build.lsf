@@ -1,0 +1,75 @@
+#!/bin/bash
+#BSUB -J qwen38_q8_avx2_library
+#BSUB -q ssc-cpu
+#BSUB -m hg_6148
+#BSUB -n 40
+#BSUB -R "span[ptile=40]"
+#BSUB -W 01:30
+#BSUB -o /work/apac2602/qwen38-cpu/logs/%J.q8_avx2_library.out
+#BSUB -e /work/apac2602/qwen38-cpu/logs/%J.q8_avx2_library.err
+set -Eeuo pipefail
+source /work/apac2602/qwen38-cpu/scripts/env.sh
+ROOT=/work/apac2602/qwen38-cpu/optimization/20261019-q8-avx2-v2
+VARIANT=${Q8_VARIANT:?set variant}
+[[ "$VARIANT" == schedule4 || "$VARIANT" == schedule4_prefetch16 ]]
+SRC="$ROOT/sources/$VARIANT"
+BUILD="$SRC/build"
+OUT="$ROOT/results/$LSB_JOBID"
+PARENT=4336888
+mkdir -p "$OUT"
+phase=COPY_SOURCE
+trap 'rc=$?; echo "FAILED phase=$phase exit=$rc" > "$OUT/job.status"; exit "$rc"' ERR
+stage() { phase=$1; echo "$phase time=$(date -Is)" > "$OUT/job.status"; }
+[[ "${LSB_DJOB_NUMPROC:?}" == 40 ]]
+[[ $(getconf _NPROCESSORS_ONLN) == 40 ]]
+lscpu | grep -q 'Intel(R) Xeon(R) Gold 6148'
+grep -q UNIT_PASS "$ROOT/results/$PARENT/job.status"
+sha256sum -c "$ROOT/results/$PARENT/sha256.txt" > "$OUT/unit-input-verification.txt"
+stage COPY_SOURCE
+python3 -u "$ROOT/scripts/copy_verify.py" > "$OUT/source-verification.json"
+unset KMP_AFFINITY GOMP_CPU_AFFINITY KMP_BLOCKTIME OMP_WAIT_POLICY
+flags='-fp-model precise -no-ftz -xCORE-AVX512 -qsimd-honor-fp-model -diag-disable=10441'
+omp=ON
+blas=OFF
+extra=()
+{ date -Is; hostname; lscpu; icc --version; icpc --version; module list; } > "$OUT/environment.txt" 2>&1
+stage BUILDING
+cmake -S "$SRC" -B "$BUILD" \
+    -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
+    -DCMAKE_C_COMPILER=icc -DCMAKE_CXX_COMPILER=icpc \
+    -DCMAKE_C_FLAGS="-gcc-name=/share/base/e5/gcc/11.2.0/bin/gcc $flags" \
+    -DCMAKE_CXX_FLAGS="-gxx-name=/share/base/e5/gcc/11.2.0/bin/g++ $flags" \
+    -DCMAKE_EXE_LINKER_FLAGS='-Wl,--no-as-needed,/lib64/libm.so.6,--as-needed' \
+    -DCMAKE_SHARED_LINKER_FLAGS='-Wl,--no-as-needed,/lib64/libm.so.6,--as-needed' \
+    -DGGML_NATIVE=ON -DGGML_OPENMP="$omp" -DGGML_OPENMP_FETCH=OFF \
+    -DGGML_BLAS="$blas" "${extra[@]}" -DGGML_CUDA=OFF -DGGML_HIP=OFF -DGGML_VULKAN=OFF \
+    -DGGML_SYCL=OFF -DGGML_OPENCL=OFF -DGGML_RPC=OFF -DGGML_METAL=OFF -DGGML_MUSA=OFF \
+    -DLLAMA_BUILD_TESTS=ON -DLLAMA_BUILD_EXAMPLES=ON -DLLAMA_BUILD_TOOLS=ON \
+    -DLLAMA_BUILD_SERVER=ON -DLLAMA_BUILD_APP=OFF -DLLAMA_BUILD_UI=OFF \
+    -DLLAMA_USE_PREBUILT_UI=OFF -DLLAMA_OPENSSL=OFF -DFETCHCONTENT_FULLY_DISCONNECTED=ON \
+    > "$OUT/configure.log" 2>&1
+cmake --build "$BUILD" --target llama-cli llama-server llama-bench llama-perplexity test-quantize-fns -j 40 > "$OUT/build.log" 2>&1
+"$BUILD/bin/test-quantize-fns" > "$OUT/quantize-tests.log" 2>&1
+for name in llama-cli llama-server llama-bench llama-perplexity; do
+    test -x "$BUILD/bin/$name"
+    ldd "$BUILD/bin/$name" >> "$OUT/ldd.txt"
+done
+! grep -q 'not found' "$OUT/ldd.txt"
+sha256sum "$BUILD/bin/llama-bench" "$BUILD/bin/llama-perplexity" "$BUILD/bin/libggml-cpu.so" > "$OUT/sha256.txt"
+cp "$BUILD/CMakeCache.txt" "$OUT/CMakeCache.txt"
+stage LIBRARY_DIFFERENTIAL
+mkdir -p "$OUT/$VARIANT"
+cp "$ROOT/results/$PARENT/test-q8" "$OUT/test-q8"
+BASE=/work/apac2602/qwen38-cpu/llama.cpp/build/bin/libggml-cpu.so
+CANDIDATE="$BUILD/bin/libggml-cpu.so"
+"$OUT/test-q8" "$BASE" "$CANDIDATE" --check "$VARIANT" > "$OUT/$VARIANT/correctness.json" 2> "$OUT/$VARIANT/correctness.log"
+cp "$OUT/$VARIANT/correctness.json" "$OUT/library-correctness.json"
+objdump -d "$CANDIDATE" > "$OUT/library-assembly.txt"
+awk '/<ggml_vec_dot_q8_0_q8_0>:/ {inside=1; print; next} inside && /^[[:xdigit:]]+ <[^>]+>:/ {exit} inside {print}' "$OUT/library-assembly.txt" > "$OUT/avx2-assembly.txt"
+stage LIBRARY_MICROBENCH
+numactl --physcpubind=0 --membind=0 "$OUT/test-q8" "$BASE" "$CANDIDATE" --bench "$VARIANT" > "$OUT/$VARIANT/kernel-times.csv" 2> "$OUT/$VARIANT/kernel-times.log"
+python3 "$ROOT/scripts/analyze.py" "$OUT" > "$OUT/kernel-summary.log"
+stage PPL_CANDIDATE
+COMPILER_BUILD_ROOT="$SRC" RUN_BENCH=0 EXPERIMENT_OUTPUT_DIR="$OUT/01_$VARIANT" bash "$ROOT/ppl_gate.lsf" > "$OUT/ppl-gate.log" 2>&1
+sha256sum "$BUILD/bin/llama-bench" "$BUILD/bin/llama-perplexity" "$CANDIDATE" >> "$OUT/sha256.txt"
+stage BUILD_PPL_PASS

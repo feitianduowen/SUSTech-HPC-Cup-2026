@@ -56,7 +56,7 @@ KMP passive/0 严重拖慢 TG，oneMKL 未通过 PPL，IPO 编译失败；这些
 
 - 基础版本：`d81235049384534c167caea52b85a694f6103d14`，CPU-only；双路 Xeon Gold 6148，40 个物理核，作业申请单节点 40 slots，推理线程固定 38。
 - 编译器：Intel Classic `icc/icpc 2021.9.0.20230302`。GCC 11.2 仅提供头文件/运行库。采用 `-O3 -fp-model precise -no-ftz -xCORE-AVX512 -qsimd-honor-fp-model`；默认 OpenMP ON、BLAS OFF。
-- PPL：`-t 38 -tb 38 -c 512 --chunks 2 -b 512 -ub 256 -ctk f16 -ctv f16 -ngl 0 --numa distribute --no-warmup`。参考 2.7696，允许区间 `[2.755752, 2.783448]`；模型路径、四个分片大小、WikiText 哈希均按参考记录核验。
+- PPL：`-t 38 -tb 38 -c 512 --chunks 2 -b 512 -ub 256 -ctk f16 -ctv f16 -ngl 0 --numa distribute --no-warmup`。参考 2.7696，允许区间 `[2.63112, 2.90808]`；模型路径、四个分片大小、WikiText 哈希均按参考记录核验。
 - PP：`-p 2048 -n 0`；TG：`-p 0 -n 128 -d 2048`；共同固定 `-t 38 -b 2048 -ub 512 -ctk f16 -ctv f16 -ngl 0 -r 10`。先 PPL PASS，再运行两项性能测试。
 - 自测分数为 `100*sqrt(PP/46.929024 * TG/3.295524)`，仅在完整 PPL/PP/TG 通过后列出。正式成绩仍须由组委会受控评测生成。
 - 规则第 2 节及第 6.1 节允许选择平台可用编译器和构建参数，因此使用 Intel 编译器符合本地提供的题目规则。PP/TG 运行时策略按第 7.1 节记录，正式使用须经组委会接入；PPL 的固定 NUMA 条件保持一致。

@@ -1,0 +1,18 @@
+{
+  "script": "/work/apac2602/qwen38-cpu/optimization/20261019-compiler-pgo/pipeline_short_train.lsf",
+  "kind": "Intel PGO短训练/构建/PPL",
+  "purpose": "Intel O2 PGO训练超时后修复：缩小不计分训练、增加进度/OS日志与周期计数，成功后自动反馈编译及固定PPL",
+  "config": "Gold6148单节点40 slots；Intel Classic2021.9 icc/icpc，Release -O2 -DNDEBUG；precise/no-ftz/CORE-AVX512/qsimd-honor-fp-model；未启用-ipo；官方原始源码d812350；OpenMP=ON,BLAS=OFF,CPU-only；构建-j40，推理38线程close/cores；gen=-prof-gen=threadsafe；use=-prof-use=nomerge；训练仅合成PP64/TG8@D64、r1、不计分；-v、15s OS记录；INTEL_PROF_DUMP_INTERVAL=60、INTEL_PROF_DUMP_CUMULATIVE=1；训练PP1200s/TG900s限时；control及pgo分别固定PPL t/tb38,c512,chunks2,b512,ub256,f16KV,ngl0,NUMA=distribute,no-warmup,timeout590s；本作业无完整PP/TG测速",
+  "baseline": "同源码同Intel编译器同-O2的无PGO control；正确性官方PPL=2.7696",
+  "case_prefix": "compiler",
+  "baseline_case": "compiler-control_{job_id}",
+  "environment": {
+    "PGO_OPT_LEVEL": "2"
+  },
+  "lsf_args": [
+    "-J",
+    "qwen38_O2_pgo_short"
+  ],
+  "note": "前次4336627的无PGO control固定PPL=2.7767 PASS；gen构建成功，但PP1024训练900s超时且无dyn，尚未生成PGO构建。此次全新独立构建和计数目录，训练改PP64及TG8@D64（各r1、38线程；PP1200s/TG900s训练限时）；开启-v、15s OS观察及60s累计计数。训练必须正常完成且JSON参数匹配才合并；超时计数仅诊断，不自动冒充完整训练。正式PPL与未来完整PP/TG所有固定参数保持原样。先提交O3验证公共训练流程，O2待确认后再提交。开发自测，未计算成绩。",
+  "retry_of": "4336627"
+}

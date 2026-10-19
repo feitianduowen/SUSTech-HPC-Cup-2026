@@ -9,6 +9,7 @@ from openpyxl import Workbook, load_workbook
 from openpyxl.styles import Alignment, Font, PatternFill
 from openpyxl.worksheet.table import Table, TableStyleInfo
 from openpyxl.utils import get_column_letter
+from ppl_policy5 import add_policy_review
 
 WORK = Path('D:/compete')
 EVIDENCE = WORK/'.codex-deploy/optimization/evidence'
@@ -64,12 +65,43 @@ for jid,order in [('4336045','auto-default → auto-interleave → copy-interlea
     CATALOG[jid]=('同节点内存矩阵','四种模型加载/NUMA配置，顺序='+order,DEFAULT+'; 同一Intel原版产物; load-mode auto/none × 默认/numactl interleave=0,1; 每作业先独立执行一次固定PPL门槛; '+PPL_CONFIG+'; 每配置'+PERF_CONFIG+'; -v及每15秒轻量OS记录; 清除KMP/OMP等待及KMP/GOMP附加亲和性覆盖','作业内 auto-default（同节点）','4个case共享同一次固定PPL验证，非每case重跑；正序/逆序分属两个节点，仍有节点与顺序影响。开发自测不等于正式排名。')
 
 registry = json.loads(SOURCE.read_text(encoding='utf-8'))
+merged_jobs={job['job_id']:job for job in registry['jobs']}
+for snapshot in sorted((EVIDENCE/'job_updates').glob('*.json')):
+    update=json.loads(snapshot.read_text(encoding='utf-8'))
+    for job in update['jobs']:
+        existing=merged_jobs.get(job['job_id'])
+        if existing and existing['state'] in ['DONE','EXIT'] and job['state'] in ['RUN','PEND']:
+            continue
+        terminal_update=job['state'] in ['DONE','EXIT'] and existing and existing['state'] in ['RUN','PEND']
+        if existing is None or update['updated_at']>=registry['updated_at'] or terminal_update:
+            job['evidence'].append({'path':str(snapshot),'text':'本行由PGO限定作业增量采集更新；其余历史行保留。采集时间='+update['updated_at']})
+            merged=dict(existing or {})
+            merged.update(job)
+            merged_jobs[job['job_id']]=merged
+    registry['updated_at']=max(registry['updated_at'],update['updated_at'])
+registry['jobs']=sorted(merged_jobs.values(),key=lambda job:int(job['job_id']))
 jobs = registry['jobs']
+# Audited descriptive corrections preserve raw submissions and runtime configuration.
+for correction_file in sorted(EVIDENCE.glob('submission_metadata_corrections*.json')):
+    correction=json.loads(correction_file.read_text(encoding='utf-8'))
+    for job in jobs:
+        change=correction['corrections'].get(job['job_id'])
+        if change:
+            job['submission'].update(change['metadata'])
+            job['evidence'].append({'path':str(correction_file),'text':json.dumps({'corrected_at':correction['corrected_at'],'reason':correction['reason'],'change':change},ensure_ascii=False)})
 for job in jobs:
     spec = job.get('submission')
     if job['job_id'] not in CATALOG and spec:
         CATALOG[job['job_id']] = (spec['kind'],spec['purpose'],spec['config'],spec['baseline'],spec.get('note','已登记新作业；结果随LSF与原始JSON更新。'))
+    if job['job_id'] not in CATALOG and any(path.endswith('.user-hc-numa.out') for path in job['logs']):
+        CATALOG[job['job_id']] = ('账户并行HC/NUMA试验（补录）','HC/NUMA单测、构建与校验；由账户内其他工作提交，按LSF记录补录','已核对LSF资源：ssc-cpu,hg_6148,单节点40 slots；原始提交命令保留在LSF证据页。该并行项目的完整编译/运行配置尚待独立核对，未假定其与本次Q8/PGO配置相同','无','账户内并行项目，保留其作业号、时间、节点和状态；本次未修改或重提该项目，不据缺失指标计算分数。')
 missing = {r['job_id'] for r in jobs}-CATALOG.keys()
+if '4336681' in CATALOG:
+    kind,purpose,config,base_label,note=CATALOG['4336681']
+    CATALOG['4336681']=(kind,purpose,config+'；性能口径补充：摘取版用_cvtsh_ss转换FP16，原库用查表，helper路径不一致',base_label,note+' 204154数值用例PASS有效；此摘取版速度对照存在helper混杂，负向样本保留，须以真实完整库对照判断性能。')
+if '4336672' in CATALOG:
+    kind,purpose,config,base_label,note=CATALOG['4336672']
+    CATALOG['4336672']=(kind,purpose,config,base_label,'内核编译完成后，旧版objdump不支持--disassemble=SYMBOL导致工具检查退出；未执行差分或微基准。已兼容重提4336681，保留失败。')
 if missing:
     raise ValueError('Missing explicit job descriptions: '+str(missing))
 manual = {}
@@ -91,7 +123,7 @@ for row in [
 ('更新时间（香港）',registry['updated_at']),('作业数',len(jobs)),('LSF状态汇总','；'.join(f"{state}: {sum(j['state']==state for j in jobs)}" for state in ['DONE','EXIT','RUN','PEND'])),('覆盖范围','本任务初始部署、ICX/ICC构建、profiling、优化、失败及排队/运行作业；每个LSF作业一行。'),
 ('提交时间来源','已完成：LSF标准输出末尾 submitted 时间；运行中：bjobs -l；时区固定 UTC+08:00，精确到秒。'),
 ('Baseline 口径','作业日志列出该实验的比较对象；不存在比较对象时填“无”。正确性固定基准与性能比较基线分列。'),
-('正式基准','PPL 2.7696，允许±0.5%；PP 46.929024，TG 3.295524 tokens/s；自测Score=100*sqrt(PP/basePP*TG/baseTG)。'),
+('正式基准','PPL 2.7696，允许±5%；PP 46.929024，TG 3.295524 tokens/s；自测Score=100*sqrt(PP/basePP*TG/baseTG)。'),
 ('Score 使用条件','PPL PASS且PP/TG各完整10次，并且没有profiling/节点诊断开销。仅为开发自测，不是组委会正式成绩。'),
 ('对照局限','跨节点只用于筛选；同节点顺序对照仍有缓存/先后影响。单算子微基准不等于完整模型收益。'),
 ('更新流程','每次新提交登记作业ID/目的/配置/baseline；collect_job_registry.py抓取LSF与原始结果，write_excel_log.py原地更新本表。人工备注列会保留。'),
@@ -103,7 +135,9 @@ log = book.create_sheet('作业日志')
 log_headers=['作业ID','提交时间（香港）','运行配置','做了什么','结果是什么','相对 Baseline','LSF状态','实验类型','运行节点','开始时间（香港）','结束时间（香港）','排队分钟','PPL','PPL状态','PP tokens/s','TG tokens/s','自测Score','PP相对变化','TG相对变化','Score相对变化','结果口径/限制','PPL校验基准','证据路径','人工备注（保留）']
 log.append(log_headers)
 detail = book.create_sheet('运行结果')
-detail.append(['作业ID','版本/结果目录','PPL','PPL状态','PP tokens/s','PP标准差','PP CV','TG tokens/s','TG标准差','TG CV','自测Score','相对 Baseline','基线PP','基线TG','PP相对变化','TG相对变化','Score相对变化','比较类型','证据目录'])
+detail.append(['作业ID','版本/结果目录','PPL','PPL状态','PP tokens/s','PP标准差','PP CV','TG tokens/s','TG标准差','TG CV','自测Score','相对 Baseline','基线PP','基线TG','PP相对变化','TG相对变化','Score相对变化','比较类型','证据目录','算子规模/模式','原版中位ns/dot','候选中位ns/dot','算子配对中位速度变化','逐位差分','诊断返回码','诊断结果'])
+kernel_samples = book.create_sheet('算子原始样本')
+kernel_samples.append(['作业ID','候选','blocks','模式','轮次','函数','ns/dot','配对速度变化','口径','证据文件'])
 samples = book.create_sheet('十次原始样本')
 samples.append(['作业ID','版本','workload','样本序号','tokens/s','耗时ns','测量类型','证据文件'])
 events = book.create_sheet('LSF与配置证据')
@@ -154,7 +188,7 @@ for job in jobs:
         dpp=pp['avg_ts']/bpp['avg_ts']-1 if pp and bpp else None
         dtg=tg['avg_ts']/btg['avg_ts']-1 if tg and btg else None
         ds=score/bs-1 if score and bs else None
-        comp='同节点顺序对照' if bm and m['name'].startswith(('confirm-','memory-','compiler-')) else ('跨节点筛选' if bm else '无')
+        comp='同节点顺序对照' if bm and m['name'].startswith(('confirm-','memory-','compiler-','q8-paired-')) else ('跨节点筛选' if bm else '无')
         if m.get('ppl_scope'): comp+='；'+m['ppl_scope']
         label=bm['name'] if bm else '无'
         if jid in ['4335554','4335568','4335584','4335605','4335636','4335832']:
@@ -176,10 +210,49 @@ for job in jobs:
         first=None
     status_notes=[e['text'].strip() for e in job['evidence'] if e['path'].endswith(('/status','/job.status'))]
     summary='\n'.join(results) if results else note
+    for evidence in job['evidence']:
+        if evidence['path'].endswith('/relink-result.json'):
+            diagnosis=json.loads(evidence['text'])
+            diagnosis_lines=[]
+            for item in diagnosis['results']:
+                state='LINK PASS' if item['link_pass'] else 'LINK FAIL'
+                diagnosis_lines.append(f"{item['variant']}: {state}, rc={item['returncode']}; 未执行产物、未加载模型")
+                detail.append([jid,'relink-'+item['variant'],None,'未运行（仅链接）',None,None,None,None,None,None,None,'同作业relink-original（失败命令复现）',None,None,None,None,None,'同节点顺序original→no_as_needed→shared_intel；不执行；无PPL共享或Score',evidence['path'],None,None,None,None,None,item['returncode'],state+'；仅链接，运行/计数/PPL尚未验证'])
+            summary+='\n'+'\n'.join(diagnosis_lines)
+        if evidence['path'].endswith('/summary.json'):
+            try:
+                kernel_summary=json.loads(evidence['text'])
+            except ValueError:
+                continue
+            if not isinstance(kernel_summary,dict):
+                continue
+            if kernel_summary.get('failure_reason'):
+                summary+='\n'+kernel_summary['failure_reason']
+            if kernel_summary.get('interpretation'):
+                summary+='\n'+kernel_summary['interpretation']
+            if 'kernel_times' in kernel_summary and 'checks' in kernel_summary:
+                lines=[]
+                for name,check in kernel_summary['checks'].items():
+                    lines.append(f"{name}: {check['status']}, cases={check['cases']}, bit_mismatches={check['bit_mismatches']}")
+                for result in kernel_summary['kernel_times']:
+                    lines.append(f"{result.get('variant','')} nb{result['blocks']} {result['mode']}: 10轮配对中位速度变化={result['paired_median_speedup']:+.2%}")
+                    variant=result.get('variant','avx512-ordered')
+                    candidate=result.get(variant,{})
+                    reference=result.get('baseline',{})
+                    diagnostic_path=str(Path(evidence['path']).parent)
+                    exact=kernel_summary['checks'].get(variant) or kernel_summary['checks'].get('library-correctness.json') or kernel_summary['checks'].get('correctness.json') or {}
+                    detail.append([jid,variant,None,'未运行（算子诊断）',None,None,None,None,None,None,None,base_label,None,None,None,None,None,'同节点单核10轮AB/BA；配置依次执行；无PPL共享或Score',diagnostic_path,f"nb{result['blocks']} {result['mode']}",reference.get('ns_median'),candidate.get('ns_median'),result['paired_median_speedup'],f"{exact.get('status','未记录')} cases={exact.get('cases','未知')} mismatches={exact.get('bit_mismatches','未知')}"])
+                    for name,stats in [('baseline',reference),(variant,candidate)]:
+                        for index,ns in enumerate(stats.get('all_ns',[]),1):
+                            kernel_samples.append([jid,variant,result['blocks'],result['mode'],index,name,ns,result['all_paired_speedups'][index-1],'原版与候选交替AB/BA；单核CPU0/membind0；非完整模型',evidence['path']])
+                summary='\n'.join(results+lines)+'\n仅单核算子微基准，不是完整PP/TG，不计算Score。'
+                if jid=='4336681':summary+='\n摘取版FP16 helper不同于实际库，速度比较有混杂；完整真实库对照作为主要性能依据。'
     if job['state'] in ['RUN','PEND']:
         summary+='\n当前阶段：'+('; '.join(status_notes) if status_notes else job['state'])
     elif job['state']=='EXIT' and status_notes:
         summary+='\n失败阶段：'+'; '.join(status_notes)
+        if any('TRAIN_PP_UNSCORED' in s and 'exit=124' in s for s in status_notes):
+            summary+='；PGO计数训练PP超时；control通过PPL，尚未生成PGO产物及完整PP/TG分数。'
         if jid in ['4336529','4336530']:
             summary+='；计算节点无git，源码检查尚未开始编译；已改为登录节点保存源码哈希、计算节点逐文件验证后重新提交。'
     lsf_args=job.get('submission',{}).get('lsf_args',[])
@@ -187,6 +260,8 @@ for job in jobs:
         summary+='\n等待依赖：'+lsf_args[lsf_args.index('-w')+1]
     p,pp,tg,score,dpp,dtg,ds=first or ({},None,None,None,None,None,None)
     display_ppl_state = '多版本见明细' if kind=='同节点完整对照' or len(job['measurements'])>1 else p.get('status','待结果' if job['state'] in ['RUN','PEND'] else '未单独运行')
+    if 'PGO' in kind and len(job['measurements'])==1 and job['measurements'][0]['name'].startswith('compiler-control_') and p.get('status')=='PASS':
+        display_ppl_state='仅control PASS；PGO'+('待校验' if job['state'] in ['RUN','PEND'] else '未校验')
     start=dt(job.get('start_time')); submit=dt(job.get('submit_time')); finish=dt(job.get('finish_time'))
     queue=(start-submit).total_seconds()/60 if start and submit else None
     host=job.get('exec_host','尚未分配' if job['state']=='PEND' else '未记录')
@@ -212,7 +287,7 @@ for phase,sub in [('PP2048','pp2048'),('TG128@D2048','tg128_d2048')]:
 
 config_sheet=book.create_sheet('公共配置')
 config_sheet.append(['配置项','固定值/来源'])
-for row in [('资源','ssc-cpu; 单节点40 slots; 2xGold6148; 正式推理38线程'),('源码',REV),('Intel默认',DEFAULT),('完整浮点参数','-gcc-name/-gxx-name=GCC11.2; -fp-model precise -no-ftz -xCORE-AVX512 -qsimd-honor-fp-model -diag-disable=10441; Release O3 DNDEBUG'),('链接','-Wl,--no-as-needed,/lib64/libm.so.6,--as-needed'),('固定PPL',PPL_CONFIG),('固定PP/TG',PERF_CONFIG),('PPL门槛','[2.755752,2.783448]；模型路径、分片大小与WikiText哈希对照官方JSON'),('WikiText SHA256','173c87a53759e0201f33e0ccf978e510c2042d7f2cb78229d9a50d79b9e7dd08'),('模型','/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf'),('构建入口',ROOT+'/scripts/build_variant.lsf'),('评测入口',ROOT+'/scripts/benchmark_variant.lsf'),('同节点对照',ROOT+'/scripts/confirm_variants.lsf; confirm_q8.lsf'),('默认环境','OMP_NUM_THREADS=38; OMP_DYNAMIC=FALSE; OMP_PROC_BIND=close; OMP_PLACES=cores; OPENBLAS/MKL/BLIS_NUM_THREADS=38'),('运行时差异','每行配置显式记录覆盖项；性能策略变更不改PPL固定条件；没有新增额外推理线程')]:
+for row in [('资源','ssc-cpu; 单节点40 slots; 2xGold6148; 正式推理38线程'),('源码',REV),('Intel默认',DEFAULT),('完整浮点参数','-gcc-name/-gxx-name=GCC11.2; -fp-model precise -no-ftz -xCORE-AVX512 -qsimd-honor-fp-model -diag-disable=10441; Release O3 DNDEBUG'),('链接','-Wl,--no-as-needed,/lib64/libm.so.6,--as-needed'),('固定PPL',PPL_CONFIG),('固定PP/TG',PERF_CONFIG),('PPL门槛','[2.63112,2.90808]；模型路径、分片大小与WikiText哈希对照官方JSON'),('WikiText SHA256','173c87a53759e0201f33e0ccf978e510c2042d7f2cb78229d9a50d79b9e7dd08'),('模型','/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf'),('构建入口',ROOT+'/scripts/build_variant.lsf'),('评测入口',ROOT+'/scripts/benchmark_variant.lsf'),('同节点对照',ROOT+'/scripts/confirm_variants.lsf; confirm_q8.lsf'),('默认环境','OMP_NUM_THREADS=38; OMP_DYNAMIC=FALSE; OMP_PROC_BIND=close; OMP_PLACES=cores; OPENBLAS/MKL/BLIS_NUM_THREADS=38'),('运行时差异','每行配置显式记录覆盖项；性能策略变更不改PPL固定条件；没有新增额外推理线程')]:
     config_sheet.append(row)
 
 if registry.get('rejected_submissions'):
@@ -220,6 +295,8 @@ if registry.get('rejected_submissions'):
     rejection_sheet.append(['返回时间（香港）','做了什么','运行配置','相对 Baseline','提交返回码','LSF原始返回','重提来源作业','提交脚本','说明'])
     for submission in registry['rejected_submissions']:
         rejection_sheet.append([dt(submission['submitted_at_client']),submission['purpose'],submission['config'],submission['baseline'],submission['return_code'],submission['submission_output'],submission.get('retry_of','无'),submission['script'],'未取得LSF作业号，不计入作业数，不记为PEND/RUN；返回时间为客户端完成重试时刻。'])
+
+add_policy_review(book, jobs, EVIDENCE)
 
 for ws in book:
     ws.freeze_panes='B2' if ws.max_column>2 else 'A2'
@@ -266,6 +343,7 @@ for r in range(2,detail.max_row+1):
     detail.row_dimensions[r].height=46
     for col in [3,5,6,8,9,11,13,14]: detail.cell(r,col).number_format='0.000000'
     for col in [7,10,15,16,17]: detail.cell(r,col).number_format='0.00%'
+    detail.cell(r,23).number_format='+0.00%;-0.00%;0.00%'
 detail.column_dimensions['B'].width=37;detail.column_dimensions['L'].width=45;detail.column_dimensions['S'].width=95
 for ws in [info,config_sheet]:
     ws.column_dimensions['A'].width=29;ws.column_dimensions['B'].width=120

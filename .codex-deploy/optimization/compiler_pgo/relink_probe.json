@@ -1,0 +1,9 @@
+{
+  "script": "/work/apac2602/qwen38-cpu/optimization/20261019-compiler-pgo/relink_probe.lsf",
+  "kind": "Intel PGO真实产物链接诊断",
+  "purpose": "用4337222已编译对象复现失败，比较保留动态依赖与共享Intel运行库两种链接方案",
+  "config": "Intel Classic2021.9 icpc；hg_6148单节点40 slots；只链接，不编译、不执行、不加载模型；同节点按original→no_as_needed→shared_intel顺序；输出新目录，不改旧构建或计数；无PPL/PP/TG或分数",
+  "baseline": "4337222原始失败链接命令（同作业内同节点顺序对照）",
+  "note": "短作业定位DSO missing from command line。original失败rc1，追加-Wl,--no-as-needed通过rc0，追加-shared-intel失败rc1。仅链接，运行、计数和PPL尚未验证；三种配置无PPL共享、不计算分数。",
+  "retry_of": "4337222"
+}

@@ -1,0 +1,36 @@
+#!/bin/bash
+#BSUB -J qwen38_q8_avx512_unit
+#BSUB -q ssc-cpu
+#BSUB -m hg_6148
+#BSUB -n 40
+#BSUB -R "span[ptile=40]"
+#BSUB -W 00:30
+#BSUB -o /work/apac2602/qwen38-cpu/logs/%J.q8_avx512_unit.out
+#BSUB -e /work/apac2602/qwen38-cpu/logs/%J.q8_avx512_unit.err
+set -Eeuo pipefail
+source /work/apac2602/qwen38-cpu/scripts/env.sh
+ROOT=/work/apac2602/qwen38-cpu/optimization/20261019-q8-avx512
+OUT="$ROOT/results/$LSB_JOBID"
+mkdir -p "$OUT"
+phase=COMPILE
+trap 'rc=$?; echo "FAILED phase=$phase exit=$rc" > "$OUT/job.status"; exit "$rc"' ERR
+stage() { phase=$1; echo "$phase time=$(date -Is)" > "$OUT/job.status"; }
+unset KMP_AFFINITY GOMP_CPU_AFFINITY KMP_BLOCKTIME OMP_WAIT_POLICY
+BASE=/work/apac2602/qwen38-cpu/llama.cpp/build/bin/libggml-cpu.so
+{ date -Is; hostname; lscpu; icc --version; module list; } > "$OUT/environment.txt" 2>&1
+flags=(-gcc-name=/share/base/e5/gcc/11.2.0/bin/gcc -std=gnu11 -O3 -g -fp-model precise -no-ftz -qsimd-honor-fp-model -diag-disable=10441 -qopenmp)
+stage COMPILE
+icc "${flags[@]}" -xCORE-AVX512 "$ROOT/scripts/test-q8-avx512.c" -ldl -Wl,--no-as-needed,/lib64/libm.so.6,--as-needed -o "$OUT/test-q8-avx512" > "$OUT/compile.log" 2>&1
+objdump -d "$OUT/test-q8-avx512" > "$OUT/full-assembly.txt"
+awk '/<q8_candidate>:/ {inside=1; print; next} inside && /^[[:xdigit:]]+ <[^>]+>:/ {exit} inside {print}' "$OUT/full-assembly.txt" > "$OUT/avx512-assembly.txt"
+grep -Eq 'vpmaddubsw.*%zmm' "$OUT/avx512-assembly.txt"
+sha256sum "$BASE" "$ROOT/scripts/test-q8-avx512.c" "$ROOT/scripts/q8-candidate-kernels.c" > "$OUT/sha256.txt"
+stage CHECK_AVX512
+"$OUT/test-q8-avx512" "$BASE" - --check > "$OUT/correctness.json" 2> "$OUT/correctness.log"
+stage CHECK_AVX2_FALLBACK
+icc "${flags[@]}" -xCORE-AVX2 "$ROOT/scripts/test-q8-avx512.c" -ldl -Wl,--no-as-needed,/lib64/libm.so.6,--as-needed -o "$OUT/test-q8-avx2" > "$OUT/compile-avx2.log" 2>&1
+"$OUT/test-q8-avx2" "$BASE" - --check > "$OUT/fallback-correctness.json" 2> "$OUT/fallback-correctness.log"
+stage MICROBENCH
+numactl --physcpubind=0 --membind=0 "$OUT/test-q8-avx512" "$BASE" - --bench > "$OUT/kernel-times.csv" 2> "$OUT/kernel-times.log"
+python3 "$ROOT/scripts/analyze_kernel.py" "$OUT"
+stage UNIT_PASS

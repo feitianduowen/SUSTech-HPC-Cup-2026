@@ -1,0 +1,19 @@
+{
+  "script": "/work/apac2602/qwen38-cpu/optimization/20261019-compiler-pgo/pipeline_ggml_pgo_v4.lsf",
+  "kind": "GGML定向PGO V4/训练时限修复/PPL",
+  "purpose": "4337257链接已通过但1200秒训练限时在权重重排第41层超时；基于持续进展证据扩大非计分PP/TG训练时限，重新生成完整独立计数",
+  "config": "Gold6148单节点40 slots；Intel Classic2021.9 icc/icpc，Release -O3 -DNDEBUG；precise/no-ftz/CORE-AVX512/qsimd-honor-fp-model；未启用-ipo；官方原始源码d812350；OpenMP=ON,BLAS=OFF,CPU-only；构建-j40，推理38线程close/cores；gen=-prof-gen=threadsafe；use=-prof-use=nomerge；训练仅合成PP64/TG8@D64、r1、不计分；-v、15s OS记录；INTEL_PROF_DUMP_INTERVAL=60、INTEL_PROF_DUMP_CUMULATIVE=1；训练PP3600s/TG3600s限时；control及pgo分别固定PPL t/tb38,c512,chunks2,b512,ub256,f16KV,ngl0,NUMA=distribute,no-warmup,timeout590s；本作业无完整PP/TG测速；PGO范围仅GGML后端；llama/common/tools在gen追加-no-prof-gen、use追加-no-prof-use；源代码/模型/固定PPL及正式PP/TG参数不改；V2递归枚举全部实际CMake目标，非GGML静态/对象库禁止插桩，非GGML动态库和可执行文件编译及链接均关闭PGO；配置后先检查全部compile_commands和动态link.txt；原始源码及此前构建保留；V3移除CMAKE_EXE/SHARED_LINKER_FLAGS中的重复PGO选项，保留C/CXX driver PGO选项；链接预检必须确认非GGML最后为-no-prof-*；control来自4337216，同源码同plain flags且SHA256核验、PPL2.7767 PASS，不重新构建/跑control PPL；gen/use与计数在新独立目录",
+  "baseline": "同源码同Intel编译器同-O3的无PGO control；正确性官方PPL=2.7696",
+  "case_prefix": "compiler",
+  "baseline_case": "compiler-control_{job_id}",
+  "environment": {
+    "PGO_OPT_LEVEL": "3"
+  },
+  "lsf_args": [
+    "-J",
+    "qwen38_O3_ggml_pgo_v4"
+  ],
+  "note": "4337257 TRAIN_PP_UNSCORED exit124，20分钟仍在模型初始化/repack，已推进blk.41；末端RSS约71.6GiB、单线程持续消耗CPU，非死锁证据。训练PP JSON为空，TG/合并/反馈/PPL均未运行；三个非空dyn仅作为超时诊断，绝不用于新训练或正式成果。新作业独立gen构建和计数，仍只读复用4337216通过SHA256核验的control PPL2.7767，PP64和TG8@D64各r1/38线程不计分、各允许3600s（每个进程都需加载重排）。正式PPL590s及正式PP/TG十次参数完全保持。另一路薄main PGO试验由账户并行工作管理，本次不重复提交。",
+  "retry_of": "4337257",
+  "ppl_scope": "control按SHA256及固定条件核验后复用4337216的PPL，未重跑；pgo为新反馈构建独立固定PPL"
+}

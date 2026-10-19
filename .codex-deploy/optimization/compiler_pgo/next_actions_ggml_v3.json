@@ -1,0 +1,9 @@
+{
+  "active_job": "4337257",
+  "host": "r13n12",
+  "prebuild_scope": "gen validated: 28 GGML units, 276 excluded units, 107 dynamic link commands",
+  "failed_job": "4337216",
+  "failure": "Prebuild checker caught -no-prof-gen overridden by a later global linker -prof-gen; no gen compile or training occurred.",
+  "fix": "Remove duplicate PGO from CMAKE_EXE/SHARED_LINKER_FLAGS; C/CXX driver flags enable GGML PGO; target disable comes last. Reuse verified immutable control from 4337216, PPL2.7767 PASS; no control rerun.",
+  "next": "Check 4337257 actual gen link and training. Do not reuse partial failed counts. A separate driver-PGO job 4337222 already runs; do not duplicate it. On success require training validation, nonempty counters, merged feedback, compile scope, quant tests and independent fixed pgo PPL before full speed tests. Keep all jobs in Excel."
+}

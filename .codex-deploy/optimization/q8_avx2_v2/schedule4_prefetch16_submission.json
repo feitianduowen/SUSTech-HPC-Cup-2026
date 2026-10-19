@@ -1,0 +1,12 @@
+{
+  "script": "/work/apac2602/qwen38-cpu/optimization/20261019-q8-avx2-v2/build.lsf",
+  "kind": "Q8源码修改/完整库差分/PPL",
+  "purpose": "独立源码构建 schedule4_prefetch16，验证真实动态库的逐位一致性、微基准与固定PPL",
+  "config": "Intel Classic icc/icpc2021.9；Release O3 precise/no-ftz CORE-AVX512 qsimd-honor-fp-model，OpenMP ON BLAS OFF；Gold6148单节点40slots，38线程固定PPL c512 chunks2 b512 ub256 f16 ngl0 NUMA distribute timeout590；4可执行文件与quantize单测；实际动态库204154例差分；CPU0/membind0单核nb80/192各10轮AB/BA resident/256MiB stream；本作业不跑完整PP/TG",
+  "baseline": "同节点同进程原版Intel libggml-cpu.so；PPL官方2.7696；无完整模型性能baseline",
+  "environment": {
+    "Q8_VARIANT": "schedule4_prefetch16"
+  },
+  "case_prefix": "q8-avx2",
+  "note": "源码在sources/schedule4_prefetch16，为独立普通文件；同节点成对微基准，两个候选构建在不同作业/节点时不能用绝对速度直接互比；不覆盖原源码，不计算Score。摘取版control已出现性能偏移，只以实际库比较为依据。"
+}

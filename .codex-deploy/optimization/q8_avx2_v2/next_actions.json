@@ -1,0 +1,22 @@
+{
+  "remote_root": "/work/apac2602/qwen38-cpu/optimization/20261019-q8-avx2-v2",
+  "source_preservation": "Old production and AVX512 V1 retained. Independent candidate source trees in sources/schedule4 and sources/schedule4_prefetch16.",
+  "completed": {
+    "4336888": "Seven source excerpt configurations, all 204154-case checks PASS. Original control has timing bias; screening only.",
+    "4336892": "schedule4 actual Intel full library: 204154-case differential PASS, quantization tests PASS, PPL 2.7767 PASS in 316s; single-core gain +11.05% to +37.94%.",
+    "4336891": "schedule4_prefetch16 actual Intel full library: 204154-case differential PASS, quantization tests PASS, PPL 2.7767 PASS in 318s; single-core gain +18.28% to +35.52%.",
+    "4337011": "Forward fixed model pair complete. Candidate PP50.748614/TG2.796380 vs baseline28.023191/2.866171; TG -2.43%, PP strongly order-confounded, candidate TG CV19.44%, all samples retained.",
+    "4337012": "Forward fixed model pair complete. Candidate PP53.802074/TG3.044166 vs baseline27.472820/3.037347; TG +0.22%, PP strongly order-confounded, no stable TG gain established."
+  },
+  "running": {
+    "4337219": "schedule4 reverse order on r13n38",
+    "4337220": "schedule4_prefetch16 reverse order on r13n06"
+  },
+  "next": [
+    "Check actual LSF state and job.status before resubmitting anything. Fix failed stage in a new job, retain failed rows and samples.",
+    "Wait for reverse order completion (candidatePP, baselinePP, baselineTG, candidateTG), keep all ten samples. Assess whether PP advantage survives order reversal; treat across-node variation explicitly. No production replacement or kernel-gain claim based on forward pair alone.",
+    "PPL is reused per unchanged binary from 4335636 baseline and each build job. Verify fingerprints; do not describe reused gates as reruns.",
+    "Refresh collect_job_registry.py --recent, download registry, update Qwen38_CPU_\u5b9e\u9a8c\u65e5\u5fd7.xlsx preserving manual notes, and mirror Excel.",
+    "Report model throughput and development score only when complete. Do not promote solely on single-core gains. No production source overwrite."
+  ]
+}

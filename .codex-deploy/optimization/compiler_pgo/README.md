@@ -1,8 +1,24 @@
+最新进展（2026-10-19T16:42:19.041976+08:00）：4337257与4337427均训练超时；4337488（r13n38）和4337448（r13n24）正在验证各3600秒合成训练。见 [PGO_DRIVER_LONG_TRAIN_NOTES.md](PGO_DRIVER_LONG_TRAIN_NOTES.md) 与next_actions.json。PGO最终PPL和完整性能尚待验证。
+
+以下为历史阶段记录。
+
+最新进展（2026-10-19 15:47 香港）：4336889、4337216、4337222已失败；4337425链接诊断完成；4337427和4337257运行中。当前配置、失败原因及PPL复用口径见 [PGO_DRIVER_NOTES.md](PGO_DRIVER_NOTES.md) 与 next_actions.json。尚无PGO最终PPL或性能结论。
+
+以下为15:34及之前的历史记录，旧的运行状态及下一步段落不代表当前状态。
+
 # Intel Classic O3 / O2 PGO 实验
 
 日期：2026-10-19，香港时间。远端目录 `/work/apac2602/qwen38-cpu/optimization/20261019-compiler-pgo`。
 
-最新重提：2026-10-19 10:40，O3 **4336626（r13n05）**、O2 **4336627（r13n45）**，10:41 查询均为 RUN、单节点 40 slots；尚待构建/训练/独立 PPL 验证。此前配额拒绝属于历史记录。后续 heartbeat 必须先检查这两个作业，不能再次重复提交。
+最新验证：**4336889 已在 BUILD_GEN 链接阶段退出**，libipgo.a 引用 `__start___pgoseg_addr`，链接器报 `DSO missing from command line`，尚未训练。control 固定 PPL 已通过。
+
+15:26 **4337216（r13n10）** 在验证全部非 GGML 目标（包括静态/对象库及main）的编译和链接均关闭PGO。15:30 **4337222（r13n11）** 验证另一策略：GGML与薄 `llama-bench/main.cpp` 保留PGO，递归关闭其余冷目标的编译及链接插桩。4337222先执行的 main→cold共享库→hot共享库探针已正常链接、退出并产生2个非空dyn；探针计数与模型训练目录分开。两项均待完整模型训练与最终PPL，未认定PGO成功。
+
+4337222 在 gen 开始前扩展了冷目标递归规则，避免遗漏 `llama-common-base` 等静态依赖；普通control编译参数不受影响。初始CMake文件保留为 `ggml_pgo_driver.initial.cmake`，修改时间、阶段、旧/新SHA256及原因保存在 `configuration_amendment.json`，gen/use实际配置保存在compile_commands及scope JSON。正式PPL和测速参数均未改变。
+
+10:40 的历史重提 4336626/4336627 均已 EXIT：各自无 PGO control 固定 PPL=2.7767 PASS（240s/246s），但合成 PP1024 训练900s超时，未生成 PGO 产物。随后 4336716 改为 PP64，仍1200s超时；详细日志停在 `init_tokenizer`，OS观察为单线程约200MB RSS、CPU约1015秒，尚未进入模型计算。周期计数已保存，但这些失败训练计数只用于诊断，未拿来反馈编译。仅缩短训练 tokens 不足以解决初始化插桩开销，因此调整插桩范围。
+
+PGO 周期计数环境变量依据 [Intel Compiler Classic说明](https://www.intel.com/content/dam/develop/external/us/en/documents/cpp_compiler_classic.pdf)。工作簿的旧 control PPL PASS 不能理解为 PGO 产物已通过。
 
 题目第 2 节允许自选编译器，第 7 节明确允许 compiler flags / PGO。所有候选仍使用 Intel Classic 2021.9 icc/icpc，CPU-only、precise/no-ftz/CORE-AVX512/qsimd-honor-fp-model、OpenMP ON、BLAS OFF。未启用此前失败的 `-ipo`。
 
@@ -18,8 +34,8 @@ O3 与 O2 各自有独立无 PGO control、threadsafe 计数构建、反馈优�
 
 ## 下一次 heartbeat
 
-1. 检查 `results/submission_registry.jsonl` 末尾以及 `bjobs -w`，确认所有重提客户端是否已返回；不要根据 SSH 通道超时猜测提交失败，也不要重复提交未返回的请求。
-2. 若有新作业号，立即 `collect_job_registry.py` → 下载 JSON → 本地 `write_excel_log.py` 更新 Excel，保留失败和拒绝页。若无作业号的拒绝已完成，则查看 `busers -w apac2602 u-ssc`，组配额允许时使用 `retry_O3.json` / `retry_O2.json` 通过 `submit_logged.py` 重提。
+1. 优先检查 **4337216 和 4337222** 的状态、`gen-build/pgo-scope.json`、训练日志和 `training-validation.json`；正在 RUN/PEND 不得重复提交。旧 `retry_O3/O2.json`、`short_O3/O2.json`、`ggml_only_O3.json` 仅保留历史，不再原样重复提交。
+2. 新作业号立即采集 → 下载 JSON → 本地 `write_excel_log.py` 更新 Excel，保留失败和拒绝页。公共采集卡在历史文件时，可用独立限定采集写 `pgo_scoped_snapshot.json`，下载到 `evidence/job_updates/`，写入器合并时保留其他行。O3训练及反馈流程正常完成后，再提交成功策略对应的O2；driver方案预备了 `driver_O2.json`。
 3. 用 `hg_6148` 自动选择符合配置的空闲 r13n 节点，不绑定繁忙节点。每个 job 单节点 40 slots，推理 38 线程。
 4. 作业 `job.status` 若 READY，检查 manifest、固定 PPL、profile 计数和反馈构建 warning；热点计数有效后运行 `prepare_paired_specs.py <parent_job_id>`，生成正反序完整对照的 spec，仍通过统一登记器提交。
 5. 作业失败先定位阶段，修复实际问题；若固定 PPL 不通过则停止该产物测速，不能改固定 PPL 条件强行通过。

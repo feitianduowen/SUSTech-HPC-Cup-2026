@@ -1,0 +1,11 @@
+{
+  "script": "/work/apac2602/qwen38-cpu/optimization/20261019-q8-avx512/build_ppl.lsf",
+  "kind": "Q8独立源码/完整构建/差分/PPL",
+  "purpose": "在新子目录source-v2独立复制并修改官方源码；完整Intel构建后，对真实动态库重跑逐位差分、热点形状微基准和固定PPL",
+  "config": "先验证单测4336681 UNIT_PASS；计算节点独立复制3687个官方源码文件逐一核对SHA256，不使用硬链接；仅修改ggml/src/ggml-cpu/arch/x86/quants.c的Q8_0整数乘加双block路径；Intel Classic icc/icpc2021.9，O3/precise/no-ftz/CORE-AVX512/qsimd-honor-fp-model，OpenMP=ON,BLAS=OFF，CPU-only；单节点Gold6148 40slots，构建-j40；真实新库对比现有部署库做204154用例逐位差分；nb80/192单核resident及256MiB流式，各10轮AB/BA；固定PPL t/tb38,c512,chunks2,b512,ub256,f16KV,ngl0,NUMA=distribute,no-warmup,timeout590s；本作业无完整PP/TG模型测速",
+  "baseline": "现有Intel原版libggml-cpu.so（同节点实际库函数对照）；PPL官方2.7696；无完整模型性能对照",
+  "case_prefix": "q8-avx512",
+  "baseline_case": "q8-reference-not-measured_{job_id}",
+  "environment": {"Q8_UNIT_JOB": "4336681"},
+  "note": "只写新独立source-v2目录，不覆盖原部署、原实验源码或PGO构建；CPU内核测试和微基准不作为正式成绩，固定PPL通过后方可另交完整PP/TG。同账户并行HC/NUMA试验未被本作业改动。"
+}

@@ -1,0 +1,18 @@
+{
+  "script": "/work/apac2602/qwen38-cpu/optimization/20261019-compiler-pgo/pipeline_driver_pgo.lsf",
+  "kind": "PGO入口/共享库链接修复及构建/PPL",
+  "purpose": "Intel O3：修复选择性PGO的运行库链接；先验证三层共享库探针，再完整训练/反馈编译/固定PPL",
+  "config": "Gold6148单节点40 slots；Intel Classic2021.9 icc/icpc，Release -O3 -DNDEBUG；precise/no-ftz/CORE-AVX512/qsimd-honor-fp-model；未启用-ipo；官方原始源码d812350；OpenMP=ON,BLAS=OFF,CPU-only；构建-j40，推理38线程close/cores；gen=-prof-gen=threadsafe；use=-prof-use=nomerge；训练仅合成PP64/TG8@D64、r1、不计分；-v、15s OS记录；INTEL_PROF_DUMP_INTERVAL=60、INTEL_PROF_DUMP_CUMULATIVE=1；训练PP1200s/TG900s限时；control及pgo分别固定PPL t/tb38,c512,chunks2,b512,ub256,f16KV,ngl0,NUMA=distribute,no-warmup,timeout590s；本作业无完整PP/TG测速；PGO范围仅GGML后端；llama/common/tools在gen追加-no-prof-gen、use追加-no-prof-use；源代码/模型/固定PPL及正式PP/TG参数不改；薄llama-bench/main.cpp保留PGO编译和链接；冷llama/common/bench-impl等同时compile+link禁用PGO；开始先进行main→cold DSO→hot DSO链接/正常退出/非空dyn探针（不加载模型、不计分）",
+  "baseline": "同源码同Intel编译器同-O3的无PGO control；正确性官方PPL=2.7696",
+  "case_prefix": "compiler",
+  "baseline_case": "compiler-control_{job_id}",
+  "environment": {
+    "PGO_OPT_LEVEL": "3"
+  },
+  "lsf_args": [
+    "-J",
+    "qwen38_O3_pgo_driver"
+  ],
+  "note": "4336889在BUILD_GEN链接llama-bench失败：libipgo.a引用__start___pgoseg_addr，DSO missing from command line；尚未训练。新修复：薄main保留插桩启动运行库，冷模块同时禁用compile/link PGO。三层共享库探针必须链接、正常退出并产生非空dyn后才完整构建。探针计数与训练计数目录分开。先O3，流程成功后才O2。所有失败保留，正式PPL/测速参数不变；仍未给出PGO性能结论。",
+  "retry_of": "4336889"
+}

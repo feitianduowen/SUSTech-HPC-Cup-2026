@@ -1,0 +1,16 @@
+{
+  "script": "/work/apac2602/qwen38-cpu/optimization/20261019-q8-avx2-v2/reverse.lsf",
+  "kind": "同节点完整对照",
+  "purpose": "反向顺序复核Q8 schedule4_prefetch16：候选先PP，原版后PP；原版先TG，候选后TG，确认完整模型差异是否依赖顺序",
+  "config": "Intel Classic 2021.9 O3 precise/no-ftz CORE-AVX512；hg_6148 40slots/38推理线程；PP p2048 n0、TG p0 n128 d2048，b2048 ub512 KVf16 ngl0 NUMA distribute，各10次；OpenMP close/cores；顺序candidatePP→baselinePP→baselineTG→candidateTG；无VTune/OS采样",
+  "baseline": "本作业01_baseline：生产Intel原版，同节点顺序对照；官方PP46.929024/TG3.295524仅用于开发自测归一化",
+  "environment": {
+    "Q8_VARIANT": "schedule4_prefetch16",
+    "Q8_BUILD_JOB": "4336891"
+  },
+  "case_prefix": "q8-paired-reverse-schedule4_prefetch16",
+  "baseline_case": "q8-paired-reverse-schedule4_prefetch16-baseline_{job_id}",
+  "note": "每版本PPL为已验证的相同二进制固定配置结果复用，不在此作业重跑：baseline来自4335636，candidate来自4336891；运行前验证二进制SHA256和PASS。两候选在不同节点时只比较各自相对同节点baseline的比例；顺序及缓存影响保留；完整10次样本保留，Score仅为开发自测，非正式成绩。 首轮原版PP约27~28而候选约51~54，异常大差异伴随原版PP高CV；TG没有稳定收益。本次反序确认，不将首轮差异直接归因于源码。反序与首轮跨节点，仍不能完全消除节点/缓存影响。",
+  "ppl_scope": "按相同二进制复用已有固定PPL：baseline 4335636，candidate 4336891；此测速作业未重跑PPL，各版本有独立PPL证据",
+  "retry_of": "4337012"
+}

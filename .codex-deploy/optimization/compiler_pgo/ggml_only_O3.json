@@ -1,0 +1,18 @@
+{
+  "script": "/work/apac2602/qwen38-cpu/optimization/20261019-compiler-pgo/pipeline_ggml_pgo.lsf",
+  "kind": "GGML定向PGO构建/训练/PPL",
+  "purpose": "修复全程序插桩在tokenizer初始化阶段超时：仅GGML保留PGO，冷初始化模块保持普通Intel优化；通过训练后反馈编译/PPL",
+  "config": "Gold6148单节点40 slots；Intel Classic2021.9 icc/icpc，Release -O3 -DNDEBUG；precise/no-ftz/CORE-AVX512/qsimd-honor-fp-model；未启用-ipo；官方原始源码d812350；OpenMP=ON,BLAS=OFF,CPU-only；构建-j40，推理38线程close/cores；gen=-prof-gen=threadsafe；use=-prof-use=nomerge；训练仅合成PP64/TG8@D64、r1、不计分；-v、15s OS记录；INTEL_PROF_DUMP_INTERVAL=60、INTEL_PROF_DUMP_CUMULATIVE=1；训练PP1200s/TG900s限时；control及pgo分别固定PPL t/tb38,c512,chunks2,b512,ub256,f16KV,ngl0,NUMA=distribute,no-warmup,timeout590s；本作业无完整PP/TG测速；PGO范围仅GGML后端；llama/common/tools在gen追加-no-prof-gen、use追加-no-prof-use；源代码/模型/固定PPL及正式PP/TG参数不改",
+  "baseline": "同源码同Intel编译器同-O3的无PGO control；正确性官方PPL=2.7696",
+  "case_prefix": "compiler",
+  "baseline_case": "compiler-control_{job_id}",
+  "environment": {
+    "PGO_OPT_LEVEL": "3"
+  },
+  "lsf_args": [
+    "-J",
+    "qwen38_O3_ggml_pgo"
+  ],
+  "note": "4336626/4336627的control固定PPL均2.7767 PASS，但PP1024训练900s超时。4336716短PP64训练仍1200s超时，-v末尾停在init_tokenizer，未进入模型计算；周期计数仅作失败诊断，不当作完成训练。本次gen对llama/common/bench等非GGML目标追加-no-prof-gen，use对同组追加-no-prof-use，GGML保留threadsafe计数/反馈；CMake DEFER及compile_commands检查实际生效。所有构建独立目录；训练正常退出和JSON校验后才合并及反馈构建，最后固定PPL。O2等待公共训练流程确认。无完整测速分数。",
+  "retry_of": "4336716"
+}
