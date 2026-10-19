@@ -1,0 +1,890 @@
+{
+  "pp": {
+    "graphs": [
+      {
+        "file": "pp_nodes.g000004.csv",
+        "rows": 4248,
+        "first_shapes": [
+          {
+            "op": "GET_ROWS",
+            "dst": "2560x512x1x1"
+          },
+          {
+            "op": "GET_ROWS",
+            "dst": "160x8192x1x1"
+          },
+          {
+            "op": "REPEAT",
+            "dst": "2560x4x512x1"
+          },
+          {
+            "op": "RMS_NORM",
+            "dst": "2560x4x512x1"
+          },
+          {
+            "op": "MUL_MAT",
+            "dst": "320x512x1x1"
+          }
+        ]
+      },
+      {
+        "file": "pp_nodes.g000005.csv",
+        "rows": 4248,
+        "first_shapes": [
+          {
+            "op": "GET_ROWS",
+            "dst": "2560x512x1x1"
+          },
+          {
+            "op": "GET_ROWS",
+            "dst": "160x8192x1x1"
+          },
+          {
+            "op": "REPEAT",
+            "dst": "2560x4x512x1"
+          },
+          {
+            "op": "RMS_NORM",
+            "dst": "2560x4x512x1"
+          },
+          {
+            "op": "MUL_MAT",
+            "dst": "320x512x1x1"
+          }
+        ]
+      },
+      {
+        "file": "pp_nodes.g000006.csv",
+        "rows": 4248,
+        "first_shapes": [
+          {
+            "op": "GET_ROWS",
+            "dst": "2560x512x1x1"
+          },
+          {
+            "op": "GET_ROWS",
+            "dst": "160x8192x1x1"
+          },
+          {
+            "op": "REPEAT",
+            "dst": "2560x4x512x1"
+          },
+          {
+            "op": "RMS_NORM",
+            "dst": "2560x4x512x1"
+          },
+          {
+            "op": "MUL_MAT",
+            "dst": "320x512x1x1"
+          }
+        ]
+      },
+      {
+        "file": "pp_nodes.g000007.csv",
+        "rows": 4248,
+        "first_shapes": [
+          {
+            "op": "GET_ROWS",
+            "dst": "2560x512x1x1"
+          },
+          {
+            "op": "GET_ROWS",
+            "dst": "160x8192x1x1"
+          },
+          {
+            "op": "REPEAT",
+            "dst": "2560x4x512x1"
+          },
+          {
+            "op": "RMS_NORM",
+            "dst": "2560x4x512x1"
+          },
+          {
+            "op": "MUL_MAT",
+            "dst": "320x512x1x1"
+          }
+        ]
+      }
+    ],
+    "operators_by_critical_compute": [
+      {
+        "op": "MUL_MAT_ID",
+        "nodes": 576,
+        "compute_critical_us": 47641077,
+        "boundary_wait_cpu_us": 84295298,
+        "arrival_spread_us": 5215630,
+        "compute_cpu_us": 1726199631,
+        "nominal_serial_nodes": 9
+      },
+      {
+        "op": "MUL_MAT",
+        "nodes": 3140,
+        "compute_critical_us": 13217878,
+        "boundary_wait_cpu_us": 18823547,
+        "arrival_spread_us": 872046,
+        "compute_cpu_us": 483794525,
+        "nominal_serial_nodes": 33
+      },
+      {
+        "op": "CONCAT",
+        "nodes": 292,
+        "compute_critical_us": 4428649,
+        "boundary_wait_cpu_us": 163879419,
+        "arrival_spread_us": 4428652,
+        "compute_cpu_us": 4436174,
+        "nominal_serial_nodes": 0
+      },
+      {
+        "op": "GATED_DELTA_NET",
+        "nodes": 144,
+        "compute_critical_us": 1859219,
+        "boundary_wait_cpu_us": 33110312,
+        "arrival_spread_us": 1858712,
+        "compute_cpu_us": 37555215,
+        "nominal_serial_nodes": 0
+      },
+      {
+        "op": "DSV4_HC_POST",
+        "nodes": 384,
+        "compute_critical_us": 1703615,
+        "boundary_wait_cpu_us": 1977608,
+        "arrival_spread_us": 87019,
+        "compute_cpu_us": 62901709,
+        "nominal_serial_nodes": 6
+      },
+      {
+        "op": "RMS_NORM",
+        "nodes": 1024,
+        "compute_critical_us": 1468467,
+        "boundary_wait_cpu_us": 46091438,
+        "arrival_spread_us": 1423718,
+        "compute_cpu_us": 9806924,
+        "nominal_serial_nodes": 6
+      },
+      {
+        "op": "FLASH_ATTN_EXT",
+        "nodes": 48,
+        "compute_critical_us": 649393,
+        "boundary_wait_cpu_us": 2295050,
+        "arrival_spread_us": 128291,
+        "compute_cpu_us": 22388999,
+        "nominal_serial_nodes": 0
+      },
+      {
+        "op": "DSV4_HC_PRE",
+        "nodes": 384,
+        "compute_critical_us": 544963,
+        "boundary_wait_cpu_us": 1607820,
+        "arrival_spread_us": 61114,
+        "compute_cpu_us": 19273731,
+        "nominal_serial_nodes": 3
+      },
+      {
+        "op": "GET_ROWS",
+        "nodes": 696,
+        "compute_critical_us": 440008,
+        "boundary_wait_cpu_us": 7165689,
+        "arrival_spread_us": 413792,
+        "compute_cpu_us": 9682253,
+        "nominal_serial_nodes": 696
+      },
+      {
+        "op": "MUL",
+        "nodes": 800,
+        "compute_critical_us": 267431,
+        "boundary_wait_cpu_us": 1496119,
+        "arrival_spread_us": 95401,
+        "compute_cpu_us": 8864917,
+        "nominal_serial_nodes": 9
+      },
+      {
+        "op": "ADD",
+        "nodes": 2336,
+        "compute_critical_us": 209171,
+        "boundary_wait_cpu_us": 2052802,
+        "arrival_spread_us": 208996,
+        "compute_cpu_us": 6173805,
+        "nominal_serial_nodes": 39
+      },
+      {
+        "op": "REPEAT",
+        "nodes": 152,
+        "compute_critical_us": 203869,
+        "boundary_wait_cpu_us": 7555188,
+        "arrival_spread_us": 203905,
+        "compute_cpu_us": 205436,
+        "nominal_serial_nodes": 152
+      },
+      {
+        "op": "UNARY",
+        "nodes": 1608,
+        "compute_critical_us": 144081,
+        "boundary_wait_cpu_us": 795097,
+        "arrival_spread_us": 77485,
+        "compute_cpu_us": 4855610,
+        "nominal_serial_nodes": 1078
+      },
+      {
+        "op": "SSM_CONV",
+        "nodes": 144,
+        "compute_critical_us": 136672,
+        "boundary_wait_cpu_us": 874446,
+        "arrival_spread_us": 38521,
+        "compute_cpu_us": 4330074,
+        "nominal_serial_nodes": 0
+      },
+      {
+        "op": "ARGSORT",
+        "nodes": 192,
+        "compute_critical_us": 111293,
+        "boundary_wait_cpu_us": 278580,
+        "arrival_spread_us": 13628,
+        "compute_cpu_us": 3970149,
+        "nominal_serial_nodes": 3
+      },
+      {
+        "op": "GLU",
+        "nodes": 384,
+        "compute_critical_us": 104168,
+        "boundary_wait_cpu_us": 835420,
+        "arrival_spread_us": 44031,
+        "compute_cpu_us": 3335581,
+        "nominal_serial_nodes": 6
+      },
+      {
+        "op": "CONT",
+        "nodes": 284,
+        "compute_critical_us": 57754,
+        "boundary_wait_cpu_us": 722678,
+        "arrival_spread_us": 56434,
+        "compute_cpu_us": 1499312,
+        "nominal_serial_nodes": 3
+      },
+      {
+        "op": "CLAMP",
+        "nodes": 292,
+        "compute_critical_us": 46264,
+        "boundary_wait_cpu_us": 716988,
+        "arrival_spread_us": 38376,
+        "compute_cpu_us": 1073244,
+        "nominal_serial_nodes": 292
+      },
+      {
+        "op": "SCALE",
+        "nodes": 1936,
+        "compute_critical_us": 37052,
+        "boundary_wait_cpu_us": 971959,
+        "arrival_spread_us": 31019,
+        "compute_cpu_us": 788422,
+        "nominal_serial_nodes": 1936
+      },
+      {
+        "op": "LIGHTNING_INDEXER",
+        "nodes": 48,
+        "compute_critical_us": 34786,
+        "boundary_wait_cpu_us": 294625,
+        "arrival_spread_us": 30437,
+        "compute_cpu_us": 1102400,
+        "nominal_serial_nodes": 0
+      },
+      {
+        "op": "SUM_ROWS",
+        "nodes": 196,
+        "compute_critical_us": 28922,
+        "boundary_wait_cpu_us": 1086302,
+        "arrival_spread_us": 29068,
+        "compute_cpu_us": 31713,
+        "nominal_serial_nodes": 196
+      },
+      {
+        "op": "SET_ROWS",
+        "nodes": 240,
+        "compute_critical_us": 27423,
+        "boundary_wait_cpu_us": 247293,
+        "arrival_spread_us": 18801,
+        "compute_cpu_us": 817330,
+        "nominal_serial_nodes": 240
+      },
+      {
+        "op": "TOP_K",
+        "nodes": 48,
+        "compute_critical_us": 25489,
+        "boundary_wait_cpu_us": 138061,
+        "arrival_spread_us": 9215,
+        "compute_cpu_us": 835308,
+        "nominal_serial_nodes": 0
+      },
+      {
+        "op": "ROPE",
+        "nodes": 192,
+        "compute_critical_us": 17203,
+        "boundary_wait_cpu_us": 126725,
+        "arrival_spread_us": 5595,
+        "compute_cpu_us": 548197,
+        "nominal_serial_nodes": 0
+      },
+      {
+        "op": "CPY",
+        "nodes": 728,
+        "compute_critical_us": 15245,
+        "boundary_wait_cpu_us": 278913,
+        "arrival_spread_us": 12044,
+        "compute_cpu_us": 403344,
+        "nominal_serial_nodes": 292
+      },
+      {
+        "op": "SOFT_MAX",
+        "nodes": 192,
+        "compute_critical_us": 12336,
+        "boundary_wait_cpu_us": 138014,
+        "arrival_spread_us": 6760,
+        "compute_cpu_us": 350948,
+        "nominal_serial_nodes": 4
+      },
+      {
+        "op": "FILL",
+        "nodes": 240,
+        "compute_critical_us": 2970,
+        "boundary_wait_cpu_us": 76930,
+        "arrival_spread_us": 3070,
+        "compute_cpu_us": 59962,
+        "nominal_serial_nodes": 0
+      },
+      {
+        "op": "CUMSUM",
+        "nodes": 48,
+        "compute_critical_us": 2786,
+        "boundary_wait_cpu_us": 14980,
+        "arrival_spread_us": 2774,
+        "compute_cpu_us": 95180,
+        "nominal_serial_nodes": 0
+      },
+      {
+        "op": "DIV",
+        "nodes": 192,
+        "compute_critical_us": 1971,
+        "boundary_wait_cpu_us": 54870,
+        "arrival_spread_us": 1745,
+        "compute_cpu_us": 42345,
+        "nominal_serial_nodes": 3
+      },
+      {
+        "op": "SUB",
+        "nodes": 48,
+        "compute_critical_us": 1084,
+        "boundary_wait_cpu_us": 19079,
+        "arrival_spread_us": 1052,
+        "compute_cpu_us": 29084,
+        "nominal_serial_nodes": 48
+      },
+      {
+        "op": "SQRT",
+        "nodes": 4,
+        "compute_critical_us": 32,
+        "boundary_wait_cpu_us": 1061,
+        "arrival_spread_us": 33,
+        "compute_cpu_us": 675,
+        "nominal_serial_nodes": 4
+      }
+    ],
+    "operators_by_boundary_wait": [
+      {
+        "op": "CONCAT",
+        "nodes": 292,
+        "compute_critical_us": 4428649,
+        "boundary_wait_cpu_us": 163879419,
+        "arrival_spread_us": 4428652,
+        "compute_cpu_us": 4436174,
+        "nominal_serial_nodes": 0
+      },
+      {
+        "op": "MUL_MAT_ID",
+        "nodes": 576,
+        "compute_critical_us": 47641077,
+        "boundary_wait_cpu_us": 84295298,
+        "arrival_spread_us": 5215630,
+        "compute_cpu_us": 1726199631,
+        "nominal_serial_nodes": 9
+      },
+      {
+        "op": "RMS_NORM",
+        "nodes": 1024,
+        "compute_critical_us": 1468467,
+        "boundary_wait_cpu_us": 46091438,
+        "arrival_spread_us": 1423718,
+        "compute_cpu_us": 9806924,
+        "nominal_serial_nodes": 6
+      },
+      {
+        "op": "GATED_DELTA_NET",
+        "nodes": 144,
+        "compute_critical_us": 1859219,
+        "boundary_wait_cpu_us": 33110312,
+        "arrival_spread_us": 1858712,
+        "compute_cpu_us": 37555215,
+        "nominal_serial_nodes": 0
+      },
+      {
+        "op": "MUL_MAT",
+        "nodes": 3140,
+        "compute_critical_us": 13217878,
+        "boundary_wait_cpu_us": 18823547,
+        "arrival_spread_us": 872046,
+        "compute_cpu_us": 483794525,
+        "nominal_serial_nodes": 33
+      },
+      {
+        "op": "REPEAT",
+        "nodes": 152,
+        "compute_critical_us": 203869,
+        "boundary_wait_cpu_us": 7555188,
+        "arrival_spread_us": 203905,
+        "compute_cpu_us": 205436,
+        "nominal_serial_nodes": 152
+      },
+      {
+        "op": "GET_ROWS",
+        "nodes": 696,
+        "compute_critical_us": 440008,
+        "boundary_wait_cpu_us": 7165689,
+        "arrival_spread_us": 413792,
+        "compute_cpu_us": 9682253,
+        "nominal_serial_nodes": 696
+      },
+      {
+        "op": "FLASH_ATTN_EXT",
+        "nodes": 48,
+        "compute_critical_us": 649393,
+        "boundary_wait_cpu_us": 2295050,
+        "arrival_spread_us": 128291,
+        "compute_cpu_us": 22388999,
+        "nominal_serial_nodes": 0
+      },
+      {
+        "op": "ADD",
+        "nodes": 2336,
+        "compute_critical_us": 209171,
+        "boundary_wait_cpu_us": 2052802,
+        "arrival_spread_us": 208996,
+        "compute_cpu_us": 6173805,
+        "nominal_serial_nodes": 39
+      },
+      {
+        "op": "DSV4_HC_POST",
+        "nodes": 384,
+        "compute_critical_us": 1703615,
+        "boundary_wait_cpu_us": 1977608,
+        "arrival_spread_us": 87019,
+        "compute_cpu_us": 62901709,
+        "nominal_serial_nodes": 6
+      },
+      {
+        "op": "DSV4_HC_PRE",
+        "nodes": 384,
+        "compute_critical_us": 544963,
+        "boundary_wait_cpu_us": 1607820,
+        "arrival_spread_us": 61114,
+        "compute_cpu_us": 19273731,
+        "nominal_serial_nodes": 3
+      },
+      {
+        "op": "MUL",
+        "nodes": 800,
+        "compute_critical_us": 267431,
+        "boundary_wait_cpu_us": 1496119,
+        "arrival_spread_us": 95401,
+        "compute_cpu_us": 8864917,
+        "nominal_serial_nodes": 9
+      },
+      {
+        "op": "SUM_ROWS",
+        "nodes": 196,
+        "compute_critical_us": 28922,
+        "boundary_wait_cpu_us": 1086302,
+        "arrival_spread_us": 29068,
+        "compute_cpu_us": 31713,
+        "nominal_serial_nodes": 196
+      },
+      {
+        "op": "SCALE",
+        "nodes": 1936,
+        "compute_critical_us": 37052,
+        "boundary_wait_cpu_us": 971959,
+        "arrival_spread_us": 31019,
+        "compute_cpu_us": 788422,
+        "nominal_serial_nodes": 1936
+      },
+      {
+        "op": "SSM_CONV",
+        "nodes": 144,
+        "compute_critical_us": 136672,
+        "boundary_wait_cpu_us": 874446,
+        "arrival_spread_us": 38521,
+        "compute_cpu_us": 4330074,
+        "nominal_serial_nodes": 0
+      },
+      {
+        "op": "GLU",
+        "nodes": 384,
+        "compute_critical_us": 104168,
+        "boundary_wait_cpu_us": 835420,
+        "arrival_spread_us": 44031,
+        "compute_cpu_us": 3335581,
+        "nominal_serial_nodes": 6
+      },
+      {
+        "op": "UNARY",
+        "nodes": 1608,
+        "compute_critical_us": 144081,
+        "boundary_wait_cpu_us": 795097,
+        "arrival_spread_us": 77485,
+        "compute_cpu_us": 4855610,
+        "nominal_serial_nodes": 1078
+      },
+      {
+        "op": "CONT",
+        "nodes": 284,
+        "compute_critical_us": 57754,
+        "boundary_wait_cpu_us": 722678,
+        "arrival_spread_us": 56434,
+        "compute_cpu_us": 1499312,
+        "nominal_serial_nodes": 3
+      },
+      {
+        "op": "CLAMP",
+        "nodes": 292,
+        "compute_critical_us": 46264,
+        "boundary_wait_cpu_us": 716988,
+        "arrival_spread_us": 38376,
+        "compute_cpu_us": 1073244,
+        "nominal_serial_nodes": 292
+      },
+      {
+        "op": "LIGHTNING_INDEXER",
+        "nodes": 48,
+        "compute_critical_us": 34786,
+        "boundary_wait_cpu_us": 294625,
+        "arrival_spread_us": 30437,
+        "compute_cpu_us": 1102400,
+        "nominal_serial_nodes": 0
+      },
+      {
+        "op": "CPY",
+        "nodes": 728,
+        "compute_critical_us": 15245,
+        "boundary_wait_cpu_us": 278913,
+        "arrival_spread_us": 12044,
+        "compute_cpu_us": 403344,
+        "nominal_serial_nodes": 292
+      },
+      {
+        "op": "ARGSORT",
+        "nodes": 192,
+        "compute_critical_us": 111293,
+        "boundary_wait_cpu_us": 278580,
+        "arrival_spread_us": 13628,
+        "compute_cpu_us": 3970149,
+        "nominal_serial_nodes": 3
+      },
+      {
+        "op": "SET_ROWS",
+        "nodes": 240,
+        "compute_critical_us": 27423,
+        "boundary_wait_cpu_us": 247293,
+        "arrival_spread_us": 18801,
+        "compute_cpu_us": 817330,
+        "nominal_serial_nodes": 240
+      },
+      {
+        "op": "TOP_K",
+        "nodes": 48,
+        "compute_critical_us": 25489,
+        "boundary_wait_cpu_us": 138061,
+        "arrival_spread_us": 9215,
+        "compute_cpu_us": 835308,
+        "nominal_serial_nodes": 0
+      },
+      {
+        "op": "SOFT_MAX",
+        "nodes": 192,
+        "compute_critical_us": 12336,
+        "boundary_wait_cpu_us": 138014,
+        "arrival_spread_us": 6760,
+        "compute_cpu_us": 350948,
+        "nominal_serial_nodes": 4
+      },
+      {
+        "op": "ROPE",
+        "nodes": 192,
+        "compute_critical_us": 17203,
+        "boundary_wait_cpu_us": 126725,
+        "arrival_spread_us": 5595,
+        "compute_cpu_us": 548197,
+        "nominal_serial_nodes": 0
+      },
+      {
+        "op": "FILL",
+        "nodes": 240,
+        "compute_critical_us": 2970,
+        "boundary_wait_cpu_us": 76930,
+        "arrival_spread_us": 3070,
+        "compute_cpu_us": 59962,
+        "nominal_serial_nodes": 0
+      },
+      {
+        "op": "DIV",
+        "nodes": 192,
+        "compute_critical_us": 1971,
+        "boundary_wait_cpu_us": 54870,
+        "arrival_spread_us": 1745,
+        "compute_cpu_us": 42345,
+        "nominal_serial_nodes": 3
+      },
+      {
+        "op": "SUB",
+        "nodes": 48,
+        "compute_critical_us": 1084,
+        "boundary_wait_cpu_us": 19079,
+        "arrival_spread_us": 1052,
+        "compute_cpu_us": 29084,
+        "nominal_serial_nodes": 48
+      },
+      {
+        "op": "CUMSUM",
+        "nodes": 48,
+        "compute_critical_us": 2786,
+        "boundary_wait_cpu_us": 14980,
+        "arrival_spread_us": 2774,
+        "compute_cpu_us": 95180,
+        "nominal_serial_nodes": 0
+      },
+      {
+        "op": "SQRT",
+        "nodes": 4,
+        "compute_critical_us": 32,
+        "boundary_wait_cpu_us": 1061,
+        "arrival_spread_us": 33,
+        "compute_cpu_us": 675,
+        "nominal_serial_nodes": 4
+      }
+    ],
+    "tinyblas_shapes_by_tiles_times_k": [
+      {
+        "a_type": "q8_0",
+        "k_blocks": "80",
+        "m0": "0",
+        "m": "10240",
+        "n0": "0",
+        "n": "512",
+        "tile_m": "4",
+        "tile_n": "4",
+        "nth": "38",
+        "calls": "1628",
+        "xtiles": "128",
+        "ytiles": "2560",
+        "tiles_per_call": "327680",
+        "total_tiles": "533463040",
+        "active_threads": "38",
+        "idle_threads": "0",
+        "min_active_tiles": "8592",
+        "max_active_tiles": "8624",
+        "idle_thread_calls": "0"
+      },
+      {
+        "a_type": "q8_0",
+        "k_blocks": "192",
+        "m0": "0",
+        "m": "2560",
+        "n0": "0",
+        "n": "512",
+        "tile_m": "4",
+        "tile_n": "4",
+        "nth": "38",
+        "calls": "2112",
+        "xtiles": "128",
+        "ytiles": "640",
+        "tiles_per_call": "81920",
+        "total_tiles": "173015040",
+        "active_threads": "38",
+        "idle_threads": "0",
+        "min_active_tiles": "2148",
+        "max_active_tiles": "2156",
+        "idle_thread_calls": "0"
+      },
+      {
+        "a_type": "q8_0",
+        "k_blocks": "80",
+        "m0": "0",
+        "m": "6144",
+        "n0": "0",
+        "n": "512",
+        "tile_m": "4",
+        "tile_n": "4",
+        "nth": "38",
+        "calls": "1584",
+        "xtiles": "128",
+        "ytiles": "1536",
+        "tiles_per_call": "196608",
+        "total_tiles": "311427072",
+        "active_threads": "38",
+        "idle_threads": "0",
+        "min_active_tiles": "5170",
+        "max_active_tiles": "5174",
+        "idle_thread_calls": "0"
+      },
+      {
+        "a_type": "q8_0",
+        "k_blocks": "80",
+        "m0": "0",
+        "m": "12288",
+        "n0": "0",
+        "n": "512",
+        "tile_m": "4",
+        "tile_n": "4",
+        "nth": "38",
+        "calls": "528",
+        "xtiles": "128",
+        "ytiles": "3072",
+        "tiles_per_call": "393216",
+        "total_tiles": "207618048",
+        "active_threads": "38",
+        "idle_threads": "0",
+        "min_active_tiles": "10340",
+        "max_active_tiles": "10348",
+        "idle_thread_calls": "0"
+      },
+      {
+        "a_type": "q8_0",
+        "k_blocks": "10",
+        "m0": "0",
+        "m": "10240",
+        "n0": "0",
+        "n": "512",
+        "tile_m": "4",
+        "tile_n": "4",
+        "nth": "38",
+        "calls": "4180",
+        "xtiles": "128",
+        "ytiles": "2560",
+        "tiles_per_call": "327680",
+        "total_tiles": "1369702400",
+        "active_threads": "38",
+        "idle_threads": "0",
+        "min_active_tiles": "8592",
+        "max_active_tiles": "8624",
+        "idle_thread_calls": "0"
+      },
+      {
+        "a_type": "q8_0",
+        "k_blocks": "320",
+        "m0": "0",
+        "m": "320",
+        "n0": "0",
+        "n": "512",
+        "tile_m": "4",
+        "tile_n": "4",
+        "nth": "38",
+        "calls": "4180",
+        "xtiles": "128",
+        "ytiles": "80",
+        "tiles_per_call": "10240",
+        "total_tiles": "42803200",
+        "active_threads": "38",
+        "idle_threads": "0",
+        "min_active_tiles": "250",
+        "max_active_tiles": "270",
+        "idle_thread_calls": "0"
+      },
+      {
+        "a_type": "q8_0",
+        "k_blocks": "80",
+        "m0": "0",
+        "m": "640",
+        "n0": "0",
+        "n": "512",
+        "tile_m": "4",
+        "tile_n": "4",
+        "nth": "38",
+        "calls": "4136",
+        "xtiles": "128",
+        "ytiles": "160",
+        "tiles_per_call": "20480",
+        "total_tiles": "84705280",
+        "active_threads": "38",
+        "idle_threads": "0",
+        "min_active_tiles": "537",
+        "max_active_tiles": "539",
+        "idle_thread_calls": "0"
+      },
+      {
+        "a_type": "q8_0",
+        "k_blocks": "20",
+        "m0": "0",
+        "m": "2560",
+        "n0": "0",
+        "n": "512",
+        "tile_m": "4",
+        "tile_n": "4",
+        "nth": "38",
+        "calls": "2068",
+        "xtiles": "128",
+        "ytiles": "640",
+        "tiles_per_call": "81920",
+        "total_tiles": "169410560",
+        "active_threads": "38",
+        "idle_threads": "0",
+        "min_active_tiles": "2148",
+        "max_active_tiles": "2156",
+        "idle_thread_calls": "0"
+      },
+      {
+        "a_type": "q8_0",
+        "k_blocks": "80",
+        "m0": "0",
+        "m": "512",
+        "n0": "0",
+        "n": "512",
+        "tile_m": "4",
+        "tile_n": "4",
+        "nth": "38",
+        "calls": "1056",
+        "xtiles": "128",
+        "ytiles": "128",
+        "tiles_per_call": "16384",
+        "total_tiles": "17301504",
+        "active_threads": "38",
+        "idle_threads": "0",
+        "min_active_tiles": "400",
+        "max_active_tiles": "432",
+        "idle_thread_calls": "0"
+      },
+      {
+        "a_type": "q8_0",
+        "k_blocks": "80",
+        "m0": "0",
+        "m": "2560",
+        "n0": "0",
+        "n": "512",
+        "tile_m": "4",
+        "tile_n": "4",
+        "nth": "38",
+        "calls": "44",
+        "xtiles": "128",
+        "ytiles": "640",
+        "tiles_per_call": "81920",
+        "total_tiles": "3604480",
+        "active_threads": "38",
+        "idle_threads": "0",
+        "min_active_tiles": "2148",
+        "max_active_tiles": "2156",
+        "idle_thread_calls": "0"
+      }
+    ]
+  },
+  "tg": {
+    "graphs": [],
+    "operators_by_critical_compute": [],
+    "operators_by_boundary_wait": [],
+    "tinyblas_shapes_by_tiles_times_k": []
+  }
+}

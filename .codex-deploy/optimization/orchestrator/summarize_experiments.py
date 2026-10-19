@@ -2,7 +2,7 @@ import json, math, sys
 from pathlib import Path
 
 root = Path('/work/apac2602/qwen38-cpu/optimization/20261018-v1')
-paths = [Path('/work/apac2602/qwen38-cpu/llama_bench_results_4335769')]+sorted((root/'results').iterdir())
+paths = [Path('/work/apac2602/qwen38-cpu/llama_bench_results_'+jid) for jid in ['4335768','4335769']]+sorted((root/'results').iterdir())
 rows = []
 for d in paths:
     if not d.is_dir():

@@ -1,0 +1,41 @@
+{
+  "schema": "llama_cpp_ppl_regression_v1",
+  "ppl": 2.7767,
+  "elapsed_seconds": 376,
+  "conditions": {
+    "model_files_path_and_size": [
+      [
+        "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+        10946624
+      ],
+      [
+        "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00002-of-00004.gguf",
+        49859583136
+      ],
+      [
+        "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00003-of-00004.gguf",
+        49376141504
+      ],
+      [
+        "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00004-of-00004.gguf",
+        12087983520
+      ]
+    ],
+    "data_sha256": "173c87a53759e0201f33e0ccf978e510c2042d7f2cb78229d9a50d79b9e7dd08",
+    "ppl_ctx": 512,
+    "ppl_chunks": 2,
+    "ppl_batch": 512,
+    "ppl_ubatch": 256,
+    "threads": 38,
+    "kv_cache_k": "f16",
+    "kv_cache_v": "f16",
+    "numa": "distribute",
+    "warmup": false,
+    "gpu_layers": 0
+  },
+  "baseline_json": "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/perplexity_result.json",
+  "tolerance_percent": 0.5,
+  "baseline_ppl": 2.7696,
+  "relative_difference_percent": 0.2563547082611084,
+  "status": "PASS"
+}

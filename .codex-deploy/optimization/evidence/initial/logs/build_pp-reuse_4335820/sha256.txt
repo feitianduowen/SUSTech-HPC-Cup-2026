@@ -1,0 +1,3 @@
+d9954801e7dae17e85675a263cbbb45443176fccb7daab082048f254756c6da7  /work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/pp-reuse/build/bin/llama-bench
+a23c0397176600878864b03260c9c2fe322632f2f8ed74280ee7326a4b38fb34  /work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/pp-reuse/build/bin/llama-perplexity
+3d970834bf882deeb51f7a36d8edfb78808cc9fe9cd89e32b5a55cfdda4e1ffe  /work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/pp-reuse/build/bin/libggml-cpu.so

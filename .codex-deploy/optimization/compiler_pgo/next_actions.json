@@ -1,0 +1,13 @@
+{
+  "phase": "Intel Classic O3/O2 PGO",
+  "status": "2026-10-19T10:41:20+08:00: both resubmissions RUN; O3 4336626 r13n05, O2 4336627 r13n45",
+  "active_jobs": {"O3": "4336626", "O2": "4336627"},
+  "failed_jobs": {"O3": "4336529", "O2": "4336530"},
+  "failure_fixed": "Compute nodes lack git. Login-side revision and clean diff verified; 3687 tracked SHA256 entries saved. Compute-side verification uses Python.",
+  "completed_rejected_retries": {"O3": "2026-10-19T10:27:03+08:00", "O2": "2026-10-19T10:32:22+08:00"},
+  "rejected_retry_job_ids": [],
+  "lsf_reason": "u-ssc pending slots reached MPEND3000. Five retries per request; return255, job not submitted.",
+  "resource_snapshot": "2026-10-19T10:30:04+08:00: group PEND3012, MPEND3000; own NJOBS0; matching r13n04..17 nodes idle",
+  "next": "Check bjobs and results/4336626/job.status and results/4336627/job.status first. Do not duplicate these submissions while RUN/PEND. Collect/download/write Excel at each stage. On READY plus both PPL PASS and usable hot-source profile feedback, run prepare_paired_specs.py PARENT and submit paired fixed PPL->PP10->TG10, forward/reverse on matching free r13n Gold6148 nodes. Failed => inspect stage and repair before resubmission via submit_logged.py; check group admission and free matching nodes. Preserve all prior failed jobs, rejection records and samples. Do not alter fixed workloads or production.",
+  "readme": "/work/apac2602/qwen38-cpu/optimization/20261019-compiler-pgo/README.md"
+}

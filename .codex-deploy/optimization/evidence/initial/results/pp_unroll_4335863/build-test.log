@@ -1,0 +1,45 @@
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+remark #11074: Inlining inhibited by limit max-total-size 
+remark #11076: To get full report use -qopt-report=4 -qopt-report-phase ipo
+PASS: 768 Q8 tinyBLAS cases, padded strides and guard outputs, bitwise equal
+timing,512,64,128,0,reference,0.000193357,2044.76355
+timing,512,64,128,0,candidate,0.000194073,2044.76355
+timing,512,64,128,1,candidate,0.000192642,2044.76355
+timing,512,64,128,1,reference,0.000191053,2044.76355
+timing,512,64,128,2,reference,0.000192324,2044.76355
+timing,512,64,128,2,candidate,0.000191371,2044.76355
+timing,512,64,128,3,candidate,0.000190020,2044.76355
+timing,512,64,128,3,reference,0.000196695,2044.76355
+timing,512,64,128,4,reference,0.000190337,2044.76355
+timing,512,64,128,4,candidate,0.000192722,2044.76355
+timing,4096,512,128,0,reference,0.012127320,2044.76355
+timing,4096,512,128,0,candidate,0.012091319,2044.76355
+timing,4096,512,128,1,candidate,0.012131691,2044.76355
+timing,4096,512,128,1,reference,0.012114366,2044.76355
+timing,4096,512,128,2,reference,0.012154341,2044.76355
+timing,4096,512,128,2,candidate,0.012081703,2044.76355
+timing,4096,512,128,3,candidate,0.012084643,2044.76355
+timing,4096,512,128,3,reference,0.012157679,2044.76355
+timing,4096,512,128,4,reference,0.012110710,2044.76355
+timing,4096,512,128,4,candidate,0.012074947,2044.76355
+timing,8192,128,128,0,reference,0.006516616,2044.76355
+timing,8192,128,128,0,candidate,0.005947987,2044.76355
+timing,8192,128,128,1,candidate,0.005954663,2044.76355
+timing,8192,128,128,1,reference,0.005966981,2044.76355
+timing,8192,128,128,2,reference,0.005988995,2044.76355
+timing,8192,128,128,2,candidate,0.005948623,2044.76355
+timing,8192,128,128,3,candidate,0.005949656,2044.76355
+timing,8192,128,128,3,reference,0.005965392,2044.76355
+timing,8192,128,128,4,reference,0.006030321,2044.76355
+timing,8192,128,128,4,candidate,0.005949974,2044.76355

@@ -1,0 +1,1411 @@
+{
+  "jobs": [
+    {
+      "job": "4336045",
+      "status": {
+        "state": "COMPLETE",
+        "time": 1792351287.7355301,
+        "host": "r13n05"
+      },
+      "ppl": 2.7767,
+      "ppl_status": "PASS"
+    },
+    {
+      "job": "4336046",
+      "status": {
+        "state": "COMPLETE",
+        "time": 1792350823.0859056,
+        "host": "r13n15"
+      },
+      "ppl": 2.7767,
+      "ppl_status": "PASS"
+    }
+  ],
+  "runs": [
+    {
+      "name": "auto-default",
+      "host": "r13n05",
+      "load_mode": "auto",
+      "interleave": false,
+      "start": 1792346209.0658684,
+      "workloads": {
+        "pp": {
+          "mean": 33.557615,
+          "std": 8.392434,
+          "cv": 25.009029992149323,
+          "samples": [
+            30.2932,
+            36.7686,
+            36.4254,
+            34.2698,
+            36.4344,
+            36.3606,
+            37.955,
+            37.675,
+            38.7462,
+            10.6479
+          ],
+          "start": 1792346209.0666456,
+          "finish": 1792347034.8736231
+        },
+        "tg": {
+          "mean": 2.861592,
+          "std": 0.071378,
+          "cv": 2.494345804712901,
+          "samples": [
+            2.86568,
+            2.87922,
+            2.76163,
+            2.9368,
+            2.76553,
+            2.89808,
+            2.76054,
+            2.90758,
+            2.9263,
+            2.91456
+          ],
+          "start": 1792347034.9350038,
+          "finish": 1792347625.3688905
+        }
+      },
+      "score": 78.79821863168763,
+      "finish": 1792347625.4005318,
+      "status": "COMPLETE",
+      "measurement_note": "Development run with 15s OS monitoring; no profiler.",
+      "job": "4336045",
+      "position": 1,
+      "ppl": 2.7767,
+      "ppl_status": "PASS",
+      "os": {
+        "pp": {
+          "measurement_start": 1792346327.8627727,
+          "measurement_end": 1792347033.209901,
+          "marker_source": "source-verified test_prompt/test_gen entry",
+          "inter_run_gaps_seconds": [
+            -0.0038899840187980317,
+            4.898637890704549e-05,
+            0.0003389863004130689,
+            0.00038111633349302565,
+            0.00029017246118456796,
+            0.0004233147689234329,
+            0.00031791847546713825,
+            0.007866637430417711,
+            0.00157690501147556
+          ],
+          "sample_count": 45,
+          "observed_seconds": 686.1917600631714,
+          "minor_fault_delta": 2692852,
+          "major_fault_delta": 0,
+          "active_cores": 21.10971137086588,
+          "rss_gib_min": 90.30375289916992,
+          "rss_gib_max": 109.24503326416016,
+          "first_numa_gib": {
+            "N1": 75.61103057861328,
+            "N0": 26.27090835571289
+          },
+          "last_numa_gib": {
+            "N1": 60.92668533325195,
+            "N0": 29.879356384277344
+          },
+          "last_numa_percent": {
+            "N1": 67.09540927108884,
+            "N0": 32.90459072891116
+          },
+          "last_file_numa_gib": {
+            "N1": 40.52876663208008,
+            "N0": 8.483184814453125
+          },
+          "last_anon_numa_gib": {
+            "N0": 21.39617156982422,
+            "N1": 20.397918701171875
+          },
+          "last_affinity_counts": {
+            "0-19": 19,
+            "20-39": 19
+          },
+          "first3_mean": 34.495733333333334,
+          "last3_mean": 29.023033333333334,
+          "note": "Fault/CPU deltas cover first-to-last 15s samples inside timed runs."
+        },
+        "tg": {
+          "measurement_start": 1792347175.5036826,
+          "measurement_end": 1792347623.439396,
+          "marker_source": "source-verified test_prompt/test_gen entry",
+          "inter_run_gaps_seconds": [
+            0.04450098002075009,
+            0.056555542672484194,
+            0.04625896858837564,
+            0.039341518273680265,
+            0.0375580711610084,
+            0.03894146188244463,
+            0.03832266451708932,
+            0.0383322417657439,
+            0.03802986344592085
+          ],
+          "sample_count": 28,
+          "observed_seconds": 425.4240825176239,
+          "minor_fault_delta": 766262,
+          "major_fault_delta": 0,
+          "active_cores": 36.65937270806459,
+          "rss_gib_min": 102.02746963500977,
+          "rss_gib_max": 103.35011672973633,
+          "first_numa_gib": {
+            "N1": 82.35543060302734,
+            "N0": 19.675048828125
+          },
+          "last_numa_gib": {
+            "N1": 82.2556381225586,
+            "N0": 21.09799575805664
+          },
+          "last_numa_percent": {
+            "N1": 79.58659510469933,
+            "N0": 20.41340489530067
+          },
+          "last_file_numa_gib": {
+            "N1": 51.03702163696289,
+            "N0": 10.342155456542969
+          },
+          "last_anon_numa_gib": {
+            "N0": 10.755840301513672,
+            "N1": 31.218616485595703
+          },
+          "last_affinity_counts": {
+            "0-19": 19,
+            "20-39": 19
+          },
+          "first3_mean": 2.8355099999999998,
+          "last3_mean": 2.9161466666666667,
+          "note": "Fault/CPU deltas cover first-to-last 15s samples inside timed runs."
+        }
+      }
+    },
+    {
+      "name": "auto-interleave",
+      "host": "r13n05",
+      "load_mode": "auto",
+      "interleave": true,
+      "start": 1792347625.4374685,
+      "workloads": {
+        "pp": {
+          "mean": 35.576532,
+          "std": 2.051263,
+          "cv": 5.765775596114877,
+          "samples": [
+            36.4697,
+            30.477,
+            34.7437,
+            34.8167,
+            35.6743,
+            36.2254,
+            37.1146,
+            37.3399,
+            35.3665,
+            37.5376
+          ],
+          "start": 1792347625.45069,
+          "finish": 1792348286.1244037
+        },
+        "tg": {
+          "mean": 3.056631,
+          "std": 0.007335,
+          "cv": 0.23997008471091213,
+          "samples": [
+            3.05334,
+            3.04846,
+            3.05794,
+            3.05662,
+            3.05309,
+            3.05446,
+            3.07119,
+            3.06614,
+            3.05761,
+            3.04745
+          ],
+          "start": 1792348286.1688008,
+          "finish": 1792348786.6717963
+        }
+      },
+      "score": 83.85332952669116,
+      "finish": 1792348786.674241,
+      "status": "COMPLETE",
+      "measurement_note": "Development run with 15s OS monitoring; no profiler.",
+      "job": "4336045",
+      "position": 2,
+      "ppl": 2.7767,
+      "ppl_status": "PASS",
+      "os": {
+        "pp": {
+          "measurement_start": 1792347706.4388072,
+          "measurement_end": 1792348283.9993236,
+          "marker_source": "source-verified test_prompt/test_gen entry",
+          "inter_run_gaps_seconds": [
+            0.006598051872799715,
+            -0.005076092899287232,
+            -0.0019878176199981112,
+            0.00769650277380407,
+            -0.0033316311938449417,
+            0.003994295174926776,
+            -0.00638295967663538,
+            0.00327557008019852,
+            -0.004751757231076681
+          ],
+          "sample_count": 37,
+          "observed_seconds": 561.8751680850983,
+          "minor_fault_delta": 1776152,
+          "major_fault_delta": 0,
+          "active_cores": 25.609852183075382,
+          "rss_gib_min": 102.5405044555664,
+          "rss_gib_max": 109.3013687133789,
+          "first_numa_gib": {
+            "N1": 71.640625,
+            "N0": 30.904735565185547
+          },
+          "last_numa_gib": {
+            "N1": 74.98040390014648,
+            "N0": 34.32680130004883
+          },
+          "last_numa_percent": {
+            "N1": 68.59603057531335,
+            "N0": 31.403969424686647
+          },
+          "last_file_numa_gib": {
+            "N1": 54.08806610107422,
+            "N0": 13.420639038085938
+          },
+          "last_anon_numa_gib": {
+            "N0": 20.90616226196289,
+            "N1": 20.892337799072266
+          },
+          "last_affinity_counts": {
+            "0-19": 19,
+            "20-39": 19
+          },
+          "first3_mean": 33.8968,
+          "last3_mean": 36.748,
+          "note": "Fault/CPU deltas cover first-to-last 15s samples inside timed runs."
+        },
+        "tg": {
+          "measurement_start": 1792348365.175685,
+          "measurement_end": 1792348784.3978827,
+          "marker_source": "source-verified test_prompt/test_gen entry",
+          "inter_run_gaps_seconds": [
+            0.049877857883913634,
+            0.05084063255834792,
+            0.05082782076782166,
+            0.05093714745166267,
+            0.051493536171754783,
+            0.05201129082678335,
+            0.04984187401916529,
+            0.05125484295373184,
+            0.05129341712353863
+          ],
+          "sample_count": 26,
+          "observed_seconds": 394.7307074069977,
+          "minor_fault_delta": 345160,
+          "major_fault_delta": 0,
+          "active_cores": 37.861356412260356,
+          "rss_gib_min": 102.11223220825195,
+          "rss_gib_max": 103.42827606201172,
+          "first_numa_gib": {
+            "N1": 71.44872665405273,
+            "N0": 30.66794204711914
+          },
+          "last_numa_gib": {
+            "N1": 72.06242370605469,
+            "N0": 31.370399475097656
+          },
+          "last_numa_percent": {
+            "N1": 69.67075004792675,
+            "N0": 30.32924995207325
+          },
+          "last_file_numa_gib": {
+            "N1": 51.073341369628906,
+            "N0": 10.379219055175781
+          },
+          "last_anon_numa_gib": {
+            "N0": 20.991180419921875,
+            "N1": 20.98908233642578
+          },
+          "last_affinity_counts": {
+            "0-19": 19,
+            "20-39": 19
+          },
+          "first3_mean": 3.0532466666666664,
+          "last3_mean": 3.0570666666666666,
+          "note": "Fault/CPU deltas cover first-to-last 15s samples inside timed runs."
+        }
+      }
+    },
+    {
+      "name": "copy-interleave",
+      "host": "r13n05",
+      "load_mode": "none",
+      "interleave": true,
+      "start": 1792348786.675938,
+      "workloads": {
+        "pp": {
+          "mean": 40.431335,
+          "std": 0.915282,
+          "cv": 2.2637936639984804,
+          "samples": [
+            39.9459,
+            41.373,
+            40.1692,
+            40.7742,
+            39.0196,
+            40.9475,
+            39.0859,
+            40.4003,
+            40.7266,
+            41.8712
+          ],
+          "start": 1792348786.703582,
+          "finish": 1792349461.8851383
+        },
+        "tg": {
+          "mean": 2.908104,
+          "std": 0.013501,
+          "cv": 0.4642543732961408,
+          "samples": [
+            2.91205,
+            2.91153,
+            2.91062,
+            2.89661,
+            2.90311,
+            2.90373,
+            2.90868,
+            2.93309,
+            2.91952,
+            2.88211
+          ],
+          "start": 1792349461.9370377,
+          "finish": 1792350113.3748686
+        }
+      },
+      "score": 87.19287687633155,
+      "finish": 1792350113.3779323,
+      "status": "COMPLETE",
+      "measurement_note": "Development run with 15s OS monitoring; no profiler.",
+      "job": "4336045",
+      "position": 3,
+      "ppl": 2.7767,
+      "ppl_status": "PASS",
+      "os": {
+        "pp": {
+          "measurement_start": 1792348954.7047198,
+          "measurement_end": 1792349461.490548,
+          "marker_source": "source-verified test_prompt/test_gen entry",
+          "inter_run_gaps_seconds": [
+            0.0003199247048328857,
+            0.008390566070190175,
+            0.0016022008526590525,
+            -0.008833620424191224,
+            0.005531083025267947,
+            -0.004162470324217793,
+            -0.00015236646166982837,
+            0.00013373287353601881,
+            0.010274373101687218
+          ],
+          "sample_count": 33,
+          "observed_seconds": 481.5844712257385,
+          "minor_fault_delta": 309240,
+          "major_fault_delta": 0,
+          "active_cores": 28.522784310379702,
+          "rss_gib_min": 77.51419067382812,
+          "rss_gib_max": 78.70134353637695,
+          "first_numa_gib": {
+            "N1": 38.76335525512695,
+            "N0": 38.75731658935547
+          },
+          "last_numa_gib": {
+            "N1": 39.355979919433594,
+            "N0": 39.349945068359375
+          },
+          "last_numa_percent": {
+            "N1": 50.003833797185635,
+            "N0": 49.996166202814365
+          },
+          "last_file_numa_gib": {
+            "N1": 0.6794242858886719,
+            "N0": 0.6712646484375
+          },
+          "last_anon_numa_gib": {
+            "N0": 38.678680419921875,
+            "N1": 38.67655563354492
+          },
+          "last_affinity_counts": {
+            "0-19": 19,
+            "20-39": 19
+          },
+          "first3_mean": 40.49603333333333,
+          "last3_mean": 40.99936666666667,
+          "note": "Fault/CPU deltas cover first-to-last 15s samples inside timed runs."
+        },
+        "tg": {
+          "measurement_start": 1792349672.4156384,
+          "measurement_end": 1792350113.0325534,
+          "marker_source": "source-verified test_prompt/test_gen entry",
+          "inter_run_gaps_seconds": [
+            0.05066254354309052,
+            0.05092590287194554,
+            0.050641368841432666,
+            0.05187048795995963,
+            0.050552953193111705,
+            0.05157543311914026,
+            0.05013135126245061,
+            0.05121666792798152,
+            0.05154545449951087
+          ],
+          "sample_count": 29,
+          "observed_seconds": 421.4046039581299,
+          "minor_fault_delta": 19908,
+          "major_fault_delta": 0,
+          "active_cores": 37.86572298955102,
+          "rss_gib_min": 77.66104507446289,
+          "rss_gib_max": 77.73657608032227,
+          "first_numa_gib": {
+            "N1": 38.83220672607422,
+            "N0": 38.83212661743164
+          },
+          "last_numa_gib": {
+            "N1": 38.87030029296875,
+            "N0": 38.86992645263672
+          },
+          "last_numa_percent": {
+            "N1": 50.000240442012895,
+            "N0": 49.999759557987105
+          },
+          "last_file_numa_gib": {
+            "N1": 0.11326980590820312,
+            "N0": 0.10492324829101562
+          },
+          "last_anon_numa_gib": {
+            "N0": 38.7650032043457,
+            "N1": 38.75703048706055
+          },
+          "last_affinity_counts": {
+            "0-19": 19,
+            "20-39": 19
+          },
+          "first3_mean": 2.9114,
+          "last3_mean": 2.911573333333333,
+          "note": "Fault/CPU deltas cover first-to-last 15s samples inside timed runs."
+        }
+      }
+    },
+    {
+      "name": "copy-default",
+      "host": "r13n05",
+      "load_mode": "none",
+      "interleave": false,
+      "start": 1792350113.3810153,
+      "workloads": {
+        "pp": {
+          "mean": 53.416379,
+          "std": 0.935087,
+          "cv": 1.750562313480665,
+          "samples": [
+            51.565,
+            52.5641,
+            53.4747,
+            53.0862,
+            52.6899,
+            53.6559,
+            54.3158,
+            54.2772,
+            54.3655,
+            54.1695
+          ],
+          "start": 1792350113.3970623,
+          "finish": 1792350679.9913073
+        },
+        "tg": {
+          "mean": 2.86664,
+          "std": 0.044683,
+          "cv": 1.5587238020818799,
+          "samples": [
+            2.74849,
+            2.85843,
+            2.86817,
+            2.87338,
+            2.86965,
+            2.86176,
+            2.89535,
+            2.89634,
+            2.90887,
+            2.88597
+          ],
+          "start": 1792350679.993845,
+          "finish": 1792351287.5344193
+        }
+      },
+      "score": 99.50405972518539,
+      "finish": 1792351287.5364861,
+      "status": "COMPLETE",
+      "measurement_note": "Development run with 15s OS monitoring; no profiler.",
+      "job": "4336045",
+      "position": 4,
+      "ppl": 2.7767,
+      "ppl_status": "PASS",
+      "os": {
+        "pp": {
+          "measurement_start": 1792350295.570726,
+          "measurement_end": 1792350679.0804822,
+          "marker_source": "source-verified test_prompt/test_gen entry",
+          "inter_run_gaps_seconds": [
+            -0.0029807756191431167,
+            0.0007989014809552941,
+            0.006849223579955321,
+            -0.0028502320850805063,
+            -0.0035010224383569266,
+            0.00041521417615086875,
+            0.00033981757556489356,
+            0.00035277361303798216,
+            0.0003302423653579467
+          ],
+          "sample_count": 25,
+          "observed_seconds": 363.4567859172821,
+          "minor_fault_delta": 5430986,
+          "major_fault_delta": 0,
+          "active_cores": 37.30922223883348,
+          "rss_gib_min": 77.54898834228516,
+          "rss_gib_max": 78.72726821899414,
+          "first_numa_gib": {
+            "N1": 44.101173400878906,
+            "N0": 33.447811126708984
+          },
+          "last_numa_gib": {
+            "N1": 46.64110565185547,
+            "N0": 32.086158752441406
+          },
+          "last_numa_percent": {
+            "N1": 59.24390489720843,
+            "N0": 40.75609510279157
+          },
+          "last_file_numa_gib": {
+            "N1": 0.6908035278320312,
+            "N0": 0.6903915405273438
+          },
+          "last_anon_numa_gib": {
+            "N0": 31.395767211914062,
+            "N1": 45.95030212402344
+          },
+          "last_affinity_counts": {
+            "0-19": 19,
+            "20-39": 19
+          },
+          "first3_mean": 52.5346,
+          "last3_mean": 54.27073333333333,
+          "note": "Fault/CPU deltas cover first-to-last 15s samples inside timed runs."
+        },
+        "tg": {
+          "measurement_start": 1792350839.4484642,
+          "measurement_end": 1792351286.6831706,
+          "marker_source": "source-verified test_prompt/test_gen entry",
+          "inter_run_gaps_seconds": [
+            0.05710597018188679,
+            0.2812696697767336,
+            0.03815081961975153,
+            0.03957450626855774,
+            0.03864205556347855,
+            0.0444940077329079,
+            0.03892203145154127,
+            0.03972706302563722,
+            0.04036983070556488
+          ],
+          "sample_count": 30,
+          "observed_seconds": 440.6342947483063,
+          "minor_fault_delta": 4847727,
+          "major_fault_delta": 0,
+          "active_cores": 37.694660170487886,
+          "rss_gib_min": 77.66516494750977,
+          "rss_gib_max": 77.74343490600586,
+          "first_numa_gib": {
+            "N1": 38.46419906616211,
+            "N0": 39.201019287109375
+          },
+          "last_numa_gib": {
+            "N1": 38.92914581298828,
+            "N0": 38.8143310546875
+          },
+          "last_numa_percent": {
+            "N1": 50.073842052688356,
+            "N0": 49.926157947311644
+          },
+          "last_file_numa_gib": {
+            "N1": 0.11418914794921875,
+            "N0": 0.10463714599609375
+          },
+          "last_anon_numa_gib": {
+            "N0": 38.709693908691406,
+            "N1": 38.81495666503906
+          },
+          "last_affinity_counts": {
+            "0-19": 19,
+            "20-39": 19
+          },
+          "first3_mean": 2.82503,
+          "last3_mean": 2.8970599999999997,
+          "note": "Fault/CPU deltas cover first-to-last 15s samples inside timed runs."
+        }
+      }
+    },
+    {
+      "name": "copy-default",
+      "host": "r13n15",
+      "load_mode": "none",
+      "interleave": false,
+      "start": 1792346156.1750114,
+      "workloads": {
+        "pp": {
+          "mean": 52.647295,
+          "std": 0.91994,
+          "cv": 1.7473642283046071,
+          "samples": [
+            52.6184,
+            50.5455,
+            51.5933,
+            52.503,
+            52.8777,
+            53.1843,
+            53.3478,
+            53.3023,
+            53.0527,
+            53.4481
+          ],
+          "start": 1792346156.201604,
+          "finish": 1792346691.0487957
+        },
+        "tg": {
+          "mean": 2.548879,
+          "std": 0.678052,
+          "cv": 26.601968943994596,
+          "samples": [
+            1.40165,
+            1.15926,
+            2.67321,
+            2.89133,
+            2.92877,
+            2.92369,
+            2.91051,
+            2.93807,
+            2.95662,
+            2.70567
+          ],
+          "start": 1792346691.0514572,
+          "finish": 1792347423.0474808
+        }
+      },
+      "score": 93.14930957446389,
+      "finish": 1792347423.0491183,
+      "status": "COMPLETE",
+      "measurement_note": "Development run with 15s OS monitoring; no profiler.",
+      "job": "4336046",
+      "position": 1,
+      "ppl": 2.7767,
+      "ppl_status": "PASS",
+      "os": {
+        "pp": {
+          "measurement_start": 1792346299.266684,
+          "measurement_end": 1792346688.3810627,
+          "marker_source": "source-verified test_prompt/test_gen entry",
+          "inter_run_gaps_seconds": [
+            -0.002688713834473333,
+            0.0003500399252942543,
+            0.008593720081663037,
+            -0.007872770313355204,
+            0.0004452934169947298,
+            0.0003605211682113918,
+            0.0004330151555151929,
+            0.00035783467492933596,
+            0.0011290611285375007
+          ],
+          "sample_count": 25,
+          "observed_seconds": 368.306503534317,
+          "minor_fault_delta": 16878567,
+          "major_fault_delta": 0,
+          "active_cores": 37.753012413761056,
+          "rss_gib_min": 77.51810455322266,
+          "rss_gib_max": 78.69761657714844,
+          "first_numa_gib": {
+            "N1": 45.88875961303711,
+            "N0": 31.62934112548828
+          },
+          "last_numa_gib": {
+            "N1": 46.35260009765625,
+            "N0": 32.34501266479492
+          },
+          "last_numa_percent": {
+            "N1": 58.8996266475981,
+            "N0": 41.1003733524019
+          },
+          "last_file_numa_gib": {
+            "N1": 0.5302886962890625,
+            "N0": 0.8203620910644531
+          },
+          "last_anon_numa_gib": {
+            "N0": 31.52465057373047,
+            "N1": 45.82231140136719
+          },
+          "last_affinity_counts": {
+            "0-19": 19,
+            "20-39": 19
+          },
+          "first3_mean": 51.58573333333333,
+          "last3_mean": 53.2677,
+          "note": "Fault/CPU deltas cover first-to-last 15s samples inside timed runs."
+        },
+        "tg": {
+          "measurement_start": 1792346860.8216329,
+          "measurement_end": 1792347420.7088926,
+          "marker_source": "source-verified test_prompt/test_gen entry",
+          "inter_run_gaps_seconds": [
+            0.03711576103796688,
+            0.044769104103266955,
+            0.041466624908082395,
+            0.04172808909863335,
+            0.04118538013256767,
+            0.04029134221081421,
+            0.0408172569312768,
+            0.040913037776242334,
+            0.04030005866393793
+          ],
+          "sample_count": 36,
+          "observed_seconds": 538.2753131389618,
+          "minor_fault_delta": 10502703,
+          "major_fault_delta": 0,
+          "active_cores": 32.52798256322755,
+          "rss_gib_min": 77.53784942626953,
+          "rss_gib_max": 77.6674575805664,
+          "first_numa_gib": {
+            "N1": 45.846614837646484,
+            "N0": 31.820899963378906
+          },
+          "last_numa_gib": {
+            "N1": 49.42536926269531,
+            "N0": 28.18044662475586
+          },
+          "last_numa_percent": {
+            "N1": 63.6877129600378,
+            "N0": 36.3122870399622
+          },
+          "last_file_numa_gib": {
+            "N1": 0.00798797607421875,
+            "N0": 0.07115554809570312
+          },
+          "last_anon_numa_gib": {
+            "N0": 28.109291076660156,
+            "N1": 49.417381286621094
+          },
+          "last_affinity_counts": {
+            "0-19": 19,
+            "20-39": 19
+          },
+          "first3_mean": 1.7447066666666666,
+          "last3_mean": 2.8667866666666666,
+          "note": "Fault/CPU deltas cover first-to-last 15s samples inside timed runs."
+        }
+      }
+    },
+    {
+      "name": "copy-interleave",
+      "host": "r13n15",
+      "load_mode": "none",
+      "interleave": true,
+      "start": 1792347423.0657196,
+      "workloads": {
+        "pp": {
+          "mean": 39.269168,
+          "std": 1.183658,
+          "cv": 3.014217158866213,
+          "samples": [
+            40.814,
+            39.3671,
+            39.7334,
+            38.4666,
+            39.8856,
+            40.458,
+            39.3666,
+            37.9311,
+            39.7514,
+            36.918
+          ],
+          "start": 1792347423.0791507,
+          "finish": 1792348113.6274366
+        },
+        "tg": {
+          "mean": 2.877717,
+          "std": 0.008593,
+          "cv": 0.2986047620387967,
+          "samples": [
+            2.87017,
+            2.87779,
+            2.87956,
+            2.86889,
+            2.87706,
+            2.88802,
+            2.87101,
+            2.87174,
+            2.89611,
+            2.87681
+          ],
+          "start": 1792348113.677292,
+          "finish": 1792348720.422277
+        }
+      },
+      "score": 85.48046789476612,
+      "finish": 1792348720.4426303,
+      "status": "COMPLETE",
+      "measurement_note": "Development run with 15s OS monitoring; no profiler.",
+      "job": "4336046",
+      "position": 2,
+      "ppl": 2.7767,
+      "ppl_status": "PASS",
+      "os": {
+        "pp": {
+          "measurement_start": 1792347591.286946,
+          "measurement_end": 1792348113.2648077,
+          "marker_source": "source-verified test_prompt/test_gen entry",
+          "inter_run_gaps_seconds": [
+            0.008704400230591602,
+            -0.006064843928712094,
+            -0.00046176204052983394,
+            0.002556547245120555,
+            0.006439410213253893,
+            -0.008251327182982493,
+            0.00022919774609420074,
+            0.009089154299559254,
+            0.000760919214478406
+          ],
+          "sample_count": 34,
+          "observed_seconds": 496.62382912635803,
+          "minor_fault_delta": 309205,
+          "major_fault_delta": 0,
+          "active_cores": 27.972056887478725,
+          "rss_gib_min": 77.509765625,
+          "rss_gib_max": 78.69131088256836,
+          "first_numa_gib": {
+            "N1": 38.7530517578125,
+            "N0": 38.762935638427734
+          },
+          "last_numa_gib": {
+            "N1": 39.31916427612305,
+            "N0": 39.37633514404297
+          },
+          "last_numa_percent": {
+            "N1": 49.96367589738857,
+            "N0": 50.03632410261143
+          },
+          "last_file_numa_gib": {
+            "N1": 0.6438865661621094,
+            "N0": 0.7067909240722656
+          },
+          "last_anon_numa_gib": {
+            "N0": 38.6695442199707,
+            "N1": 38.67527770996094
+          },
+          "last_affinity_counts": {
+            "0-39": 1,
+            "20-39": 19,
+            "0-19": 18
+          },
+          "first3_mean": 39.9715,
+          "last3_mean": 38.20016666666667,
+          "note": "Fault/CPU deltas cover first-to-last 15s samples inside timed runs."
+        },
+        "tg": {
+          "measurement_start": 1792348274.8195722,
+          "measurement_end": 1792348720.0776715,
+          "marker_source": "source-verified test_prompt/test_gen entry",
+          "inter_run_gaps_seconds": [
+            0.049524575071167476,
+            0.050950929368163145,
+            0.051092316497069135,
+            0.050797547883419725,
+            0.050696392067990814,
+            0.05081213843676835,
+            0.05125711804259936,
+            0.05114606847632075,
+            0.05115268319433852
+          ],
+          "sample_count": 30,
+          "observed_seconds": 436.28477716445923,
+          "minor_fault_delta": 20382,
+          "major_fault_delta": 0,
+          "active_cores": 37.863663516669,
+          "rss_gib_min": 77.6567497253418,
+          "rss_gib_max": 77.73605728149414,
+          "first_numa_gib": {
+            "N1": 38.83052444458008,
+            "N0": 38.83155822753906
+          },
+          "last_numa_gib": {
+            "N1": 38.83558654785156,
+            "N0": 38.90424728393555
+          },
+          "last_numa_percent": {
+            "N1": 49.95583941159911,
+            "N0": 50.04416058840089
+          },
+          "last_file_numa_gib": {
+            "N1": 0.0776824951171875,
+            "N0": 0.14033889770507812
+          },
+          "last_anon_numa_gib": {
+            "N0": 38.76390838623047,
+            "N1": 38.757904052734375
+          },
+          "last_affinity_counts": {
+            "0-19": 19,
+            "20-39": 19
+          },
+          "first3_mean": 2.87584,
+          "last3_mean": 2.881553333333333,
+          "note": "Fault/CPU deltas cover first-to-last 15s samples inside timed runs."
+        }
+      }
+    },
+    {
+      "name": "auto-interleave",
+      "host": "r13n15",
+      "load_mode": "auto",
+      "interleave": true,
+      "start": 1792348720.4442458,
+      "workloads": {
+        "pp": {
+          "mean": 47.821295,
+          "std": 3.931983,
+          "cv": 8.222242831357871,
+          "samples": [
+            41.2015,
+            45.9595,
+            42.4076,
+            46.9143,
+            47.0684,
+            48.8273,
+            49.814,
+            50.5683,
+            52.2169,
+            53.2351
+          ],
+          "start": 1792348720.4627454,
+          "finish": 1792349330.4005592
+        },
+        "tg": {
+          "mean": 2.969195,
+          "std": 0.014233,
+          "cv": 0.47935551555219513,
+          "samples": [
+            2.9575,
+            2.96084,
+            2.9552,
+            2.99574,
+            2.95748,
+            2.9721,
+            2.97838,
+            2.98924,
+            2.96219,
+            2.96328
+          ],
+          "start": 1792349330.4405813,
+          "finish": 1792349847.7632084
+        }
+      },
+      "score": 95.81798334333553,
+      "finish": 1792349847.7842736,
+      "status": "COMPLETE",
+      "measurement_note": "Development run with 15s OS monitoring; no profiler.",
+      "job": "4336046",
+      "position": 3,
+      "ppl": 2.7767,
+      "ppl_status": "PASS",
+      "os": {
+        "pp": {
+          "measurement_start": 1792348897.193602,
+          "measurement_end": 1792349328.1714456,
+          "marker_source": "source-verified test_prompt/test_gen entry",
+          "inter_run_gaps_seconds": [
+            -0.008914602961056062,
+            -4.977920679039016e-05,
+            0.009816911340820411,
+            -0.0035479084306615505,
+            -0.004600193627688043,
+            0.00327739353893719,
+            -0.0030556423554699563,
+            0.003427935060550169,
+            0.006962672871338782
+          ],
+          "sample_count": 28,
+          "observed_seconds": 422.2704358100891,
+          "minor_fault_delta": 1869884,
+          "major_fault_delta": 0,
+          "active_cores": 33.817167362439385,
+          "rss_gib_min": 102.19736099243164,
+          "rss_gib_max": 109.31209182739258,
+          "first_numa_gib": {
+            "N1": 64.04766845703125,
+            "N0": 38.162166595458984
+          },
+          "last_numa_gib": {
+            "N1": 67.5430908203125,
+            "N0": 41.774986267089844
+          },
+          "last_numa_percent": {
+            "N1": 61.78583873764101,
+            "N0": 38.21416126235899
+          },
+          "last_file_numa_gib": {
+            "N1": 46.64247131347656,
+            "N0": 20.880069732666016
+          },
+          "last_anon_numa_gib": {
+            "N0": 20.894916534423828,
+            "N1": 20.900619506835938
+          },
+          "last_affinity_counts": {
+            "0-19": 19,
+            "20-39": 19
+          },
+          "first3_mean": 43.18953333333334,
+          "last3_mean": 52.00676666666667,
+          "note": "Fault/CPU deltas cover first-to-last 15s samples inside timed runs."
+        },
+        "tg": {
+          "measurement_start": 1792349414.1887834,
+          "measurement_end": 1792349845.7518802,
+          "marker_source": "source-verified test_prompt/test_gen entry",
+          "inter_run_gaps_seconds": [
+            0.05029367064258139,
+            0.05107247187390129,
+            0.05113721350524969,
+            0.05145895326257488,
+            0.05211095095947371,
+            0.050430963254392225,
+            0.050692086635130806,
+            0.0516311160345424,
+            0.05210610779138136
+          ],
+          "sample_count": 27,
+          "observed_seconds": 411.1212296485901,
+          "minor_fault_delta": 349954,
+          "major_fault_delta": 0,
+          "active_cores": 37.73222806630414,
+          "rss_gib_min": 102.0811538696289,
+          "rss_gib_max": 103.41551971435547,
+          "first_numa_gib": {
+            "N1": 63.998043060302734,
+            "N0": 38.08934020996094
+          },
+          "last_numa_gib": {
+            "N1": 64.62436294555664,
+            "N0": 38.79854965209961
+          },
+          "last_numa_percent": {
+            "N1": 62.485537607090315,
+            "N0": 37.514462392909685
+          },
+          "last_file_numa_gib": {
+            "N1": 43.636295318603516,
+            "N0": 17.81619644165039
+          },
+          "last_anon_numa_gib": {
+            "N0": 20.98235321044922,
+            "N1": 20.988067626953125
+          },
+          "last_affinity_counts": {
+            "0-19": 19,
+            "20-39": 19
+          },
+          "first3_mean": 2.9578466666666667,
+          "last3_mean": 2.9715700000000003,
+          "note": "Fault/CPU deltas cover first-to-last 15s samples inside timed runs."
+        }
+      }
+    },
+    {
+      "name": "auto-default",
+      "host": "r13n15",
+      "load_mode": "auto",
+      "interleave": false,
+      "start": 1792349847.7863214,
+      "workloads": {
+        "pp": {
+          "mean": 53.615132,
+          "std": 0.123068,
+          "cv": 0.229539675478184,
+          "samples": [
+            53.3947,
+            53.5175,
+            53.5456,
+            53.5207,
+            53.6566,
+            53.572,
+            53.7015,
+            53.767,
+            53.7473,
+            53.7285
+          ],
+          "start": 1792349847.8331118,
+          "finish": 1792350312.124814
+        },
+        "tg": {
+          "mean": 2.996009,
+          "std": 0.01226,
+          "cv": 0.40921105377186784,
+          "samples": [
+            2.9648,
+            3.00472,
+            2.99211,
+            2.99444,
+            3.00275,
+            3.00857,
+            2.99314,
+            2.99719,
+            2.99813,
+            3.00425
+          ],
+          "start": 1792350312.1390746,
+          "finish": 1792350822.8673215
+        }
+      },
+      "score": 101.91362422947657,
+      "finish": 1792350822.8687568,
+      "status": "COMPLETE",
+      "measurement_note": "Development run with 15s OS monitoring; no profiler.",
+      "job": "4336046",
+      "position": 4,
+      "ppl": 2.7767,
+      "ppl_status": "PASS",
+      "os": {
+        "pp": {
+          "measurement_start": 1792349927.7712893,
+          "measurement_end": 1792350309.7586458,
+          "marker_source": "source-verified test_prompt/test_gen entry",
+          "inter_run_gaps_seconds": [
+            0.00047419241699486747,
+            0.008848435554440925,
+            -0.008007349994265667,
+            0.008155459921141528,
+            -0.007445476788575434,
+            0.0026132338376498865,
+            -0.0018674837781986753,
+            0.00034122564111527254,
+            0.0007155347052005823
+          ],
+          "sample_count": 24,
+          "observed_seconds": 361.1755316257477,
+          "minor_fault_delta": 1958014,
+          "major_fault_delta": 0,
+          "active_cores": 37.81011946886404,
+          "rss_gib_min": 102.91494369506836,
+          "rss_gib_max": 109.29072570800781,
+          "first_numa_gib": {
+            "N1": 82.02896881103516,
+            "N0": 20.891403198242188
+          },
+          "last_numa_gib": {
+            "N1": 82.83850860595703,
+            "N0": 26.456653594970703
+          },
+          "last_numa_percent": {
+            "N1": 75.79339006210274,
+            "N0": 24.20660993789726
+          },
+          "last_file_numa_gib": {
+            "N1": 46.6319694519043,
+            "N0": 20.86762237548828
+          },
+          "last_anon_numa_gib": {
+            "N0": 5.589031219482422,
+            "N1": 36.206539154052734
+          },
+          "last_affinity_counts": {
+            "0-19": 19,
+            "20-39": 19
+          },
+          "first3_mean": 53.485933333333335,
+          "last3_mean": 53.7476,
+          "note": "Fault/CPU deltas cover first-to-last 15s samples inside timed runs."
+        },
+        "tg": {
+          "measurement_start": 1792350393.213086,
+          "measurement_end": 1792350820.8015893,
+          "marker_source": "source-verified test_prompt/test_gen entry",
+          "inter_run_gaps_seconds": [
+            0.04206389188281179,
+            0.037952250627931505,
+            0.03824089460705693,
+            0.03850505256652781,
+            0.037725880674685186,
+            0.03775640288257165,
+            0.038978235759152824,
+            0.037636314975827645,
+            0.03807273993176352
+          ],
+          "sample_count": 27,
+          "observed_seconds": 411.1327893733978,
+          "minor_fault_delta": 705290,
+          "major_fault_delta": 0,
+          "active_cores": 37.838942556029075,
+          "rss_gib_min": 102.09909439086914,
+          "rss_gib_max": 103.43790817260742,
+          "first_numa_gib": {
+            "N1": 78.44670486450195,
+            "N0": 23.658329010009766
+          },
+          "last_numa_gib": {
+            "N1": 77.86320495605469,
+            "N0": 25.577678680419922
+          },
+          "last_numa_percent": {
+            "N1": 75.2731436727587,
+            "N0": 24.72685632724129
+          },
+          "last_file_numa_gib": {
+            "N1": 43.64237976074219,
+            "N0": 17.822242736816406
+          },
+          "last_anon_numa_gib": {
+            "N0": 7.755435943603516,
+            "N1": 34.2208251953125
+          },
+          "last_affinity_counts": {
+            "0-19": 19,
+            "20-39": 19
+          },
+          "first3_mean": 2.9872099999999997,
+          "last3_mean": 2.9998566666666666,
+          "note": "Fault/CPU deltas cover first-to-last 15s samples inside timed runs."
+        }
+      }
+    }
+  ],
+  "grouped": {
+    "auto-default": {
+      "pp": {
+        "runs": 2,
+        "mean_of_run_means": 43.5863735,
+        "run_means": [
+          33.557615,
+          53.615132
+        ],
+        "within_run_cv": [
+          25.009029992149323,
+          0.229539675478184
+        ],
+        "between_run_cv": 32.539541938409855,
+        "relative_range_percent": 46.01786152270733
+      },
+      "tg": {
+        "runs": 2,
+        "mean_of_run_means": 2.9288005,
+        "run_means": [
+          2.861592,
+          2.996009
+        ],
+        "within_run_cv": [
+          2.494345804712901,
+          0.40921105377186784
+        ],
+        "between_run_cv": 3.245259354700061,
+        "relative_range_percent": 4.589489792834986
+      },
+      "descriptive_score_from_mean_rates": 90.85257954682953
+    },
+    "auto-interleave": {
+      "pp": {
+        "runs": 2,
+        "mean_of_run_means": 41.6989135,
+        "run_means": [
+          35.576532,
+          47.821295
+        ],
+        "within_run_cv": [
+          5.765775596114877,
+          8.222242831357871
+        ],
+        "between_run_cv": 20.763982139060126,
+        "relative_range_percent": 29.364705149931538
+      },
+      "tg": {
+        "runs": 2,
+        "mean_of_run_means": 3.012913,
+        "run_means": [
+          3.056631,
+          2.969195
+        ],
+        "within_run_cv": [
+          0.23997008471091213,
+          0.47935551555219513
+        ],
+        "between_run_cv": 2.0520535614479027,
+        "relative_range_percent": 2.9020419773156356
+      },
+      "descriptive_score_from_mean_rates": 90.13068355770383
+    },
+    "copy-interleave": {
+      "pp": {
+        "runs": 2,
+        "mean_of_run_means": 39.8502515,
+        "run_means": [
+          40.431335,
+          39.269168
+        ],
+        "within_run_cv": [
+          2.2637936639984804,
+          3.014217158866213
+        ],
+        "between_run_cv": 2.062160552666083,
+        "relative_range_percent": 2.916335421371172
+      },
+      "tg": {
+        "runs": 2,
+        "mean_of_run_means": 2.8929105,
+        "run_means": [
+          2.908104,
+          2.877717
+        ],
+        "within_run_cv": [
+          0.4642543732961408,
+          0.2986047620387967
+        ],
+        "between_run_cv": 0.7427417391556158,
+        "relative_range_percent": 1.0503954408544516
+      },
+      "descriptive_score_from_mean_rates": 86.33761187188858
+    },
+    "copy-default": {
+      "pp": {
+        "runs": 2,
+        "mean_of_run_means": 53.031836999999996,
+        "run_means": [
+          53.416379,
+          52.647295
+        ],
+        "within_run_cv": [
+          1.750562313480665,
+          1.7473642283046071
+        ],
+        "between_run_cv": 1.0254679876581954,
+        "relative_range_percent": 1.4502307359256656
+      },
+      "tg": {
+        "runs": 2,
+        "mean_of_run_means": 2.7077595,
+        "run_means": [
+          2.86664,
+          2.548879
+        ],
+        "within_run_cv": [
+          1.5587238020818799,
+          26.601968943994596
+        ],
+        "between_run_cv": 8.298039685452807,
+        "relative_range_percent": 11.735200264277532
+      },
+      "descriptive_score_from_mean_rates": 96.3585773117647
+    }
+  },
+  "errors": [],
+  "note": "Exploratory two-node reverse-order design; not official scores or proof of causality."
+}

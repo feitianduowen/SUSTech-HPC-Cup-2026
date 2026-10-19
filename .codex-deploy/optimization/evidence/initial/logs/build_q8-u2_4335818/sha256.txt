@@ -1,0 +1,3 @@
+44c48d8c501d8d7a8eae785d9f5b73ee21a4149eb4f741cc118eed8a099a7317  /work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/q8-u2/build/bin/llama-bench
+7ffe092e3d1a4aefa0850a498c7de41c4749719a1643bb972317058a6605c103  /work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/q8-u2/build/bin/llama-perplexity
+ed4b1286fe4049202966a80e0a1dae1969d0bd858bb6d74a4c1b54f2e7336aa5  /work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/q8-u2/build/bin/libggml-cpu.so

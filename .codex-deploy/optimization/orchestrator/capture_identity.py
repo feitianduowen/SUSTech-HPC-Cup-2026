@@ -2,7 +2,7 @@ import hashlib,json,subprocess
 from pathlib import Path
 root=Path('/work/apac2602/qwen38-cpu/optimization/20261018-v1')
 data={}
-for name in ['native','q8-u2','q8-a4','pp-reuse','diagnostic','concat']:
+for name in ['native','q8-u2','q8-a4','pp-reuse','diagnostic','concat','native-concat-u2']:
     src=root/'sources'/name
     if not (src/'build/bin/llama-bench').exists():
         continue

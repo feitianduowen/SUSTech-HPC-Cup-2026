@@ -1,0 +1,35 @@
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+remark #11074: Inlining inhibited by limit max-total-size 
+remark #11076: To get full report use -qopt-report=4 -qopt-report-phase ipo
+PASS: 768 Q8 tinyBLAS cases, padded strides and guard outputs, bitwise equal
+timing,10240,512,80,0,reference,0.020523310,1279.48035
+timing,10240,512,80,0,candidate,0.020226002,1279.48035
+timing,10240,512,80,1,candidate,0.020198027,1279.48035
+timing,10240,512,80,1,reference,0.020439307,1279.48035
+timing,10240,512,80,2,reference,0.020305713,1279.48035
+timing,10240,512,80,2,candidate,0.020223935,1279.48035
+timing,10240,512,80,3,candidate,0.020285368,1279.48035
+timing,10240,512,80,3,reference,0.020372947,1279.48035
+timing,10240,512,80,4,reference,0.020454327,1279.48035
+timing,10240,512,80,4,candidate,0.020348390,1279.48035
+timing,2560,512,192,0,reference,0.012164672,3074.93213
+timing,2560,512,192,0,candidate,0.011681000,3074.93213
+timing,2560,512,192,1,candidate,0.012683948,3074.93213
+timing,2560,512,192,1,reference,0.011775335,3074.93213
+timing,2560,512,192,2,reference,0.011736314,3074.93213
+timing,2560,512,192,2,candidate,0.011722724,3074.93213
+timing,2560,512,192,3,candidate,0.011684974,3074.93213
+timing,2560,512,192,3,reference,0.011736949,3074.93213
+timing,2560,512,192,4,reference,0.011732340,3074.93213
+timing,2560,512,192,4,candidate,0.011677663,3074.93213

@@ -1,0 +1,13 @@
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+PASS: 768 Q8 tinyBLAS cases, padded strides and guard outputs, bitwise equal

@@ -1,0 +1,142 @@
+{
+  "native": {
+    "source_revision": "d81235049384534c167caea52b85a694f6103d14",
+    "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts": {
+      "libllama-common.so": "cc89014f8082cee41175d0ea0f474b358beb2393feac3b81dc5c5e9618c1ad84",
+      "libllama-perplexity-impl.so": "c925b00de7a2f1d3a5d00fe4f6289d9a2d95dde4af92238ad92dbddee6bc6acc",
+      "libggml-base.so": "db9453979efc6427d88ec3d75cc7323e526e63c967c28fc1f5d6fdf164cfd576",
+      "libllama-bench-impl.so": "2ae58d388370aa349687bb6a3ceee6a699f910a8b3b9a708c74e4fd8079c88f9",
+      "libggml.so": "acf7b886678da454ef410264babc5cb15d2c6f03670d402dcc8334953a9c3872",
+      "libllama-cli-impl.so": "9099a14fff00db497c42fbcafd819727d06976edc3764bc5d31e99371c8f09bc",
+      "libllama-server-impl.so": "5ba263775aa2c412c44b0022792521394e5759b260aa4f74e8b2bab5a0b03490",
+      "llama-perplexity": "62cc9191d9cb3dd0993c42c3a99ed216c6522bb354a50bb5f8c9a44f2b9f53a9",
+      "llama-cli": "66823c224702034183835f321c04d5283d9fe39aa85bb58beafd3b5fefd02b36",
+      "libggml-cpu.so": "e552acbda08bbd4953777423207393f6efc769b4b17ca88b55f6f8a40a332bd9",
+      "libllama.so": "d9203b960336dde32004c285d148aab3cfa9d940b09bebec640647e19021ac1f",
+      "libmtmd.so": "f1c89b3f17e472999ee087b41fb7c0e0349071b9b7ece6fb2e34b905ae2302ca",
+      "llama-server": "a2ad9b66765dbf7ef78e53f87f424ddc0d64f06cc7474450dba34127ff160a9c",
+      "llama-bench": "6d7e1655f85fd91fbe165bb0e57f2184acc02f2bbf62b2edac202dd63939c4d6"
+    }
+  },
+  "q8-u2": {
+    "source_revision": "d81235049384534c167caea52b85a694f6103d14",
+    "source_diff_sha256": "8d6a0a4a910f8bf5ad3a4226bf4ad65462be7d64e8196d847fa793a206f1ad6b",
+    "artifacts": {
+      "libllama-common.so": "60a04d3b7802cc05c49cc281179815f71198b89de2139314109727d8db2d5c00",
+      "libllama-perplexity-impl.so": "aafa46fcf3eb345316afd8ba6b8e4dd4ef34a5e4a397c9bff706d45f16ed075a",
+      "libggml-base.so": "2e0b2658943a499df03a8c3cd74aa9ed753103166c4a2a73621d893bfe0f102f",
+      "libllama-bench-impl.so": "448aed75d1f8f4f3da489d81cdd96afa171733fc0bf0390430fe6c16f7bc8609",
+      "libggml.so": "c6ab6b7f8b80d929e640ee40f0ff13ed1339de749c99240e79b61f1b58975a49",
+      "libllama-cli-impl.so": "ae169de03f0d0130952dd367fe8d54657e26c3c212dfcf0294232005fcd23304",
+      "libllama-server-impl.so": "9efc8a4dfe582681a6d9fe7cb870b2dd16a1e3e43f0924fb0f2e52ac4336be1f",
+      "llama-perplexity": "7ffe092e3d1a4aefa0850a498c7de41c4749719a1643bb972317058a6605c103",
+      "llama-cli": "086b892ca96769f9d9bb6c252a9d889fbbbd0beb1f7b0d364829b8cf7a04de10",
+      "libggml-cpu.so": "ed4b1286fe4049202966a80e0a1dae1969d0bd858bb6d74a4c1b54f2e7336aa5",
+      "libllama.so": "7185a81e7fa11982d6bd6037bd82977a21e7199babe8f09582c6faf1d86fb6d7",
+      "libmtmd.so": "200a61d63986785023c509d1834de5d40e49ce4d9cae20a06eddd6b11b599620",
+      "llama-server": "a46b7df89b1471d9ae646f5169dc8e84408e774dd576a743550ca3200f593b5b",
+      "llama-bench": "44c48d8c501d8d7a8eae785d9f5b73ee21a4149eb4f741cc118eed8a099a7317"
+    }
+  },
+  "q8-a4": {
+    "source_revision": "d81235049384534c167caea52b85a694f6103d14",
+    "source_diff_sha256": "ee852151bd1cece014c54214bab9871be0170001998ea0750b63a86470c9b9fe",
+    "artifacts": {
+      "libllama-common.so": "efd92aaad8993f797906347412ee18ef35184ff302b6b579fff911773b344c83",
+      "libllama-perplexity-impl.so": "75da2288c687d393f5209bb5427e32642bde3066c8f40b47eb3856d61a08a8ec",
+      "libggml-base.so": "bb6348c98c4dafc652fd1882a723191ce26002fd1d71afb9a063c6ebab619ada",
+      "libllama-bench-impl.so": "a5144a956bd69ebaad1c1b0aae1143c9926d266caad4ca85d33a29df2f483df4",
+      "libggml.so": "143c24fb870c88fcd2e639b9a027c527db5fc011a81490d3f59bce8d9f2aacc7",
+      "libllama-cli-impl.so": "c5ff3d86fae1b2701507481875164df021219dcb7691567323f40ee95c5dbfb7",
+      "libllama-server-impl.so": "5f6f945642241c5ea25ae536d3f07749cae349eb5a8aa295d8db71bb46dc13f1",
+      "llama-perplexity": "fdac83ed26a61f02aaa412a3e1cf8224a60e4c5a63dc6082084ac2ea4414a501",
+      "llama-cli": "c73f17f845e0fa5dc62b6bf86b7e065b025da1c4170aca31e909744a79696896",
+      "libggml-cpu.so": "9a6450debbbd6bae07d51b472b508347555f9aa7e5b1a7a3016533378a7de62e",
+      "libllama.so": "2280988143d494eb9525190210ba6b5699fb1bec0003ffb23dff4c53c6c56dbc",
+      "libmtmd.so": "d3899754df4b06b67015a63a3c804fceb45e74bd164912b937ada81f5c42c988",
+      "llama-server": "cafd8f2f24434fe27205fcbedcdddf43fd4762086a22e759d2efc4bea57d6aba",
+      "llama-bench": "e4de6c42c8c1cb04c816812b0db9707604a66c397969944160cdb3890979c034"
+    }
+  },
+  "pp-reuse": {
+    "source_revision": "d81235049384534c167caea52b85a694f6103d14",
+    "source_diff_sha256": "5e7514265a8f21dd0ee12f24103518bf7b545973ea833de42cb1130141fda796",
+    "artifacts": {
+      "libllama-common.so": "bf318592c625fb35d66f36640f79c0de103c7f41289a966d4e0da5acbad6f05c",
+      "libllama-perplexity-impl.so": "0fd9c63d7fbb8fb2ed043c995d7d19b4ef8b1258e0b8dc0d7124b1c0b9c4ef29",
+      "libggml-base.so": "431ce05af07e945e263033e2ed7310cb05747ec8b1b3120b8fc39a1e210cab8f",
+      "libllama-bench-impl.so": "525fa108f0db3be8fdbc80e0bdd98361c6c61ed103979036385a6932d352c03e",
+      "libggml.so": "6822f5ee68ce842ac1a85d4b7367213dfb23634c40fdcd5241c503f52506bb22",
+      "libllama-cli-impl.so": "c1914367d491b5715996353182bc48eb7814c73079ebeb723f95e96f9ba0c292",
+      "libllama-server-impl.so": "e60b28291fb3ed6c1ce3c4d3b77f6e617b894fe7c8fa032822d96c1b6f00c285",
+      "llama-perplexity": "a23c0397176600878864b03260c9c2fe322632f2f8ed74280ee7326a4b38fb34",
+      "llama-cli": "aa115d679a6c61d3232684c282a78da21f4b2d6d3aa1cd20a0015b270b7e07ee",
+      "libggml-cpu.so": "3d970834bf882deeb51f7a36d8edfb78808cc9fe9cd89e32b5a55cfdda4e1ffe",
+      "libllama.so": "0b2904ef8cf24f7d8436a8d7525ba63c14a41456aeec919641dc2c2a5de39595",
+      "libmtmd.so": "a9725c1b82f934f548884abc0facef8fb60caa5a4a3088c47d958ee7b5f83a51",
+      "llama-server": "5941e7854c2b932120bf7a509b299b3eb1443f69592ce211b584008654cde173",
+      "llama-bench": "d9954801e7dae17e85675a263cbbb45443176fccb7daab082048f254756c6da7"
+    }
+  },
+  "diagnostic": {
+    "source_revision": "d81235049384534c167caea52b85a694f6103d14",
+    "source_diff_sha256": "73d7452bb01318a959b7385ba67e99819d808156797cb21c21db2a2b02136ae6",
+    "artifacts": {
+      "libllama-common.so": "59133a3e11b2636af2f59bdbe9ca4aabb7f88e36a1451afb1b2c801d653d9921",
+      "libllama-perplexity-impl.so": "2962e741765c532d7bae6d583af65aff764147c04e30213d1a039d70648f2d51",
+      "libggml-base.so": "f1bbfcfbda99ef0e9c34f618198b54fe38953fc5d75a524eae0d0efd4c6a4b51",
+      "libllama-bench-impl.so": "58506386c0d7b26c51edae778d3349d4f524ed4a06fb63e51810aa6d8405700d",
+      "libggml.so": "6d36e47d9925efde809f344260f06721636e464f83ad7810bd0210e1dc7333f0",
+      "libllama-cli-impl.so": "ec13c796f6d7300b1980f1754db99c37b61ac19c70f6f22d62f08ba3c9ddb27b",
+      "libllama-server-impl.so": "f631ae2d5e784e93b3261229022c835cb4e7baf61211b1a18f5a9f362c3cca0c",
+      "llama-perplexity": "9d868c2009b865d8f8fc5b0a827f38cbc56771d9bc03d03d7caa64807665fa1b",
+      "llama-cli": "0222a48164d04ac3f443aa4fb1092f0e213c114bc57879a970032ee4399c688c",
+      "libggml-cpu.so": "eaf1fc2b704c9d8c12f463ef146570e01046cda96d5876c8963119b492106240",
+      "libllama.so": "3ac52d3645be9193e2677859276340a5e3c63af9472a963cbb01e63aaf404af4",
+      "libmtmd.so": "0a4e6f066712382fc247463476b011ace4f220e00996724809f8495ab9273db0",
+      "llama-server": "df39ba1183fbd07e82e8420d5adb4980217a193235f60b60e48b7fd79f4e1634",
+      "llama-bench": "12046f8f6181f2be7a162c3a50168563a07a5759d380e0d5bcb8035bb67ae386"
+    }
+  },
+  "concat": {
+    "source_revision": "d81235049384534c167caea52b85a694f6103d14",
+    "source_diff_sha256": "d9a9375cacf84fc93025de22d7f1b042e7e0d4cf6f98f0f2757be80655aaf085",
+    "artifacts": {
+      "libllama-common.so": "895da3299d049fbba42d2b907e3e2aa1a6accfc3728e134987c7a30c864fd5b8",
+      "libllama-perplexity-impl.so": "e822a8738eecbcd04b662db9c44d43c5adf87efce75d73243fef81b2e169c05b",
+      "libggml-base.so": "bb1ad18728d91f6b9fa6aa01a3b6ad871fb1fc8001a1a941f18267cd5ffc1545",
+      "libllama-bench-impl.so": "b271491971ee14440e50da88c3143b7a2f30cd0f93c2bdf885b1b0ef9cdc72ee",
+      "libggml.so": "7649d4cd0b6958a1a486572e977f22be79a844888170beca7cc6ef8ef942862d",
+      "libllama-cli-impl.so": "786e11eb98a7ddf1c18f498aabf0d5301ac3e6a5cfd7294b8ecb1073b4aaff73",
+      "libllama-server-impl.so": "937fc19bcb759925306a2d761b73a31d38574500ecdee777736fb902b1259aba",
+      "llama-perplexity": "f4d0747c8ccde861c64df8e344b40825678d625b54e73baf722b45f7c4235f2b",
+      "llama-cli": "8ded557ba59f46cded1e460b763f0ac8d4a0e2a737613608c9c0fca9cc01bcbf",
+      "libggml-cpu.so": "ed5c110cfc9f7ae55725500ef4a4e1b97e5e629227b82dcefb995d58cc798f6e",
+      "libllama.so": "96e91248f21c6527f203b5249fc0fb17da06fc8e7b55ac33b9d2c27dc811428a",
+      "libmtmd.so": "f16404795508421614dc5333f22dee56528ef7d7089228cfa370fe9c7a1ada6a",
+      "llama-server": "d3f8cf761588369c90218051ca9ae4cf635a5fa4cad2895529236e879baeb4b6",
+      "llama-bench": "323008f343b68827fbf169bc61bbd632c593546d3a77b9156939e1bc6929d971"
+    }
+  },
+  "native-concat-u2": {
+    "source_revision": "d81235049384534c167caea52b85a694f6103d14",
+    "source_diff_sha256": "04312a67a8f3857801308d199e961bfb2810e865590b0636099c88408a592f70",
+    "artifacts": {
+      "libllama-common.so": "de71453da682a782bcd82d5e31c2ab00e7d9b32067c070b8a88a8af52e23ebbc",
+      "libllama-perplexity-impl.so": "a1ab120c523a7f2a0b07420a928c7190ffbb2b93b909cabb7baf5a780523832a",
+      "libggml-base.so": "a031fd3544748f16d5b86ef810313f6501f2d3b271daa0641818e13640f0129e",
+      "libllama-bench-impl.so": "586c7d0a9c461cee2e40c7d4f60f79db359b4bc7b3c77133691459634c45baf0",
+      "libggml.so": "2603db17f86dd58a7e2fa34cdd7778605bcb805b715fb2d1646f69188cb0cecb",
+      "libllama-cli-impl.so": "7db4b70a4bac99d5ecdce4e3ade649d93aaf159d4f22b6207f3b84503ad2f8b6",
+      "libllama-server-impl.so": "c4731e60d87d0ed3ed49d4a791be90b51e1927805fc18c4edc61279fa2e7a2cd",
+      "llama-perplexity": "416f4d584c154a7e23e4de91866ca8394ed60b8c5960eb0a8ba6b5544aa4fd11",
+      "llama-cli": "8de4065774a10b43016b5aa79b952b48371646d526dbedf486ca8368a53db6ac",
+      "libggml-cpu.so": "5da1867767954dbd86f4c6fe6645ab94a965cc1950b7cd86d56a3d14aeb5a0be",
+      "libllama.so": "6f4ed08d94ecff3b2d9dca4bb5dc034b2ebeecc09a5b47f3978baaacc8c687bb",
+      "libmtmd.so": "70a78d7e515471c6f685a9c4712bfee0c5c55263940fa1ed09212b3cfb8125e3",
+      "llama-server": "2a14bc0463315e96525fc4bb4479d4dc91d9fdc9b53b1c473cd65ebccf55253c",
+      "llama-bench": "8eb0c62f504b903b2cd5fee591fe752a5e43ee742703e1ce2133cda160ea9170"
+    }
+  }
+}

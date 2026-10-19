@@ -1,0 +1,18 @@
+2026-10-19T10:30:04+08:00
+USER/GROUP          JL/P    MAX  NJOBS   PEND    RUN  SSUSP  USUSP    RSV  MPEND  PJOBS MPJOBS   PRIO 
+apac2602               -      -      0      0      0      0      0      0      -      0      -      0 
+u-ssc                  -  30000   3349   3012    337      0      0      0   3000     75    100      0 
+r13n04             ok              -     40      0      0      0      0      0
+r13n05             ok              -     40      0      0      0      0      0
+r13n06             ok              -     40      0      0      0      0      0
+r13n07             ok              -     40      0      0      0      0      0
+r13n08             ok              -     40      0      0      0      0      0
+r13n09             ok              -     40      0      0      0      0      0
+r13n10             ok              -     40      0      0      0      0      0
+r13n11             ok              -     40      0      0      0      0      0
+r13n12             ok              -     40      0      0      0      0      0
+r13n13             ok              -     40      0      0      0      0      0
+r13n14             ok              -     40      0      0      0      0      0
+r13n15             ok              -     40      0      0      0      0      0
+r13n16             ok              -     40      0      0      0      0      0
+r13n17             ok              -     40      0      0      0      0      0

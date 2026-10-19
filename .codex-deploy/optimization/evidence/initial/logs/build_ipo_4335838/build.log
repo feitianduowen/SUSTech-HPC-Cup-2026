@@ -1,0 +1,423 @@
+[  1%] Building CXX object vendor/cpp-httplib/CMakeFiles/cpp-httplib.dir/httplib.cpp.o
+[  1%] Building CXX object vendor/hash/CMakeFiles/vendor-hash.dir/hash.cpp.o
+[  1%] Building C object ggml/src/CMakeFiles/ggml-base.dir/ggml.c.o
+[  1%] Building C object vendor/hash/CMakeFiles/vendor-hash.dir/xxhash/xxhash.c.o
+[  1%] Building CXX object ggml/src/CMakeFiles/ggml-base.dir/ggml.cpp.o
+[  1%] Building CXX object vendor/hash/CMakeFiles/vendor-hash.dir/sha1/sha1.c.o
+[  1%] Building C object ggml/src/CMakeFiles/ggml-base.dir/ggml-alloc.c.o
+[  1%] Building C object vendor/hash/CMakeFiles/vendor-hash.dir/sha256/sha256.c.o
+[  1%] Building CXX object ggml/src/CMakeFiles/ggml-base.dir/ggml-backend-meta.cpp.o
+[  1%] Building CXX object ggml/src/CMakeFiles/ggml-base.dir/ggml-opt.cpp.o
+[  3%] Building CXX object ggml/src/CMakeFiles/ggml-base.dir/ggml-backend.cpp.o
+[  3%] Building CXX object ggml/src/CMakeFiles/ggml-base.dir/ggml-threading.cpp.o
+[  5%] Building C object ggml/src/CMakeFiles/ggml-base.dir/ggml-quants.c.o
+[  5%] Building CXX object ggml/src/CMakeFiles/ggml-base.dir/gguf.cpp.o
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icc: command line warning #10148: option '-Wpedantic' not supported
+[  5%] Building CXX object common/CMakeFiles/llama-common-base.dir/build-info.cpp.o
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+[  5%] Provisioning UI assets
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icc: command line warning #10148: option '-Wpedantic' not supported
+CMake Warning at /work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/scripts/ui-assets.cmake:584 (message):
+  UI: no assets available - building without an embedded UI.  In a
+  disconnected environment, download the pre-built UI from a llama.cpp
+  release at https://github.com/ggml-org/llama.cpp/releases and extract to
+  tools/ui/dist.
+
+
+-- UI: embedded 0 assets
+[  5%] Built target llama-ui-assets
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+[  5%] Building CXX object tools/ui/CMakeFiles/llama-ui.dir/ui.cpp.o
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-alloc.c(136): warning #279: controlling expression is constant
+      GGML_ASSERT(chunk->n_free_blocks < MAX_FREE_BLOCKS && "out of free blocks");
+      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml.c(4291): warning #279: controlling expression is constant
+      GGML_ASSERT((mode & 1) == 0 && "mode & 1 == 1 is no longer supported");
+      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml.c(4579): warning #279: controlling expression is constant
+      GGML_ASSERT((!is_2D || OH > 0) && "b too small compared to a");
+      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml.c(4580): warning #279: controlling expression is constant
+      GGML_ASSERT((OW > 0)           && "b too small compared to a");
+      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(3303): warning #279: controlling expression is constant
+      GGML_ASSERT(quant_weights   && "missing quantization weights");
+      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(3304): warning #279: controlling expression is constant
+      GGML_ASSERT(kgrid_q2xs      && "forgot to call ggml_quantize_init()?");
+      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(3305): warning #279: controlling expression is constant
+      GGML_ASSERT(kmap_q2xs       && "forgot to call ggml_quantize_init()?");
+      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(3306): warning #279: controlling expression is constant
+      GGML_ASSERT(kneighbors_q2xs && "forgot to call ggml_quantize_init()?");
+      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml.c(4818): warning #279: controlling expression is constant
+      GGML_ASSERT((OD > 0)  && "b too small compared to a");
+      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml.c(4819): warning #279: controlling expression is constant
+      GGML_ASSERT((OH > 0)  && "b too small compared to a");
+      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml.c(4820): warning #279: controlling expression is constant
+      GGML_ASSERT((OW > 0)  && "b too small compared to a");
+      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(3481): warning #279: controlling expression is constant
+      GGML_ASSERT(quant_weights   && "missing quantization weights");
+      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(3482): warning #279: controlling expression is constant
+      GGML_ASSERT(kmap_q2xs       && "forgot to call ggml_quantize_init()?");
+      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(3483): warning #279: controlling expression is constant
+      GGML_ASSERT(kgrid_q2xs      && "forgot to call ggml_quantize_init()?");
+      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(3484): warning #279: controlling expression is constant
+      GGML_ASSERT(kneighbors_q2xs && "forgot to call ggml_quantize_init()?");
+      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(3949): warning #279: controlling expression is constant
+      GGML_ASSERT(kgrid_q3xs      && "forgot to call ggml_quantize_init()?");
+      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(3950): warning #279: controlling expression is constant
+      GGML_ASSERT(kmap_q3xs       && "forgot to call ggml_quantize_init()?");
+      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(3951): warning #279: controlling expression is constant
+      GGML_ASSERT(kneighbors_q3xs && "forgot to call ggml_quantize_init()?");
+      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(4189): warning #279: controlling expression is constant
+      GGML_ASSERT(kgrid_q3xs      && "forgot to call ggml_quantize_init()?");
+      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(4190): warning #279: controlling expression is constant
+      GGML_ASSERT(kmap_q3xs       && "forgot to call ggml_quantize_init()?");
+      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(4191): warning #279: controlling expression is constant
+      GGML_ASSERT(kneighbors_q3xs && "forgot to call ggml_quantize_init()?");
+      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(4525): warning #279: controlling expression is constant
+      GGML_ASSERT(quant_weights   && "missing quantization weights");
+      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(4526): warning #279: controlling expression is constant
+      GGML_ASSERT(kgrid_q2xs      && "forgot to call ggml_quantize_init()?");
+      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(4527): warning #279: controlling expression is constant
+      GGML_ASSERT(kmap_q2xs       && "forgot to call ggml_quantize_init()?");
+      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(4528): warning #279: controlling expression is constant
+      GGML_ASSERT(kneighbors_q2xs && "forgot to call ggml_quantize_init()?");
+      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(4708): warning #279: controlling expression is constant
+      GGML_ASSERT(kgrid_q2xs      && "forgot to call ggml_quantize_init()?");
+      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(4709): warning #279: controlling expression is constant
+      GGML_ASSERT(kmap_q2xs       && "forgot to call ggml_quantize_init()?");
+      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(4710): warning #279: controlling expression is constant
+      GGML_ASSERT(kneighbors_q2xs && "forgot to call ggml_quantize_init()?");
+      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(5122): warning #279: controlling expression is constant
+      GGML_ASSERT(kmap_q2xs       && "forgot to call ggml_quantize_init()?");
+      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(5123): warning #279: controlling expression is constant
+      GGML_ASSERT(kgrid_q2xs      && "forgot to call ggml_quantize_init()?");
+      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(5124): warning #279: controlling expression is constant
+      GGML_ASSERT(kneighbors_q2xs && "forgot to call ggml_quantize_init()?");
+      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml.c(7102): warning #279: controlling expression is constant
+              GGML_ASSERT((!src1 || !src1_needs_grads) && "backward pass for softmax mask not implemented");
+              ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml.c(7129): warning #279: controlling expression is constant
+              GGML_ASSERT((!src2 || !src2_needs_grads) && "gradients for freq factors not implemented");
+              ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml.c(7146): warning #188: enumerated type mixed with another type
+                  const enum ggml_op_pool op = ggml_get_op_params_i32(tensor, 0);
+                                               ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml.c(7213): warning #279: controlling expression is constant
+              GGML_ASSERT(!src1_needs_grads && "backward pass for labels not implemented");
+              ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml.c(7219): warning #279: controlling expression is constant
+                          GGML_ASSERT(src1 && "backward pass only implemented for split swiglu");
+                          ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml.c(7376): warning #279: controlling expression is constant
+          GGML_ASSERT(any_params && "no trainable parameters found, did you forget to call ggml_set_param?");
+          ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml.c(7377): warning #279: controlling expression is constant
+          GGML_ASSERT(any_loss && "no training loss found, did you forget to call ggml_set_loss?");
+          ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml.c(8158): warning #188: enumerated type mixed with another type
+      p->prio       = 0;     // default priority (usually means normal or inherited)
+                    ^
+
+[  5%] Linking CXX static library libllama-ui.a
+[  7%] Linking CXX static library libvendor-hash.a
+[  9%] Linking CXX static library libllama-common-base.a
+[  9%] Built target llama-ui
+[  9%] Built target llama-common-base
+[  9%] Built target vendor-hash
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-opt.cpp(24): warning #68: integer conversion resulted in a change of sign
+      size_t  nbs_data    = -1;
+                            ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-opt.cpp(25): warning #68: integer conversion resulted in a change of sign
+      size_t  nbs_labels  = -1;
+                            ^
+
+[  9%] Linking CXX shared library ../../bin/libggml-base.so
+[  9%] Linking CXX static library libcpp-httplib.a
+[  9%] Built target cpp-httplib
+[  9%] Built target ggml-base
+[  9%] Building C object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/ggml-cpu.c.o
+[ 11%] Building CXX object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/ggml-cpu.cpp.o
+[ 11%] Building CXX object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/repack.cpp.o
+[ 11%] Building CXX object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/hbm.cpp.o
+[ 11%] Building C object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/quants.c.o
+[ 13%] Building CXX object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/traits.cpp.o
+[ 13%] Building CXX object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/amx/amx.cpp.o
+[ 13%] Building CXX object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/amx/mmq.cpp.o
+[ 13%] Building CXX object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/tiled/tiled.cpp.o
+[ 13%] Building CXX object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/tiled/tiled-kernel.cpp.o
+[ 15%] Building CXX object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/binary-ops.cpp.o
+[ 15%] Building CXX object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/unary-ops.cpp.o
+[ 15%] Building CXX object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/vec.cpp.o
+[ 17%] Building CXX object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/llamafile/sgemm.cpp.o
+[ 17%] Building CXX object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/arch/x86/repack.cpp.o
+[ 17%] Building CXX object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/ops.cpp.o
+[ 17%] Building C object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/arch/x86/quants.c.o
+icc: command line warning #10148: option '-Wpedantic' not supported
+icc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icc: command line warning #10148: option '-Wpedantic' not supported
+icc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/tiled/tiled-kernel.cpp(290): warning #125: expected a "("
+                              #pragma GCC unroll 8
+                                                 ^
+          detected during instantiation of "void tiled_run_microtile<SUBBLK,HAS_MIN,BIAS,ACTBIAS>(const tiled_tile_src0 &, const tiled_tile_src1 &, int, int, int, int, float *, int) [with SUBBLK=32, HAS_MIN=true, BIAS=0, ACTBIAS=false]" at line 544
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/tiled/tiled-kernel.cpp(299): warning #125: expected a "("
+                              #pragma GCC unroll 8
+                                                 ^
+          detected during instantiation of "void tiled_run_microtile<SUBBLK,HAS_MIN,BIAS,ACTBIAS>(const tiled_tile_src0 &, const tiled_tile_src1 &, int, int, int, int, float *, int) [with SUBBLK=32, HAS_MIN=true, BIAS=0, ACTBIAS=false]" at line 544
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/tiled/tiled-kernel.cpp(307): warning #125: expected a "("
+                          #pragma GCC unroll 8
+                                             ^
+          detected during instantiation of "void tiled_run_microtile<SUBBLK,HAS_MIN,BIAS,ACTBIAS>(const tiled_tile_src0 &, const tiled_tile_src1 &, int, int, int, int, float *, int) [with SUBBLK=32, HAS_MIN=true, BIAS=0, ACTBIAS=false]" at line 544
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/tiled/tiled-kernel.cpp(330): warning #125: expected a "("
+                              #pragma GCC unroll 8
+                                                 ^
+          detected during instantiation of "void tiled_run_microtile<SUBBLK,HAS_MIN,BIAS,ACTBIAS>(const tiled_tile_src0 &, const tiled_tile_src1 &, int, int, int, int, float *, int) [with SUBBLK=32, HAS_MIN=true, BIAS=0, ACTBIAS=false]" at line 544
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/tiled/tiled-kernel.cpp(339): warning #125: expected a "("
+                              #pragma GCC unroll 8
+                                                 ^
+          detected during instantiation of "void tiled_run_microtile<SUBBLK,HAS_MIN,BIAS,ACTBIAS>(const tiled_tile_src0 &, const tiled_tile_src1 &, int, int, int, int, float *, int) [with SUBBLK=32, HAS_MIN=true, BIAS=0, ACTBIAS=false]" at line 544
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/tiled/tiled-kernel.cpp(347): warning #125: expected a "("
+                          #pragma GCC unroll 8
+                                             ^
+          detected during instantiation of "void tiled_run_microtile<SUBBLK,HAS_MIN,BIAS,ACTBIAS>(const tiled_tile_src0 &, const tiled_tile_src1 &, int, int, int, int, float *, int) [with SUBBLK=32, HAS_MIN=true, BIAS=0, ACTBIAS=false]" at line 544
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/tiled/tiled-kernel.cpp(368): warning #125: expected a "("
+              #pragma GCC unroll 8
+                                 ^
+          detected during instantiation of "void tiled_run_microtile<SUBBLK,HAS_MIN,BIAS,ACTBIAS>(const tiled_tile_src0 &, const tiled_tile_src1 &, int, int, int, int, float *, int) [with SUBBLK=32, HAS_MIN=true, BIAS=0, ACTBIAS=false]" at line 544
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/ggml-cpu.c(574): warning #188: enumerated type mixed with another type
+  static struct ggml_state g_state = {0};
+                                      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/repack.cpp(4927): warning #854: const variable "q1_0_4x4_q8_0" requires an initializer -- class "ggml::cpu::repack::tensor_traits<block_q1_0, 4L, 4L, GGML_TYPE_Q8_0>" has no user-provided default constructor
+      static const ggml::cpu::repack::tensor_traits<block_q1_0, 4, 4, GGML_TYPE_Q8_0> q1_0_4x4_q8_0;
+                                                                                      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/repack.cpp(4928): warning #854: const variable "q1_0_4x8_q8_0" requires an initializer -- class "ggml::cpu::repack::tensor_traits<block_q1_0, 8L, 4L, GGML_TYPE_Q8_0>" has no user-provided default constructor
+      static const ggml::cpu::repack::tensor_traits<block_q1_0, 8, 4, GGML_TYPE_Q8_0> q1_0_4x8_q8_0;
+                                                                                      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/repack.cpp(4931): warning #854: const variable "q4_0_4x4_q8_0" requires an initializer -- class "ggml::cpu::repack::tensor_traits<block_q4_0, 4L, 4L, GGML_TYPE_Q8_0>" has no user-provided default constructor
+      static const ggml::cpu::repack::tensor_traits<block_q4_0, 4, 4, GGML_TYPE_Q8_0> q4_0_4x4_q8_0;
+                                                                                      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/repack.cpp(4932): warning #854: const variable "q4_0_4x8_q8_0" requires an initializer -- class "ggml::cpu::repack::tensor_traits<block_q4_0, 8L, 4L, GGML_TYPE_Q8_0>" has no user-provided default constructor
+      static const ggml::cpu::repack::tensor_traits<block_q4_0, 8, 4, GGML_TYPE_Q8_0> q4_0_4x8_q8_0;
+                                                                                      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/repack.cpp(4933): warning #854: const variable "q4_0_8x8_q8_0" requires an initializer -- class "ggml::cpu::repack::tensor_traits<block_q4_0, 8L, 8L, GGML_TYPE_Q8_0>" has no user-provided default constructor
+      static const ggml::cpu::repack::tensor_traits<block_q4_0, 8, 8, GGML_TYPE_Q8_0> q4_0_8x8_q8_0;
+                                                                                      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/repack.cpp(4936): warning #854: const variable "q4_K_8x4_q8_K" requires an initializer -- class "ggml::cpu::repack::tensor_traits<block_q4_K, 4L, 8L, GGML_TYPE_Q8_K>" has no user-provided default constructor
+      static const ggml::cpu::repack::tensor_traits<block_q4_K, 4, 8, GGML_TYPE_Q8_K> q4_K_8x4_q8_K;
+                                                                                      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/repack.cpp(4937): warning #854: const variable "q4_K_8x8_q8_K" requires an initializer -- class "ggml::cpu::repack::tensor_traits<block_q4_K, 8L, 8L, GGML_TYPE_Q8_K>" has no user-provided default constructor
+      static const ggml::cpu::repack::tensor_traits<block_q4_K, 8, 8, GGML_TYPE_Q8_K> q4_K_8x8_q8_K;
+                                                                                      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/repack.cpp(4940): warning #854: const variable "q5_K_8x4_q8_K" requires an initializer -- class "ggml::cpu::repack::tensor_traits<block_q5_K, 4L, 8L, GGML_TYPE_Q8_K>" has no user-provided default constructor
+      static const ggml::cpu::repack::tensor_traits<block_q5_K, 4, 8, GGML_TYPE_Q8_K> q5_K_8x4_q8_K;
+                                                                                      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/repack.cpp(4941): warning #854: const variable "q5_K_8x8_q8_K" requires an initializer -- class "ggml::cpu::repack::tensor_traits<block_q5_K, 8L, 8L, GGML_TYPE_Q8_K>" has no user-provided default constructor
+      static const ggml::cpu::repack::tensor_traits<block_q5_K, 8, 8, GGML_TYPE_Q8_K> q5_K_8x8_q8_K;
+                                                                                      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/repack.cpp(4944): warning #854: const variable "q6_K_8x4_q8_K" requires an initializer -- class "ggml::cpu::repack::tensor_traits<block_q6_K, 4L, 8L, GGML_TYPE_Q8_K>" has no user-provided default constructor
+      static const ggml::cpu::repack::tensor_traits<block_q6_K, 4, 8, GGML_TYPE_Q8_K> q6_K_8x4_q8_K;
+                                                                                      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/repack.cpp(4945): warning #854: const variable "q6_K_8x8_q8_K" requires an initializer -- class "ggml::cpu::repack::tensor_traits<block_q6_K, 8L, 8L, GGML_TYPE_Q8_K>" has no user-provided default constructor
+      static const ggml::cpu::repack::tensor_traits<block_q6_K, 8, 8, GGML_TYPE_Q8_K> q6_K_8x8_q8_K;
+                                                                                      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/repack.cpp(4948): warning #854: const variable "q2_K_8x8_q8_K" requires an initializer -- class "ggml::cpu::repack::tensor_traits<block_q2_K, 8L, 8L, GGML_TYPE_Q8_K>" has no user-provided default constructor
+      static const ggml::cpu::repack::tensor_traits<block_q2_K, 8, 8, GGML_TYPE_Q8_K> q2_K_8x8_q8_K;
+                                                                                      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/repack.cpp(4951): warning #854: const variable "iq4_nl_4x4_q8_0" requires an initializer -- class "ggml::cpu::repack::tensor_traits<block_iq4_nl, 4L, 4L, GGML_TYPE_Q8_0>" has no user-provided default constructor
+      static const ggml::cpu::repack::tensor_traits<block_iq4_nl, 4, 4, GGML_TYPE_Q8_0> iq4_nl_4x4_q8_0;
+                                                                                        ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/repack.cpp(4952): warning #854: const variable "iq4_nl_8x8_q8_0" requires an initializer -- class "ggml::cpu::repack::tensor_traits<block_iq4_nl, 8L, 8L, GGML_TYPE_Q8_0>" has no user-provided default constructor
+      static const ggml::cpu::repack::tensor_traits<block_iq4_nl, 8, 8, GGML_TYPE_Q8_0> iq4_nl_8x8_q8_0;
+                                                                                        ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/repack.cpp(4955): warning #854: const variable "mxfp4_4x4_q8_0" requires an initializer -- class "ggml::cpu::repack::tensor_traits<block_mxfp4, 4L, 4L, GGML_TYPE_Q8_0>" has no user-provided default constructor
+      static const ggml::cpu::repack::tensor_traits<block_mxfp4, 4, 4, GGML_TYPE_Q8_0> mxfp4_4x4_q8_0;
+                                                                                       ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/repack.cpp(4956): warning #854: const variable "mxfp4_8x8_q8_0" requires an initializer -- class "ggml::cpu::repack::tensor_traits<block_mxfp4, 8L, 8L, GGML_TYPE_Q8_0>" has no user-provided default constructor
+      static const ggml::cpu::repack::tensor_traits<block_mxfp4, 8, 8, GGML_TYPE_Q8_0> mxfp4_8x8_q8_0;
+                                                                                       ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/repack.cpp(4959): warning #854: const variable "q8_0_4x4_q8_0" requires an initializer -- class "ggml::cpu::repack::tensor_traits<block_q8_0, 4L, 4L, GGML_TYPE_Q8_0>" has no user-provided default constructor
+      static const ggml::cpu::repack::tensor_traits<block_q8_0, 4, 4, GGML_TYPE_Q8_0> q8_0_4x4_q8_0;
+                                                                                      ^
+
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/repack.cpp(4960): warning #854: const variable "q8_0_4x8_q8_0" requires an initializer -- class "ggml::cpu::repack::tensor_traits<block_q8_0, 8L, 4L, GGML_TYPE_Q8_0>" has no user-provided default constructor
+      static const ggml::cpu::repack::tensor_traits<block_q8_0, 8, 4, GGML_TYPE_Q8_0> q8_0_4x8_q8_0;
+                                                                                      ^
+
+[ 17%] Linking CXX shared library ../../bin/libggml-cpu.so
+
+          "": internal error: 010101_3096
+
+icpc: error #10014: problem during multi-file optimization compilation (code 4)
+gmake[3]: *** [ggml/src/CMakeFiles/ggml-cpu.dir/build.make:356: bin/libggml-cpu.so.0.26.0] Error 4
+gmake[2]: *** [CMakeFiles/Makefile2:1985: ggml/src/CMakeFiles/ggml-cpu.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:4889: tools/cli/CMakeFiles/llama-cli.dir/rule] Error 2
+gmake: *** [Makefile:1791: llama-cli] Error 2

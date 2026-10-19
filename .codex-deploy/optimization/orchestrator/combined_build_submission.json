@@ -1,0 +1,9 @@
+{
+  "script": "/work/apac2602/qwen38-cpu/optimization/20261018-v1/scripts/build_variant.lsf",
+  "kind": "候选构建",
+  "purpose": "构建组合候选 native-concat-u2：原生线程池、CONCAT按行拷贝、保持FMA顺序的Q8两路展开",
+  "config": "icc/icpc Intel Classic2021.9; O3/precise/no-ftz/CORE-AVX512/qsimd-honor-fp-model; OpenMP=OFF,BLAS=OFF,CPU-only; 官方d812350源码+concat-rows.patch+q8-u2.patch; 四个目标与test-quantize-fns; 单节点40 slots",
+  "baseline": "无",
+  "environment": {"EXPERIMENT_VARIANT": "native-concat-u2"},
+  "note": "只构建候选；通过后再做组合对照，当前部署未替换。"
+}

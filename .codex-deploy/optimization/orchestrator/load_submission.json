@@ -1,0 +1,8 @@
+{
+  "script": "/work/apac2602/qwen38-cpu/optimization/20261018-v1/scripts/confirm_load_mode.lsf",
+  "kind": "同节点完整对照",
+  "purpose": "验证加载/内存放置影响：先load-mode=none+numactl interleave，再默认mmap/auto加载，均使用同一Intel原版构建",
+  "config": "Intel Classic2021.9原始部署产物；OpenMP=ON,BLAS=OFF；单节点40 slots/推理38线程；各版本固定PPL t/tb38,c512,chunks2,b512,ub256,f16KV,ngl0,NUMA=distribute,no-warmup；只有PP/TG的copy-interleave方案增加numactl --interleave=all与-lm none，baseline保持默认auto；PP p2048/n0，TG p0/n128/d2048，共同t38,b2048,ub512,f16KV,ngl0,r10,NUMA=distribute；close/cores",
+  "baseline": "作业内默认加载baseline（同节点，同一Intel构建）",
+  "note": "规则7.1允许加载模式/内存策略；不改变正式模型与计算。先调优方案后baseline，保留顺序局限；此轮不再扩展其他优化方向。"
+}

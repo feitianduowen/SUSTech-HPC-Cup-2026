@@ -1,0 +1,14 @@
+warning: no usable GPU found, --gpu-layers option will be ignored
+warning: one possible reason is that llama.cpp was compiled without GPU support
+warning: consult docs/build.md for compilation instructions
+0.00.031.736 W /proc/sys/kernel/numa_balancing is enabled, this has been observed to impair performance
+1.23.589.918 I cmn          init: llama threadpool init, n_threads = 38
+1.23.595.623 I 
+1.23.595.867 I system_info: n_threads = 38 (n_threads_batch = 38) / 40 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | AVX512 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+1.23.600.675 I perplexity: tokenizing the input ..
+1.24.230.809 I perplexity: tokenization took 630.128 ms
+1.24.231.176 I perplexity: calculating perplexity over 2 chunks, n_ctx=512, batch_size=512, n_seq=1
+4.31.208.973 I perplexity: 186.98 seconds per pass - ETA 6.22 minutes
+[1]1.7359,[2]2.7893,
+6.28.698.336 I Final estimate: PPL = 2.7893 +/- 0.26627
+

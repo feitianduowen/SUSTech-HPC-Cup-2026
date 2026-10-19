@@ -1,0 +1,12 @@
+--- a/ggml/src/ggml-cpu/llamafile/sgemm.cpp
++++ b/ggml/src/ggml-cpu/llamafile/sgemm.cpp
+@@ -1633,6 +1633,9 @@
+                 __m256i avec1 = load(A + lda * (ii + 1) + l);
+                 __m256i avec2 = load(A + lda * (ii + 2) + l);
+                 __m256i avec3 = load(A + lda * (ii + 3) + l);
++#if defined(__INTEL_COMPILER)
++                #pragma unroll
++#endif
+                 for (int64_t j = 0; j < RN; ++j) {
+                         __m128 db = _mm_set1_ps(unhalf(B[ldb * (jj + j) + l].d));
+                         // Computation of product of delta values for four blocks and replicate it across 256 bit lane

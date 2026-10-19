@@ -1,0 +1,18 @@
+{
+  "script": "/work/apac2602/qwen38-cpu/optimization/20261019-compiler-pgo/pipeline.lsf",
+  "kind": "Intel PGO构建/训练/PPL",
+  "purpose": "Intel Classic O2：无PGO对照构建、线程安全计数训练、反馈优化重编译及独立固定PPL门槛",
+  "config": "Gold6148单节点40 slots；Intel Classic2021.9 icc/icpc，Release -O2 -DNDEBUG；precise/no-ftz/CORE-AVX512/qsimd-honor-fp-model；未启用-ipo；官方原始源码d812350；OpenMP=ON,BLAS=OFF,CPU-only；构建-j40，推理38线程close/cores；gen=-prof-gen=threadsafe；use=-prof-use=nomerge；训练仅合成PP1024/TG32@D512、r1、不计分；control及pgo分别固定PPL t/tb38,c512,chunks2,b512,ub256,f16KV,ngl0,NUMA=distribute,no-warmup,timeout590s；本作业无完整PP/TG测速",
+  "baseline": "同源码同Intel编译器同-O2的无PGO control；正确性官方PPL=2.7696",
+  "case_prefix": "compiler",
+  "baseline_case": "compiler-control_{job_id}",
+  "environment": {
+    "PGO_OPT_LEVEL": "2"
+  },
+  "lsf_args": [
+    "-J",
+    "qwen38_icc_O2_pgo"
+  ],
+  "note": "本阶段只构建、采集编译器计数并校验正确性；训练指标不计入性能结果。成功后另交同节点正反序完整10次PP/TG对照；两个O级分属不同节点，不直接比较。规则7明确允许compiler flags及PGO。 重提修复：计算节点无git，改为登录节点验证官方commit并保存3687个源码文件SHA256，计算节点逐文件校验；前次失败作业4336530保留。",
+  "retry_of": "4336530"
+}

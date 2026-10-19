@@ -1,0 +1,223 @@
+ *)
+ ;;
+ ;;
+ ;;
+ ;;
+}
+}
+}
+}
+BASH_FUNC_ml%%=() {  module ml "$@"
+BASH_FUNC_module%%=() {  unset _mlshdbg;
+BASH_FUNC_switchml%%=() {  typeset swfound=1;
+BASH_FUNC_which%%=() {  ( alias;
+BINARY_TYPE_HPC=
+BLIS_NUM_THREADS=38
+BSUB_BLOCK_EXEC_HOST=
+ case "$-" in 
+CC=icc
+CMAKEROOT=/share/apps/cmake/3.28.1
+CMPLR_ROOT=/share/intel/oneapi-2023.1/compiler/2023.1.0
+COMPILER_GNUROOT=/share/base/e5/gcc/11.2.0
+CUDA_VISIBLE_DEVICES=
+CUDA_VISIBLE_DEVICES_ORIG=
+CXX=icpc
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/2301/bus
+DIAGUTIL_PATH_modshare=/share/intel/oneapi-2023.1/compiler/2023.1.0/sys_check/sys_check.sh:2
+DIAGUTIL_PATH=/share/intel/oneapi-2023.1/compiler/2023.1.0/sys_check/sys_check.sh
+ do
+ done;
+ echo "Cannot switch to Modules $swname version, command not found";
+ echo "Switching to Modules $swname version";
+EGO_BINDIR=/opt/ibm/lsfsuite/lsf/10.1/linux2.6-glibc2.3-x86_64/bin
+EGO_CONFDIR=/opt/ibm/lsfsuite/lsf/conf/ego/qmhpc/kernel
+EGO_ESRVDIR=/opt/ibm/lsfsuite/lsf/conf/ego/qmhpc/eservice
+EGO_LIBDIR=/opt/ibm/lsfsuite/lsf/10.1/linux2.6-glibc2.3-x86_64/lib
+EGO_LOCAL_CONFDIR=/opt/ibm/lsfsuite/lsf/conf/ego/qmhpc/kernel
+EGO_SERVERDIR=/opt/ibm/lsfsuite/lsf/10.1/linux2.6-glibc2.3-x86_64/etc
+EGO_TOP=/opt/ibm/lsfsuite/lsf
+ else
+ else
+ else
+ else
+ esac;
+ eval ${which_declare} ) | /usr/bin/which --tty-only --read-alias --read-functions --show-tilde --show-dot $@
+ eval `eval ${_mlre} /usr/bin/tclsh /usr/share/Modules/libexec/modulecmd.tcl bash '"$@"'`;
+ eval `/usr/bin/tclsh /usr/share/Modules/libexec/modulecmd.tcl bash "$@"`;
+EXPERIMENT_POLICY=bt20-active
+ export MODULES_USE_COMPAT_VERSION;
+ fi
+ fi;
+ fi;
+ fi;
+ fi;
+ fi;
+ fi;
+ fi;
+ fi;
+ fi;
+ fi;
+ for _mlv in ${MODULES_RUN_QUARANTINE:-};
+GPU_DEVICE_ORDINAL=
+HIP_VISIBLE_DEVICES=
+HOME=/work/apac2602
+HOSTNAME=r13n42
+HOSTTYPE=X86_64
+ if [ "${_mlv}" = "${_mlv##*[!A-Za-z0-9_]}" -a "${_mlv}" = "${_mlv#[0-9]}" ]; then
+ if [ "${MODULES_SILENT_SHELL_DEBUG:-0}" = '1' ]; then
+ if [ "${MODULES_USE_COMPAT_VERSION:-0}" = '1' ]; then
+ if [ $swfound -eq 0 ]; then
+ if [ -e /usr/share/Modules/libexec/modulecmd-compat ]; then
+ if [ -e /usr/share/Modules/libexec/modulecmd.tcl ]; then
+ if [ -n "${IFS+x}" ]; then
+ if [ -n "${_mlIFS+x}" ]; then
+ if [ -n "${_mlre:-}" ]; then
+ if [ -n "${_mlshdbg:-}" ]; then
+ if [ -n "`eval 'echo ${'$_mlv'+x}'`" ]; then
+ IFS=' ';
+ IFS=$_mlIFS;
+INCLUDE_modshare=/share/base/e5/gcc/11.2.0/include:1
+INCLUDE=/share/base/e5/gcc/11.2.0/include
+JOB_TERMINATE_INTERVAL=10
+JS_ARCH=linux2.6-glibc2.3-x86_64
+JS_ENVDIR=/opt/ibm/lsfsuite/ext/ppm/conf
+JS_HOME=/opt/ibm/lsfsuite/ext/ppm
+JS_SERVERDIR=/opt/ibm/lsfsuite/ext/ppm/10.2/linux2.6-glibc2.3-x86_64/etc
+JS_VERSION=10.2
+KMP_BLOCKTIME=20
+LANG=en_US.UTF-8
+LD_LIBRARY_PATH_modshare=/share/base/e5/gcc/11.2.0/lib64:1:/share/intel/oneapi-2023.1/compiler/2023.1.0/linux/lib:1:/share/intel/oneapi-2023.1/compiler/2023.1.0/linux/lib/x64:1:/share/intel/oneapi-2023.1/compiler/2023.1.0/linux/compiler/lib/intel64_lin:1:/opt/ibm/lsfsuite/lsf/10.1/linux2.6-glibc2.3-x86_64/lib:1:/opt/ibm/lsfsuite/ext/ppm/10.2/linux2.6-glibc2.3-x86_64/lib:1
+LD_LIBRARY_PATH=/share/intel/oneapi-2023.1/compiler/2023.1.0/linux/lib:/share/intel/oneapi-2023.1/compiler/2023.1.0/linux/lib/x64:/share/intel/oneapi-2023.1/compiler/2023.1.0/linux/compiler/lib/intel64_lin:/share/base/e5/gcc/11.2.0/lib64:/opt/ibm/lsfsuite/lsf/10.1/linux2.6-glibc2.3-x86_64/lib:/opt/ibm/lsfsuite/ext/ppm/10.2/linux2.6-glibc2.3-x86_64/lib
+LESSOPEN=||/usr/bin/lesspipe.sh %s
+LIBRARY_PATH_modshare=/share/base/e5/gcc/11.2.0/lib64:1:/share/intel/oneapi-2023.1/compiler/2023.1.0/linux/lib:1
+LIBRARY_PATH=/share/intel/oneapi-2023.1/compiler/2023.1.0/linux/lib:/share/base/e5/gcc/11.2.0/lib64
+LLAMA_CPP_DIR=/work/apac2602/qwen38-cpu/llama.cpp
+_LMFILES__modshare=/share/intel/oneapi-2023.1/modulefiles/icc/2023.1.0:1:/share/base/modulefiles/library/mpi/gcc/11.2.0:1:/share/intel/oneapi-2023.1/modulefiles/compiler-rt/latest:1:/share/base/modulefiles/library/mpi/cmake/3.28.1:1
+_LMFILES_=/share/base/modulefiles/library/mpi/cmake/3.28.1:/share/base/modulefiles/library/mpi/gcc/11.2.0:/share/intel/oneapi-2023.1/modulefiles/compiler-rt/latest:/share/intel/oneapi-2023.1/modulefiles/icc/2023.1.0
+LOADEDMODULES=cmake/3.28.1:gcc/11.2.0:compiler-rt/latest:icc/2023.1.0
+LOADEDMODULES_modshare=gcc/11.2.0:1:icc/2023.1.0:1:cmake/3.28.1:1:compiler-rt/latest:1
+LOGNAME=apac2602
+LSB_ACCT_FILE=/tmp/4335823.tmpdir/.1792336369.4335823.acct
+LSB_AFFINITY_HOSTFILE=/work/apac2602/.lsbatch/1792336369.4335823.hostAffinityFile
+LSB_BATCH_JID=4335823
+LSB_CHKFILENAME=/work/apac2602/.lsbatch/1792336369.4335823
+LSB_DJOB_HOSTFILE=/work/apac2602/.lsbatch/1792336369.4335823.hostfile
+LSB_DJOB_NUMPROC=40
+LSB_DJOB_RANKFILE=/work/apac2602/.lsbatch/1792336369.4335823.hostfile
+LSB_DOCKER_JOB_STARTTS=1792336369
+LSB_EEXEC_REAL_GID=
+LSB_EEXEC_REAL_UID=
+LSB_EFFECTIVE_RSRCREQ=select[type == any] order[-slots] span[ptile=40] 
+LSB_ERRORFILE=/work/apac2602/qwen38-cpu/logs/4335823.err
+LSB_EXEC_CLUSTER=qmhpc
+LSB_EXEC_HOSTTYPE=X86_64
+LSB_EXIT_PRE_ABORT=99
+LSB_HOSTS=r13n42 r13n42 r13n42 r13n42 r13n42 r13n42 r13n42 r13n42 r13n42 r13n42 r13n42 r13n42 r13n42 r13n42 r13n42 r13n42 r13n42 r13n42 r13n42 r13n42 r13n42 r13n42 r13n42 r13n42 r13n42 r13n42 r13n42 r13n42 r13n42 r13n42 r13n42 r13n42 r13n42 r13n42 r13n42 r13n42 r13n42 r13n42 r13n42 r13n42
+LSB_JOB_EXECUSER=apac2602
+LSB_JOBEXIT_STAT=0
+LSB_JOBFILENAME=/work/apac2602/.lsbatch/1792336369.4335823
+LSB_JOBID=4335823
+LSB_JOBINDEX=0
+LSB_JOBNAME=qwen38_runtime_bench
+LSB_JOBRES_CALLBACK=42385@r13n42
+LSB_JOBRES_PID=1276287
+LSB_MAX_NUM_PROCESSORS=40
+LSB_MCPU_HOSTS=r13n42 40 
+LSB_OUTDIR=/work/apac2602/qwen38-cpu/optimization/20261018-v1
+LSB_OUTPUTFILE=/work/apac2602/qwen38-cpu/logs/4335823.out
+LSB_PROJECT_NAME=default
+LSB_QUEUE=ssc-cpu
+LSB_RES_GET_FANOUT_INFO=Y
+LSB_SUB_HOST=b04u17l
+LSB_SUB_RES_REQ=span[ptile=40]
+LSB_SUB_USER=apac2602
+LSB_TRAPSIGS=trap # 15 10 12 2 1
+LSB_UNIXGROUP_INT=ssc
+LSB_XFER_OP=
+LS_EXECCWD=/work/apac2602/qwen38-cpu/optimization/20261018-v1
+LS_EXEC_T=START
+LSF_BINDIR=/opt/ibm/lsfsuite/lsf/10.1/linux2.6-glibc2.3-x86_64/bin
+LSF_CGROUP_TOPDIR_KEY=qmhpc
+LSF_EGO_ENVDIR=/opt/ibm/lsfsuite/lsf/conf/ego/qmhpc/kernel
+LSF_ENVDIR=/opt/ibm/lsfsuite/lsf/conf
+LSF_FULL_VERSION=10.1.0.9
+LSF_INVOKE_CMD=bsub
+LSF_JOB_TIMESTAMP_VALUE=1792336369
+__LSF_JOB_TMPDIR__=/tmp/4335823.tmpdir
+LSF_LIBDIR=/opt/ibm/lsfsuite/lsf/10.1/linux2.6-glibc2.3-x86_64/lib
+LSF_LIM_API_NTRIES=1
+LSF_LOGDIR=/opt/ibm/lsflogs
+LSF_SERVERDIR=/opt/ibm/lsfsuite/lsf/10.1/linux2.6-glibc2.3-x86_64/etc
+LSFUSER=apac2602
+LSF_VERSION=34
+LS_JOBPID=1276287
+LS_SUBCWD=/work/apac2602/qwen38-cpu/optimization/20261018-v1
+MANPATH_modshare=:1:/share/base/e5/gcc/11.2.0/share/man:1:/opt/ibm/lsfsuite/lsf/10.1/man:1:/share/intel/oneapi-2023.1/compiler/2023.1.0/documentation/en/man/common:1:/opt/ibm/lsfsuite/ext/ppm/10.2/man:1:/share/apps/cmake/3.28.1/share/man:1
+MANPATH=/share/base/e5/gcc/11.2.0/share/man:/share/apps/cmake/3.28.1/share/man:/opt/ibm/lsfsuite/ext/ppm/10.2/man:/opt/ibm/lsfsuite/lsf/10.1/man::/share/intel/oneapi-2023.1/compiler/2023.1.0/documentation/en/man/common
+MKL_NUM_THREADS=38
+ _mlIFS=$IFS;
+ _mlre="${_mlre:-}${_mlv}='`eval 'echo ${'$_mlrv':-}'`' ";
+ _mlre="${_mlre:-}${_mlv}_modquar='`eval 'echo ${'$_mlv'}'`' ";
+ _mlrv="MODULES_RUNENV_${_mlv}";
+ _mlshdbg=''
+ _mlshdbg='v'
+ _mlshdbg='vx'
+ _mlshdbg='x'
+ _mlstatus=$?;
+MODEL=/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf
+MODULEPATH_modshare=/share/base/modulefiles/library/mathlib:1:/share/base/modulefiles/tools:1:/share/nvhpc/modulefiles:1:/share/intel/oneapi/modulefiles:1:/share/base/modulefiles/library/mpi:1:/share/intel/oneapi-2023.1/modulefiles:1:/share/base/modulefiles/gpu:1
+MODULEPATH=/share/intel/oneapi-2023.1/modulefiles:/share/base/modulefiles/library/mathlib:/share/base/modulefiles/tools:/share/base/modulefiles/library/mpi:/share/base/modulefiles/gpu:/share/nvhpc/modulefiles:/share/intel/oneapi/modulefiles
+MODULES_CMD=/usr/share/Modules/libexec/modulecmd.tcl
+MODULESHOME=/usr/share/Modules
+MODULES_LMCONFLICT=compiler-rt/latest&compiler-rt32&compiler-rt:icc/2023.1.0&icc32&icc
+MODULES_LMCONFLICT_modshare=icc/2023.1.0&icc32&icc:1:compiler-rt/latest&compiler-rt32&compiler-rt:1
+MODULES_LMNOTUASKED=compiler-rt/latest
+MODULES_LMNOTUASKED_modshare=compiler-rt/latest:1
+MODULES_LMPREREQ=icc/2023.1.0&compiler-rt
+MODULES_LMPREREQ_modshare=icc/2023.1.0&compiler-rt:1
+MODULES_RUN_QUARANTINE=LD_LIBRARY_PATH LD_PRELOAD
+ MODULES_USE_COMPAT_VERSION=1;
+OLDPWD=/work/apac2602/qwen38-cpu/optimization/20261018-v1
+OMP_DYNAMIC=FALSE
+OMP_NUM_THREADS=38
+OMP_PLACES=cores
+OMP_PROC_BIND=close
+OMP_WAIT_POLICY=ACTIVE
+OPENBLAS_NUM_THREADS=38
+PATH_modshare=/share/base/e5/gcc/11.2.0/bin:1:/work/apac2602/bin:1:/usr/bin:1:/usr/share/Modules/bin:1:/usr/local/bin:1:/opt/ibm/lsfsuite/lsf/10.1/linux2.6-glibc2.3-x86_64/bin:1:/share/base/hpctool:1:/opt/ibm/lsfsuite/ext/ppm/10.2/linux2.6-glibc2.3-x86_64/bin:1:/bin:1:/work/apac2602/.local/bin:1:/opt/ibm/lsfsuite/ext/ppm/10.2/bin:1:/share/intel/oneapi-2023.1/compiler/2023.1.0/linux/bin/intel64:1:/usr/sbin:1:/usr/lpp/mmfs/bin:1:/share/apps/cmake/3.28.1/bin:1:/usr/local/sbin:1:/opt/ibm/lsfsuite/lsf/10.1/linux2.6-glibc2.3-x86_64/etc:1
+PATH=/work/apac2602/qwen38-cpu/llama.cpp/build/bin:/share/intel/oneapi-2023.1/compiler/2023.1.0/linux/bin/intel64:/share/base/e5/gcc/11.2.0/bin:/share/apps/cmake/3.28.1/bin:/opt/ibm/lsfsuite/lsf/10.1/linux2.6-glibc2.3-x86_64/bin:/work/apac2602/.local/bin:/work/apac2602/bin:/usr/share/Modules/bin:/opt/ibm/lsfsuite/ext/ppm/10.2/bin:/opt/ibm/lsfsuite/ext/ppm/10.2/linux2.6-glibc2.3-x86_64/bin:/opt/ibm/lsfsuite/lsf/10.1/linux2.6-glibc2.3-x86_64/etc:/share/base/hpctool:/usr/lpp/mmfs/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/bin:/usr/bin
+PPL_BASELINE_JSON=/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/perplexity_result.json
+PPL_DATA=/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/wikitext-2-raw/wiki.test.raw
+PWD=/work/apac2602/qwen38-cpu/optimization/20261018-v1
+QWEN_DEPLOY=/work/apac2602/qwen38-cpu
+ return $_mlstatus
+ return 1;
+ROCR_VISIBLE_DEVICES=
+SBD_KRB5CCNAME_VAL=
+S_COLORS=auto
+ set -$_mlshdbg;
+ set +v;
+ set +vx;
+ set +x;
+SHELL=/bin/bash
+SHLVL=3
+ source /usr/share/Modules/init/bash;
+SSH_CLIENT=10.26.251.162 54698 18188
+SSH_CONNECTION=10.26.251.162 54698 172.18.6.10 18188
+ typeset swfound=0;
+ typeset swfound=0;
+ typeset swname='compatibility';
+ typeset swname='main';
+ unset IFS;
+ unset _mlre _mlIFS;
+ unset _mlre _mlv _mlrv _mlIFS;
+ unset _mlshdbg;
+ unset MODULES_USE_COMPAT_VERSION;
+USER=apac2602
+_=/usr/bin/env
+ *v*)
+ *v*x*)
+which_declare=declare -f
+ *x*)
+XDG_RUNTIME_DIR=/run/user/2301
+XDG_SESSION_ID=620149

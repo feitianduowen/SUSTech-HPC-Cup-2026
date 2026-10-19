@@ -1,0 +1,9 @@
+{
+  "script": "/work/apac2602/qwen38-cpu/optimization/20261018-v1/scripts/confirm_combined.lsf",
+  "kind": "同节点完整对照",
+  "purpose": "组合候选先运行，随后运行native原生线程池对照，检查Q8/CONCAT补丁的合并收益",
+  "config": "Intel Classic2021.9; 两者OpenMP=OFF,BLAS=OFF,同precise/no-ftz/CORE-AVX512参数；native-concat-u2额外加q8-u2与concat-rows补丁；单节点40 slots/38计算线程；各版本PPL t/tb38,c512,chunks2,b512,ub256,f16KV,ngl0,NUMA=distribute,no-warmup; PP p2048/n0与TG p0/n128/d2048共同t38,b2048,ub512,f16KV,ngl0,r10,NUMA=distribute; close/cores",
+  "baseline": "作业内native原生线程池（同节点，组合候选先运行）",
+  "baseline_case": "confirm-native_{job_id}",
+  "note": "先候选后对照，避免仅候选后运行的优势；仍是顺序对照，保留全部十次样本。构建依赖由提交时添加。"
+}

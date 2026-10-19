@@ -2,10 +2,13 @@ import json, os, sys, time
 from pathlib import Path
 
 out = Path(sys.argv[1])
+watch = Path(sys.argv[2]) if len(sys.argv)>2 else None
 deadline = time.time()+7200
 idle = 0
 with out.open('w') as stream:
-    while time.time()<deadline and idle<4:
+    while time.time()<deadline and (watch is not None or idle<4):
+        if watch is not None and watch.exists() and watch.read_text().strip() in ['READY','FAILED']:
+            break
         found = False
         for proc in Path('/proc').iterdir():
             if not proc.name.isdigit():

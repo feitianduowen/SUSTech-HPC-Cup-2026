@@ -1,0 +1,25 @@
+#!/bin/bash
+#BSUB -J qwen38_q8_same_node
+#BSUB -q ssc-cpu
+#BSUB -m hg_6148
+#BSUB -n 40
+#BSUB -R "span[ptile=40]"
+#BSUB -W 04:00
+#BSUB -o /work/apac2602/qwen38-cpu/logs/%J.confirm.out
+#BSUB -e /work/apac2602/qwen38-cpu/logs/%J.confirm.err
+set -euo pipefail
+ROOT=/work/apac2602/qwen38-cpu/optimization/20261018-v1
+cd "$ROOT"
+OUT="$ROOT/results/confirmation_${LSB_JOBID}"
+mkdir -p "$OUT"
+trap 'echo FAILED > "$OUT/status"' ERR
+{ date -Is; hostname; lscpu; free -h; } > "$OUT/environment.txt"
+for name in baseline q8-u2; do
+    echo "RUNNING $name" > "$OUT/status"
+    unset KMP_BLOCKTIME OMP_WAIT_POLICY
+    export EXPERIMENT_VARIANT=$name
+    export EXPERIMENT_OUTPUT_DIR="$ROOT/results/confirm-${name}_${LSB_JOBID}"
+    bash "$ROOT/scripts/benchmark_variant.lsf" > "$OUT/$name.out" 2> "$OUT/$name.err"
+done
+echo READY > "$OUT/status"
+date -Is > "$OUT/completed.txt"

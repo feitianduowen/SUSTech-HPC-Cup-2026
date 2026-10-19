@@ -30,7 +30,7 @@ if [[ "$VARIANT" == diagnostic ]]; then
     flags="$flags -DGGML_CPU_NODE_STATS -DGGML_CPU_SHAPE_STATS"
 fi
 omp=ON
-[[ "$VARIANT" != native ]] || omp=OFF
+[[ "$VARIANT" != native && "$VARIANT" != native-concat-u2 ]] || omp=OFF
 blas=OFF
 extra=()
 if [[ "$VARIANT" == mkl ]]; then

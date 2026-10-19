@@ -1,0 +1,8 @@
+{
+  "script": "/work/apac2602/qwen38-cpu/optimization/20261018-v1/scripts/confirm_reverse.lsf",
+  "kind": "同节点完整对照",
+  "purpose": "反向顺序复核：先 native(OpenMP OFF)，再 baseline(OpenMP ON)，避免仅候选后运行的预热优势",
+  "config": "Intel Classic 2021.9，同一基础源码；native:OpenMP=OFF，baseline:ON；其余precise/no-ftz/CORE-AVX512、BLAS=OFF一致；单节点40 slots/推理38线程；各版本PPL t/tb38,c512,chunks2,b512,ub256,no-warmup，之后PP p2048/n0、TG p0/n128/d2048，t38/b2048/ub512/KV=f16/ngl0/r10/NUMA=distribute；close/cores",
+  "baseline": "作业内 baseline（同节点；native先运行、baseline后运行）",
+  "note": "复核4335857的PP大幅提升；保留每项十次完整样本。新增构建/模型/固定参数均未改变。"
+}
