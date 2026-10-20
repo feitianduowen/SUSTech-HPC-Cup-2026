@@ -1,0 +1,19 @@
+{
+  "script": "/work/apac2602/qwen38-cpu/optimization/20261020-vtune-wait-pair/profile_pair.lsf",
+  "kind": "VTune首次/后续PP等待诊断（不计分）",
+  "purpose": "同节点首次PP→无采样TG→后续PP；VTune软件线程/等待分析，定位大量自愿上下文切换的调用栈",
+  "config": "同一SHA核验Intel Classic2021.9 O3 precise/no-ftz CORE-AVX512 qsimd-honor-fp-model原版；OpenMP/tinyBLAS ON、BLAS/GPU OFF；hg_6148单节点40slots/Gold6148，38推理线程close/cores、默认等待。先2.5秒工具探测（不触碰模型），独立固定PPL t/tb38 c512 chunks2 b512ub256 f16KV ngl0 NUMA distribute no-warmup timeout590s，±5%。PP p2048n0、TG p0n128d2048，各r10 t38 b2048ub512 KVf16 ngl0 NUMA distribute --progress。VTune threading，10ms栈采样2048bytes、每case数据上限2048MB；PP start-paused，正式prompt run1/10后resume，60秒后pause，目标继续完成全部10次。每30秒独立只读记录目标PID与各线程/NUMA；每case3600s保护。",
+  "baseline": "同作业01_first_pp首次PP采样窗口；03_later_pp为TG后PP。仅同节点诊断，不是源码优化；TG无同作业内性能baseline",
+  "baseline_case": "profile-waits-threading-first_pp_{job_id}",
+  "case_prefix": "profile-waits-threading",
+  "comparison_scope": "same-node",
+  "environment": {
+    "PROFILE_MODE": "threading"
+  },
+  "lsf_args": [
+    "-J",
+    "qwen38_wait_threading"
+  ],
+  "ppl_scope": "本作业一次新固定PPL，三个诊断workload共享门槛；两个PP采样，无性能Score",
+  "note": "不预设first一定慢或later一定快，必须用实际完整JSON与ROI时间确认。采样窗口按墙钟60秒，可能覆盖不同token数量；不能直接把样本计数当速度。软件插桩/暂停状态仍可能影响运行时，硬件模式为独立跨节点诊断参照。包装Python进程在采样树内，分析必须用target.pid和process分组区分llama-bench，避免把Python等待管道算进模型等待。收集summary/hotspots/callstacks/top-down及原始结果；可选report失败记录返回码，不伪造报告。完整10样本及所有旧慢样本保留，不修改生产构建或系统设置，开发诊断非正式成绩。"
+}

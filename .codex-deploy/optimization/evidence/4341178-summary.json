@@ -1,0 +1,481 @@
+{
+  "checks": {
+    "q4-int-tree": {
+      "status": "PASS",
+      "cases": 128128,
+      "values": 1115648,
+      "bit_mismatches": 0,
+      "repetitions": 3,
+      "finite_half_patterns": 63488,
+      "scope": "actual original/candidate libraries; nr1; eight n values, six nc values, three byte offsets, eight raw patterns; all finite FP16 patterns in both d and dmin; guards and repeatability"
+    },
+    "library-correctness.json": {
+      "status": "PASS",
+      "cases": 144,
+      "values": 745104,
+      "bit_mismatches": 0,
+      "tolerance_failures": 0,
+      "max_abs_error": 0.0,
+      "tolerance": "bit-exact required; Q4 integer balanced-add tree",
+      "repetitions": 3
+    }
+  },
+  "kernel_times": [
+    {
+      "variant": "q4-int-tree",
+      "blocks": 10,
+      "n": 2560,
+      "nc": 8,
+      "mode": "resident nc=8",
+      "baseline": {
+        "ns_median": 876.0985000000001,
+        "all_ns": [
+          876.281,
+          875.852,
+          876.117,
+          876.044,
+          876.24,
+          876.266,
+          876.242,
+          876.08,
+          876.003,
+          875.806
+        ]
+      },
+      "q4-int-tree": {
+        "ns_median": 875.517,
+        "all_ns": [
+          878.227,
+          875.368,
+          875.513,
+          875.386,
+          875.278,
+          877.7,
+          875.521,
+          875.413,
+          877.408,
+          875.872
+        ]
+      },
+      "paired_median_speedup": 0.0006213957828131722,
+      "all_paired_speedups": [
+        -0.0022158280262392083,
+        0.000552910318860178,
+        0.0006898812467661664,
+        0.000751668406851369,
+        0.001099079378209078,
+        -0.0016338156545517846,
+        0.0008235096588202762,
+        0.0007619260851734477,
+        -0.0016013074875086408,
+        -7.535347630693856e-05
+      ],
+      "paired_wins": 6,
+      "weight_bytes": 11520,
+      "sets": 1,
+      "calls_per_round": 67942
+    },
+    {
+      "variant": "q4-int-tree",
+      "blocks": 10,
+      "n": 2560,
+      "nc": 8,
+      "mode": "stream256MiB nc=8",
+      "baseline": {
+        "ns_median": 1396.745,
+        "all_ns": [
+          1396.51,
+          1402.62,
+          1393.21,
+          1399.06,
+          1393.94,
+          1395.94,
+          1398.1,
+          1393.06,
+          1396.98,
+          1398.27
+        ]
+      },
+      "q4-int-tree": {
+        "ns_median": 1393.145,
+        "all_ns": [
+          1392.28,
+          1393.56,
+          1392.53,
+          1394.26,
+          1391.01,
+          1393.62,
+          1392.86,
+          1392.49,
+          1393.43,
+          1394.85
+        ]
+      },
+      "paired_median_speedup": 0.0024997733417914114,
+      "all_paired_speedups": [
+        0.0030381819748901417,
+        0.006501334711099593,
+        0.0004883198207579209,
+        0.00344268644298773,
+        0.002106383131681433,
+        0.001664729266227738,
+        0.0037620435650389528,
+        0.00040933866670500585,
+        0.002547670137717617,
+        0.002451876545865206
+      ],
+      "paired_wins": 10,
+      "weight_bytes": 268439040,
+      "sets": 23302,
+      "calls_per_round": 43266
+    },
+    {
+      "variant": "q4-int-tree",
+      "blocks": 10,
+      "n": 2560,
+      "nc": 64,
+      "mode": "resident nc=64",
+      "baseline": {
+        "ns_median": 6931.79,
+        "all_ns": [
+          6941.37,
+          6934.98,
+          6933.05,
+          6931.49,
+          6930.93,
+          6932.09,
+          6930.56,
+          6930.42,
+          6950.99,
+          6929.27
+        ]
+      },
+      "q4-int-tree": {
+        "ns_median": 6898.16,
+        "all_ns": [
+          6898.65,
+          6903.62,
+          6897.77,
+          6898.27,
+          6919.29,
+          6901.44,
+          6896.58,
+          6896.69,
+          6894.79,
+          6898.05
+        ]
+      },
+      "paired_median_speedup": 0.004853226054363335,
+      "all_paired_speedups": [
+        0.006192515927029296,
+        0.004542544346299415,
+        0.005114696488865311,
+        0.0048157001683029055,
+        0.0016822535260121452,
+        0.004441102146798492,
+        0.004927079798972889,
+        0.004890751940423765,
+        0.008151082193946335,
+        0.004525916744587244
+      ],
+      "paired_wins": 10,
+      "weight_bytes": 92160,
+      "sets": 1,
+      "calls_per_round": 8653
+    },
+    {
+      "variant": "q4-int-tree",
+      "blocks": 10,
+      "n": 2560,
+      "nc": 64,
+      "mode": "stream256MiB nc=64",
+      "baseline": {
+        "ns_median": 11076.6,
+        "all_ns": [
+          11066.9,
+          11059.7,
+          11074,
+          11086.9,
+          11088.8,
+          11064,
+          11073.1,
+          11096.5,
+          11095.7,
+          11079.2
+        ]
+      },
+      "q4-int-tree": {
+        "ns_median": 11067.75,
+        "all_ns": [
+          11048.3,
+          11099,
+          11062.6,
+          11066.7,
+          11061.2,
+          11089,
+          11072.1,
+          11068.8,
+          11064.9,
+          11104.4
+        ]
+      },
+      "paired_median_speedup": 0.0013570080402424134,
+      "all_paired_speedups": [
+        0.0016835169211553147,
+        -0.0035408595368952023,
+        0.001030499159329512,
+        0.0018252957069404552,
+        0.0024952084764762184,
+        -0.002254486427991753,
+        9.031710334994614e-05,
+        0.002502529632842032,
+        0.0027835768963118124,
+        -0.0022693706999026286
+      ],
+      "paired_wins": 7,
+      "weight_bytes": 268462080,
+      "sets": 2913,
+      "calls_per_round": 5480
+    },
+    {
+      "variant": "q4-int-tree",
+      "blocks": 24,
+      "n": 6144,
+      "nc": 8,
+      "mode": "resident nc=8",
+      "baseline": {
+        "ns_median": 2073.605,
+        "all_ns": [
+          2074.3,
+          2073.71,
+          2073.31,
+          2079.09,
+          2073.75,
+          2072.91,
+          2073.5,
+          2080.77,
+          2072.79,
+          2072.82
+        ]
+      },
+      "q4-int-tree": {
+        "ns_median": 2076.8950000000004,
+        "all_ns": [
+          2079.88,
+          2077.01,
+          2076.38,
+          2077.37,
+          2077.49,
+          2075.87,
+          2077.38,
+          2075.9,
+          2076.78,
+          2076.56
+        ]
+      },
+      "paired_median_speedup": -0.0016945358665381716,
+      "all_paired_speedups": [
+        -0.0026828470873319077,
+        -0.0015888223937294832,
+        -0.001478534757607064,
+        0.0008279699812745456,
+        -0.00180024933934686,
+        -0.001425908173440571,
+        -0.0018677372459541264,
+        0.002345970422467314,
+        -0.0019212434634386932,
+        -0.001801055591940437
+      ],
+      "paired_wins": 2,
+      "weight_bytes": 27648,
+      "sets": 1,
+      "calls_per_round": 28928
+    },
+    {
+      "variant": "q4-int-tree",
+      "blocks": 24,
+      "n": 6144,
+      "nc": 8,
+      "mode": "stream256MiB nc=8",
+      "baseline": {
+        "ns_median": 3321.045,
+        "all_ns": [
+          3323.24,
+          3320.46,
+          3320.96,
+          3314.33,
+          3318.91,
+          3321.89,
+          3323.54,
+          3319.88,
+          3321.13,
+          3321.7
+        ]
+      },
+      "q4-int-tree": {
+        "ns_median": 3316.105,
+        "all_ns": [
+          3311.48,
+          3315.34,
+          3315.2,
+          3312.03,
+          3326.51,
+          3316.87,
+          3320.08,
+          3311.48,
+          3331.98,
+          3320.98
+        ]
+      },
+      "paired_median_speedup": 0.0012778093080468844,
+      "all_paired_speedups": [
+        0.0035512822061434246,
+        0.0015443363274958433,
+        0.0017374517374517673,
+        0.0006944381542437483,
+        -0.00228467673327315,
+        0.001513475053288138,
+        0.0010421435628056308,
+        0.0025366301472453667,
+        -0.0032563220667590764,
+        0.00021680347367336594
+      ],
+      "paired_wins": 8,
+      "weight_bytes": 268462080,
+      "sets": 9710,
+      "calls_per_round": 18262
+    },
+    {
+      "variant": "q4-int-tree",
+      "blocks": 24,
+      "n": 6144,
+      "nc": 64,
+      "mode": "resident nc=64",
+      "baseline": {
+        "ns_median": 16556.5,
+        "all_ns": [
+          16552.4,
+          16558.8,
+          16556.7,
+          16555,
+          16556.3,
+          16555.2,
+          16558.5,
+          16559.2,
+          16556.9,
+          16553.8
+        ]
+      },
+      "q4-int-tree": {
+        "ns_median": 16516.35,
+        "all_ns": [
+          16516.8,
+          16515.9,
+          16530.9,
+          16514,
+          16515.8,
+          16519.1,
+          16577.1,
+          16514.7,
+          16512.4,
+          16522.1
+        ]
+      },
+      "paired_median_speedup": 0.002318773185314593,
+      "all_paired_speedups": [
+        0.0021553811876393603,
+        0.00259749695747713,
+        0.0015607135727637722,
+        0.002482741915950104,
+        0.0024521972898678968,
+        0.0021853490807612896,
+        -0.0011220297880810692,
+        0.0026945690808795053,
+        0.0026949444054165106,
+        0.0019186423033392686
+      ],
+      "paired_wins": 9,
+      "weight_bytes": 221184,
+      "sets": 1,
+      "calls_per_round": 3632
+    },
+    {
+      "variant": "q4-int-tree",
+      "blocks": 24,
+      "n": 6144,
+      "nc": 64,
+      "mode": "stream256MiB nc=64",
+      "baseline": {
+        "ns_median": 26613.2,
+        "all_ns": [
+          26585.2,
+          26618.8,
+          26616.9,
+          26614.9,
+          26686.1,
+          26574.4,
+          26575.9,
+          26711.3,
+          26611.5,
+          26588.2
+        ]
+      },
+      "q4-int-tree": {
+        "ns_median": 26567.699999999997,
+        "all_ns": [
+          26586.5,
+          26567.6,
+          26567.8,
+          26566,
+          26564,
+          26565.6,
+          26567.5,
+          26572.4,
+          26589.9,
+          26579
+        ]
+      },
+      "paired_median_speedup": 0.0013265185784344657,
+      "all_paired_speedups": [
+        -4.889699659593738e-05,
+        0.0019271593971603718,
+        0.0018481018375628988,
+        0.0018406986373560308,
+        0.004596446318325453,
+        0.00033125545818668556,
+        0.00031617577867693036,
+        0.005227228251870386,
+        0.0008123385195129007,
+        0.0003461379284397381
+      ],
+      "paired_wins": 9,
+      "weight_bytes": 268517376,
+      "sets": 1214,
+      "calls_per_round": 2272
+    }
+  ],
+  "advance_to_model": false,
+  "proof_scope": "Only VPADDW integer sums reparenthesized; modulo2^16 associativity preserves lanes before the original VPMADDWD. All floating point scales, FMAs, accumulation order and final permutation remain unchanged.",
+  "interpretation": "Actual exported Q4_Kx8/Q8_K GEMV original and candidate functions verified by dladdr, both full Intel O3 libraries loaded by absolute path. nr1 direct check128128 cases, all finite FP16 patterns in d and dmin,3repetitions, exact bits; general matrix144cases exact. Eight resident/stream256MiB configurations with ten AB/BA rounds onCPU0/membind0, same inputs. Not full-model throughput. Gate:>=3% paired median at resident nc64 for n2560or6144 with>=7/10wins; no configuration below-5%. Kernel screen did not pass; do not run model phase or claim PPL/model gain.",
+  "source_screening_review": {
+    "status": "COMPLETE_KERNEL_SCREEN_NO_GAIN",
+    "decision": "do_not_promote",
+    "reviewed_hong_kong": "2026-10-20T21:58:27.047754+08:00",
+    "direct_cases": 128128,
+    "matrix_cases": 144,
+    "all_bit_mismatches": 0,
+    "ppl": "not_run",
+    "model_pp_tg": "not_run",
+    "changes": {
+      "2560 resident nc=8": 0.0006213957828131722,
+      "2560 stream256MiB nc=8": 0.0024997733417914114,
+      "2560 resident nc=64": 0.004853226054363335,
+      "2560 stream256MiB nc=64": 0.0013570080402424134,
+      "6144 resident nc=8": -0.0016945358665381716,
+      "6144 stream256MiB nc=8": 0.0012778093080468844,
+      "6144 resident nc=64": 0.002318773185314593,
+      "6144 stream256MiB nc=64": 0.0013265185784344657
+    },
+    "next": "Separate original-source Q4 masked-shuffle experiment; do not overlay integer tree."
+  }
+}

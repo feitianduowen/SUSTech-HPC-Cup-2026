@@ -1,0 +1,259 @@
+{
+  "order": "BAAB",
+  "preparation": {
+    "purpose": "Separate development preparation; retained but excluded from comparative statistics; not an official score.",
+    "ppl": {
+      "ppl": 2.7767,
+      "elapsed_seconds": 352
+    },
+    "tg": {
+      "avg_ts": 2.704679,
+      "cv": 0.046209919920256706,
+      "samples_ts": [
+        2.46509,
+        2.63476,
+        2.57788,
+        2.72316,
+        2.69843,
+        2.8459,
+        2.66078,
+        2.8364,
+        2.75979,
+        2.8446
+      ]
+    },
+    "path": "/work/apac2602/qwen38-cpu/optimization/20261020-q5-balanced/results/4340351/diagnostics/preparation"
+  },
+  "interpretation": "Completed Q5 BAAB development confirmation after explicitly separate original TG10 preparation. Four cases each independently passed fixed PPL and all10 PP/TG samples. Candidate pass-mean PP change=-16.018%, TG change=+2.867%. Both original passes and both candidate passes retained. Compare the other node/order and examine all within-pass variation before any conclusion; preparation is excluded, no formal score claimed. Joint review: PP direction reverses across ABBA/BAAB (+37.532% vs -16.018%); preparation did not eliminate slow first runs or time-varying noise. TG means positive in both jobs (+1.109%/+2.867%), but BAAB per-pass TG CV13.1%-21.5% exceeds that observation. Do not pool into a claimed causal gain or choose favorable passes. No production promotion.",
+  "cases": [
+    {
+      "ordinal": 1,
+      "letter": "B",
+      "role": "candidate1",
+      "directory": "01_candidate1",
+      "ppl": {
+        "ppl": 2.7767,
+        "elapsed_seconds": 67
+      },
+      "pp": {
+        "avg_ts": 27.225438,
+        "cv": 0.10515573707207208,
+        "samples_ts": [
+          32.253,
+          24.6688,
+          23.8741,
+          25.5942,
+          25.704,
+          27.1044,
+          31.6583,
+          28.1054,
+          25.1237,
+          28.1684
+        ]
+      },
+      "tg": {
+        "avg_ts": 2.63464,
+        "cv": 0.2149876263929797,
+        "samples_ts": [
+          3.05181,
+          3.06351,
+          3.07019,
+          3.06912,
+          3.07051,
+          1.41278,
+          2.26013,
+          2.07585,
+          2.54807,
+          2.72442
+        ]
+      }
+    },
+    {
+      "ordinal": 2,
+      "letter": "A",
+      "role": "baseline1",
+      "directory": "02_baseline1",
+      "ppl": {
+        "ppl": 2.7767,
+        "elapsed_seconds": 109
+      },
+      "pp": {
+        "avg_ts": 39.108132,
+        "cv": 0.03659573921863617,
+        "samples_ts": [
+          35.2519,
+          39.2298,
+          39.8487,
+          40.3646,
+          39.9238,
+          39.4195,
+          39.2567,
+          38.9366,
+          38.9735,
+          39.8763
+        ]
+      },
+      "tg": {
+        "avg_ts": 2.414277,
+        "cv": 0.13614883462005398,
+        "samples_ts": [
+          1.78653,
+          1.91532,
+          2.42199,
+          2.52576,
+          2.60098,
+          2.53669,
+          2.30933,
+          2.84613,
+          2.61626,
+          2.58378
+        ]
+      }
+    },
+    {
+      "ordinal": 3,
+      "letter": "A",
+      "role": "baseline2",
+      "directory": "03_baseline2",
+      "ppl": {
+        "ppl": 2.7767,
+        "elapsed_seconds": 123
+      },
+      "pp": {
+        "avg_ts": 35.754227,
+        "cv": 0.04708425104533794,
+        "samples_ts": [
+          33.5553,
+          33.0979,
+          35.8952,
+          34.1845,
+          37.192,
+          37.0585,
+          37.1064,
+          37.7727,
+          36.6901,
+          34.9899
+        ]
+      },
+      "tg": {
+        "avg_ts": 2.593313,
+        "cv": 0.14401423970033697,
+        "samples_ts": [
+          3.03618,
+          3.03243,
+          1.85477,
+          2.12479,
+          2.44674,
+          2.64761,
+          2.60901,
+          2.832,
+          2.73185,
+          2.61773
+        ]
+      }
+    },
+    {
+      "ordinal": 4,
+      "letter": "B",
+      "role": "candidate2",
+      "directory": "04_candidate2",
+      "ppl": {
+        "ppl": 2.7767,
+        "elapsed_seconds": 116
+      },
+      "pp": {
+        "avg_ts": 35.645596,
+        "cv": 0.05852335867802576,
+        "samples_ts": [
+          37.7123,
+          33.767,
+          32.8584,
+          37.3075,
+          32.1798,
+          36.5922,
+          35.9228,
+          38.1528,
+          36.7999,
+          35.1633
+        ]
+      },
+      "tg": {
+        "avg_ts": 2.516535,
+        "cv": 0.13076353001249733,
+        "samples_ts": [
+          1.79004,
+          2.19903,
+          2.26065,
+          2.63934,
+          2.75911,
+          2.81731,
+          2.76835,
+          2.68942,
+          2.59895,
+          2.64314
+        ]
+      }
+    }
+  ],
+  "pass_means": {
+    "A": {
+      "pp": 37.4311795,
+      "tg": 2.503795
+    },
+    "B": {
+      "pp": 31.435516999999997,
+      "tg": 2.5755875
+    }
+  },
+  "candidate_change": {
+    "pp": -0.16017829467543232,
+    "tg": 0.028673473666973592
+  },
+  "decision": "model_gain_not_established_no_promotion",
+  "initial_pass_summary": "Completed Q5 BAAB development confirmation after explicitly separate original TG10 preparation. Four cases each independently passed fixed PPL and all10 PP/TG samples. Candidate pass-mean PP change=-16.018%, TG change=+2.867%. Both original passes and both candidate passes retained. Compare the other node/order and examine all within-pass variation before any conclusion; preparation is excluded, no formal score claimed.",
+  "joint_review": {
+    "decision": "model_gain_not_established_no_promotion",
+    "jobs": {
+      "4340350": {
+        "order": "ABBA",
+        "pass_means": {
+          "A": {
+            "pp": 39.8742855,
+            "tg": 3.0439285
+          },
+          "B": {
+            "pp": 54.8400015,
+            "tg": 3.0776805
+          }
+        },
+        "candidate_change": {
+          "pp": 0.37532248696970383,
+          "tg": 0.011088302501192304
+        },
+        "max_pp_cv": 0.062223821456541144,
+        "max_tg_cv": 0.010108587035294086
+      },
+      "4340351": {
+        "order": "BAAB",
+        "pass_means": {
+          "A": {
+            "pp": 37.4311795,
+            "tg": 2.503795
+          },
+          "B": {
+            "pp": 31.435516999999997,
+            "tg": 2.5755875
+          }
+        },
+        "candidate_change": {
+          "pp": -0.16017829467543232,
+          "tg": 0.028673473666973592
+        },
+        "max_pp_cv": 0.10515573707207208,
+        "max_tg_cv": 0.2149876263929797
+      }
+    },
+    "evidence": "Both jobs complete with8comparison passes,80PP+80TG samples retained; all comparison and preparation PPL2.7767 PASS.",
+    "caveat": "PP direction reverses across ABBA/BAAB (+37.532% vs -16.018%); preparation did not eliminate slow first runs or time-varying noise. TG means positive in both jobs (+1.109%/+2.867%), but BAAB per-pass TG CV13.1%-21.5% exceeds that observation. Do not pool into a claimed causal gain or choose favorable passes."
+  }
+}

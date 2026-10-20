@@ -1,0 +1,242 @@
+{
+  "job_id": "4340602",
+  "updated_hong_kong": "2026-10-20T19:12:03.981554+08:00",
+  "last_known_status": "DONE",
+  "node": "r13n22",
+  "remote_root": "/work/apac2602/qwen38-cpu/optimization/20261020-q5-unroll",
+  "source": "/work/apac2602/qwen38-cpu/optimization/20261020-q5-unroll/sources/q5-unroll4-4340602",
+  "change": "Only Intel pragma unroll(4) at original Q5_1 AVX2 loop. Same ordered vector accumulator and summs. No FP16 conversion or high-bit mask overlay.",
+  "next": [
+    "Retain independent source and all raw model/kernel samples.",
+    "Do not promote: first/last original PP drift; full-model gain not established.",
+    "Combined candidate needs counterbalanced full-model replication before any performance claim."
+  ],
+  "review": {
+    "status": "COMPLETE_MODEL_GAIN_NOT_ESTABLISHED",
+    "decision": "do_not_promote_model_gain_not_established",
+    "dot_cases": 262432,
+    "dot_bit_mismatches": 0,
+    "matrix_cases": 144,
+    "matrix_bit_mismatches": 0,
+    "kernel_changes": {
+      "256": 0.010018391239192237,
+      "1024": 0.03153984569481372,
+      "2560": 0.09295123706241881,
+      "6144": 0.09503960827800917,
+      "16384": 0.07436795642841454
+    },
+    "phase": "COMPLETE time=2026-10-20T18:34:43+08:00",
+    "followup_combination_job": "4340624",
+    "reviewed_hong_kong": "2026-10-20T19:10:50.248453+08:00",
+    "model_cases": [
+      {
+        "case": "01_baseline",
+        "ppl": 2.7767,
+        "ppl_status": "PASS",
+        "pp": {
+          "avg_ts": 30.629364,
+          "raw_sample_count": 10,
+          "raw_cv_percent": 11.224959888543992,
+          "samples_ts": [
+            25.7634,
+            27.5312,
+            26.6056,
+            29.158,
+            29.4077,
+            31.0089,
+            33.1314,
+            34.9512,
+            34.7026,
+            34.0336
+          ],
+          "samples_ns": [
+            79492672208,
+            74388217747,
+            76976237155,
+            70238074343,
+            69641550894,
+            66045478864,
+            61814501439,
+            58596023035,
+            59015678443,
+            60175897612
+          ]
+        },
+        "tg": {
+          "avg_ts": 3.030502,
+          "raw_sample_count": 10,
+          "raw_cv_percent": 0.5918379672742197,
+          "samples_ts": [
+            2.99392,
+            3.03301,
+            3.02925,
+            3.04455,
+            3.00943,
+            3.03145,
+            3.04439,
+            3.02422,
+            3.04021,
+            3.05459
+          ],
+          "samples_ns": [
+            42753362794,
+            42202326573,
+            42254724056,
+            42042303122,
+            42532936832,
+            42224051651,
+            42044501552,
+            42324919228,
+            42102357802,
+            41904167072
+          ]
+        }
+      },
+      {
+        "case": "02_candidate",
+        "ppl": 2.7767,
+        "ppl_status": "PASS",
+        "pp": {
+          "avg_ts": 54.789687,
+          "raw_sample_count": 10,
+          "raw_cv_percent": 0.4794228614781147,
+          "samples_ts": [
+            54.3345,
+            54.6098,
+            54.5583,
+            54.6444,
+            54.6372,
+            55.0388,
+            54.9775,
+            54.9859,
+            54.9976,
+            55.1129
+          ],
+          "samples_ns": [
+            37692417261,
+            37502402919,
+            37537825716,
+            37478678928,
+            37483650353,
+            37210123283,
+            37251589968,
+            37245922120,
+            37238013681,
+            37160094211
+          ]
+        },
+        "tg": {
+          "avg_ts": 3.007731,
+          "raw_sample_count": 10,
+          "raw_cv_percent": 0.3217408566489472,
+          "samples_ts": [
+            3.0038,
+            2.99012,
+            2.99823,
+            3.0064,
+            3.00534,
+            3.0078,
+            3.02351,
+            3.01982,
+            3.01186,
+            3.01043
+          ],
+          "samples_ns": [
+            42612750803,
+            42807636209,
+            42691799855,
+            42575803218,
+            42590826579,
+            42556059818,
+            42334838935,
+            42386639531,
+            42498684150,
+            42518868259
+          ]
+        }
+      },
+      {
+        "case": "03_baseline_after",
+        "ppl": 2.7767,
+        "ppl_status": "PASS",
+        "pp": {
+          "avg_ts": 54.514568,
+          "raw_sample_count": 10,
+          "raw_cv_percent": 0.26141229706560754,
+          "samples_ts": [
+            54.1215,
+            54.5688,
+            54.5753,
+            54.4692,
+            54.5451,
+            54.5837,
+            54.5638,
+            54.5443,
+            54.5936,
+            54.5803
+          ],
+          "samples_ns": [
+            37840800019,
+            37530618551,
+            37526142932,
+            37599197711,
+            37546932693,
+            37520324530,
+            37534047125,
+            37547440488,
+            37513528281,
+            37522689070
+          ]
+        },
+        "tg": {
+          "avg_ts": 3.071243,
+          "raw_sample_count": 10,
+          "raw_cv_percent": 0.4665749770828281,
+          "samples_ts": [
+            3.03244,
+            3.07943,
+            3.07966,
+            3.08416,
+            3.0711,
+            3.07668,
+            3.07331,
+            3.07174,
+            3.07082,
+            3.07308
+          ],
+          "samples_ns": [
+            42210272901,
+            41566124514,
+            41562989758,
+            41502378089,
+            41678843579,
+            41603298471,
+            41648844453,
+            41670188763,
+            41682683406,
+            41652054540
+          ]
+        }
+      }
+    ],
+    "candidate_comparisons": {
+      "first_original": {
+        "pp_change_percent": 78.8796104287376,
+        "tg_change_percent": -0.7513936634920393
+      },
+      "last_original": {
+        "pp_change_percent": 0.5046706047455052,
+        "tg_change_percent": -2.0679575012462315
+      }
+    },
+    "original_before_after_drift": {
+      "pp_change_percent": 77.98139066811834,
+      "tg_change_percent": 1.3443647290118932
+    },
+    "validation": "All six performance cases contain ten raw samples; all three fixed PPL cases PASS; fixed benchmark dimensions checked.",
+    "limitation": "Single original/candidate/original sequence, no counterbalanced replication. First original PP differs strongly from last original; last comparison alone does not establish a causal gain. Raw samples and reported statistics retained."
+  },
+  "latest_stage": "COMPLETE time=2026-10-20T18:34:43+08:00",
+  "followup_combined_job": "4340624",
+  "latest_stage_checked": "2026-10-20T19:12:03.981554+08:00"
+}

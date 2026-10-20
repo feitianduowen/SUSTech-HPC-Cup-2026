@@ -1,0 +1,11 @@
+{
+  "new_jobs": [
+    "4340520",
+    "4340521"
+  ],
+  "registered_run": true,
+  "completed_vtune_jobs_logged": true,
+  "profiling_scores_blank": true,
+  "no_premature_new_scores": true,
+  "total_raw_samples": 2190
+}

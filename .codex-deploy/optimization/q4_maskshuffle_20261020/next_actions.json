@@ -1,0 +1,20 @@
+{
+  "job_id": "4341285",
+  "remote_root": "/work/apac2602/qwen38-cpu/optimization/20261020-q4-maskshuffle",
+  "source": "/work/apac2602/qwen38-cpu/optimization/20261020-q4-maskshuffle/sources/q4-maskshuffle-4341285",
+  "last_known_status": "RUN",
+  "change": "New original-source copy:16 Q4_K GEMV shuffle/blend expressions use complementary AVX512VL mask shuffles. No integer-tree overlay. Integer and FP arithmetic order unchanged; AVX2 fallback retained.",
+  "compiler": "Intel Classic2021.9 O3 precise/no-ftz CORE-AVX512 qsimd-honor-fp-model; OpenMP ON BLAS OFF",
+  "previous_job": "4341178",
+  "previous_result": "DONE128128directcases+144matrixcases0bitdifferences;8kernelconfigs -0.17%..+0.49%, no gain gate, no model PPL/PP/TG.",
+  "next": [
+    "Verify3687 independent source files and four-tool build/ldd; inspect actual assembly counts, especially masked vpshufd, vpblendmd and function size. Do not infer speed from static counts.",
+    "Require4096 lane probe cases and128128 actual-library GEMV cases3repetitions and144 matrix configurations0bitdifferences; retain all evidence.",
+    "Eight resident/stream256MiB configurations,10AB/BA rounds. Gate>=3% paired median at resident nc64 n2560or6144 with>=7/10wins and no config below-5%.",
+    "Only on gate pass run each original/candidate/original fresh fixed PPL[2.63112,2.90808], PP10,TG10. Keep all slow samples and order drift; do not promote prematurely.",
+    "Refresh registry/Excel and server mirror; retain failed/negative rows."
+  ],
+  "node": "r13n15",
+  "updated_hong_kong": "2026-10-20T21:59:51+08:00",
+  "latest_stage": "BUILD_AND_QUANT_TEST time=2026-10-20T21:59:35+08:00"
+}

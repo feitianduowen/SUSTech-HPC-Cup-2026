@@ -1,0 +1,26 @@
+{
+  "job_id": "4340728",
+  "updated_hong_kong": "2026-10-20T18:19:47.791001+08:00",
+  "last_known_status": "DONE",
+  "node": "r13n17",
+  "remote_root": "/work/apac2602/qwen38-cpu/optimization/20261020-q5-stream",
+  "scope": "Read-only actual-library synthetic diagnostic, no model source changes, no model PPL/PP/TG or Score. Driver IntelO2strict, libraries prior IntelO3precise.",
+  "next": [
+    "Retain all576operator samples and all48raw driver outputs; hash checks passed.",
+    "Combined38threadstream throughput vsoriginal +7.44% at2560,+7.09% at6144; resident+21.19%/+18.25%. Access-pattern sensitivity established in this synthetic harness, not a model score.",
+    "Wait for full-model candidate4340624 and unroll4340602; no production promotion from synthetic diagnostics.",
+    "Excel verified with576raw kernel rows and mirrored server copy. Do not duplicate this diagnostic without a new hypothesis."
+  ],
+  "review": {
+    "status": "COMPLETE",
+    "decision": "streaming_and_parallel_gain_retained_model_tests_still_required",
+    "driver_processes": 48,
+    "raw_operator_samples": 576,
+    "checked_output_hashes": "all_match",
+    "combined_38thread_streaming_changes": {
+      "2560": 0.07442760096536905,
+      "6144": 0.0709314031822803
+    },
+    "caveat": "Synthetic loop and per-worker first-touch differ from full GGML graph. Derived byte rate is not measured DRAM bandwidth. Do not convert kernel gains into a model score."
+  }
+}

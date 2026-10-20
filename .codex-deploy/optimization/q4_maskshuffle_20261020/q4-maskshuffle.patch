@@ -1,0 +1,78 @@
+--- a/ggml/src/ggml-cpu/arch/x86/repack.cpp
++++ b/ggml/src/ggml-cpu/arch/x86/repack.cpp
+@@ -1484,6 +1484,21 @@
+     UNUSED(blocklen);
+ 
+ #if defined(__AVX2__)
++    // Fuse lane shuffle+merge while preserving the original dword lane order.
++    const auto q4_pair_even = [](__m256i a, __m256i b) {
++#if defined(__AVX512F__) && defined(__AVX512VL__)
++        return _mm256_mask_shuffle_epi32(a, (__mmask8) 0xAA, b, 177);
++#else
++        return _mm256_blend_epi32(a, _mm256_shuffle_epi32(b, 177), 170);
++#endif
++    };
++    const auto q4_pair_odd = [](__m256i a, __m256i b) {
++#if defined(__AVX512F__) && defined(__AVX512VL__)
++        return _mm256_mask_shuffle_epi32(b, (__mmask8) 0x55, a, 177);
++#else
++        return _mm256_blend_epi32(_mm256_shuffle_epi32(a, 177), b, 170);
++#endif
++    };
+     // Lookup table to convert signed nibbles to signed bytes
+     __m256i signextendlut = _mm256_castsi128_si256(_mm_set_epi8(-1, -2, -3, -4, -5, -6, -7, -8, 7, 6, 5, 4, 3, 2, 1, 0));
+     signextendlut = _mm256_permute2f128_si256(signextendlut, signextendlut, 0);
+@@ -1622,31 +1637,31 @@
+                     __m256i iacc_0 = _mm256_setzero_si256();
+                     __m256i iacc_1 = _mm256_setzero_si256();
+ 
+-                    iacc_0 = _mm256_add_epi16(iacc_0, _mm256_maddubs_epi16(_mm256_blend_epi32(rhs_vec_0123_00 ,_mm256_shuffle_epi32(rhs_vec_4567_00, 177), 170), _mm256_shuffle_epi32(lhs_vec_00, 0)));
+-                    iacc_0 = _mm256_add_epi16(iacc_0, _mm256_maddubs_epi16(_mm256_blend_epi32(_mm256_shuffle_epi32(rhs_vec_0123_00, 177) ,rhs_vec_4567_00, 170), _mm256_shuffle_epi32(lhs_vec_00, 85)));
+-
+-                    iacc_0 = _mm256_add_epi16(iacc_0, _mm256_maddubs_epi16(_mm256_blend_epi32(rhs_vec_0123_01 ,_mm256_shuffle_epi32(rhs_vec_4567_01, 177), 170), _mm256_shuffle_epi32(lhs_vec_00, 170)));
+-                    iacc_0 = _mm256_add_epi16(iacc_0, _mm256_maddubs_epi16(_mm256_blend_epi32(_mm256_shuffle_epi32(rhs_vec_0123_01, 177) ,rhs_vec_4567_01, 170), _mm256_shuffle_epi32(lhs_vec_00, 255)));
+-
+-                    iacc_0 = _mm256_add_epi16(iacc_0, _mm256_maddubs_epi16(_mm256_blend_epi32(rhs_vec_0123_02 ,_mm256_shuffle_epi32(rhs_vec_4567_02, 177), 170), _mm256_shuffle_epi32(lhs_vec_01, 0)));
+-                    iacc_0 = _mm256_add_epi16(iacc_0, _mm256_maddubs_epi16(_mm256_blend_epi32(_mm256_shuffle_epi32(rhs_vec_0123_02, 177) ,rhs_vec_4567_02, 170), _mm256_shuffle_epi32(lhs_vec_01, 85)));
+-
+-                    iacc_0 = _mm256_add_epi16(iacc_0, _mm256_maddubs_epi16(_mm256_blend_epi32(rhs_vec_0123_03 ,_mm256_shuffle_epi32(rhs_vec_4567_03, 177), 170), _mm256_shuffle_epi32(lhs_vec_01, 170)));
+-                    iacc_0 = _mm256_add_epi16(iacc_0, _mm256_maddubs_epi16(_mm256_blend_epi32(_mm256_shuffle_epi32(rhs_vec_0123_03, 177) ,rhs_vec_4567_03, 170), _mm256_shuffle_epi32(lhs_vec_01, 255)));
++                    iacc_0 = _mm256_add_epi16(iacc_0, _mm256_maddubs_epi16(q4_pair_even(rhs_vec_0123_00, rhs_vec_4567_00), _mm256_shuffle_epi32(lhs_vec_00, 0)));
++                    iacc_0 = _mm256_add_epi16(iacc_0, _mm256_maddubs_epi16(q4_pair_odd(rhs_vec_0123_00, rhs_vec_4567_00), _mm256_shuffle_epi32(lhs_vec_00, 85)));
++
++                    iacc_0 = _mm256_add_epi16(iacc_0, _mm256_maddubs_epi16(q4_pair_even(rhs_vec_0123_01, rhs_vec_4567_01), _mm256_shuffle_epi32(lhs_vec_00, 170)));
++                    iacc_0 = _mm256_add_epi16(iacc_0, _mm256_maddubs_epi16(q4_pair_odd(rhs_vec_0123_01, rhs_vec_4567_01), _mm256_shuffle_epi32(lhs_vec_00, 255)));
++
++                    iacc_0 = _mm256_add_epi16(iacc_0, _mm256_maddubs_epi16(q4_pair_even(rhs_vec_0123_02, rhs_vec_4567_02), _mm256_shuffle_epi32(lhs_vec_01, 0)));
++                    iacc_0 = _mm256_add_epi16(iacc_0, _mm256_maddubs_epi16(q4_pair_odd(rhs_vec_0123_02, rhs_vec_4567_02), _mm256_shuffle_epi32(lhs_vec_01, 85)));
++
++                    iacc_0 = _mm256_add_epi16(iacc_0, _mm256_maddubs_epi16(q4_pair_even(rhs_vec_0123_03, rhs_vec_4567_03), _mm256_shuffle_epi32(lhs_vec_01, 170)));
++                    iacc_0 = _mm256_add_epi16(iacc_0, _mm256_maddubs_epi16(q4_pair_odd(rhs_vec_0123_03, rhs_vec_4567_03), _mm256_shuffle_epi32(lhs_vec_01, 255)));
+ 
+                     iacc_0 = _mm256_madd_epi16(iacc_0, scales_0);
+ 
+-                    iacc_1 = _mm256_add_epi16(iacc_1, _mm256_maddubs_epi16(_mm256_blend_epi32(rhs_vec_0123_10 ,_mm256_shuffle_epi32(rhs_vec_4567_10, 177), 170), _mm256_shuffle_epi32(lhs_vec_10, 0)));
+-                    iacc_1 = _mm256_add_epi16(iacc_1, _mm256_maddubs_epi16(_mm256_blend_epi32(_mm256_shuffle_epi32(rhs_vec_0123_10, 177) ,rhs_vec_4567_10, 170), _mm256_shuffle_epi32(lhs_vec_10, 85)));
+-
+-                    iacc_1 = _mm256_add_epi16(iacc_1, _mm256_maddubs_epi16(_mm256_blend_epi32(rhs_vec_0123_11 ,_mm256_shuffle_epi32(rhs_vec_4567_11, 177), 170), _mm256_shuffle_epi32(lhs_vec_10, 170)));
+-                    iacc_1 = _mm256_add_epi16(iacc_1, _mm256_maddubs_epi16(_mm256_blend_epi32(_mm256_shuffle_epi32(rhs_vec_0123_11, 177) ,rhs_vec_4567_11, 170), _mm256_shuffle_epi32(lhs_vec_10, 255)));
+-
+-                    iacc_1 = _mm256_add_epi16(iacc_1, _mm256_maddubs_epi16(_mm256_blend_epi32(rhs_vec_0123_12 ,_mm256_shuffle_epi32(rhs_vec_4567_12, 177), 170), _mm256_shuffle_epi32(lhs_vec_11, 0)));
+-                    iacc_1 = _mm256_add_epi16(iacc_1, _mm256_maddubs_epi16(_mm256_blend_epi32(_mm256_shuffle_epi32(rhs_vec_0123_12, 177) ,rhs_vec_4567_12, 170), _mm256_shuffle_epi32(lhs_vec_11, 85)));
+-
+-                    iacc_1 = _mm256_add_epi16(iacc_1, _mm256_maddubs_epi16(_mm256_blend_epi32(rhs_vec_0123_13 ,_mm256_shuffle_epi32(rhs_vec_4567_13, 177), 170), _mm256_shuffle_epi32(lhs_vec_11, 170)));
+-                    iacc_1 = _mm256_add_epi16(iacc_1, _mm256_maddubs_epi16(_mm256_blend_epi32(_mm256_shuffle_epi32(rhs_vec_0123_13, 177) ,rhs_vec_4567_13, 170), _mm256_shuffle_epi32(lhs_vec_11, 255)));
++                    iacc_1 = _mm256_add_epi16(iacc_1, _mm256_maddubs_epi16(q4_pair_even(rhs_vec_0123_10, rhs_vec_4567_10), _mm256_shuffle_epi32(lhs_vec_10, 0)));
++                    iacc_1 = _mm256_add_epi16(iacc_1, _mm256_maddubs_epi16(q4_pair_odd(rhs_vec_0123_10, rhs_vec_4567_10), _mm256_shuffle_epi32(lhs_vec_10, 85)));
++
++                    iacc_1 = _mm256_add_epi16(iacc_1, _mm256_maddubs_epi16(q4_pair_even(rhs_vec_0123_11, rhs_vec_4567_11), _mm256_shuffle_epi32(lhs_vec_10, 170)));
++                    iacc_1 = _mm256_add_epi16(iacc_1, _mm256_maddubs_epi16(q4_pair_odd(rhs_vec_0123_11, rhs_vec_4567_11), _mm256_shuffle_epi32(lhs_vec_10, 255)));
++
++                    iacc_1 = _mm256_add_epi16(iacc_1, _mm256_maddubs_epi16(q4_pair_even(rhs_vec_0123_12, rhs_vec_4567_12), _mm256_shuffle_epi32(lhs_vec_11, 0)));
++                    iacc_1 = _mm256_add_epi16(iacc_1, _mm256_maddubs_epi16(q4_pair_odd(rhs_vec_0123_12, rhs_vec_4567_12), _mm256_shuffle_epi32(lhs_vec_11, 85)));
++
++                    iacc_1 = _mm256_add_epi16(iacc_1, _mm256_maddubs_epi16(q4_pair_even(rhs_vec_0123_13, rhs_vec_4567_13), _mm256_shuffle_epi32(lhs_vec_11, 170)));
++                    iacc_1 = _mm256_add_epi16(iacc_1, _mm256_maddubs_epi16(q4_pair_odd(rhs_vec_0123_13, rhs_vec_4567_13), _mm256_shuffle_epi32(lhs_vec_11, 255)));
+ 
+                     iacc_1 = _mm256_madd_epi16(iacc_1, scales_1);
+ 

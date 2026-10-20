@@ -1,0 +1,25 @@
+{
+  "script": "/work/apac2602/qwen38-cpu/optimization/20261020-barrier-tree/runtime_pair.lsf",
+  "kind": "同节点完整对照",
+  "purpose": "针对约30% barrier自旋CPU时间：普通barrier hyper/tree单变量无采样对照，顺序BAAB",
+  "config": "同一SHA核验Intel Classic2021.9 O3 precise/no-ftz CORE-AVX512 qsimd-honor-fp-model原版，OpenMP/tinyBLAS ON、BLAS/GPU OFF；hg_6148单节点40slots/Gold6148，38线程close/cores。唯一测速变量：KMP_PLAIN_BARRIER_PATTERN A=hyper,hyper，B=tree,tree；两者KMP_FORKJOIN_BARRIER_PATTERN=hyper,hyper，KMP_BLOCKTIME200、OMP_WAIT_POLICY ACTIVE、OMP_DYNAMIC FALSE。Intel编译的小程序先验证两种plain模式真实生效并确认forkjoin和blocktime不变。四轮BAAB，每轮独立固定默认环境PPL t/tb38 c512 chunks2 b512ub256 f16KV ngl0 NUMA distribute no-warmup timeout590s，±5%；通过后测速PP2048及TG128d2048各r10 t38 b2048ub512 f16KV ngl0 NUMA distribute。无VTune/OS采样。",
+  "baseline": "本作业hyper普通barrier A1/A2；tree B1对应A1，B2对应A2，同节点配对；不与同时运行的infinite实验混用",
+  "case_prefix": "confirm-barrier-tree-baab",
+  "baseline_case": "confirm-barrier-tree-baab-A1_{job_id}",
+  "measurement_baselines": {
+    "confirm-barrier-tree-baab-A1_{job_id}": null,
+    "confirm-barrier-tree-baab-A2_{job_id}": null,
+    "confirm-barrier-tree-baab-B1_{job_id}": "confirm-barrier-tree-baab-A1_{job_id}",
+    "confirm-barrier-tree-baab-B2_{job_id}": "confirm-barrier-tree-baab-A2_{job_id}"
+  },
+  "comparison_scope": "same-node",
+  "environment": {
+    "CASE_ORDER": "BAAB"
+  },
+  "lsf_args": [
+    "-J",
+    "qwen38_barrier_tree_BAAB"
+  ],
+  "ppl_scope": "每轮独立新固定PPL，PPL默认等待设置；A/B仅测速生效。同一个原版二进制，无PPL共享",
+  "note": "独立检验普通barrier算法，等待时长固定200ms，forkjoin算法固定hyper，不组合infinite干预。上一轮VTune自旋比例前后接近30%，并非首次慢速唯一原因；此次面向潜在稳定开销。保留所有四轮和低速样本，不挑最快轮。首次状态/顺序/跨节点/时段混杂仍需逐项分析。正式采用运行时参数前按赛题申报；开发自测非正式成绩。源码、模型和生产环境不改。"
+}

@@ -1,0 +1,85 @@
+#!/bin/bash
+#BSUB -J qwen38_wait_profile
+#BSUB -q ssc-cpu
+#BSUB -m hg_6148
+#BSUB -n 40
+#BSUB -R "span[ptile=40]"
+#BSUB -W 04:00
+#BSUB -o /work/apac2602/qwen38-cpu/logs/%J.wait_profile.out
+#BSUB -e /work/apac2602/qwen38-cpu/logs/%J.wait_profile.err
+set -Eeuo pipefail
+source /work/apac2602/qwen38-cpu/scripts/env.sh
+ROOT=/work/apac2602/qwen38-cpu/optimization/20261020-vtune-wait-pair
+OUT="$ROOT/results/$LSB_JOBID"
+BUILD=/work/apac2602/qwen38-cpu/llama.cpp
+VTUNE=/share/intel/oneapi-2023.1/vtune/2023.1.0/bin64/vtune
+[[ "${PROFILE_MODE:?}" =~ ^(threading|hotspots)$ ]]
+mkdir -p "$OUT"
+phase=VERIFY
+trap 'rc=$?; printf "FAILED phase=%s exit=%s time=%s\n" "$phase" "$rc" "$(date -Is)" > "$OUT/job.status"; exit "$rc"' ERR
+stage() { phase=$1; printf '%s time=%s\n' "$phase" "$(date -Is)" | tee "$OUT/job.status"; }
+unset KMP_BLOCKTIME OMP_WAIT_POLICY KMP_AFFINITY GOMP_CPU_AFFINITY KMP_HW_SUBSET PROF_DIR
+export OMP_NUM_THREADS=38 OMP_DYNAMIC=FALSE OMP_PROC_BIND=close OMP_PLACES=cores
+export MKL_NUM_THREADS=38 OPENBLAS_NUM_THREADS=38 BLIS_NUM_THREADS=38 LC_ALL=C
+[[ "${LSB_DJOB_NUMPROC:?}" == 40 ]]
+[[ $(getconf _NPROCESSORS_ONLN) == 40 ]]
+lscpu | grep -q 'Intel(R) Xeon(R) Gold 6148'
+cp /work/apac2602/qwen38-cpu/optimization/20261019-factor-screen/results/4338278/baseline-sha256.txt "$OUT/sha256.txt"
+sha256sum -c "$OUT/sha256.txt" > "$OUT/hash-check.txt"
+cp "$ROOT/$PROFILE_MODE.json" "$OUT/plan.json"
+cp "$ROOT/profile_pair_sw_defaults.lsf" "$ROOT/ppl_gate.lsf" "$ROOT/target_exec.py" "$ROOT/roi_monitor.py" "$ROOT/observed_run.py" "$ROOT/probe.py" "$OUT/"
+{ date -Is; hostname; lscpu; module list; icc --version; icpc --version; "$VTUNE" -version; cat /proc/sys/kernel/perf_event_paranoid; } > "$OUT/environment.txt" 2>&1
+args=(-collect threading -knob sampling-and-waits=sw)
+[[ "$PROFILE_MODE" != hotspots ]] || args=(-collect hotspots -knob sampling-mode=hw -knob sampling-interval=10 -knob enable-stack-collection=true -knob stack-size=2048)
+stage PROBE
+timeout --kill-after=15s 200s "$VTUNE" "${args[@]}" -data-limit=128 -r "$OUT/probe" -- python3 "$OUT/probe.py" > "$OUT/probe.log" 2>&1
+"$VTUNE" -report summary -r "$OUT/probe" > "$OUT/probe-summary.txt" 2> "$OUT/probe-report.log"
+"$VTUNE" -report hotspots -r "$OUT/probe" '-group-by=?' > "$OUT/report-groupings.txt" 2>&1 || true
+"$VTUNE" -report hotspots -r "$OUT/probe" '-column=?' > "$OUT/report-columns.txt" 2>&1 || true
+stage FIXED_PPL
+COMPILER_BUILD_ROOT="$BUILD" EXPERIMENT_OUTPUT_DIR="$OUT/ppl" RUN_BENCH=0 bash "$OUT/ppl_gate.lsf" > "$OUT/ppl.log" 2>&1
+MODEL=/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf
+common=(-m "$MODEL" -t 38 -ngl 0 -b 2048 -ub 512 -ctk f16 -ctv f16 --numa distribute -r 10 --progress -o json)
+profile_pp() {
+    local name=$1
+    local case_dir="$OUT/$name"
+    mkdir -p "$case_dir"
+    timeout --signal=TERM --kill-after=30s 3600s "$VTUNE" "${args[@]}" -data-limit=2048 -start-paused -r "$case_dir/vtune" -- python3 "$OUT/target_exec.py" "$case_dir" pp "$BUILD/build/bin/llama-bench" "${common[@]}" -p 2048 -n 0 > "$case_dir/vtune.log" 2>&1 &
+    local collector=$!
+    python3 "$OUT/roi_monitor.py" "$case_dir" "$VTUNE" 60 > "$case_dir/monitor.log" 2>&1 &
+    local monitor=$!
+    local rc=0 monitor_rc=0
+    wait "$collector" || rc=$?
+    printf '%s\n' "$rc" > "$case_dir/collector.exit"
+    wait "$monitor" || monitor_rc=$?
+    [[ "$rc" == 0 && "$monitor_rc" == 0 ]]
+    [[ $(cat "$case_dir/target.exit") == 0 ]]
+    sha256sum -c "$OUT/sha256.txt" >> "$OUT/hash-check.txt"
+}
+stage PROFILE_FIRST_PP
+profile_pp 01_first_pp
+stage UNPROFILED_TG
+mkdir -p "$OUT/02_intervening_tg"
+timeout --signal=TERM --kill-after=15s 3600s python3 "$OUT/target_exec.py" "$OUT/02_intervening_tg" tg "$BUILD/build/bin/llama-bench" "${common[@]}" -p 0 -n 128 -d 2048 > "$OUT/tg-exec.log" 2>&1
+stage PROFILE_LATER_PP
+profile_pp 03_later_pp
+stage EXPORT_REPORTS
+for name in 01_first_pp 03_later_pp; do
+    case_dir="$OUT/$name"
+    "$VTUNE" -report summary -r "$case_dir/vtune" -report-output "$case_dir/summary.txt" > "$case_dir/report.log" 2>&1
+    for kind in function thread process,function; do
+        if "$VTUNE" -report hotspots -r "$case_dir/vtune" -group-by "$kind" -format csv -csv-delimiter comma -limit 120 -report-output "$case_dir/hotspots-$kind.csv" >> "$case_dir/report.log" 2>&1; then
+            printf 'hotspots-%s=0\n' "$kind" >> "$case_dir/report-status.txt"
+        else
+            printf 'hotspots-%s=%s\n' "$kind" "$?" >> "$case_dir/report-status.txt"
+        fi
+    done
+    for report in callstacks top-down; do
+        if "$VTUNE" -report "$report" -r "$case_dir/vtune" -format csv -csv-delimiter comma -limit 120 -report-output "$case_dir/$report.csv" >> "$case_dir/report.log" 2>&1; then
+            printf '%s=0\n' "$report" >> "$case_dir/report-status.txt"
+        else
+            printf '%s=%s\n' "$report" "$?" >> "$case_dir/report-status.txt"
+        fi
+    done
+done
+stage COMPLETE

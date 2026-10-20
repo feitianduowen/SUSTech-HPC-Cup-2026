@@ -1,0 +1,10 @@
+{
+  "base_commit": "d81235049384534c167caea52b85a694f6103d14",
+  "variants": {
+    "q5-paircvt": {
+      "file": "ggml/src/ggml-cpu/arch/x86/quants.c",
+      "original_sha256": "3c489fdc77e3ab484a5f188bff9c60c0e9483c951ed65c1a562a04c249d5628e",
+      "sha256": "90e70a5b9d5f14ceef9a4f92fc09b47b2c7724ad07957710bd6bfbcca654d777"
+    }
+  }
+}

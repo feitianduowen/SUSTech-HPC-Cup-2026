@@ -1,0 +1,35 @@
+--- a/ggml/src/ggml-cpu/arch/x86/quants.c
++++ b/ggml/src/ggml-cpu/arch/x86/quants.c
+@@ -1244,16 +1244,30 @@
+ 
+     // Main loop
+     for (; ib < nb; ++ib) {
++#if defined(__F16C__) || defined(__AVX512F__)
++        // Convert d_x, m_x, d_y, s_y together instead of four table lookups.
++        // Keep the original scale products and accumulator order below.
++        uint32_t xdm, yds;
++        memcpy(&xdm, &x[ib].d, sizeof(xdm));
++        memcpy(&yds, &y[ib].d, sizeof(yds));
++        const __m128 scales = _mm_cvtph_ps(_mm_unpacklo_epi32(
++                _mm_cvtsi32_si128((int) xdm), _mm_cvtsi32_si128((int) yds)));
++        const __m256 dx = _mm256_set1_ps(_mm_cvtss_f32(scales));
++        const __m256 dy = _mm256_set1_ps(_mm_cvtss_f32(_mm_shuffle_ps(scales, scales, 0xaa)));
++        const float mx = _mm_cvtss_f32(_mm_shuffle_ps(scales, scales, 0x55));
++        const float sy = _mm_cvtss_f32(_mm_shuffle_ps(scales, scales, 0xff));
++        summs += mx * sy;
++#else
+         const __m256 dx = _mm256_set1_ps(GGML_CPU_FP16_TO_FP32(x[ib].d));
+-
++        const __m256 dy = _mm256_set1_ps(GGML_CPU_FP16_TO_FP32(y[ib].d));
+         summs += GGML_CPU_FP16_TO_FP32(x[ib].m) * GGML_CPU_FP16_TO_FP32(y[ib].s);
++#endif
+ 
+         __m256i qx = bytes_from_nibbles_32(x[ib].qs);
+         __m256i bxhi = bytes_from_bits_32(x[ib].qh);
+         bxhi = _mm256_and_si256(bxhi, _mm256_set1_epi8(0x10));
+         qx = _mm256_or_si256(qx, bxhi);
+ 
+-        const __m256 dy = _mm256_set1_ps(GGML_CPU_FP16_TO_FP32(y[ib].d));
+         const __m256i qy = _mm256_loadu_si256((const __m256i *)y[ib].qs);
+ 
+         const __m256 q = mul_sum_us8_pairs_float(qx, qy);

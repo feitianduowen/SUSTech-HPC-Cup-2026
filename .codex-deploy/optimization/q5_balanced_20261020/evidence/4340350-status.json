@@ -1,0 +1,83 @@
+{
+  "checked_hong_kong": "2026-10-20T16:54:14.533183+08:00",
+  "job_id": "4340350",
+  "order": "ABBA",
+  "stage": "PPL_PP10_TG10_02_candidate1 time=2026-10-20T16:45:55+08:00",
+  "cases_complete": 1,
+  "cases_expected": 4,
+  "cases": [
+    {
+      "ordinal": 1,
+      "letter": "A",
+      "role": "baseline1",
+      "directory": "01_baseline1",
+      "ppl": {
+        "status": "PASS",
+        "ppl": 2.7767
+      },
+      "pp": {
+        "status": "COMPLETE",
+        "samples": 10,
+        "avg_ts": 26.237556,
+        "cv": 0.062223821456541144
+      },
+      "tg": {
+        "status": "COMPLETE",
+        "samples": 10,
+        "avg_ts": 3.057661,
+        "cv": 0.004285628786186565
+      },
+      "complete": true
+    },
+    {
+      "ordinal": 2,
+      "letter": "B",
+      "role": "candidate1",
+      "directory": "02_candidate1",
+      "ppl": {
+        "status": "PASS",
+        "ppl": 2.7767
+      },
+      "pp": {
+        "status": "pending_or_partial"
+      },
+      "tg": {
+        "status": "pending_or_partial"
+      },
+      "complete": false
+    },
+    {
+      "ordinal": 3,
+      "letter": "B",
+      "role": "candidate2",
+      "directory": "03_candidate2",
+      "ppl": {
+        "status": "pending_or_partial"
+      },
+      "pp": {
+        "status": "pending_or_partial"
+      },
+      "tg": {
+        "status": "pending_or_partial"
+      },
+      "complete": false
+    },
+    {
+      "ordinal": 4,
+      "letter": "A",
+      "role": "baseline2",
+      "directory": "04_baseline2",
+      "ppl": {
+        "status": "pending_or_partial"
+      },
+      "pp": {
+        "status": "pending_or_partial"
+      },
+      "tg": {
+        "status": "pending_or_partial"
+      },
+      "complete": false
+    }
+  ],
+  "decision": "RUNNING; do not compare early, no candidate promotion; all slow samples retained"
+}

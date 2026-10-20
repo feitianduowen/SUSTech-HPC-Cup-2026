@@ -1,0 +1,139 @@
+{
+  "updated_hong_kong": "2026-10-20T21:18:41.644699+08:00",
+  "remote_root": "/work/apac2602/qwen38-cpu/optimization/20261020-q5-combined-balanced",
+  "jobs": [
+    {
+      "job_id": "4340898",
+      "order": "ABBA",
+      "node": "r13n44",
+      "last_known_status": "DONE",
+      "latest_stage": "COMPLETE time=2026-10-20T20:57:02+08:00",
+      "complete_comparison_passes": 4,
+      "comparison_ppl_passes": 4
+    },
+    {
+      "job_id": "4340899",
+      "order": "BAAB",
+      "node": "r13n43",
+      "last_known_status": "DONE",
+      "latest_stage": "COMPLETE time=2026-10-20T20:52:56+08:00",
+      "complete_comparison_passes": 4,
+      "comparison_ppl_passes": 4
+    }
+  ],
+  "source_job": "4340624",
+  "source": "/work/apac2602/qwen38-cpu/optimization/20261020-q5-combined/sources/q5-mask-unroll4-4340624",
+  "change": "No new source modification; SHA-verified independent combined mask+ordered-unroll4 Intel build reused.",
+  "preparation": "Separate original fixed PPL then PP10 and TG10. All raw results retained in diagnostics/preparation and excluded from comparative gains by predeclared plan.",
+  "next": [
+    "Retain independent combined source and evidence. Do not repeat the same balanced model test solely to seek a favorable outcome; prioritize a different hotspot or diagnose runtime/I/O drift before further model-gain claims.",
+    "Preserve all source, logs and raw samples; keep Excel and server mirror synchronized."
+  ],
+  "review": {
+    "reviewed_hong_kong": "2026-10-20T21:18:41.644699+08:00",
+    "decision": "model_gain_not_established_do_not_promote",
+    "jobs": {
+      "4340898": {
+        "order": "ABBA",
+        "pass_means": {
+          "A": {
+            "pp": 44.554657500000005,
+            "tg": 3.0518140000000002
+          },
+          "B": {
+            "pp": 54.9564765,
+            "tg": 3.0244405
+          }
+        },
+        "candidate_change": {
+          "pp": 0.2334619899165422,
+          "tg": -0.008969583336337128
+        },
+        "max_pp_cv": 0.07954548503647854,
+        "max_tg_cv": 0.004053282976990603,
+        "original_pass_change": {
+          "pp": 0.5540073818861386,
+          "tg": -0.0009845030830404333
+        },
+        "case_results": [
+          {
+            "case": "01_baseline1",
+            "ppl": 2.7767,
+            "pp": 34.889999,
+            "tg": 3.053317
+          },
+          {
+            "case": "02_candidate1",
+            "ppl": 2.7767,
+            "pp": 55.12151,
+            "tg": 3.019616
+          },
+          {
+            "case": "03_candidate2",
+            "ppl": 2.7767,
+            "pp": 54.791443,
+            "tg": 3.029265
+          },
+          {
+            "case": "04_baseline2",
+            "ppl": 2.7767,
+            "pp": 54.219316,
+            "tg": 3.050311
+          }
+        ]
+      },
+      "4340899": {
+        "order": "BAAB",
+        "pass_means": {
+          "A": {
+            "pp": 53.921972999999994,
+            "tg": 3.050922
+          },
+          "B": {
+            "pp": 53.0202,
+            "tg": 2.99716
+          }
+        },
+        "candidate_change": {
+          "pp": -0.016723664766494895,
+          "tg": -0.01762155833548018
+        },
+        "max_pp_cv": 0.06748804005458822,
+        "max_tg_cv": 0.01753772463066049,
+        "original_pass_change": {
+          "pp": 0.007833316760253783,
+          "tg": 0.02001394381556021
+        },
+        "case_results": [
+          {
+            "case": "01_candidate1",
+            "ppl": 2.7767,
+            "pp": 52.514706,
+            "tg": 3.008504
+          },
+          {
+            "case": "02_baseline1",
+            "ppl": 2.7767,
+            "pp": 53.711603,
+            "tg": 3.020694
+          },
+          {
+            "case": "03_baseline2",
+            "ppl": 2.7767,
+            "pp": 54.132343,
+            "tg": 3.08115
+          },
+          {
+            "case": "04_candidate2",
+            "ppl": 2.7767,
+            "pp": 53.525694,
+            "tg": 2.985816
+          }
+        ]
+      }
+    },
+    "evidence": "Both jobs COMPLETE. Eight comparison cases:80 PP +80 TG raw samples. Two separate preparation cases:20 PP+20 TG samples. All ten fixed PPL=2.7767 PASS. Preparation excluded by predeclared plan; all comparison samples retained.",
+    "caveat": "PP direction reverses:ABBA+23.346% vs BAAB-1.672%. ABBA original PP34.889999 then54.219316 despite separate full preparation. TG is lower for the candidate in both orders:-0.897%/-1.762%. No reproducible full-model speedup established; do not pool the two nodes or select favorable passes. The kernel microbenchmark remains valid within its narrower scope.",
+    "next_recommendation": "Retain independent combined source and evidence. Do not repeat the same balanced model test solely to seek a favorable outcome; prioritize a different hotspot or diagnose runtime/I/O drift before further model-gain claims."
+  }
+}

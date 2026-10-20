@@ -1,0 +1,19 @@
+{
+  "script": "/work/apac2602/qwen38-cpu/optimization/20261020-q5-unroll/build_and_pair.lsf",
+  "kind": "Q5_1有序循环展开源码筛选",
+  "purpose": "Intel pragma unroll(4)用于Q5_1 x Q8_1原始AVX2循环，增加相邻块读取的调度空间；保留单条向量累加器和原summs顺序。独立官方源码副本，不叠加FP16转换、Q5掩码等补丁。",
+  "environment": {
+    "SOURCE_VARIANT": "q5-unroll4"
+  },
+  "lsf_args": [
+    "-J",
+    "qwen38_q5_unroll4"
+  ],
+  "config": "Intel Classic2021.9 O3 precise/no-ftz CORE-AVX512 qsimd-honor-fp-model; OpenMP ON/BLAS OFF; hg_6148单节点40slots,38推理线程close/cores。3687源码SHA核验，仅arch/x86/quants.c修改。四工具构建、量化测试、矩阵144配置3重复要求逐bit一致；实际Q5函数262432组输入3重复与原版逐bit一致（原8480用例+63488有限FP16位模式×4参数），保存实际函数反汇编和FMA/查表/跳转指令静态计数。五个长度单核CPU0/membind0微基准10轮AB/BA。至少一个代表长度2560或6144提升>=3%、10轮至少7轮胜出且各长度退化<=5%才进入模型阶段：baseline→candidate→baseline_after，各自固定PPL t/tb38 c512 chunks2 b512ub256 f16KV ngl0 NUMA distribute no-warmup590s ±5%，通过后PP2048/TG128d2048各r10 b2048ub512。",
+  "baseline": "同节点本作业01_baseline原版Intel，03_baseline_after再次原版对照；直接dot及矩阵测试均对原版生产库",
+  "case_prefix": "confirm-q5-unroll4",
+  "baseline_case": "confirm-q5-unroll4-baseline_{job_id}",
+  "comparison_scope": "same-node",
+  "ppl_scope": "各case独立固定PPL；微基准未通过收益门槛则不运行模型PPL/PP/TG",
+  "note": "循环展开能否增加并行调度由Intel生成代码和实际微基准判断；不宣称指令计数等于性能。262432组有限输入差分及矩阵要求逐bit一致；无内核收益即结束，不重跑同一候选。微基准无收益则保留结果结束作业，不能标作模型PPL已通过。完整模型顺序仍可能受缓存/NUMA驻留影响，三段对照不能证明正式收益；全部原始样本保留，旧源码不覆盖。"
+}

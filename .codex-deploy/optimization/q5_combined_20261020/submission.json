@@ -1,0 +1,19 @@
+{
+  "script": "/work/apac2602/qwen38-cpu/optimization/20261020-q5-combined/build_and_pair.lsf",
+  "kind": "Q5掩码加循环展开组合源码筛选",
+  "purpose": "独立原版源码组合Q5_1高位掩码解包和Intel unroll(4)，不改变原浮点累加链；同节点同时比较原版、仅掩码4338563、仅展开4340602、组合四个实际库版本，确认组合是否有增量收益。",
+  "environment": {
+    "SOURCE_VARIANT": "q5-mask-unroll4"
+  },
+  "lsf_args": [
+    "-J",
+    "qwen38_q5_combined"
+  ],
+  "config": "Intel Classic2021.9 O3 precise/no-ftz CORE-AVX512 qsimd-honor-fp-model；OpenMP ON/BLAS OFF；hg_6148 40slots，38推理线程close/cores。独立源码3687文件SHA，仅quants.c组合两项已单独验证改动。四工具构建、量化测试、矩阵144配置3重复逐bit；原版/仅掩码/仅展开/组合四实际库各262432点积用例3重复逐bit；参考产物SHA前后核验。单核CPU0/membind0，5长度、12轮四版本循环换序，每版本在每位置各3次。至少2560或6144相对两个单项中更快者>=2%、相对每个单项至少9/12轮胜出，所有长度相对最快单项>=0.95x才进入模型阶段。完整模型原版→组合→原版，各独立固定PPL t/tb38 c512 chunks2 b512ub256 f16KV ngl0 NUMA distribute no-warmup590s±5%，PP2048/TG128d2048各r10 b2048ub512。",
+  "baseline": "微基准同时比较原版、仅掩码、仅展开；推进门槛相对更快单项，不只对原版。模型对照01_baseline和03_baseline_after原版Intel。",
+  "case_prefix": "confirm-q5-combined",
+  "baseline_case": "confirm-q5-combined-baseline_{job_id}",
+  "comparison_scope": "same-node",
+  "ppl_scope": "各case独立固定PPL；微基准未通过收益门槛则不运行模型PPL/PP/TG",
+  "note": "12轮仅用于四版本算子筛选，完整PP/TG仍各r10。组合可能增加寄存器压力，不能将两个单项收益相加；未达到增量门槛即停止、模型PPL未运行。保留所有样本及原始数据，正式收益尚未确立，不替换部署。"
+}

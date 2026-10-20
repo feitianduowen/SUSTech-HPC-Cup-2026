@@ -1,0 +1,492 @@
+{
+  "dot_checks": {
+    "baseline": {
+      "status": "PASS",
+      "cases": 262432,
+      "repetitions": 3,
+      "failures": 0,
+      "scope": "finite and repeatable; cross-library bit comparison required"
+    },
+    "mask": {
+      "status": "PASS",
+      "cases": 262432,
+      "repetitions": 3,
+      "failures": 0,
+      "scope": "finite and repeatable; cross-library bit comparison required"
+    },
+    "unroll": {
+      "status": "PASS",
+      "cases": 262432,
+      "repetitions": 3,
+      "failures": 0,
+      "scope": "finite and repeatable; cross-library bit comparison required"
+    },
+    "candidate": {
+      "status": "PASS",
+      "cases": 262432,
+      "repetitions": 3,
+      "failures": 0,
+      "scope": "finite and repeatable; cross-library bit comparison required"
+    }
+  },
+  "dot_correctness": {
+    "mask": {
+      "status": "PASS",
+      "cases": 262432,
+      "bit_mismatches": 0,
+      "repetitions": 3
+    },
+    "unroll": {
+      "status": "PASS",
+      "cases": 262432,
+      "bit_mismatches": 0,
+      "repetitions": 3
+    },
+    "candidate": {
+      "status": "PASS",
+      "cases": 262432,
+      "bit_mismatches": 0,
+      "repetitions": 3
+    }
+  },
+  "microbench_rounds": 12,
+  "microbench": [
+    {
+      "n": 256,
+      "baseline_ns_median": 29.9162608,
+      "candidate_ns_median": 28.4557888,
+      "speedup": 1.0513242493562505,
+      "samples": {
+        "baseline": [
+          29.8870304,
+          29.896112,
+          29.848512,
+          30.0466432,
+          29.903792,
+          30.0829632,
+          30.1067904,
+          29.901456,
+          29.8522944,
+          29.9287296,
+          29.9513056,
+          30.0159488
+        ],
+        "candidate": [
+          28.5080512,
+          28.4420384,
+          28.5080576,
+          28.4460192,
+          28.529104,
+          28.3862784,
+          28.4703296,
+          28.4187392,
+          28.3887136,
+          28.9506368,
+          28.4655584,
+          28.4263744
+        ]
+      },
+      "comparators": {
+        "mask": {
+          "reference_ns_median": 28.4367984,
+          "speedup": 0.9993326349118813,
+          "paired_wins": 2,
+          "samples_ns": [
+            28.4228064,
+            28.4188352,
+            28.4440064,
+            28.435888,
+            28.4525632,
+            28.4467488,
+            28.176416,
+            28.4013984,
+            28.4624736,
+            28.4377088,
+            28.440144,
+            28.4039776
+          ]
+        },
+        "unroll": {
+          "reference_ns_median": 29.6546656,
+          "speedup": 1.042131209520363,
+          "paired_wins": 12,
+          "samples_ns": [
+            29.9887488,
+            29.6842912,
+            29.6831904,
+            29.63728,
+            30.9783936,
+            29.6298464,
+            29.5629536,
+            29.6717632,
+            29.6055104,
+            29.6079712,
+            29.8467776,
+            29.637568
+          ]
+        }
+      },
+      "speedup_vs_best_single": 0.9993326349118813
+    },
+    {
+      "n": 1024,
+      "baseline_ns_median": 106.241427,
+      "candidate_ns_median": 94.1564992,
+      "speedup": 1.12834937473971,
+      "samples": {
+        "baseline": [
+          113.865242,
+          109.282496,
+          109.14839,
+          108.450906,
+          104.16553,
+          107.806246,
+          99.9816064,
+          105.245299,
+          101.738227,
+          107.237555,
+          104.038285,
+          95.7501952
+        ],
+        "candidate": [
+          94.1137152,
+          94.168,
+          94.0900864,
+          94.1741056,
+          98.9546496,
+          94.1548416,
+          94.1383168,
+          94.1277824,
+          95.1215488,
+          94.1581568,
+          94.0918912,
+          99.0005376
+        ]
+      },
+      "comparators": {
+        "mask": {
+          "reference_ns_median": 98.3872192,
+          "speedup": 1.0449328515391534,
+          "paired_wins": 10,
+          "samples_ns": [
+            98.316032,
+            98.4012416,
+            98.3915392,
+            100.493171,
+            98.307072,
+            98.4175744,
+            98.3973632,
+            98.3828992,
+            98.531712,
+            98.3784192,
+            98.2769664,
+            98.3456384
+          ]
+        },
+        "unroll": {
+          "reference_ns_median": 102.7825535,
+          "speedup": 1.0916140083084143,
+          "paired_wins": 12,
+          "samples_ns": [
+            102.734426,
+            102.766784,
+            102.742694,
+            102.667712,
+            104.17833,
+            102.806131,
+            102.798323,
+            102.8336,
+            102.737267,
+            102.624499,
+            102.808397,
+            102.833997
+          ]
+        }
+      },
+      "speedup_vs_best_single": 1.0449328515391534
+    },
+    {
+      "n": 2560,
+      "baseline_ns_median": 259.97092799999996,
+      "candidate_ns_median": 217.32240000000002,
+      "speedup": 1.1962454307517307,
+      "samples": {
+        "baseline": [
+          260.236928,
+          262.394784,
+          259.479808,
+          259.704928,
+          259.446464,
+          260.286912,
+          263.033728,
+          260.412032,
+          259.370432,
+          261.600448,
+          259.445632,
+          259.381888
+        ],
+        "candidate": [
+          217.319488,
+          217.046208,
+          217.623424,
+          217.722816,
+          216.896448,
+          216.894176,
+          217.46256,
+          217.325312,
+          216.971776,
+          217.981504,
+          217.330944,
+          217.058688
+        ]
+      },
+      "comparators": {
+        "mask": {
+          "reference_ns_median": 230.59480000000002,
+          "speedup": 1.061072397507114,
+          "paired_wins": 12,
+          "samples_ns": [
+            230.61376,
+            230.57584,
+            230.899712,
+            230.44064,
+            230.688032,
+            230.474752,
+            230.92064,
+            230.570816,
+            230.49088,
+            230.957888,
+            230.738752,
+            230.490816
+          ]
+        },
+        "unroll": {
+          "reference_ns_median": 238.17224,
+          "speedup": 1.0959396730387663,
+          "paired_wins": 12,
+          "samples_ns": [
+            237.9768,
+            238.381824,
+            238.133408,
+            237.873312,
+            238.988128,
+            238.336768,
+            238.348384,
+            237.838816,
+            237.79936,
+            238.211072,
+            237.852352,
+            238.556864
+          ]
+        }
+      },
+      "speedup_vs_best_single": 1.061072397507114
+    },
+    {
+      "n": 6144,
+      "baseline_ns_median": 607.4812979999999,
+      "candidate_ns_median": 504.1740785,
+      "speedup": 1.2049038693289345,
+      "samples": {
+        "baseline": [
+          608.436943,
+          607.467051,
+          607.671966,
+          607.101767,
+          607.393395,
+          607.119278,
+          609.20914,
+          607.552995,
+          607.495545,
+          607.377727,
+          607.504992,
+          607.341935
+        ],
+        "candidate": [
+          503.573195,
+          503.369432,
+          506.149309,
+          506.121659,
+          504.538633,
+          504.108295,
+          504.403994,
+          503.565975,
+          504.354455,
+          503.632796,
+          503.664439,
+          504.239862
+        ]
+      },
+      "comparators": {
+        "mask": {
+          "reference_ns_median": 539.1197385,
+          "speedup": 1.0693126868084315,
+          "paired_wins": 12,
+          "samples_ns": [
+            538.336559,
+            540.176344,
+            540.279263,
+            539.238556,
+            540.093164,
+            538.95937,
+            539.200998,
+            538.024731,
+            540.328111,
+            538.567896,
+            538.719278,
+            539.038479
+          ]
+        },
+        "unroll": {
+          "reference_ns_median": 554.669969,
+          "speedup": 1.1001556657776488,
+          "paired_wins": 12,
+          "samples_ns": [
+            554.593241,
+            554.384869,
+            554.350307,
+            554.372811,
+            556.183794,
+            553.764286,
+            555.296083,
+            555.049309,
+            555.007373,
+            554.810599,
+            554.542704,
+            554.746697
+          ]
+        }
+      },
+      "speedup_vs_best_single": 1.0693126868084315
+    },
+    {
+      "n": 16384,
+      "baseline_ns_median": 1618.526425,
+      "candidate_ns_median": 1417.698585,
+      "speedup": 1.1416576429749346,
+      "samples": {
+        "baseline": [
+          1621.94756,
+          1621.71528,
+          1618.24621,
+          1619.07374,
+          1616.82835,
+          1617.98341,
+          1616.6442,
+          1617.54158,
+          1621.11778,
+          1618.54752,
+          1618.50533,
+          1620.18353
+        ],
+        "candidate": [
+          1415.86727,
+          1416.94572,
+          1417.75399,
+          1417.12823,
+          1427.99304,
+          1417.17329,
+          1417.64318,
+          1419.65629,
+          1419.52151,
+          1419.70094,
+          1416.9027,
+          1424.34658
+        ]
+      },
+      "comparators": {
+        "mask": {
+          "reference_ns_median": 1475.00543,
+          "speedup": 1.040422446355196,
+          "paired_wins": 12,
+          "samples_ns": [
+            1474.89144,
+            1474.93589,
+            1476.09668,
+            1477.83531,
+            1474.64441,
+            1474.29742,
+            1474.55592,
+            1475.07497,
+            1476.2077,
+            1474.34433,
+            1476.69275,
+            1477.45166
+          ]
+        },
+        "unroll": {
+          "reference_ns_median": 1505.418375,
+          "speedup": 1.061874781373221,
+          "paired_wins": 12,
+          "samples_ns": [
+            1511.10447,
+            1504.97399,
+            1503.81135,
+            1503.79394,
+            1506.48607,
+            1504.79537,
+            1504.90127,
+            1511.84392,
+            1505.86276,
+            1504.4703,
+            1506.13499,
+            1508.45145
+          ]
+        }
+      },
+      "speedup_vs_best_single": 1.040422446355196
+    }
+  ],
+  "advance_to_model": true,
+  "assembly_statistics": {
+    "baseline": {
+      "vector_fma_static": 1,
+      "scalar_fma_static": 1,
+      "half_conversion_static": 0,
+      "conditional_jumps_static": 2
+    },
+    "mask": {
+      "vector_fma_static": 1,
+      "scalar_fma_static": 1,
+      "half_conversion_static": 0,
+      "conditional_jumps_static": 2
+    },
+    "unroll": {
+      "vector_fma_static": 5,
+      "scalar_fma_static": 5,
+      "half_conversion_static": 0,
+      "conditional_jumps_static": 5
+    },
+    "candidate": {
+      "vector_fma_static": 5,
+      "scalar_fma_static": 5,
+      "half_conversion_static": 0,
+      "conditional_jumps_static": 5
+    },
+    "scope": "Static counts from actual exported function, including remainder paths; not a dynamic instruction count or a speedup claim."
+  },
+  "interpretation": "Combined Q5 mask+unroll4 passes actual-library bitwise checks.12 balanced cyclic four-variant kernel rounds: at2560/6144 throughput vs original+19.62%/+20.49%, vs faster single+6.11%/+6.93%, each12/12wins against both singles. Full original/combined/original model test pending; kernel gain is not model gain. Next independent resident/streaming1/19/38-thread actual-library diagnostic checks memory and scaling sensitivity.",
+  "source_screening_review": {
+    "status": "KERNEL_INCREMENTAL_GAIN_MODEL_RUNNING",
+    "decision": "not_promoted_pending_full_model",
+    "phase": "PPL_PP10_TG10_baseline time=2026-10-20T17:40:29+08:00",
+    "four_library_dot_cases_each": 262432,
+    "dot_bit_mismatches_all": 0,
+    "matrix_cases": 144,
+    "matrix_bit_mismatches": 0,
+    "combined_vs_original": {
+      "256": 0.05132424935625046,
+      "1024": 0.12834937473970998,
+      "2560": 0.19624543075173073,
+      "6144": 0.20490386932893445,
+      "16384": 0.14165764297493455
+    },
+    "combined_vs_best_single": {
+      "256": -0.0006673650881187099,
+      "1024": 0.044932851539153384,
+      "2560": 0.06107239750711391,
+      "6144": 0.0693126868084315,
+      "16384": 0.040422446355196096
+    }
+  }
+}

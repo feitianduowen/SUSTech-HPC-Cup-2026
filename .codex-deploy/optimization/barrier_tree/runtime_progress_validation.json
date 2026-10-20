@@ -1,0 +1,12 @@
+{
+  "checked_job_ids": [
+    "4340520",
+    "4340521",
+    "4340614",
+    "4340615"
+  ],
+  "all_still_running": true,
+  "job_level_scores_blank": true,
+  "incomplete_cases_unscored": 4,
+  "raw_samples_preserved": 2450
+}

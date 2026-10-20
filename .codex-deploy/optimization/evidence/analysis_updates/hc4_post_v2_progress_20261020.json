@@ -1,0 +1,1946 @@
+{
+  "updated_at_hkt": "2026-10-20T21:23:11.541756+08:00",
+  "source": "/work/apac2602/qwen38-cpu/optimization/20261020-hc4-post-v2/progress_snapshot.json",
+  "jobs": {
+    "4340916": {
+      "summary": "当前阶段：COMPLETE time=2026-10-20T20:45:19+08:00。实际GGML图跨库逐bit差分PASS：972组/42341535个F32值，1/3/38线程各3重复，bit差异0；包含连续、填充、转置、hc1/2/4/8以及comb缺省/单位/稠密。算子微基准完成10轮AB/BA，形状与中位加速比分别为：[2560, 4, 1] 1.655x；[2560, 4, 32] 20.824x；[2560, 4, 512] 53.925x；[10240, 4, 1] 3.711x。仅算子合成图，包含线程池开销，不能当作整模收益。每case独立PPL后继续PP10/TG10；目前尚无完整模型性能结论，不计算或挑选不完整样本分数。v1两个差分失败保留，未放宽逐bit或PPL门槛。",
+      "snapshot": {
+        "job_id": "4340916",
+        "status": "COMPLETE time=2026-10-20T20:45:19+08:00",
+        "remote_result_root": "/work/apac2602/qwen38-cpu/optimization/20261020-hc4-post-v2/results/4340916",
+        "source_verification": {
+          "base_commit": "d81235049384534c167caea52b85a694f6103d14",
+          "verified_files": 3687,
+          "new_source": "/work/apac2602/qwen38-cpu/optimization/20261020-hc4-post-v2/sources/hc4-post-v2-4340916",
+          "changed_files": [
+            "ggml/src/ggml-cpu/ops.cpp"
+          ],
+          "independent_regular_files": true,
+          "original_unchanged": true,
+          "all_match": true
+        },
+        "library_correctness": {
+          "status": "PASS",
+          "cases": 972,
+          "values": 42341535,
+          "bit_mismatches": 0,
+          "repetitions": 3
+        },
+        "summary": {
+          "hc_checks": {
+            "baseline": {
+              "status": "PASS",
+              "cases": 972,
+              "values": 42341535,
+              "repetitions": 3,
+              "threads": [
+                1,
+                3,
+                38
+              ],
+              "checks": "finite, double oracle, repeatable; cross-build bit comparison required"
+            },
+            "candidate": {
+              "status": "PASS",
+              "cases": 972,
+              "values": 42341535,
+              "repetitions": 3,
+              "threads": [
+                1,
+                3,
+                38
+              ],
+              "checks": "finite, double oracle, repeatable; cross-build bit comparison required"
+            }
+          },
+          "library_correctness": {
+            "status": "PASS",
+            "cases": 972,
+            "values": 42341535,
+            "bit_mismatches": 0,
+            "repetitions": 3
+          },
+          "hc_microbench": [
+            {
+              "shape": [
+                2560,
+                4,
+                1
+              ],
+              "baseline_ns_median": 19928.512499999997,
+              "candidate_ns_median": 12040.0,
+              "speedup": 1.6551920681063121,
+              "paired_wins": 10,
+              "samples": {
+                "baseline": [
+                  20595.35,
+                  21737.225,
+                  19811.675,
+                  20258.025,
+                  19981.1,
+                  19590.6,
+                  19523.025,
+                  19641.5,
+                  19875.925,
+                  26746.775
+                ],
+                "candidate": [
+                  14134.525,
+                  11759.2,
+                  11219.9,
+                  12798.375,
+                  11749.125,
+                  11754.85,
+                  12834.475,
+                  12132.9,
+                  11947.1,
+                  14131.025
+                ]
+              }
+            },
+            {
+              "shape": [
+                2560,
+                4,
+                32
+              ],
+              "baseline_ns_median": 303903.6,
+              "candidate_ns_median": 14594.175,
+              "speedup": 20.82362312360925,
+              "paired_wins": 10,
+              "samples": {
+                "baseline": [
+                  307845.875,
+                  304490.65,
+                  303441.75,
+                  303816.325,
+                  304213.4,
+                  306972.75,
+                  303990.875,
+                  303035.55,
+                  303520.3,
+                  303054.025
+                ],
+                "candidate": [
+                  13477.175,
+                  14098.6,
+                  14826.075,
+                  14299.525,
+                  14832.2,
+                  14193.95,
+                  14639.3,
+                  19512.825,
+                  15112.65,
+                  14549.05
+                ]
+              }
+            },
+            {
+              "shape": [
+                2560,
+                4,
+                512
+              ],
+              "baseline_ns_median": 4697318.65,
+              "candidate_ns_median": 87107.775,
+              "speedup": 53.925366019279,
+              "paired_wins": 10,
+              "samples": {
+                "baseline": [
+                  4699169.65,
+                  4704391.35,
+                  4706676.95,
+                  4705301.83,
+                  4706280.28,
+                  4693443.95,
+                  4695467.65,
+                  4692116.62,
+                  4690655.22,
+                  4695354.2
+                ],
+                "candidate": [
+                  86541.625,
+                  86981.875,
+                  86858.225,
+                  92531.275,
+                  86940.85,
+                  87160.725,
+                  87624.775,
+                  87126.475,
+                  89876.6,
+                  87089.075
+                ]
+              }
+            },
+            {
+              "shape": [
+                10240,
+                4,
+                1
+              ],
+              "baseline_ns_median": 47408.8,
+              "candidate_ns_median": 12774.925,
+              "speedup": 3.711082452538861,
+              "paired_wins": 10,
+              "samples": {
+                "baseline": [
+                  47419.925,
+                  48114.375,
+                  48258.1,
+                  46896.725,
+                  47376.7,
+                  47397.675,
+                  49279.6,
+                  47356.675,
+                  47376.6,
+                  47521.475
+                ],
+                "candidate": [
+                  13070.625,
+                  12791.9,
+                  12550.675,
+                  13337.6,
+                  12686.125,
+                  12735.3,
+                  14555.875,
+                  12921.7,
+                  12577.65,
+                  12757.95
+                ]
+              }
+            }
+          ],
+          "interpretation": "Actual GGML HC-post graphs: 972 configurations, 3 repetitions, 1/3/38 threads, hc1/2/4/8, contiguous/padded/transposed, absent/identity/dense comb, double oracle and baseline bit identity. Operator timings include graph threadpool overhead, 10 alternating AB/BA rounds. These are not model scores. Independent PPL and full balanced model comparisons pending."
+        },
+        "cases": [
+          {
+            "name": "01_A1",
+            "ppl": {
+              "schema": "llama_cpp_ppl_regression_v1",
+              "ppl": 2.7767,
+              "elapsed_seconds": 259,
+              "conditions": {
+                "model_files_path_and_size": [
+                  [
+                    "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+                    10946624
+                  ],
+                  [
+                    "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00002-of-00004.gguf",
+                    49859583136
+                  ],
+                  [
+                    "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00003-of-00004.gguf",
+                    49376141504
+                  ],
+                  [
+                    "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00004-of-00004.gguf",
+                    12087983520
+                  ]
+                ],
+                "data_sha256": "173c87a53759e0201f33e0ccf978e510c2042d7f2cb78229d9a50d79b9e7dd08",
+                "ppl_ctx": 512,
+                "ppl_chunks": 2,
+                "ppl_batch": 512,
+                "ppl_ubatch": 256,
+                "threads": 38,
+                "kv_cache_k": "f16",
+                "kv_cache_v": "f16",
+                "numa": "distribute",
+                "warmup": false,
+                "gpu_layers": 0
+              },
+              "baseline_json": "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/perplexity_result.json",
+              "tolerance_percent": 5.0,
+              "baseline_ppl": 2.7696,
+              "relative_difference_percent": 0.2563547082611084,
+              "accepted_ppl_interval": [
+                2.63112,
+                2.90808
+              ],
+              "policy_id": "20261019-ppl-tolerance-5pct",
+              "status": "PASS"
+            },
+            "pp2048.json": [
+              {
+                "build_commit": "unknown",
+                "build_number": 0,
+                "cpu_info": "Intel(R) Xeon(R) Gold 6148 CPU @ 2.40GHz",
+                "gpu_info": "",
+                "backends": "CPU",
+                "model_filename": "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+                "model_type": "qwen4exp A3B Q4_K - Medium",
+                "model_size": 111323630080,
+                "model_n_params": 176943899520,
+                "n_batch": 2048,
+                "n_ubatch": 512,
+                "n_threads": 38,
+                "cpu_mask": "0x0",
+                "cpu_strict": false,
+                "poll": 50,
+                "type_k": "f16",
+                "type_v": "f16",
+                "n_gpu_layers": 0,
+                "n_cpu_moe": 0,
+                "split_mode": "layer",
+                "main_gpu": 0,
+                "no_kv_offload": false,
+                "flash_attn": -1,
+                "devices": "auto",
+                "tensor_split": "0.00",
+                "tensor_buft_overrides": "none",
+                "load_mode": "auto",
+                "lazy_mode": "auto",
+                "embeddings": false,
+                "no_op_offload": 0,
+                "no_host": false,
+                "repack": true,
+                "fit_target": 0,
+                "fit_min_ctx": 0,
+                "n_prompt": 2048,
+                "n_gen": 0,
+                "n_depth": 0,
+                "test_time": "2026-10-20T11:34:49Z",
+                "avg_ns": 58601117482,
+                "stddev_ns": 758831159,
+                "avg_ts": 35.059839,
+                "stddev_ts": 2.03061,
+                "samples_ns": [
+                  66493384144,
+                  57752131608,
+                  57609367083,
+                  54714953898,
+                  61703522271,
+                  56409658190,
+                  55664874530,
+                  55977284378,
+                  58473615013,
+                  61212383708
+                ],
+                "samples_ts": [
+                  30.8001,
+                  35.4619,
+                  35.5498,
+                  37.4304,
+                  33.191,
+                  36.3058,
+                  36.7916,
+                  36.5863,
+                  35.0243,
+                  33.4573
+                ]
+              }
+            ],
+            "tg128_d2048.json": [
+              {
+                "build_commit": "unknown",
+                "build_number": 0,
+                "cpu_info": "Intel(R) Xeon(R) Gold 6148 CPU @ 2.40GHz",
+                "gpu_info": "",
+                "backends": "CPU",
+                "model_filename": "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+                "model_type": "qwen4exp A3B Q4_K - Medium",
+                "model_size": 111323630080,
+                "model_n_params": 176943899520,
+                "n_batch": 2048,
+                "n_ubatch": 512,
+                "n_threads": 38,
+                "cpu_mask": "0x0",
+                "cpu_strict": false,
+                "poll": 50,
+                "type_k": "f16",
+                "type_v": "f16",
+                "n_gpu_layers": 0,
+                "n_cpu_moe": 0,
+                "split_mode": "layer",
+                "main_gpu": 0,
+                "no_kv_offload": false,
+                "flash_attn": -1,
+                "devices": "auto",
+                "tensor_split": "0.00",
+                "tensor_buft_overrides": "none",
+                "load_mode": "auto",
+                "lazy_mode": "auto",
+                "embeddings": false,
+                "no_op_offload": 0,
+                "no_host": false,
+                "repack": true,
+                "fit_target": 0,
+                "fit_min_ctx": 0,
+                "n_prompt": 0,
+                "n_gen": 128,
+                "n_depth": 2048,
+                "test_time": "2026-10-20T11:46:42Z",
+                "avg_ns": 42146715156,
+                "stddev_ns": 184476985,
+                "avg_ts": 3.037062,
+                "stddev_ts": 0.013295,
+                "samples_ns": [
+                  42429543367,
+                  42298589970,
+                  42149098784,
+                  42160695906,
+                  42179534781,
+                  42370192647,
+                  42005208412,
+                  41835279201,
+                  41983273318,
+                  42055735180
+                ],
+                "samples_ts": [
+                  3.01677,
+                  3.02611,
+                  3.03684,
+                  3.036,
+                  3.03465,
+                  3.02099,
+                  3.04724,
+                  3.05962,
+                  3.04883,
+                  3.04358
+                ]
+              }
+            ]
+          },
+          {
+            "name": "02_B1",
+            "ppl": {
+              "schema": "llama_cpp_ppl_regression_v1",
+              "ppl": 2.7767,
+              "elapsed_seconds": 63,
+              "conditions": {
+                "model_files_path_and_size": [
+                  [
+                    "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+                    10946624
+                  ],
+                  [
+                    "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00002-of-00004.gguf",
+                    49859583136
+                  ],
+                  [
+                    "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00003-of-00004.gguf",
+                    49376141504
+                  ],
+                  [
+                    "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00004-of-00004.gguf",
+                    12087983520
+                  ]
+                ],
+                "data_sha256": "173c87a53759e0201f33e0ccf978e510c2042d7f2cb78229d9a50d79b9e7dd08",
+                "ppl_ctx": 512,
+                "ppl_chunks": 2,
+                "ppl_batch": 512,
+                "ppl_ubatch": 256,
+                "threads": 38,
+                "kv_cache_k": "f16",
+                "kv_cache_v": "f16",
+                "numa": "distribute",
+                "warmup": false,
+                "gpu_layers": 0
+              },
+              "baseline_json": "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/perplexity_result.json",
+              "tolerance_percent": 5.0,
+              "baseline_ppl": 2.7696,
+              "relative_difference_percent": 0.2563547082611084,
+              "accepted_ppl_interval": [
+                2.63112,
+                2.90808
+              ],
+              "policy_id": "20261019-ppl-tolerance-5pct",
+              "status": "PASS"
+            },
+            "pp2048.json": [
+              {
+                "build_commit": "unknown",
+                "build_number": 0,
+                "cpu_info": "Intel(R) Xeon(R) Gold 6148 CPU @ 2.40GHz",
+                "gpu_info": "",
+                "backends": "CPU",
+                "model_filename": "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+                "model_type": "qwen4exp A3B Q4_K - Medium",
+                "model_size": 111323630080,
+                "model_n_params": 176943899520,
+                "n_batch": 2048,
+                "n_ubatch": 512,
+                "n_threads": 38,
+                "cpu_mask": "0x0",
+                "cpu_strict": false,
+                "poll": 50,
+                "type_k": "f16",
+                "type_v": "f16",
+                "n_gpu_layers": 0,
+                "n_cpu_moe": 0,
+                "split_mode": "layer",
+                "main_gpu": 0,
+                "no_kv_offload": false,
+                "flash_attn": -1,
+                "devices": "auto",
+                "tensor_split": "0.00",
+                "tensor_buft_overrides": "none",
+                "load_mode": "auto",
+                "lazy_mode": "auto",
+                "embeddings": false,
+                "no_op_offload": 0,
+                "no_host": false,
+                "repack": true,
+                "fit_target": 0,
+                "fit_min_ctx": 0,
+                "n_prompt": 2048,
+                "n_gen": 0,
+                "n_depth": 0,
+                "test_time": "2026-10-20T11:56:09Z",
+                "avg_ns": 36407297237,
+                "stddev_ns": 98970040,
+                "avg_ts": 56.252834,
+                "stddev_ts": 0.153385,
+                "samples_ns": [
+                  36212887303,
+                  36246180798,
+                  36386371287,
+                  36449614255,
+                  36435661135,
+                  36462479435,
+                  36445767600,
+                  36474306679,
+                  36449647923,
+                  36510055962
+                ],
+                "samples_ts": [
+                  56.5545,
+                  56.5025,
+                  56.2848,
+                  56.1872,
+                  56.2087,
+                  56.1673,
+                  56.1931,
+                  56.1491,
+                  56.1871,
+                  56.0941
+                ]
+              }
+            ],
+            "tg128_d2048.json": [
+              {
+                "build_commit": "unknown",
+                "build_number": 0,
+                "cpu_info": "Intel(R) Xeon(R) Gold 6148 CPU @ 2.40GHz",
+                "gpu_info": "",
+                "backends": "CPU",
+                "model_filename": "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+                "model_type": "qwen4exp A3B Q4_K - Medium",
+                "model_size": 111323630080,
+                "model_n_params": 176943899520,
+                "n_batch": 2048,
+                "n_ubatch": 512,
+                "n_threads": 38,
+                "cpu_mask": "0x0",
+                "cpu_strict": false,
+                "poll": 50,
+                "type_k": "f16",
+                "type_v": "f16",
+                "n_gpu_layers": 0,
+                "n_cpu_moe": 0,
+                "split_mode": "layer",
+                "main_gpu": 0,
+                "no_kv_offload": false,
+                "flash_attn": -1,
+                "devices": "auto",
+                "tensor_split": "0.00",
+                "tensor_buft_overrides": "none",
+                "load_mode": "auto",
+                "lazy_mode": "auto",
+                "embeddings": false,
+                "no_op_offload": 0,
+                "no_host": false,
+                "repack": true,
+                "fit_target": 0,
+                "fit_min_ctx": 0,
+                "n_prompt": 0,
+                "n_gen": 128,
+                "n_depth": 2048,
+                "test_time": "2026-10-20T12:03:31Z",
+                "avg_ns": 41346488759,
+                "stddev_ns": 252590459,
+                "avg_ts": 3.095892,
+                "stddev_ts": 0.018712,
+                "samples_ns": [
+                  42005317767,
+                  41300265933,
+                  41341292714,
+                  41447419816,
+                  41221622119,
+                  41055650016,
+                  41277123769,
+                  41240359177,
+                  41239463000,
+                  41336373285
+                ],
+                "samples_ts": [
+                  3.04723,
+                  3.09925,
+                  3.09618,
+                  3.08825,
+                  3.10517,
+                  3.11772,
+                  3.10099,
+                  3.10376,
+                  3.10382,
+                  3.09655
+                ]
+              }
+            ]
+          },
+          {
+            "name": "03_B2",
+            "ppl": {
+              "schema": "llama_cpp_ppl_regression_v1",
+              "ppl": 2.7767,
+              "elapsed_seconds": 62,
+              "conditions": {
+                "model_files_path_and_size": [
+                  [
+                    "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+                    10946624
+                  ],
+                  [
+                    "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00002-of-00004.gguf",
+                    49859583136
+                  ],
+                  [
+                    "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00003-of-00004.gguf",
+                    49376141504
+                  ],
+                  [
+                    "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00004-of-00004.gguf",
+                    12087983520
+                  ]
+                ],
+                "data_sha256": "173c87a53759e0201f33e0ccf978e510c2042d7f2cb78229d9a50d79b9e7dd08",
+                "ppl_ctx": 512,
+                "ppl_chunks": 2,
+                "ppl_batch": 512,
+                "ppl_ubatch": 256,
+                "threads": 38,
+                "kv_cache_k": "f16",
+                "kv_cache_v": "f16",
+                "numa": "distribute",
+                "warmup": false,
+                "gpu_layers": 0
+              },
+              "baseline_json": "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/perplexity_result.json",
+              "tolerance_percent": 5.0,
+              "baseline_ppl": 2.7696,
+              "relative_difference_percent": 0.2563547082611084,
+              "accepted_ppl_interval": [
+                2.63112,
+                2.90808
+              ],
+              "policy_id": "20261019-ppl-tolerance-5pct",
+              "status": "PASS"
+            },
+            "pp2048.json": [
+              {
+                "build_commit": "unknown",
+                "build_number": 0,
+                "cpu_info": "Intel(R) Xeon(R) Gold 6148 CPU @ 2.40GHz",
+                "gpu_info": "",
+                "backends": "CPU",
+                "model_filename": "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+                "model_type": "qwen4exp A3B Q4_K - Medium",
+                "model_size": 111323630080,
+                "model_n_params": 176943899520,
+                "n_batch": 2048,
+                "n_ubatch": 512,
+                "n_threads": 38,
+                "cpu_mask": "0x0",
+                "cpu_strict": false,
+                "poll": 50,
+                "type_k": "f16",
+                "type_v": "f16",
+                "n_gpu_layers": 0,
+                "n_cpu_moe": 0,
+                "split_mode": "layer",
+                "main_gpu": 0,
+                "no_kv_offload": false,
+                "flash_attn": -1,
+                "devices": "auto",
+                "tensor_split": "0.00",
+                "tensor_buft_overrides": "none",
+                "load_mode": "auto",
+                "lazy_mode": "auto",
+                "embeddings": false,
+                "no_op_offload": 0,
+                "no_host": false,
+                "repack": true,
+                "fit_target": 0,
+                "fit_min_ctx": 0,
+                "n_prompt": 2048,
+                "n_gen": 0,
+                "n_depth": 0,
+                "test_time": "2026-10-20T12:12:47Z",
+                "avg_ns": 36921673259,
+                "stddev_ns": 4054340942,
+                "avg_ts": 55.470269,
+                "stddev_ts": 0.304201,
+                "samples_ns": [
+                  36677332734,
+                  36499214297,
+                  36824066091,
+                  37046126297,
+                  36982733064,
+                  37147623780,
+                  36996989013,
+                  36953287004,
+                  36973033903,
+                  37116326414
+                ],
+                "samples_ts": [
+                  55.8383,
+                  56.1108,
+                  55.6158,
+                  55.2824,
+                  55.3772,
+                  55.1314,
+                  55.3559,
+                  55.4213,
+                  55.3917,
+                  55.1779
+                ]
+              }
+            ],
+            "tg128_d2048.json": [
+              {
+                "build_commit": "unknown",
+                "build_number": 0,
+                "cpu_info": "Intel(R) Xeon(R) Gold 6148 CPU @ 2.40GHz",
+                "gpu_info": "",
+                "backends": "CPU",
+                "model_filename": "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+                "model_type": "qwen4exp A3B Q4_K - Medium",
+                "model_size": 111323630080,
+                "model_n_params": 176943899520,
+                "n_batch": 2048,
+                "n_ubatch": 512,
+                "n_threads": 38,
+                "cpu_mask": "0x0",
+                "cpu_strict": false,
+                "poll": 50,
+                "type_k": "f16",
+                "type_v": "f16",
+                "n_gpu_layers": 0,
+                "n_cpu_moe": 0,
+                "split_mode": "layer",
+                "main_gpu": 0,
+                "no_kv_offload": false,
+                "flash_attn": -1,
+                "devices": "auto",
+                "tensor_split": "0.00",
+                "tensor_buft_overrides": "none",
+                "load_mode": "auto",
+                "lazy_mode": "auto",
+                "embeddings": false,
+                "no_op_offload": 0,
+                "no_host": false,
+                "repack": true,
+                "fit_target": 0,
+                "fit_min_ctx": 0,
+                "n_prompt": 0,
+                "n_gen": 128,
+                "n_depth": 2048,
+                "test_time": "2026-10-20T12:20:17Z",
+                "avg_ns": 41795586950,
+                "stddev_ns": 4058916294,
+                "avg_ts": 3.062645,
+                "stddev_ts": 0.020182,
+                "samples_ns": [
+                  42517477570,
+                  41979171855,
+                  41751550144,
+                  41711868633,
+                  41653807445,
+                  41777515698,
+                  41520339885,
+                  41675593212,
+                  41676732640,
+                  41691812422
+                ],
+                "samples_ts": [
+                  3.01053,
+                  3.04913,
+                  3.06575,
+                  3.06867,
+                  3.07295,
+                  3.06385,
+                  3.08283,
+                  3.07134,
+                  3.07126,
+                  3.07015
+                ]
+              }
+            ]
+          },
+          {
+            "name": "04_A2",
+            "ppl": {
+              "schema": "llama_cpp_ppl_regression_v1",
+              "ppl": 2.7767,
+              "elapsed_seconds": 64,
+              "conditions": {
+                "model_files_path_and_size": [
+                  [
+                    "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+                    10946624
+                  ],
+                  [
+                    "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00002-of-00004.gguf",
+                    49859583136
+                  ],
+                  [
+                    "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00003-of-00004.gguf",
+                    49376141504
+                  ],
+                  [
+                    "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00004-of-00004.gguf",
+                    12087983520
+                  ]
+                ],
+                "data_sha256": "173c87a53759e0201f33e0ccf978e510c2042d7f2cb78229d9a50d79b9e7dd08",
+                "ppl_ctx": 512,
+                "ppl_chunks": 2,
+                "ppl_batch": 512,
+                "ppl_ubatch": 256,
+                "threads": 38,
+                "kv_cache_k": "f16",
+                "kv_cache_v": "f16",
+                "numa": "distribute",
+                "warmup": false,
+                "gpu_layers": 0
+              },
+              "baseline_json": "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/perplexity_result.json",
+              "tolerance_percent": 5.0,
+              "baseline_ppl": 2.7696,
+              "relative_difference_percent": 0.2563547082611084,
+              "accepted_ppl_interval": [
+                2.63112,
+                2.90808
+              ],
+              "policy_id": "20261019-ppl-tolerance-5pct",
+              "status": "PASS"
+            },
+            "pp2048.json": [
+              {
+                "build_commit": "unknown",
+                "build_number": 0,
+                "cpu_info": "Intel(R) Xeon(R) Gold 6148 CPU @ 2.40GHz",
+                "gpu_info": "",
+                "backends": "CPU",
+                "model_filename": "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+                "model_type": "qwen4exp A3B Q4_K - Medium",
+                "model_size": 111323630080,
+                "model_n_params": 176943899520,
+                "n_batch": 2048,
+                "n_ubatch": 512,
+                "n_threads": 38,
+                "cpu_mask": "0x0",
+                "cpu_strict": false,
+                "poll": 50,
+                "type_k": "f16",
+                "type_v": "f16",
+                "n_gpu_layers": 0,
+                "n_cpu_moe": 0,
+                "split_mode": "layer",
+                "main_gpu": 0,
+                "no_kv_offload": false,
+                "flash_attn": -1,
+                "devices": "auto",
+                "tensor_split": "0.00",
+                "tensor_buft_overrides": "none",
+                "load_mode": "auto",
+                "lazy_mode": "auto",
+                "embeddings": false,
+                "no_op_offload": 0,
+                "no_host": false,
+                "repack": true,
+                "fit_target": 0,
+                "fit_min_ctx": 0,
+                "n_prompt": 2048,
+                "n_gen": 0,
+                "n_depth": 0,
+                "test_time": "2026-10-20T12:29:40Z",
+                "avg_ns": 38987621447,
+                "stddev_ns": 222303023,
+                "avg_ts": 52.531048,
+                "stddev_ts": 0.302911,
+                "samples_ns": [
+                  38400226652,
+                  38861237579,
+                  39023634520,
+                  39138707389,
+                  39160524747,
+                  39043607825,
+                  39034110019,
+                  39030552804,
+                  39070653135,
+                  39112959800
+                ],
+                "samples_ts": [
+                  53.333,
+                  52.7003,
+                  52.481,
+                  52.3267,
+                  52.2976,
+                  52.4542,
+                  52.4669,
+                  52.4717,
+                  52.4179,
+                  52.3612
+                ]
+              }
+            ],
+            "tg128_d2048.json": [
+              {
+                "build_commit": "unknown",
+                "build_number": 0,
+                "cpu_info": "Intel(R) Xeon(R) Gold 6148 CPU @ 2.40GHz",
+                "gpu_info": "",
+                "backends": "CPU",
+                "model_filename": "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+                "model_type": "qwen4exp A3B Q4_K - Medium",
+                "model_size": 111323630080,
+                "model_n_params": 176943899520,
+                "n_batch": 2048,
+                "n_ubatch": 512,
+                "n_threads": 38,
+                "cpu_mask": "0x0",
+                "cpu_strict": false,
+                "poll": 50,
+                "type_k": "f16",
+                "type_v": "f16",
+                "n_gpu_layers": 0,
+                "n_cpu_moe": 0,
+                "split_mode": "layer",
+                "main_gpu": 0,
+                "no_kv_offload": false,
+                "flash_attn": -1,
+                "devices": "auto",
+                "tensor_split": "0.00",
+                "tensor_buft_overrides": "none",
+                "load_mode": "auto",
+                "lazy_mode": "auto",
+                "embeddings": false,
+                "no_op_offload": 0,
+                "no_host": false,
+                "repack": true,
+                "fit_target": 0,
+                "fit_min_ctx": 0,
+                "n_prompt": 0,
+                "n_gen": 128,
+                "n_depth": 2048,
+                "test_time": "2026-10-20T12:37:30Z",
+                "avg_ns": 42539960696,
+                "stddev_ns": 161239266,
+                "avg_ts": 3.008974,
+                "stddev_ts": 0.011374,
+                "samples_ns": [
+                  42883578029,
+                  42675358369,
+                  42636437311,
+                  42418722198,
+                  42566581060,
+                  42510548056,
+                  42465280630,
+                  42485002636,
+                  42455253469,
+                  42302845210
+                ],
+                "samples_ts": [
+                  2.98483,
+                  2.99939,
+                  3.00213,
+                  3.01754,
+                  3.00705,
+                  3.01102,
+                  3.01423,
+                  3.01283,
+                  3.01494,
+                  3.0258
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "4340917": {
+      "summary": "当前阶段：COMPLETE time=2026-10-20T20:46:32+08:00。实际GGML图跨库逐bit差分PASS：972组/42341535个F32值，1/3/38线程各3重复，bit差异0；包含连续、填充、转置、hc1/2/4/8以及comb缺省/单位/稠密。算子微基准完成10轮AB/BA，形状与中位加速比分别为：[2560, 4, 1] 1.659x；[2560, 4, 32] 20.098x；[2560, 4, 512] 53.034x；[10240, 4, 1] 3.759x。仅算子合成图，包含线程池开销，不能当作整模收益。每case独立PPL后继续PP10/TG10；目前尚无完整模型性能结论，不计算或挑选不完整样本分数。v1两个差分失败保留，未放宽逐bit或PPL门槛。",
+      "snapshot": {
+        "job_id": "4340917",
+        "status": "COMPLETE time=2026-10-20T20:46:32+08:00",
+        "remote_result_root": "/work/apac2602/qwen38-cpu/optimization/20261020-hc4-post-v2/results/4340917",
+        "source_verification": {
+          "base_commit": "d81235049384534c167caea52b85a694f6103d14",
+          "verified_files": 3687,
+          "new_source": "/work/apac2602/qwen38-cpu/optimization/20261020-hc4-post-v2/sources/hc4-post-v2-4340917",
+          "changed_files": [
+            "ggml/src/ggml-cpu/ops.cpp"
+          ],
+          "independent_regular_files": true,
+          "original_unchanged": true,
+          "all_match": true
+        },
+        "library_correctness": {
+          "status": "PASS",
+          "cases": 972,
+          "values": 42341535,
+          "bit_mismatches": 0,
+          "repetitions": 3
+        },
+        "summary": {
+          "hc_checks": {
+            "baseline": {
+              "status": "PASS",
+              "cases": 972,
+              "values": 42341535,
+              "repetitions": 3,
+              "threads": [
+                1,
+                3,
+                38
+              ],
+              "checks": "finite, double oracle, repeatable; cross-build bit comparison required"
+            },
+            "candidate": {
+              "status": "PASS",
+              "cases": 972,
+              "values": 42341535,
+              "repetitions": 3,
+              "threads": [
+                1,
+                3,
+                38
+              ],
+              "checks": "finite, double oracle, repeatable; cross-build bit comparison required"
+            }
+          },
+          "library_correctness": {
+            "status": "PASS",
+            "cases": 972,
+            "values": 42341535,
+            "bit_mismatches": 0,
+            "repetitions": 3
+          },
+          "hc_microbench": [
+            {
+              "shape": [
+                2560,
+                4,
+                1
+              ],
+              "baseline_ns_median": 20456.85,
+              "candidate_ns_median": 12329.0875,
+              "speedup": 1.6592347162756367,
+              "paired_wins": 10,
+              "samples": {
+                "baseline": [
+                  19936.575,
+                  20741.45,
+                  20458.85,
+                  19769.875,
+                  20481.35,
+                  19953.325,
+                  20125.075,
+                  20454.85,
+                  20848.175,
+                  20770.9
+                ],
+                "candidate": [
+                  12443.175,
+                  12260.675,
+                  12942.6,
+                  11903.8,
+                  11742.55,
+                  12621.275,
+                  13461.4,
+                  11705.575,
+                  12397.5,
+                  12222.575
+                ]
+              }
+            },
+            {
+              "shape": [
+                2560,
+                4,
+                32
+              ],
+              "baseline_ns_median": 305290.32499999995,
+              "candidate_ns_median": 15189.9625,
+              "speedup": 20.098161861821577,
+              "paired_wins": 10,
+              "samples": {
+                "baseline": [
+                  304744.825,
+                  305270.3,
+                  305782.05,
+                  305429.55,
+                  305310.35,
+                  307183.425,
+                  304721.375,
+                  304492.35,
+                  304690.575,
+                  306548.8
+                ],
+                "candidate": [
+                  16107,
+                  14851.85,
+                  15030.3,
+                  15378.925,
+                  15241.375,
+                  15685.075,
+                  14594.1,
+                  15619.025,
+                  15138.55,
+                  15124.025
+                ]
+              }
+            },
+            {
+              "shape": [
+                2560,
+                4,
+                512
+              ],
+              "baseline_ns_median": 4708769.365,
+              "candidate_ns_median": 88788.025,
+              "speedup": 53.03383384189479,
+              "paired_wins": 10,
+              "samples": {
+                "baseline": [
+                  4706492.03,
+                  4733773.9,
+                  4698431.42,
+                  4696283.88,
+                  4694753.1,
+                  4711046.7,
+                  4750894.33,
+                  4722688.05,
+                  4699222.33,
+                  4782697.45
+                ],
+                "candidate": [
+                  88296.375,
+                  87888.55,
+                  87665.775,
+                  89469.25,
+                  89761.75,
+                  88116.55,
+                  88827.9,
+                  88748.15,
+                  89809.4,
+                  89021.25
+                ]
+              }
+            },
+            {
+              "shape": [
+                10240,
+                4,
+                1
+              ],
+              "baseline_ns_median": 47865.4625,
+              "candidate_ns_median": 12732.6125,
+              "speedup": 3.7592805482771117,
+              "paired_wins": 10,
+              "samples": {
+                "baseline": [
+                  47735.525,
+                  48801.65,
+                  47995.4,
+                  46974.25,
+                  48691.5,
+                  47146.35,
+                  47509.55,
+                  47444.55,
+                  48650.05,
+                  48494.275
+                ],
+                "candidate": [
+                  12250,
+                  12197.325,
+                  12408.5,
+                  11944.525,
+                  14256.225,
+                  13778.1,
+                  13720.525,
+                  13005.125,
+                  14003.725,
+                  12460.1
+                ]
+              }
+            }
+          ],
+          "interpretation": "Actual GGML HC-post graphs: 972 configurations, 3 repetitions, 1/3/38 threads, hc1/2/4/8, contiguous/padded/transposed, absent/identity/dense comb, double oracle and baseline bit identity. Operator timings include graph threadpool overhead, 10 alternating AB/BA rounds. These are not model scores. Independent PPL and full balanced model comparisons pending."
+        },
+        "cases": [
+          {
+            "name": "01_B1",
+            "ppl": {
+              "schema": "llama_cpp_ppl_regression_v1",
+              "ppl": 2.7767,
+              "elapsed_seconds": 246,
+              "conditions": {
+                "model_files_path_and_size": [
+                  [
+                    "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+                    10946624
+                  ],
+                  [
+                    "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00002-of-00004.gguf",
+                    49859583136
+                  ],
+                  [
+                    "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00003-of-00004.gguf",
+                    49376141504
+                  ],
+                  [
+                    "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00004-of-00004.gguf",
+                    12087983520
+                  ]
+                ],
+                "data_sha256": "173c87a53759e0201f33e0ccf978e510c2042d7f2cb78229d9a50d79b9e7dd08",
+                "ppl_ctx": 512,
+                "ppl_chunks": 2,
+                "ppl_batch": 512,
+                "ppl_ubatch": 256,
+                "threads": 38,
+                "kv_cache_k": "f16",
+                "kv_cache_v": "f16",
+                "numa": "distribute",
+                "warmup": false,
+                "gpu_layers": 0
+              },
+              "baseline_json": "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/perplexity_result.json",
+              "tolerance_percent": 5.0,
+              "baseline_ppl": 2.7696,
+              "relative_difference_percent": 0.2563547082611084,
+              "accepted_ppl_interval": [
+                2.63112,
+                2.90808
+              ],
+              "policy_id": "20261019-ppl-tolerance-5pct",
+              "status": "PASS"
+            },
+            "pp2048.json": [
+              {
+                "build_commit": "unknown",
+                "build_number": 0,
+                "cpu_info": "Intel(R) Xeon(R) Gold 6148 CPU @ 2.40GHz",
+                "gpu_info": "",
+                "backends": "CPU",
+                "model_filename": "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+                "model_type": "qwen4exp A3B Q4_K - Medium",
+                "model_size": 111323630080,
+                "model_n_params": 176943899520,
+                "n_batch": 2048,
+                "n_ubatch": 512,
+                "n_threads": 38,
+                "cpu_mask": "0x0",
+                "cpu_strict": false,
+                "poll": 50,
+                "type_k": "f16",
+                "type_v": "f16",
+                "n_gpu_layers": 0,
+                "n_cpu_moe": 0,
+                "split_mode": "layer",
+                "main_gpu": 0,
+                "no_kv_offload": false,
+                "flash_attn": -1,
+                "devices": "auto",
+                "tensor_split": "0.00",
+                "tensor_buft_overrides": "none",
+                "load_mode": "auto",
+                "lazy_mode": "auto",
+                "embeddings": false,
+                "no_op_offload": 0,
+                "no_host": false,
+                "repack": true,
+                "fit_target": 0,
+                "fit_min_ctx": 0,
+                "n_prompt": 2048,
+                "n_gen": 0,
+                "n_depth": 0,
+                "test_time": "2026-10-20T11:35:04Z",
+                "avg_ns": 58282340009,
+                "stddev_ns": 4259594892,
+                "avg_ts": 35.306919,
+                "stddev_ts": 2.550555,
+                "samples_ns": [
+                  63712117419,
+                  56378339948,
+                  53982976433,
+                  53829299167,
+                  61740476809,
+                  55503625112,
+                  53394130956,
+                  58030252604,
+                  63936520290,
+                  62315661359
+                ],
+                "samples_ts": [
+                  32.1446,
+                  36.326,
+                  37.9379,
+                  38.0462,
+                  33.1711,
+                  36.8985,
+                  38.3563,
+                  35.2919,
+                  32.0318,
+                  32.8649
+                ]
+              }
+            ],
+            "tg128_d2048.json": [
+              {
+                "build_commit": "unknown",
+                "build_number": 0,
+                "cpu_info": "Intel(R) Xeon(R) Gold 6148 CPU @ 2.40GHz",
+                "gpu_info": "",
+                "backends": "CPU",
+                "model_filename": "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+                "model_type": "qwen4exp A3B Q4_K - Medium",
+                "model_size": 111323630080,
+                "model_n_params": 176943899520,
+                "n_batch": 2048,
+                "n_ubatch": 512,
+                "n_threads": 38,
+                "cpu_mask": "0x0",
+                "cpu_strict": false,
+                "poll": 50,
+                "type_k": "f16",
+                "type_v": "f16",
+                "n_gpu_layers": 0,
+                "n_cpu_moe": 0,
+                "split_mode": "layer",
+                "main_gpu": 0,
+                "no_kv_offload": false,
+                "flash_attn": -1,
+                "devices": "auto",
+                "tensor_split": "0.00",
+                "tensor_buft_overrides": "none",
+                "load_mode": "auto",
+                "lazy_mode": "auto",
+                "embeddings": false,
+                "no_op_offload": 0,
+                "no_host": false,
+                "repack": true,
+                "fit_target": 0,
+                "fit_min_ctx": 0,
+                "n_prompt": 0,
+                "n_gen": 128,
+                "n_depth": 2048,
+                "test_time": "2026-10-20T11:46:44Z",
+                "avg_ns": 41643198230,
+                "stddev_ns": 413537703,
+                "avg_ts": 3.074001,
+                "stddev_ts": 0.030196,
+                "samples_ns": [
+                  42531995849,
+                  41732327788,
+                  42185872370,
+                  41628135378,
+                  41494553048,
+                  41392914407,
+                  41506832620,
+                  41183142755,
+                  41414210278,
+                  41361997811
+                ],
+                "samples_ts": [
+                  3.0095,
+                  3.06717,
+                  3.03419,
+                  3.07484,
+                  3.08474,
+                  3.09232,
+                  3.08383,
+                  3.10807,
+                  3.09073,
+                  3.09463
+                ]
+              }
+            ]
+          },
+          {
+            "name": "02_A1",
+            "ppl": {
+              "schema": "llama_cpp_ppl_regression_v1",
+              "ppl": 2.7767,
+              "elapsed_seconds": 90,
+              "conditions": {
+                "model_files_path_and_size": [
+                  [
+                    "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+                    10946624
+                  ],
+                  [
+                    "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00002-of-00004.gguf",
+                    49859583136
+                  ],
+                  [
+                    "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00003-of-00004.gguf",
+                    49376141504
+                  ],
+                  [
+                    "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00004-of-00004.gguf",
+                    12087983520
+                  ]
+                ],
+                "data_sha256": "173c87a53759e0201f33e0ccf978e510c2042d7f2cb78229d9a50d79b9e7dd08",
+                "ppl_ctx": 512,
+                "ppl_chunks": 2,
+                "ppl_batch": 512,
+                "ppl_ubatch": 256,
+                "threads": 38,
+                "kv_cache_k": "f16",
+                "kv_cache_v": "f16",
+                "numa": "distribute",
+                "warmup": false,
+                "gpu_layers": 0
+              },
+              "baseline_json": "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/perplexity_result.json",
+              "tolerance_percent": 5.0,
+              "baseline_ppl": 2.7696,
+              "relative_difference_percent": 0.2563547082611084,
+              "accepted_ppl_interval": [
+                2.63112,
+                2.90808
+              ],
+              "policy_id": "20261019-ppl-tolerance-5pct",
+              "status": "PASS"
+            },
+            "pp2048.json": [
+              {
+                "build_commit": "unknown",
+                "build_number": 0,
+                "cpu_info": "Intel(R) Xeon(R) Gold 6148 CPU @ 2.40GHz",
+                "gpu_info": "",
+                "backends": "CPU",
+                "model_filename": "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+                "model_type": "qwen4exp A3B Q4_K - Medium",
+                "model_size": 111323630080,
+                "model_n_params": 176943899520,
+                "n_batch": 2048,
+                "n_ubatch": 512,
+                "n_threads": 38,
+                "cpu_mask": "0x0",
+                "cpu_strict": false,
+                "poll": 50,
+                "type_k": "f16",
+                "type_v": "f16",
+                "n_gpu_layers": 0,
+                "n_cpu_moe": 0,
+                "split_mode": "layer",
+                "main_gpu": 0,
+                "no_kv_offload": false,
+                "flash_attn": -1,
+                "devices": "auto",
+                "tensor_split": "0.00",
+                "tensor_buft_overrides": "none",
+                "load_mode": "auto",
+                "lazy_mode": "auto",
+                "embeddings": false,
+                "no_op_offload": 0,
+                "no_host": false,
+                "repack": true,
+                "fit_target": 0,
+                "fit_min_ctx": 0,
+                "n_prompt": 2048,
+                "n_gen": 0,
+                "n_depth": 0,
+                "test_time": "2026-10-20T11:56:44Z",
+                "avg_ns": 39037235468,
+                "stddev_ns": 967593929,
+                "avg_ts": 52.491408,
+                "stddev_ts": 1.285666,
+                "samples_ns": [
+                  40082948297,
+                  40194109125,
+                  40659965185,
+                  39278817370,
+                  38755177355,
+                  38777155216,
+                  38339102700,
+                  38148697425,
+                  38083591557,
+                  38052790452
+                ],
+                "samples_ts": [
+                  51.094,
+                  50.9527,
+                  50.369,
+                  52.1401,
+                  52.8446,
+                  52.8146,
+                  53.418,
+                  53.6847,
+                  53.7764,
+                  53.82
+                ]
+              }
+            ],
+            "tg128_d2048.json": [
+              {
+                "build_commit": "unknown",
+                "build_number": 0,
+                "cpu_info": "Intel(R) Xeon(R) Gold 6148 CPU @ 2.40GHz",
+                "gpu_info": "",
+                "backends": "CPU",
+                "model_filename": "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+                "model_type": "qwen4exp A3B Q4_K - Medium",
+                "model_size": 111323630080,
+                "model_n_params": 176943899520,
+                "n_batch": 2048,
+                "n_ubatch": 512,
+                "n_threads": 38,
+                "cpu_mask": "0x0",
+                "cpu_strict": false,
+                "poll": 50,
+                "type_k": "f16",
+                "type_v": "f16",
+                "n_gpu_layers": 0,
+                "n_cpu_moe": 0,
+                "split_mode": "layer",
+                "main_gpu": 0,
+                "no_kv_offload": false,
+                "flash_attn": -1,
+                "devices": "auto",
+                "tensor_split": "0.00",
+                "tensor_buft_overrides": "none",
+                "load_mode": "auto",
+                "lazy_mode": "auto",
+                "embeddings": false,
+                "no_op_offload": 0,
+                "no_host": false,
+                "repack": true,
+                "fit_target": 0,
+                "fit_min_ctx": 0,
+                "n_prompt": 0,
+                "n_gen": 128,
+                "n_depth": 2048,
+                "test_time": "2026-10-20T12:04:38Z",
+                "avg_ns": 41998801058,
+                "stddev_ns": 168807343,
+                "avg_ts": 3.04775,
+                "stddev_ts": 0.012244,
+                "samples_ns": [
+                  42234690932,
+                  42223287569,
+                  42172902576,
+                  41881204719,
+                  41989762889,
+                  42056734727,
+                  41864949621,
+                  41731694026,
+                  41917354458,
+                  41915429063
+                ],
+                "samples_ts": [
+                  3.03068,
+                  3.0315,
+                  3.03512,
+                  3.05626,
+                  3.04836,
+                  3.04351,
+                  3.05745,
+                  3.06721,
+                  3.05363,
+                  3.05377
+                ]
+              }
+            ]
+          },
+          {
+            "name": "03_A2",
+            "ppl": {
+              "schema": "llama_cpp_ppl_regression_v1",
+              "ppl": 2.7767,
+              "elapsed_seconds": 68,
+              "conditions": {
+                "model_files_path_and_size": [
+                  [
+                    "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+                    10946624
+                  ],
+                  [
+                    "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00002-of-00004.gguf",
+                    49859583136
+                  ],
+                  [
+                    "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00003-of-00004.gguf",
+                    49376141504
+                  ],
+                  [
+                    "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00004-of-00004.gguf",
+                    12087983520
+                  ]
+                ],
+                "data_sha256": "173c87a53759e0201f33e0ccf978e510c2042d7f2cb78229d9a50d79b9e7dd08",
+                "ppl_ctx": 512,
+                "ppl_chunks": 2,
+                "ppl_batch": 512,
+                "ppl_ubatch": 256,
+                "threads": 38,
+                "kv_cache_k": "f16",
+                "kv_cache_v": "f16",
+                "numa": "distribute",
+                "warmup": false,
+                "gpu_layers": 0
+              },
+              "baseline_json": "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/perplexity_result.json",
+              "tolerance_percent": 5.0,
+              "baseline_ppl": 2.7696,
+              "relative_difference_percent": 0.2563547082611084,
+              "accepted_ppl_interval": [
+                2.63112,
+                2.90808
+              ],
+              "policy_id": "20261019-ppl-tolerance-5pct",
+              "status": "PASS"
+            },
+            "pp2048.json": [
+              {
+                "build_commit": "unknown",
+                "build_number": 0,
+                "cpu_info": "Intel(R) Xeon(R) Gold 6148 CPU @ 2.40GHz",
+                "gpu_info": "",
+                "backends": "CPU",
+                "model_filename": "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+                "model_type": "qwen4exp A3B Q4_K - Medium",
+                "model_size": 111323630080,
+                "model_n_params": 176943899520,
+                "n_batch": 2048,
+                "n_ubatch": 512,
+                "n_threads": 38,
+                "cpu_mask": "0x0",
+                "cpu_strict": false,
+                "poll": 50,
+                "type_k": "f16",
+                "type_v": "f16",
+                "n_gpu_layers": 0,
+                "n_cpu_moe": 0,
+                "split_mode": "layer",
+                "main_gpu": 0,
+                "no_kv_offload": false,
+                "flash_attn": -1,
+                "devices": "auto",
+                "tensor_split": "0.00",
+                "tensor_buft_overrides": "none",
+                "load_mode": "auto",
+                "lazy_mode": "auto",
+                "embeddings": false,
+                "no_op_offload": 0,
+                "no_host": false,
+                "repack": true,
+                "fit_target": 0,
+                "fit_min_ctx": 0,
+                "n_prompt": 2048,
+                "n_gen": 0,
+                "n_depth": 0,
+                "test_time": "2026-10-20T12:14:11Z",
+                "avg_ns": 38164132983,
+                "stddev_ns": 75717304,
+                "avg_ts": 53.663141,
+                "stddev_ts": 0.106357,
+                "samples_ns": [
+                  38223979327,
+                  38313754377,
+                  38214469867,
+                  38189835219,
+                  38189813979,
+                  38126064796,
+                  38120479649,
+                  38070536165,
+                  38110869577,
+                  38081526874
+                ],
+                "samples_ts": [
+                  53.5789,
+                  53.4534,
+                  53.5923,
+                  53.6268,
+                  53.6269,
+                  53.7165,
+                  53.7244,
+                  53.7949,
+                  53.7379,
+                  53.7794
+                ]
+              }
+            ],
+            "tg128_d2048.json": [
+              {
+                "build_commit": "unknown",
+                "build_number": 0,
+                "cpu_info": "Intel(R) Xeon(R) Gold 6148 CPU @ 2.40GHz",
+                "gpu_info": "",
+                "backends": "CPU",
+                "model_filename": "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+                "model_type": "qwen4exp A3B Q4_K - Medium",
+                "model_size": 111323630080,
+                "model_n_params": 176943899520,
+                "n_batch": 2048,
+                "n_ubatch": 512,
+                "n_threads": 38,
+                "cpu_mask": "0x0",
+                "cpu_strict": false,
+                "poll": 50,
+                "type_k": "f16",
+                "type_v": "f16",
+                "n_gpu_layers": 0,
+                "n_cpu_moe": 0,
+                "split_mode": "layer",
+                "main_gpu": 0,
+                "no_kv_offload": false,
+                "flash_attn": -1,
+                "devices": "auto",
+                "tensor_split": "0.00",
+                "tensor_buft_overrides": "none",
+                "load_mode": "auto",
+                "lazy_mode": "auto",
+                "embeddings": false,
+                "no_op_offload": 0,
+                "no_host": false,
+                "repack": true,
+                "fit_target": 0,
+                "fit_min_ctx": 0,
+                "n_prompt": 0,
+                "n_gen": 128,
+                "n_depth": 2048,
+                "test_time": "2026-10-20T12:21:59Z",
+                "avg_ns": 41804615028,
+                "stddev_ns": 68474604,
+                "avg_ts": 3.06187,
+                "stddev_ts": 0.005019,
+                "samples_ns": [
+                  41898548527,
+                  41690658623,
+                  41829733353,
+                  41700318324,
+                  41777900188,
+                  41820024539,
+                  41873928995,
+                  41840469970,
+                  41837488131,
+                  41777079638
+                ],
+                "samples_ts": [
+                  3.055,
+                  3.07023,
+                  3.06002,
+                  3.06952,
+                  3.06382,
+                  3.06073,
+                  3.05679,
+                  3.05924,
+                  3.05946,
+                  3.06388
+                ]
+              }
+            ]
+          },
+          {
+            "name": "04_B2",
+            "ppl": {
+              "schema": "llama_cpp_ppl_regression_v1",
+              "ppl": 2.7767,
+              "elapsed_seconds": 66,
+              "conditions": {
+                "model_files_path_and_size": [
+                  [
+                    "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+                    10946624
+                  ],
+                  [
+                    "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00002-of-00004.gguf",
+                    49859583136
+                  ],
+                  [
+                    "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00003-of-00004.gguf",
+                    49376141504
+                  ],
+                  [
+                    "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00004-of-00004.gguf",
+                    12087983520
+                  ]
+                ],
+                "data_sha256": "173c87a53759e0201f33e0ccf978e510c2042d7f2cb78229d9a50d79b9e7dd08",
+                "ppl_ctx": 512,
+                "ppl_chunks": 2,
+                "ppl_batch": 512,
+                "ppl_ubatch": 256,
+                "threads": 38,
+                "kv_cache_k": "f16",
+                "kv_cache_v": "f16",
+                "numa": "distribute",
+                "warmup": false,
+                "gpu_layers": 0
+              },
+              "baseline_json": "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/perplexity_result.json",
+              "tolerance_percent": 5.0,
+              "baseline_ppl": 2.7696,
+              "relative_difference_percent": 0.2563547082611084,
+              "accepted_ppl_interval": [
+                2.63112,
+                2.90808
+              ],
+              "policy_id": "20261019-ppl-tolerance-5pct",
+              "status": "PASS"
+            },
+            "pp2048.json": [
+              {
+                "build_commit": "unknown",
+                "build_number": 0,
+                "cpu_info": "Intel(R) Xeon(R) Gold 6148 CPU @ 2.40GHz",
+                "gpu_info": "",
+                "backends": "CPU",
+                "model_filename": "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+                "model_type": "qwen4exp A3B Q4_K - Medium",
+                "model_size": 111323630080,
+                "model_n_params": 176943899520,
+                "n_batch": 2048,
+                "n_ubatch": 512,
+                "n_threads": 38,
+                "cpu_mask": "0x0",
+                "cpu_strict": false,
+                "poll": 50,
+                "type_k": "f16",
+                "type_v": "f16",
+                "n_gpu_layers": 0,
+                "n_cpu_moe": 0,
+                "split_mode": "layer",
+                "main_gpu": 0,
+                "no_kv_offload": false,
+                "flash_attn": -1,
+                "devices": "auto",
+                "tensor_split": "0.00",
+                "tensor_buft_overrides": "none",
+                "load_mode": "auto",
+                "lazy_mode": "auto",
+                "embeddings": false,
+                "no_op_offload": 0,
+                "no_host": false,
+                "repack": true,
+                "fit_target": 0,
+                "fit_min_ctx": 0,
+                "n_prompt": 2048,
+                "n_gen": 0,
+                "n_depth": 0,
+                "test_time": "2026-10-20T12:31:27Z",
+                "avg_ns": 36198227571,
+                "stddev_ns": 150638343,
+                "avg_ts": 56.578235,
+                "stddev_ts": 0.234741,
+                "samples_ns": [
+                  36515739662,
+                  36316544883,
+                  36219361569,
+                  36243813143,
+                  36129748211,
+                  36129409562,
+                  36067865214,
+                  36009949809,
+                  36065526253,
+                  36284317408
+                ],
+                "samples_ts": [
+                  56.0854,
+                  56.393,
+                  56.5443,
+                  56.5062,
+                  56.6846,
+                  56.6851,
+                  56.7818,
+                  56.8732,
+                  56.7855,
+                  56.4431
+                ]
+              }
+            ],
+            "tg128_d2048.json": [
+              {
+                "build_commit": "unknown",
+                "build_number": 0,
+                "cpu_info": "Intel(R) Xeon(R) Gold 6148 CPU @ 2.40GHz",
+                "gpu_info": "",
+                "backends": "CPU",
+                "model_filename": "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+                "model_type": "qwen4exp A3B Q4_K - Medium",
+                "model_size": 111323630080,
+                "model_n_params": 176943899520,
+                "n_batch": 2048,
+                "n_ubatch": 512,
+                "n_threads": 38,
+                "cpu_mask": "0x0",
+                "cpu_strict": false,
+                "poll": 50,
+                "type_k": "f16",
+                "type_v": "f16",
+                "n_gpu_layers": 0,
+                "n_cpu_moe": 0,
+                "split_mode": "layer",
+                "main_gpu": 0,
+                "no_kv_offload": false,
+                "flash_attn": -1,
+                "devices": "auto",
+                "tensor_split": "0.00",
+                "tensor_buft_overrides": "none",
+                "load_mode": "auto",
+                "lazy_mode": "auto",
+                "embeddings": false,
+                "no_op_offload": 0,
+                "no_host": false,
+                "repack": true,
+                "fit_target": 0,
+                "fit_min_ctx": 0,
+                "n_prompt": 0,
+                "n_gen": 128,
+                "n_depth": 2048,
+                "test_time": "2026-10-20T12:38:53Z",
+                "avg_ns": 41595494781,
+                "stddev_ns": 194398079,
+                "avg_ts": 3.077317,
+                "stddev_ts": 0.014383,
+                "samples_ns": [
+                  41930549332,
+                  41332111642,
+                  41679712281,
+                  41629369274,
+                  41567790696,
+                  41791225509,
+                  41672679273,
+                  41464578592,
+                  41298823458,
+                  41588107756
+                ],
+                "samples_ts": [
+                  3.05267,
+                  3.09687,
+                  3.07104,
+                  3.07475,
+                  3.07931,
+                  3.06284,
+                  3.07156,
+                  3.08697,
+                  3.09936,
+                  3.0778
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

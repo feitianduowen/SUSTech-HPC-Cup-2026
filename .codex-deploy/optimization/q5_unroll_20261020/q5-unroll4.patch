@@ -1,0 +1,15 @@
+--- a/ggml/src/ggml-cpu/arch/x86/quants.c
++++ b/ggml/src/ggml-cpu/arch/x86/quants.c
+@@ -1242,7 +1242,11 @@
+ 
+     float summs = 0.0f;
+ 
+-    // Main loop
++    // Expose adjacent block loads while preserving the original ordered
++    // vector accumulator and minimum-term sum; no additional FP chains.
++#if defined(__INTEL_COMPILER)
++#pragma unroll(4)
++#endif
+     for (; ib < nb; ++ib) {
+         const __m256 dx = _mm256_set1_ps(GGML_CPU_FP16_TO_FP32(x[ib].d));
+ 

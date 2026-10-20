@@ -249,6 +249,16 @@ for job in jobs:
                 summary+='\n'+kernel_summary['failure_reason']
             if kernel_summary.get('interpretation'):
                 summary+='\n'+kernel_summary['interpretation']
+            for result in kernel_summary.get('streaming_microbench',[]):
+                mode=f"{result['mode']} t={result['threads']} n={result['n']}"
+                changes=result['throughput_change_vs_original']
+                summary+='\nQ5 '+mode+': '+', '.join(f"{name} {value:+.2%}" for name,value in changes.items())+'（仅合成算子）'
+                groups=result['variants'];reference=groups['baseline']['all_ns']
+                assert len(reference)==kernel_summary['rounds']
+                for name,stats in groups.items():
+                    assert len(stats['all_ns'])==len(reference)
+                    for index,(ref_ns,ns) in enumerate(zip(reference,stats['all_ns']),1):
+                        kernel_samples.append([jid,'q5-stream',result['n']//32,mode,index,name,ns,ref_ns/ns-1,'实际库四版本循环换序；线程首触自有权重；含一次OMP启动/同步；非模型吞吐',evidence['path']])
             for result in kernel_summary.get('softmax_microbench',[]):
                 shape='x'.join(str(x) for x in result['shape'])
                 summary+=f"\nSoftmax {shape}: 中位原版={result['baseline_ns_median']:.3f}ns/graph, 候选={result['candidate_ns_median']:.3f}ns/graph, 吞吐变化={result['speedup']-1:+.2%}（仅算子）"
@@ -257,14 +267,30 @@ for job in jobs:
                 for index,(base_ns,candidate_ns) in enumerate(zip(groups['baseline'],groups['candidate']),1):
                     for name,ns in [('baseline',base_ns),('candidate',candidate_ns)]:
                         kernel_samples.append([jid,'softmax-rows',None,shape,index,name,ns,base_ns/candidate_ns-1,'实际Softmax graph，含线程池调度；38线程10轮AB/BA；非完整模型',evidence['path']])
+            for result in kernel_summary.get('hc_microbench',[]):
+                shape='x'.join(str(x) for x in result['shape'])
+                summary+=f"\nHC-post {shape}: 中位原版={result['baseline_ns_median']:.3f}ns/graph, 候选={result['candidate_ns_median']:.3f}ns/graph, 吞吐变化={result['speedup']-1:+.2%}（仅算子）"
+                groups=result['samples']
+                assert len(groups['baseline'])==len(groups['candidate'])==10
+                for index,(base_ns,candidate_ns) in enumerate(zip(groups['baseline'],groups['candidate']),1):
+                    for name,ns in [('baseline',base_ns),('candidate',candidate_ns)]:
+                        kernel_samples.append([jid,job.get('submission',{}).get('case_prefix','hc4-post'),None,shape,index,name,ns,base_ns/candidate_ns-1,'实际HC-post graph，含线程池调度；38线程10轮AB/BA；非完整模型',evidence['path']])
             if 'microbench' in kernel_summary and 'dot_checks' in kernel_summary:
                 for result in kernel_summary['microbench']:
                     summary+=f"\n实际dot n={result['n']}: 中位耗时原版={result['baseline_ns_median']:.3f}ns, 候选={result['candidate_ns_median']:.3f}ns, 吞吐变化={result['speedup']-1:+.2%}（仅单核驻留微基准）"
                     groups=result['samples']
-                    assert len(groups['baseline'])==len(groups['candidate'])==10
+                    rounds=kernel_summary.get('microbench_rounds',10)
+                    assert len(groups['baseline'])==len(groups['candidate'])==rounds
+                    scope='四版本循环换序；各位置次数相等' if result.get('comparators') else '交替AB/BA'
                     for index,(base_ns,candidate_ns) in enumerate(zip(groups['baseline'],groups['candidate']),1):
                         for name,ns in [('baseline',base_ns),('candidate',candidate_ns)]:
-                            kernel_samples.append([jid,job.get('submission',{}).get('case_prefix','dot-candidate'),None,f"resident n={result['n']}",index,name,ns,base_ns/candidate_ns-1,'实际库函数交替AB/BA；单核CPU0/membind0；非完整模型',evidence['path']])
+                            kernel_samples.append([jid,job.get('submission',{}).get('case_prefix','dot-candidate'),None,f"resident n={result['n']}",index,name,ns,base_ns/candidate_ns-1,'实际库函数'+scope+'；单核CPU0/membind0；非完整模型',evidence['path']])
+                    for name,comparison in result.get('comparators',{}).items():
+                        reference_samples=comparison['samples_ns']
+                        assert len(reference_samples)==rounds
+                        summary+=f"\n组合 n={result['n']} 相对{name}: 吞吐变化={comparison['speedup']-1:+.2%}，配对胜出={comparison['paired_wins']}/{rounds}（仅算子）"
+                        for index,(ref_ns,candidate_ns) in enumerate(zip(reference_samples,groups['candidate']),1):
+                            kernel_samples.append([jid,job.get('submission',{}).get('case_prefix','dot-candidate'),None,f"resident n={result['n']}",index,name,ref_ns,ref_ns/candidate_ns-1,'组合相对本参考的配对变化；四版本循环换序；单核CPU0/membind0；非完整模型',evidence['path']])
             for probe in kernel_summary.get('runtime_probe_cases',[]):
                 result=probe.get('result',{})
                 state=result.get('status','TIMEOUT' if probe['returncode']==124 else 'FAIL')
@@ -416,6 +442,22 @@ for r in range(2,events.max_row+1):events.row_dimensions[r].height=70
 samples.column_dimensions['B'].width=38;samples.column_dimensions['H'].width=100
 samples.column_dimensions['E'].width=18
 for r in range(2,samples.max_row+1):samples.cell(r,5).number_format='0.000000'
+overview_path=EVIDENCE/'optimization_overview.json'
+if overview_path.is_file():
+    overview_data=json.loads(overview_path.read_text(encoding='utf-8'))
+    overview=book.create_sheet('优化与消融汇总')
+    overview.append(overview_data['columns'])
+    for row in overview_data['rows']:overview.append(row)
+    overview.append(['更新时间',overview_data['updated_at_hkt']])
+    overview.freeze_panes='A2'
+    overview.auto_filter.ref=f'A1:H{len(overview_data["rows"])+1}'
+    for cell in overview[1]:
+        cell.font=Font(bold=True,color='FFFFFF')
+        cell.fill=PatternFill('solid',fgColor='17365D')
+    for index,width in enumerate([24,47,27,27,25,51,34,82],1):overview.column_dimensions[get_column_letter(index)].width=width
+    for row in overview.iter_rows(min_row=2):
+        overview.row_dimensions[row[0].row].height=88
+        for cell in row:cell.alignment=Alignment(vertical='top',wrap_text=True)
 book.active=book.sheetnames.index('作业日志')
 book.properties.title='Qwen3.8 CPU 实验作业日志'
 book.properties.description='LSF作业、提交时间、配置、改动、结果、Baseline；保留失败和完整十次样本。'

@@ -1,0 +1,13 @@
+{
+  "new_jobs_registered": [
+    "4340614",
+    "4340615"
+  ],
+  "existing_wait_jobs_retained": [
+    "4340520",
+    "4340521"
+  ],
+  "actual_algorithms_validated": true,
+  "no_premature_new_scores": true,
+  "raw_samples": 2290
+}

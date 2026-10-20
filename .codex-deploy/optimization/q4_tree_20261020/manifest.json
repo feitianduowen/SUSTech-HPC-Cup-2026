@@ -1,0 +1,10 @@
+{
+  "base_commit": "d81235049384534c167caea52b85a694f6103d14",
+  "variants": {
+    "q4-int-tree": {
+      "file": "ggml/src/ggml-cpu/arch/x86/repack.cpp",
+      "original_sha256": "c69735f83caf854172cac78eed2cbc022ef81c077e5f6aca55a49d3404a02331",
+      "sha256": "48cb12e48743a1b4dd8e99691458d1704b3dca0b2a2a9ec68726168c0b5d09fb"
+    }
+  }
+}

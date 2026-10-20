@@ -1,0 +1,36 @@
+{
+  "job_id": "4341178",
+  "remote_root": "/work/apac2602/qwen38-cpu/optimization/20261020-q4-tree",
+  "source": "/work/apac2602/qwen38-cpu/optimization/20261020-q4-tree/sources/q4-int-tree-4341178",
+  "last_known_status": "DONE",
+  "change": "Only Q4_Kx8/Q8_K GEMV integer16 add chains replaced with balanced modulo2^16 tree. FP scale/FMA/order unchanged. Independent full source; no Q5 overlays.",
+  "compiler": "Intel Classic2021.9; O3 precise/no-ftz CORE-AVX512 qsimd-honor-fp-model; OpenMP ON BLAS OFF",
+  "next": [
+    "Retain source and all160kernel samples. No model phase; no PPL claimed.",
+    "Proceed with separate mask-shuffle candidate, not another identical tree submission."
+  ],
+  "node": "r13n17",
+  "updated_hong_kong": "2026-10-20T21:27:48+08:00",
+  "latest_stage": "COMPLETE_KERNEL_SCREEN_NO_GAIN time=2026-10-20T21:30:40+08:00",
+  "review": {
+    "status": "COMPLETE_KERNEL_SCREEN_NO_GAIN",
+    "decision": "do_not_promote",
+    "reviewed_hong_kong": "2026-10-20T21:58:27.047754+08:00",
+    "direct_cases": 128128,
+    "matrix_cases": 144,
+    "all_bit_mismatches": 0,
+    "ppl": "not_run",
+    "model_pp_tg": "not_run",
+    "changes": {
+      "2560 resident nc=8": 0.0006213957828131722,
+      "2560 stream256MiB nc=8": 0.0024997733417914114,
+      "2560 resident nc=64": 0.004853226054363335,
+      "2560 stream256MiB nc=64": 0.0013570080402424134,
+      "6144 resident nc=8": -0.0016945358665381716,
+      "6144 stream256MiB nc=8": 0.0012778093080468844,
+      "6144 resident nc=64": 0.002318773185314593,
+      "6144 stream256MiB nc=64": 0.0013265185784344657
+    },
+    "next": "Separate original-source Q4 masked-shuffle experiment; do not overlay integer tree."
+  }
+}

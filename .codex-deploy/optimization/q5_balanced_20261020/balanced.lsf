@@ -1,0 +1,78 @@
+#!/bin/bash
+#BSUB -J qwen38_q5_balanced
+#BSUB -q ssc-cpu
+#BSUB -m hg_6148
+#BSUB -n 40
+#BSUB -R "span[ptile=40]"
+#BSUB -W 06:00
+#BSUB -o /work/apac2602/qwen38-cpu/logs/%J.q5_balanced.out
+#BSUB -e /work/apac2602/qwen38-cpu/logs/%J.q5_balanced.err
+set -Eeuo pipefail
+source /work/apac2602/qwen38-cpu/scripts/env.sh
+ROOT=/work/apac2602/qwen38-cpu/optimization/20261020-q5-balanced
+Q5=/work/apac2602/qwen38-cpu/optimization/20261019-q5-mask
+BASE=/work/apac2602/qwen38-cpu/llama.cpp
+CANDIDATE="$Q5/sources/q5-mask-4338563"
+[[ "${Q5_ORDER:?}" =~ ^(ABBA|BAAB)$ ]]
+OUT="$ROOT/results/$LSB_JOBID"
+mkdir -p "$OUT"
+phase=INIT
+trap 'rc=$?; printf "FAILED phase=%s exit=%s time=%s\n" "$phase" "$rc" "$(date -Is)" > "$OUT/job.status"; exit "$rc"' ERR
+stage() { phase=$1; printf '%s time=%s\n' "$phase" "$(date -Is)" > "$OUT/job.status"; }
+[[ "$LSB_DJOB_NUMPROC" == 40 ]]
+[[ $(getconf _NPROCESSORS_ONLN) == 40 ]]
+lscpu | grep -q 'Intel(R) Xeon(R) Gold 6148'
+unset KMP_AFFINITY GOMP_CPU_AFFINITY KMP_BLOCKTIME OMP_WAIT_POLICY KMP_HW_SUBSET PROF_DIR INTEL_PROF_DUMP_INTERVAL INTEL_PROF_DUMP_CUMULATIVE
+export OMP_NUM_THREADS=38 OMP_DYNAMIC=FALSE OMP_PROC_BIND=close OMP_PLACES=cores
+export OPENBLAS_NUM_THREADS=38 MKL_NUM_THREADS=38 BLIS_NUM_THREADS=38
+cp "$ROOT/balanced.lsf" "$ROOT/ppl_gate.lsf" "$ROOT/analyze.py" "$OUT/"
+cp "$ROOT/$Q5_ORDER-plan.json" "$OUT/plan.json"
+{ date -Is; hostname; lscpu; module list; icc --version; icpc --version; cat /proc/sys/kernel/numa_balancing; env | sort | grep -E '^(OMP_|KMP_|MKL_|OPENBLAS_|BLIS_)'; } > "$OUT/environment.txt" 2>&1
+stage VERIFY_SOURCE_AND_BINARIES
+python3 "$ROOT/verify_existing.py" > "$OUT/source-verification.json"
+sha256sum -c "$Q5/results/4338563/sha256.txt" > "$OUT/verified-candidate-origin.log"
+sha256sum -c "$Q5/results/4339768/baseline-sha256.txt" > "$OUT/verified-baseline-origin.log"
+for name in baseline candidate; do
+    SRC="$BASE"
+    [[ "$name" != candidate ]] || SRC="$CANDIDATE"
+    sha256sum "$SRC/build/bin/llama-cli" "$SRC/build/bin/llama-server" "$SRC/build/bin/llama-bench" "$SRC/build/bin/llama-perplexity" "$SRC/build/bin/"lib*.so* > "$OUT/$name-sha256.txt"
+    for tool in llama-cli llama-server llama-bench llama-perplexity; do
+        test -x "$SRC/build/bin/$tool"
+        ldd "$SRC/build/bin/$tool" >> "$OUT/ldd-$name.txt"
+    done
+    ! grep -q 'not found' "$OUT/ldd-$name.txt"
+done
+cat "$OUT/baseline-sha256.txt" "$OUT/candidate-sha256.txt" > "$OUT/sha256.txt"
+check_hashes() { sha256sum -c "$OUT/sha256.txt" >> "$OUT/hash-checks.log"; }
+check_hashes
+
+# Explicit development-only preparation. Raw results are retained separately;
+# no PP is run here and no model Score or candidate ratio is derived from it.
+stage PREPARATION_FIXED_PPL
+PREP="$OUT/diagnostics/preparation"
+mkdir -p "$PREP"
+COMPILER_BUILD_ROOT="$BASE" RUN_BENCH=0 EXPERIMENT_OUTPUT_DIR="$PREP" bash "$OUT/ppl_gate.lsf" > "$OUT/preparation-ppl.log" 2>&1
+stage PREPARATION_TG10
+MODEL=/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf
+timeout --signal=TERM --kill-after=10s 3600 "$BASE/build/bin/llama-bench" -m "$MODEL" -t 38 -ngl 0 -b 2048 -ub 512 -ctk f16 -ctv f16 --numa distribute -r 10 -p 0 -n 128 -d 2048 -o json > "$PREP/tg128_d2048.json" 2> "$PREP/tg.log"
+check_hashes
+python3 "$OUT/analyze.py" "$OUT" --preparation-only > "$OUT/preparation-check.log"
+
+baseline_index=0
+candidate_index=0
+for ((index=0; index<4; index++)); do
+    letter=${Q5_ORDER:$index:1}
+    if [[ "$letter" == A ]]; then
+        baseline_index=$((baseline_index+1)); role="baseline$baseline_index"; SRC="$BASE"
+    else
+        candidate_index=$((candidate_index+1)); role="candidate$candidate_index"; SRC="$CANDIDATE"
+    fi
+    printf -v directory '%02d_%s' "$((index+1))" "$role"
+    stage "PPL_PP10_TG10_$directory"
+    check_hashes
+    COMPILER_BUILD_ROOT="$SRC" RUN_BENCH=1 EXPERIMENT_OUTPUT_DIR="$OUT/$directory" bash "$OUT/ppl_gate.lsf" > "$OUT/$directory.log" 2>&1
+    check_hashes
+done
+stage ANALYZE_COMPLETE
+python3 "$OUT/analyze.py" "$OUT" > "$OUT/analysis.log"
+stage COMPLETE

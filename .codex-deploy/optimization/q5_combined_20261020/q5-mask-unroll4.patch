@@ -1,0 +1,31 @@
+--- a/ggml/src/ggml-cpu/arch/x86/quants.c
++++ b/ggml/src/ggml-cpu/arch/x86/quants.c
+@@ -1242,15 +1242,27 @@
+ 
+     float summs = 0.0f;
+ 
+-    // Main loop
++    // Expose adjacent block loads while preserving the original ordered
++    // vector accumulator and minimum-term sum; no additional FP chains.
++#if defined(__INTEL_COMPILER)
++#pragma unroll(4)
++#endif
+     for (; ib < nb; ++ib) {
+         const __m256 dx = _mm256_set1_ps(GGML_CPU_FP16_TO_FP32(x[ib].d));
+ 
+         summs += GGML_CPU_FP16_TO_FP32(x[ib].m) * GGML_CPU_FP16_TO_FP32(y[ib].s);
+ 
+         __m256i qx = bytes_from_nibbles_32(x[ib].qs);
++#if defined(__AVX512BW__) && defined(__AVX512VL__)
++        // Expand one high-bit mask directly to the corresponding byte lanes.
++        // The integer dot, scale products and ordered FMA remain unchanged.
++        uint32_t high_bits;
++        memcpy(&high_bits, x[ib].qh, sizeof(high_bits));
++        const __m256i bxhi = _mm256_maskz_set1_epi8((__mmask32) high_bits, 0x10);
++#else
+         __m256i bxhi = bytes_from_bits_32(x[ib].qh);
+         bxhi = _mm256_and_si256(bxhi, _mm256_set1_epi8(0x10));
++#endif
+         qx = _mm256_or_si256(qx, bxhi);
+ 
+         const __m256 dy = _mm256_set1_ps(GGML_CPU_FP16_TO_FP32(y[ib].d));

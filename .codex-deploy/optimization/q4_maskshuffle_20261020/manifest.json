@@ -1,0 +1,10 @@
+{
+  "base_commit": "d81235049384534c167caea52b85a694f6103d14",
+  "variants": {
+    "q4-maskshuffle": {
+      "file": "ggml/src/ggml-cpu/arch/x86/repack.cpp",
+      "original_sha256": "c69735f83caf854172cac78eed2cbc022ef81c077e5f6aca55a49d3404a02331",
+      "sha256": "1a1b0626e3be3e67063fe81bbae3034811d203860706a569559a508661a20f22"
+    }
+  }
+}

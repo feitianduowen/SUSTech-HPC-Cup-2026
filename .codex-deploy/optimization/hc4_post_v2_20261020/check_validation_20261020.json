@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "all_jobs": 122,
+  "new_cases": 8,
+  "ppl_values": [
+    2.7767,
+    2.7767,
+    2.7767,
+    2.7767,
+    2.7767,
+    2.7767,
+    2.7767,
+    2.7767
+  ],
+  "retained_full_benchmark_samples": {
+    "4340916": 70,
+    "4340917": 70
+  },
+  "total_model_samples": 2990
+}

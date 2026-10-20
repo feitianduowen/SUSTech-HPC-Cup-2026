@@ -1,0 +1,40 @@
+{
+  "updated_at_hkt": "2026-10-20T19:09:28.532362+08:00",
+  "phase": "all four complete; runtime changes not adopted",
+  "jobs": [
+    {
+      "job_id": "4340520",
+      "state": "DONE",
+      "host": "40*r13n10",
+      "order": "ABBA"
+    },
+    {
+      "job_id": "4340521",
+      "state": "DONE",
+      "host": "40*r13n12",
+      "order": "BAAB"
+    }
+  ],
+  "hypothesis": "4340376 first PP reported fork-barrier wait records, later PP none; both first/later spin share about30%. Test longer active waiting instead of assuming barrier spin explains 2x speed.",
+  "next": "四个作业均已完成，不重提。infinite未消除首次慢速，第二对PP约+1%而TG受低速样本干扰；tree第二对PP方向不一致、TG差异约0.5%，两项均未证明稳定综合收益，暂不采用。保留全部16轮PPL、320测速样本及全部对照。后续以源码热点优化为主，候选需固定流程和配对重复评估；停止仅基于首次/后续速度差推进运行时猜测。",
+  "runtime_validation": {
+    "200": {
+      "effective_KMP_BLOCKTIME": "200",
+      "threads": 38,
+      "OMP_WAIT_POLICY": "ACTIVE"
+    },
+    "infinite": {
+      "effective_KMP_BLOCKTIME": "2147483647",
+      "threads": 38,
+      "OMP_WAIT_POLICY": "ACTIVE"
+    }
+  },
+  "do_not_duplicate": [
+    "4340350",
+    "4340351"
+  ],
+  "excel": "D:/compete/Qwen38_CPU_实验日志.xlsx",
+  "parallel_followup": "D:\\compete\\.codex-deploy\\optimization\\barrier_tree\\next_actions.json",
+  "latest_progress": "D:\\compete\\.codex-deploy\\optimization\\barrier_tree\\runtime_progress_analysis.json",
+  "completed_verdict": "D:\\compete\\.codex-deploy\\optimization\\barrier_tree\\completed_runtime_verdict.json"
+}

@@ -1,0 +1,16 @@
+{
+  "completed_job_ids": [
+    "4339778",
+    "4339779"
+  ],
+  "raw_samples_per_job": {
+    "4339778": 120,
+    "4339779": 120
+  },
+  "same_block_baseline_pairs": {
+    "4339778": 4,
+    "4339779": 4
+  },
+  "all_diagnostic_scores_blank": true,
+  "total_raw_samples": 2070
+}

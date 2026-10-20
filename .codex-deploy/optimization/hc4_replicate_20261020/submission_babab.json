@@ -1,0 +1,30 @@
+{
+  "script": "/work/apac2602/qwen38-cpu/optimization/20261020-hc4-replicate/repeat.lsf",
+  "kind": "同节点完整对照",
+  "purpose": "HC-post v2独立复现及漂移检查：BABAB五轮交错，在排除原r13n08/r13n45的其他空闲Gold6148节点复用同一已验证Intel候选构建；后段B2-A2-B3双侧对照，确认约5.5% PP与0.5%-1.8% TG收益是否复现。",
+  "config": "Intel Classic2021.9 icc/icpc O3 precise/no-ftz CORE-AVX512 qsimd-honor-fp-model；OpenMP ON，BLAS OFF；每节点40物理核40slots，推理38线程close/cores。A=原版部署；B=4340916 HC-post v2构建，逐bit差分972组/42341535值已通过。冻结两构建eval二进制/动态库SHA及B源码SHA，每轮前复核并检查ldd。顺序BABAB；每case独立PPL t/tb38 c512 chunks2 b512ub256 f16KV ngl0 NUMA distribute no-warmup 590s ±5%；PP2048与TG128d2048各r10，t38 b2048ub512 f16KV ngl0 NUMA distribute。无采样；保留全部首轮/低速样本。",
+  "baseline": "本作业同节点Intel原版A1/A2；B1/A1，后段B2/A2，补充B3/A2双侧分析；4340916/4340917为前期不同节点复测依据，不作直接速度除数",
+  "environment": {
+    "PAIR_ORDER": "BABAB"
+  },
+  "lsf_args": [
+    "-J",
+    "qwen38_hc4_rep_babab"
+  ],
+  "case_prefix": "confirm-hc4-rep-babab",
+  "measurement_baselines": {
+    "confirm-hc4-rep-babab-B1_{job_id}": "confirm-hc4-rep-babab-A1_{job_id}",
+    "confirm-hc4-rep-babab-A1_{job_id}": null,
+    "confirm-hc4-rep-babab-B2_{job_id}": "confirm-hc4-rep-babab-A2_{job_id}",
+    "confirm-hc4-rep-babab-A2_{job_id}": null,
+    "confirm-hc4-rep-babab-B3_{job_id}": "confirm-hc4-rep-babab-A2_{job_id}"
+  },
+  "comparison_scope": "same-node",
+  "ppl_scope": "每case独立重新执行固定PPL；算子正确性复用4340916既有证据，不声称重跑",
+  "late_bracket": [
+    "B2",
+    "A2",
+    "B3"
+  ],
+  "note": "此前ABBA/BAAB均完成8次PPL=2.7767和160测速样本，后段PP +5.595%/+5.432%，TG +1.784%/+0.504%，几何均值 +3.672%/+2.939%；首对PP +60.45%/-32.74%明显受顺序影响。当前为独立复现和漂移控制，不修改源码或部署；保留五轮全部样本，不把后段对照或算子收益称为正式成绩。"
+}

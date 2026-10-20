@@ -1,0 +1,10 @@
+{
+  "base_commit": "d81235049384534c167caea52b85a694f6103d14",
+  "variants": {
+    "q5-unroll4": {
+      "file": "ggml/src/ggml-cpu/arch/x86/quants.c",
+      "original_sha256": "3c489fdc77e3ab484a5f188bff9c60c0e9483c951ed65c1a562a04c249d5628e",
+      "sha256": "832cf4aa6bac2d2ef031135aae553468b4899dc30c0ae77b78e4d019d58309a2"
+    }
+  }
+}

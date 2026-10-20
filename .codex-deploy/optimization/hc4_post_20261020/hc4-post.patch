@@ -1,0 +1,52 @@
+--- a/ggml/src/ggml-cpu/ops.cpp
++++ b/ggml/src/ggml-cpu/ops.cpp
+@@ -11605,6 +11605,49 @@
+     const int64_t ir0 = dr * ith;
+     const int64_t ir1 = MIN(ir0 + dr, nr);
+ 
++    // Keep each output's reduction order and the original thread partition.
++    if (hc == 4 && nbx0 == sizeof(float) && nbr0 == sizeof(float) && nbd0 == sizeof(float)) {
++        for (int64_t ir = ir0; ir < ir1;) {
++            const int64_t row  = ir / n_embd;
++            const int64_t i0   = ir % n_embd;
++            const int64_t idst = row % hc;
++            const int64_t it   = row / hc;
++            const int64_t count = MIN(n_embd - i0, ir1 - ir);
++            const float * xp = (const float *) ((const char *) x->data + it*nbx1) + i0;
++            const char * rp = (const char *) residual->data + it*nbr2;
++            float * dp = (float *) ((char *) dst->data + idst*nbd1 + it*nbd2) + i0;
++            const float pv = *(const float *) ((const char *) post->data + idst*nbp0 + it*nbp1);
++            if (comb) {
++                const char * cp = (const char *) comb->data + idst*nbc0 + it*nbc2;
++                const float c0 = *(const float *) (cp + 0*nbc1);
++                const float c1 = *(const float *) (cp + 1*nbc1);
++                const float c2 = *(const float *) (cp + 2*nbc1);
++                const float c3 = *(const float *) (cp + 3*nbc1);
++                const float * r0 = (const float *) (rp + 0*nbr1) + i0;
++                const float * r1 = (const float *) (rp + 1*nbr1) + i0;
++                const float * r2 = (const float *) (rp + 2*nbr1) + i0;
++                const float * r3 = (const float *) (rp + 3*nbr1) + i0;
++                for (int64_t j = 0; j < count; ++j) {
++                    float sum = xp[j] * pv;
++                    sum += r0[j] * c0;
++                    sum += r1[j] * c1;
++                    sum += r2[j] * c2;
++                    sum += r3[j] * c3;
++                    dp[j] = sum;
++                }
++            } else {
++                const float * rp_self = (const float *) (rp + idst*nbr1) + i0;
++                for (int64_t j = 0; j < count; ++j) {
++                    float sum = xp[j] * pv;
++                    sum += rp_self[j];
++                    dp[j] = sum;
++                }
++            }
++            ir += count;
++        }
++        return;
++    }
++
+     for (int64_t ir = ir0; ir < ir1; ++ir) {
+         const int64_t i0     = ir % n_embd;
+         const int64_t idst   = (ir / n_embd) % hc;

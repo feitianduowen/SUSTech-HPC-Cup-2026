@@ -1,0 +1,11 @@
+{
+  "job_ids": [
+    "4340364",
+    "4340365",
+    "4340376"
+  ],
+  "failed_probe_preserved": true,
+  "retry_registered": true,
+  "no_premature_scores": true,
+  "total_raw_samples": 2070
+}

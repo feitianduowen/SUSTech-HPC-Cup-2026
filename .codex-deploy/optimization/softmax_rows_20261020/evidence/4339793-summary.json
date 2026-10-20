@@ -1,0 +1,227 @@
+{
+  "softmax_checks": {
+    "baseline": {
+      "status": "PASS",
+      "cases": 1280,
+      "values": 5737120,
+      "repetitions": 3,
+      "threads": [
+        1,
+        38
+      ],
+      "checks": "finite, range, row normalization, repeatable; cross-build comparison required"
+    },
+    "candidate": {
+      "status": "PASS",
+      "cases": 1280,
+      "values": 5737120,
+      "repetitions": 3,
+      "threads": [
+        1,
+        38
+      ],
+      "checks": "finite, range, row normalization, repeatable; cross-build comparison required"
+    }
+  },
+  "library_correctness": {
+    "status": "PASS",
+    "cases": 1280,
+    "values": 5737120,
+    "bit_mismatches": 0,
+    "repetitions": 3
+  },
+  "softmax_microbench": [
+    {
+      "shape": [
+        2048,
+        1,
+        32,
+        1
+      ],
+      "baseline_ns_median": 251312.09999999998,
+      "candidate_ns_median": 20217.15,
+      "speedup": 12.430639333437204,
+      "paired_wins": 10,
+      "samples": {
+        "baseline": [
+          251752.45,
+          250931.8,
+          251006.9,
+          251744.25,
+          251078.95,
+          250924.05,
+          251266.4,
+          251517.35,
+          251357.8,
+          251541.3
+        ],
+        "candidate": [
+          22333.05,
+          19689.75,
+          19362.45,
+          20399.35,
+          20637.2,
+          20034.95,
+          20870.05,
+          19433.75,
+          27544.1,
+          19978.9
+        ]
+      }
+    },
+    {
+      "shape": [
+        2048,
+        4,
+        32,
+        1
+      ],
+      "baseline_ns_median": 262309.725,
+      "candidate_ns_median": 44067.25,
+      "speedup": 5.952486824115414,
+      "paired_wins": 10,
+      "samples": {
+        "baseline": [
+          263585.95,
+          258882.6,
+          260309,
+          261855.4,
+          265796.95,
+          261953.75,
+          262665.7,
+          262876,
+          260041.95,
+          263050.2
+        ],
+        "candidate": [
+          43685.4,
+          44420.7,
+          44246.55,
+          45389.45,
+          43566,
+          43757.35,
+          43610.4,
+          44105,
+          44029.5,
+          44239.15
+        ]
+      }
+    },
+    {
+      "shape": [
+        512,
+        32,
+        8,
+        1
+      ],
+      "baseline_ns_median": 38260.475,
+      "candidate_ns_median": 34680.05,
+      "speedup": 1.1032416331579682,
+      "paired_wins": 10,
+      "samples": {
+        "baseline": [
+          37648.85,
+          38366.95,
+          38883.45,
+          38154,
+          40884.85,
+          38433.95,
+          36551.7,
+          34010.05,
+          36901.25,
+          39728.3
+        ],
+        "candidate": [
+          33865.85,
+          37282.8,
+          33871.9,
+          33249.2,
+          36260.1,
+          36375.65,
+          31668.55,
+          31288.9,
+          35488.2,
+          35622.1
+        ]
+      }
+    },
+    {
+      "shape": [
+        512,
+        128,
+        8,
+        1
+      ],
+      "baseline_ns_median": 91485.7,
+      "candidate_ns_median": 90944.775,
+      "speedup": 1.0059478403239768,
+      "paired_wins": 5,
+      "samples": {
+        "baseline": [
+          92871.2,
+          92163.75,
+          90504.45,
+          90559.65,
+          92649.3,
+          88946.3,
+          92457.4,
+          87458.3,
+          95807.4,
+          90807.65
+        ],
+        "candidate": [
+          91191.35,
+          93552.8,
+          90033.05,
+          89118.9,
+          95561.55,
+          89282.95,
+          90698.2,
+          89412.7,
+          91319.5,
+          93836.15
+        ]
+      }
+    }
+  ],
+  "interpretation": "Softmax completed: 1280 configurations, 5737120 output floats, 3 repeats at1/38 threads; all bit-identical. Four actual-graph microbench median speedups12.4306x/5.9525x/1.1032x/1.00595x. Full A/B/A each fixed PPL2.7767 PASS, PP10/TG10 complete. Full-model PP and TG have substantial within-case and between-case variation. Candidate PP below both baseline passes; TG below first baseline and above last. Operator gains alone do not prove workload benefit. No production replacement.",
+  "source_screening_review": {
+    "status": "COMPLETE",
+    "decision": "model_benefit_unconfirmed_not_promoted",
+    "cases": {
+      "01_baseline": {
+        "ppl": 2.7767,
+        "ppl_elapsed_seconds": 332,
+        "pp_ts": 28.819277,
+        "pp_cv": 0.11817225671553107,
+        "tg_ts": 2.751696,
+        "tg_cv": 0.1510254039690431
+      },
+      "02_candidate": {
+        "ppl": 2.7767,
+        "ppl_elapsed_seconds": 137,
+        "pp_ts": 28.028788,
+        "pp_cv": 0.21913705294713423,
+        "tg_ts": 2.570143,
+        "tg_cv": 0.21406980078540377
+      },
+      "03_baseline_after": {
+        "ppl": 2.7767,
+        "ppl_elapsed_seconds": 237,
+        "pp_ts": 31.165565,
+        "pp_cv": 0.08004379192227062,
+        "tg_ts": 2.489347,
+        "tg_cv": 0.20579051454056022
+      }
+    },
+    "candidate_vs_first_baseline": {
+      "pp_ts": -0.02742917527042754,
+      "tg_ts": -0.06597858193637673
+    },
+    "candidate_vs_last_baseline": {
+      "pp_ts": -0.10064880903009465,
+      "tg_ts": 0.03245670450925475
+    },
+    "caveat": "Full-model PP and TG have substantial within-case and between-case variation. Candidate PP below both baseline passes; TG below first baseline and above last. Operator gains alone do not prove workload benefit. No production replacement."
+  }
+}

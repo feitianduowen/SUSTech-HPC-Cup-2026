@@ -1,23 +1,24 @@
 {
-  "updated_at_hkt": "2026-10-20T13:11:40.401965+08:00",
-  "phase": "same-node balanced crossover submitted",
+  "updated_at_hkt": "2026-10-20T16:17:25.071074+08:00",
+  "phase": "ABBA and BAAB complete; no consistent steady-state TG benefit",
   "jobs": [
     {
       "job_id": "4339778",
-      "state": "RUN",
+      "state": "DONE",
       "host": "40*r13n10",
       "order": "ABBA"
     },
     {
       "job_id": "4339779",
-      "state": "RUN",
+      "state": "DONE",
       "host": "40*r13n15",
       "order": "BAAB"
     }
   ],
   "design": "A=PP anchor→PP probe→TG; B=PP anchor→TG→PP probe. ABBA and BAAB each contain four blocks. Every call retains r10. Only compare probe/anchor within its own block before combining evidence.",
-  "next": "检查阶段和固定PPL，失败则定位日志。完成后验证24个测速进程各10样本、全量SHA检查；分别计算各段probe/anchor PP与CV，先比较同节点A/B并保留时间位置和跨段残留效应，再交叉核对另一顺序。对齐每TID stat/schedstat/status/wchan与GGUF驻留页、NUMA、主机计数；schedstat为0或权限不足时明确不可解释。只诊断不计Score，不改变正式参数，不删慢样本。",
+  "next": "先检查PPL、case采样进度与roi.json；software4340376与hardware4340365使用相同流程，失败4340364保留。首次PP与后续PP必须各完整10样本，TG也需10样本；同作业一次新固定PPL。ROI以prompt run1/10为起点resume，60秒后pause，核验两个控制返回码、实际时间及是否数据上限截断。读取summary/hotspots/callstacks/top-down和report-status，按target.pid/process分组排除包装Python等待。软件插桩和硬件采样有开销，模式跨节点，不直接比较吞吐为优化收益。保留原始vtune结果和所有样本，不计Score。",
   "shared_ppl": "each job has one fresh fixed PPL; all 12 diagnostic commands within that job share it; ±5%",
   "binary": "unchanged hash-verified Intel Classic production build",
-  "excel": "D:/compete/Qwen38_CPU_实验日志.xlsx"
+  "excel": "D:/compete/Qwen38_CPU_实验日志.xlsx",
+  "latest_followup": "D:\\compete\\.codex-deploy\\optimization\\vtune_wait_pair\\next_actions.json"
 }

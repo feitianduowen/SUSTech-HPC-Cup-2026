@@ -1,0 +1,25 @@
+{
+  "script": "/work/apac2602/qwen38-cpu/optimization/20261020-hc4-post/build_and_pair.lsf",
+  "kind": "同节点完整对照",
+  "purpose": "HC-post四路连续通道专用展开：固定hc=4并提升post/comb加载，保留每输出乘加顺序和线程分块；其余形状走原版。仅修改ops.cpp，不叠加HC-pre、NUMA或量化候选。",
+  "environment": {
+    "SOURCE_VARIANT": "hc4-post",
+    "PAIR_ORDER": "ABBA"
+  },
+  "lsf_args": [
+    "-J",
+    "qwen38_hc4_abba"
+  ],
+  "config": "Intel Classic2021.9 icc/icpc O3 precise/no-ftz CORE-AVX512 qsimd-honor-fp-model；OpenMP ON，BLAS OFF；hg_6148 Gold6148双路40核40slots，推理38线程close/cores。独立源码副本全SHA校验，四工具构建、量化测试、ldd；实际GGML图1/3/38线程、hc1/2/4/8、连续/填充/转置、comb缺省/单位/稠密、短行尾段和真实2560通道，3重复及跨库逐bit一致门槛；10轮AB/BA算子微基准。整模顺序ABBA，A=原版，B=候选；每case固定PPL t/tb38 c512 chunks2 b512 ub256 f16KV ngl0 NUMA distribute no-warmup 590s ±5%；每case PP2048、TG128d2048各r10 b2048 ub512。",
+  "baseline": "本作业同节点Intel原版A1/A2；B1对应A1，B2对应A2；算子对照原版实际库",
+  "case_prefix": "confirm-hc4-post-abba",
+  "comparison_scope": "same-node",
+  "measurement_baselines": {
+    "confirm-hc4-post-abba-A1_{job_id}": null,
+    "confirm-hc4-post-abba-B1_{job_id}": "confirm-hc4-post-abba-A1_{job_id}",
+    "confirm-hc4-post-abba-B2_{job_id}": "confirm-hc4-post-abba-A2_{job_id}",
+    "confirm-hc4-post-abba-A2_{job_id}": null
+  },
+  "ppl_scope": "每case独立固定PPL，无共享PPL",
+  "note": "实际库逐bit差分不过即停止，保留失败及所有慢样本。两个节点分别ABBA/BAAB以检查顺序影响，跨节点不直接相除；算子收益不是整模成绩，完整结果前不替换部署。"
+}

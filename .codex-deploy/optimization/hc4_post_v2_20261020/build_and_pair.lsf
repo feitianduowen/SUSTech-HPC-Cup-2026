@@ -1,0 +1,93 @@
+#!/bin/bash
+#BSUB -J qwen38_hc4_post
+#BSUB -q ssc-cpu
+#BSUB -m hg_6148
+#BSUB -n 40
+#BSUB -R "span[ptile=40]"
+#BSUB -W 06:00
+#BSUB -o /work/apac2602/qwen38-cpu/logs/%J.hc4_post.out
+#BSUB -e /work/apac2602/qwen38-cpu/logs/%J.hc4_post.err
+set -Eeuo pipefail
+source /work/apac2602/qwen38-cpu/scripts/env.sh
+ROOT=/work/apac2602/qwen38-cpu/optimization/20261020-hc4-post-v2
+VARIANT=${SOURCE_VARIANT:?set SOURCE_VARIANT}
+[[ "$VARIANT" == hc4-post-v2 ]]
+OUT="$ROOT/results/$LSB_JOBID"
+SRC="$ROOT/sources/$VARIANT-$LSB_JOBID"
+BUILD="$SRC/build"
+mkdir -p "$OUT"
+phase=INIT
+trap 'rc=$?; echo "FAILED phase=$phase exit=$rc time=$(date -Is)" > "$OUT/job.status"; exit "$rc"' ERR
+stage() { phase=$1; echo "$phase time=$(date -Is)" > "$OUT/job.status"; }
+[[ "$LSB_DJOB_NUMPROC" == 40 ]]
+[[ $(getconf _NPROCESSORS_ONLN) == 40 ]]
+lscpu | grep -q 'Intel(R) Xeon(R) Gold 6148'
+unset KMP_AFFINITY GOMP_CPU_AFFINITY KMP_BLOCKTIME OMP_WAIT_POLICY KMP_HW_SUBSET KMP_FORKJOIN_BARRIER KMP_FORKJOIN_BARRIER_PATTERN KMP_PLAIN_BARRIER KMP_PLAIN_BARRIER_PATTERN KMP_REDUCTION_BARRIER KMP_REDUCTION_BARRIER_PATTERN KMP_HOT_TEAMS_MAX_LEVEL KMP_HOT_TEAMS_MODE PROF_DIR INTEL_PROF_DUMP_INTERVAL INTEL_PROF_DUMP_CUMULATIVE
+export OMP_NUM_THREADS=38 OMP_DYNAMIC=FALSE OMP_PROC_BIND=close OMP_PLACES=cores
+export OPENBLAS_NUM_THREADS=38 MKL_NUM_THREADS=38 BLIS_NUM_THREADS=38
+{ date -Is; hostname; lscpu; module list; icc --version; icpc --version; } > "$OUT/environment.txt" 2>&1
+cp "$ROOT/build_and_pair.lsf" "$OUT/pipeline.lsf"
+cp "$ROOT/ppl_gate.lsf" "$OUT/ppl_gate.lsf"
+cp "$ROOT/$VARIANT.patch" "$OUT/source.patch"
+stage COPY_VERIFY_SOURCE
+python3 "$ROOT/copy_verify.py" > "$OUT/source-verification.json"
+flags='-fp-model precise -no-ftz -xCORE-AVX512 -qsimd-honor-fp-model -diag-disable=10441 -qopt-report=3 -qopt-report-phase=vec'
+omp=ON
+blas=OFF
+extra=()
+stage BUILD_AND_QUANT_TEST
+cmake -S "$SRC" -B "$BUILD" \
+    -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
+    -DCMAKE_C_COMPILER=icc -DCMAKE_CXX_COMPILER=icpc \
+    -DCMAKE_C_FLAGS="-gcc-name=/share/base/e5/gcc/11.2.0/bin/gcc $flags" \
+    -DCMAKE_CXX_FLAGS="-gxx-name=/share/base/e5/gcc/11.2.0/bin/g++ $flags" \
+    -DCMAKE_EXE_LINKER_FLAGS='-Wl,--no-as-needed,/lib64/libm.so.6,--as-needed' \
+    -DCMAKE_SHARED_LINKER_FLAGS='-Wl,--no-as-needed,/lib64/libm.so.6,--as-needed' \
+    -DGGML_NATIVE=ON -DGGML_OPENMP="$omp" -DGGML_OPENMP_FETCH=OFF \
+    -DGGML_BLAS="$blas" "${extra[@]}" -DGGML_CUDA=OFF -DGGML_HIP=OFF -DGGML_VULKAN=OFF \
+    -DGGML_SYCL=OFF -DGGML_OPENCL=OFF -DGGML_RPC=OFF -DGGML_METAL=OFF -DGGML_MUSA=OFF \
+    -DLLAMA_BUILD_TESTS=ON -DLLAMA_BUILD_EXAMPLES=ON -DLLAMA_BUILD_TOOLS=ON \
+    -DLLAMA_BUILD_SERVER=ON -DLLAMA_BUILD_APP=OFF -DLLAMA_BUILD_UI=OFF \
+    -DLLAMA_USE_PREBUILT_UI=OFF -DLLAMA_OPENSSL=OFF -DFETCHCONTENT_FULLY_DISCONNECTED=ON \
+    > "$OUT/configure.log" 2>&1
+cmake --build "$BUILD" --target llama-cli llama-server llama-bench llama-perplexity test-quantize-fns -j 40 > "$OUT/build.log" 2>&1
+"$BUILD/bin/test-quantize-fns" > "$OUT/quantize-tests.log" 2>&1
+for name in llama-cli llama-server llama-bench llama-perplexity; do
+    test -x "$BUILD/bin/$name"
+    ldd "$BUILD/bin/$name" >> "$OUT/ldd.txt"
+done
+! grep -q 'not found' "$OUT/ldd.txt"
+sha256sum "$BUILD/bin/llama-bench" "$BUILD/bin/llama-perplexity" "$BUILD/bin/libggml-cpu.so" > "$OUT/sha256.txt"
+cp "$BUILD/CMakeCache.txt" "$OUT/CMakeCache.txt"
+
+stage BUILD_HC4_POST_CHECK
+BASE=/work/apac2602/qwen38-cpu/llama.cpp
+for name in baseline candidate; do
+    BIN="$BUILD/bin"
+    [[ "$name" != baseline ]] || BIN="$BASE/build/bin"
+    icpc -gxx-name=/share/base/e5/gcc/11.2.0/bin/g++ -std=c++17 -O2 -fp-model strict -no-ftz -diag-disable=10441 -I"$SRC/ggml/include" "$ROOT/hc_check.cpp" -L"$BIN" -Wl,-rpath,"$BIN",--no-as-needed -lggml-cpu -lggml -lggml-base -Wl,--no-as-needed,/lib64/libm.so.6,--as-needed -qopenmp -o "$OUT/check-$name" > "$OUT/check-$name-build.log" 2>&1
+    ldd "$OUT/check-$name" > "$OUT/check-$name-ldd.txt"
+    ! grep -q 'not found' "$OUT/check-$name-ldd.txt"
+    stage "HC4_POST_CHECK_$name"
+    timeout --signal=TERM --kill-after=10s 900 "$OUT/check-$name" --check "$OUT/$name.bin" > "$OUT/$name-check.json" 2> "$OUT/$name-check.log"
+done
+stage HC4_POST_MICROBENCH
+python3 "$ROOT/bench.py" "$OUT" > "$OUT/hc-bench.log" 2>&1
+
+ORDER=${PAIR_ORDER:?set PAIR_ORDER}
+case "$ORDER" in
+    ABBA) names=(A1 B1 B2 A2) ;;
+    BAAB) names=(B1 A1 A2 B2) ;;
+    *) exit 2 ;;
+esac
+ordinal=0
+for name in "${names[@]}"; do
+    ordinal=$((ordinal+1))
+    stage "PPL_PP10_TG10_$name"
+    CASE_ROOT="$SRC"
+    [[ "$name" != A* ]] || CASE_ROOT="$BASE"
+    dir=$(printf "%02d_%s" "$ordinal" "$name")
+    sha256sum "$CASE_ROOT/build/bin/llama-bench" "$CASE_ROOT/build/bin/llama-perplexity" "$CASE_ROOT/build/bin/"lib*.so* > "$OUT/$name-sha256.txt"
+    COMPILER_BUILD_ROOT="$CASE_ROOT" RUN_BENCH=1 EXPERIMENT_OUTPUT_DIR="$OUT/$dir" bash "$OUT/ppl_gate.lsf" > "$OUT/$name-bench.log" 2>&1
+done
+stage COMPLETE

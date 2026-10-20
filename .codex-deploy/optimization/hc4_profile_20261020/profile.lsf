@@ -1,0 +1,114 @@
+#!/bin/bash
+#BSUB -J qwen38_hc4_profile
+#BSUB -q ssc-cpu
+#BSUB -m hg_6148
+#BSUB -n 40
+#BSUB -R "span[ptile=40]"
+#BSUB -W 06:00
+#BSUB -o /work/apac2602/qwen38-cpu/logs/%J.hc4_profile.out
+#BSUB -e /work/apac2602/qwen38-cpu/logs/%J.hc4_profile.err
+set -Eeuo pipefail
+source /work/apac2602/qwen38-cpu/scripts/env.sh
+ROOT=/work/apac2602/qwen38-cpu/optimization/20261020-hc4-profile
+OUT="$ROOT/results/$LSB_JOBID"
+VTUNE=/share/intel/oneapi-2023.1/vtune/2023.1.0/bin64/vtune
+MODE=${PROFILE_MODE:?set PROFILE_MODE}
+ORDER=${PAIR_ORDER:?set PAIR_ORDER}
+mkdir -p "$OUT"
+phase=VERIFY
+trap 'rc=$?; printf "FAILED phase=%s exit=%s time=%s\n" "$phase" "$rc" "$(date -Is)" > "$OUT/job.status"; exit "$rc"' ERR
+stage() { phase=$1; printf '%s time=%s\n' "$phase" "$(date -Is)" | tee "$OUT/job.status"; }
+[[ "$LSB_DJOB_NUMPROC" == 40 && $(getconf _NPROCESSORS_ONLN) == 40 ]]
+lscpu | grep -q 'Intel(R) Xeon(R) Gold 6148'
+[[ $(lscpu -p=CORE,SOCKET | sed '/^#/d' | sort -u | wc -l) == 40 ]]
+unset KMP_BLOCKTIME OMP_WAIT_POLICY KMP_AFFINITY GOMP_CPU_AFFINITY KMP_HW_SUBSET KMP_FORKJOIN_BARRIER KMP_FORKJOIN_BARRIER_PATTERN KMP_PLAIN_BARRIER KMP_PLAIN_BARRIER_PATTERN KMP_REDUCTION_BARRIER KMP_REDUCTION_BARRIER_PATTERN KMP_HOT_TEAMS_MAX_LEVEL KMP_HOT_TEAMS_MODE PROF_DIR INTEL_PROF_DUMP_INTERVAL INTEL_PROF_DUMP_CUMULATIVE
+export OMP_NUM_THREADS=38 OMP_DYNAMIC=FALSE OMP_PROC_BIND=close OMP_PLACES=cores
+export MKL_NUM_THREADS=38 OPENBLAS_NUM_THREADS=38 BLIS_NUM_THREADS=38 LC_ALL=C
+{ date -Is; hostname; lscpu; module list; icc --version; icpc --version; "$VTUNE" -version; cat /proc/sys/kernel/perf_event_paranoid; env | sort | grep -E '^(OMP|KMP|GOMP|MKL|BLIS|OPENBLAS|LD_LIBRARY_PATH)'; } > "$OUT/environment.txt" 2>&1
+cp "$ROOT/profile.lsf" "$ROOT/ppl_gate.lsf" "$ROOT/target_exec.py" "$ROOT/roi_monitor.py" "$ROOT/observed_run.py" "$ROOT/probe.py" "$OUT/"
+cp "$ROOT/submission_$MODE.json" "$OUT/plan.json"
+cp "$ROOT/frozen_builds.json" "$OUT/frozen_builds.json"
+python3 "$ROOT/verify_frozen.py" > "$OUT/binary_sha256.json"
+args=(-collect threading -knob sampling-and-waits=sw)
+case "$MODE" in
+    hotspots) args=(-collect hotspots -knob sampling-mode=hw -knob sampling-interval=10 -knob enable-stack-collection=true -knob stack-size=2048) ;;
+    threading) ;;
+    *) exit 2 ;;
+esac
+stage TOOL_PROBE
+timeout --kill-after=15s 200s "$VTUNE" "${args[@]}" -data-limit=128 -r "$OUT/probe" -- python3 "$OUT/probe.py" > "$OUT/probe.log" 2>&1
+"$VTUNE" -report summary -r "$OUT/probe" > "$OUT/probe-summary.txt" 2> "$OUT/probe-report.log"
+case "$ORDER" in
+    ABBA) names=(A1 B1 B2 A2) ;;
+    BAAB) names=(B1 A1 A2 B2) ;;
+    *) exit 2 ;;
+esac
+BASE=/work/apac2602/qwen38-cpu/llama.cpp
+CAND=/work/apac2602/qwen38-cpu/optimization/20261020-hc4-post-v2/sources/hc4-post-v2-4340916
+MODEL=/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf
+common=(-m "$MODEL" -t 38 -ngl 0 -b 2048 -ub 512 -ctk f16 -ctv f16 --numa distribute -r 10 --progress -o json)
+
+export_reports() {
+    local folder=$1
+    "$VTUNE" -report summary -r "$folder/vtune" -report-output "$folder/summary.txt" > "$folder/report.log" 2>&1
+    for grouping in function thread process,function; do
+        if "$VTUNE" -report hotspots -r "$folder/vtune" -group-by "$grouping" -format csv -csv-delimiter comma -limit 500 -report-output "$folder/hotspots-$grouping.csv" >> "$folder/report.log" 2>&1; then
+            printf 'hotspots-%s=0\n' "$grouping" >> "$folder/report-status.txt"
+        else
+            printf 'hotspots-%s=%s\n' "$grouping" "$?" >> "$folder/report-status.txt"
+        fi
+    done
+    for report in callstacks top-down; do
+        if "$VTUNE" -report "$report" -r "$folder/vtune" -format csv -csv-delimiter comma -limit 500 -report-output "$folder/$report.csv" >> "$folder/report.log" 2>&1; then
+            printf '%s=0\n' "$report" >> "$folder/report-status.txt"
+        else
+            printf '%s=%s\n' "$report" "$?" >> "$folder/report-status.txt"
+        fi
+    done
+}
+
+profile_workload() {
+    local case_dir=$1 workload=$2 build=$3
+    local folder="$case_dir/$workload"
+    local shape=(-p 2048 -n 0)
+    [[ "$workload" != tg ]] || shape=(-p 0 -n 128 -d 2048)
+    mkdir -p "$folder"
+    stage "PROFILE_${case_dir##*/}_$workload"
+    timeout --signal=TERM --kill-after=30s 3600s "$VTUNE" "${args[@]}" -data-limit=2048 -start-paused -r "$folder/vtune" -- python3 "$OUT/target_exec.py" "$folder" "$workload" "$build/build/bin/llama-bench" "${common[@]}" "${shape[@]}" > "$folder/vtune.log" 2>&1 &
+    local collector=$!
+    python3 "$OUT/roi_monitor.py" "$folder" "$VTUNE" 60 "$workload" > "$folder/monitor.log" 2>&1 &
+    local monitor=$!
+    local rc=0 monitor_rc=0
+    wait "$collector" || rc=$?
+    printf '%s\n' "$rc" > "$folder/collector.exit"
+    wait "$monitor" || monitor_rc=$?
+    [[ "$rc" == 0 && "$monitor_rc" == 0 && $(cat "$folder/target.exit") == 0 ]]
+    python3 - "$folder/roi.json" <<'PY'
+import json,sys
+r=json.load(open(sys.argv[1]))
+assert r['status']=='PAUSED_WINDOW_COMPLETE'
+assert r['resume']['returncode']==r['pause']['returncode']==0
+assert r['control_interval_seconds']>=60
+PY
+    cp "$folder/$workload.json" "$case_dir/$workload.json"
+    cp "$folder/$workload.command.json" "$case_dir/$workload.command.json"
+    stage "REPORT_${case_dir##*/}_$workload"
+    export_reports "$folder"
+}
+
+ordinal=0
+for name in "${names[@]}"; do
+    ordinal=$((ordinal+1))
+    dir=$(printf "%02d_%s" "$ordinal" "$name")
+    case_dir="$OUT/$dir"
+    mkdir -p "$case_dir"
+    build="$CAND"
+    [[ "$name" != A* ]] || build="$BASE"
+    stage "FIXED_PPL_$name"
+    python3 "$ROOT/verify_frozen.py" > "$case_dir/frozen-check.json"
+    COMPILER_BUILD_ROOT="$build" EXPERIMENT_OUTPUT_DIR="$case_dir" RUN_BENCH=0 bash "$OUT/ppl_gate.lsf" > "$case_dir/ppl.log" 2>&1
+    profile_workload "$case_dir" pp "$build"
+    profile_workload "$case_dir" tg "$build"
+    python3 "$ROOT/verify_frozen.py" > "$case_dir/frozen-after.json"
+done
+stage COMPLETE

@@ -1,0 +1,423 @@
+{
+  "updated_at_hkt": "2026-10-20T16:59:54.670086+08:00",
+  "source": "Actual VTune probe stderr and summary, LSF state, pipeline stage",
+  "jobs": {
+    "4340364": {
+      "summary": "PROBE参数兼容失败：VTune threading软件模式拒绝sampling-interval，报告incorrect apply_state knob，exit1。未执行固定PPL或模型PP/TG，无性能结果。保留失败，已修复为软件模式默认采样/栈设置后重提4340376。",
+      "probe_evidence": {
+        "job.status": "FAILED phase=PROBE exit=1 time=2026-10-20T16:12:29+08:00\n",
+        "probe.log": "vtune: Error: The knob sampling-interval cannot be applied due to an incorrect apply_state knob.\n"
+      }
+    },
+    "4340365": {
+      "summary": "同节点首次PP→TG→后续PP全部完成，独立固定PPL2.7767 PASS；PP 27.204350→52.987179，TG3.004968，三进程各10样本。两个PP控制窗口均约61秒，resume/pause返回码0，所有报告导出成功，未发现数据上限截断日志。硬件target PID CPU热点：自旋占报告CPU时间约32.42%→33.31%，比例接近；硬件模式没有等待时间指标，禁止把缺失当0。已按target.pid及process/function过滤包装Python。完整elapsed包含暂停时段，不能把整个elapsed当采样窗口；等待事件可能跨窗口边界，等待数/线程秒不是墙钟因果分解。报告有跳帧/未知符号限制；软件与硬件作业不同节点且采样方式有开销，不直接比较模式间吞吐。保留原始报告、全部十次样本，不计算性能Score。下一轮以200/infinite等待时长单变量做无采样平衡顺序干预，运行时设置先核验。",
+      "ppl": 2.7767,
+      "values": {
+        "01_first_pp": {
+          "pp": 27.20435,
+          "cv_percent": 5.413501884808862
+        },
+        "03_later_pp": {
+          "pp": 52.987179,
+          "cv_percent": 4.0203027226642885
+        }
+      },
+      "tg": 3.004968,
+      "rois": {
+        "01_first_pp": {
+          "requested_window_seconds": 60.0,
+          "marker": "prompt run 1/10",
+          "status": "PAUSED_WINDOW_COMPLETE",
+          "marker_seen_unix": 1792484412.4789212,
+          "resume": {
+            "requested_unix": 1792484412.5019047,
+            "completed_unix": 1792484413.3333807,
+            "returncode": 0
+          },
+          "pause": {
+            "requested_unix": 1792484473.4719129,
+            "completed_unix": 1792484474.3564074,
+            "returncode": 0
+          },
+          "control_interval_seconds": 61.02302670478821,
+          "target_end_seen_unix": 1792485169.4246094
+        },
+        "03_later_pp": {
+          "requested_window_seconds": 60.0,
+          "marker": "prompt run 1/10",
+          "status": "PAUSED_WINDOW_COMPLETE",
+          "marker_seen_unix": 1792485822.1287003,
+          "resume": {
+            "requested_unix": 1792485822.1724086,
+            "completed_unix": 1792485823.000235,
+            "returncode": 0
+          },
+          "pause": {
+            "requested_unix": 1792485883.0173202,
+            "completed_unix": 1792485883.9006958,
+            "returncode": 0
+          },
+          "control_interval_seconds": 60.900460720062256,
+          "target_end_seen_unix": 1792486211.926765
+        }
+      },
+      "target_process_hotspot_summary": {
+        "01_first_pp": {
+          "target_pid": 2288851,
+          "reported_rows": 120,
+          "reported_cpu_sum": 1098.1341820000007,
+          "reported_spin_sum": 355.964435,
+          "spin_percent": 32.41538610078525,
+          "reported_wait_sum": null,
+          "top_cpu": [
+            {
+              "Function": "__kmpc_barrier",
+              "CPU Time": "336.649158",
+              "CPU Time:Spin Time": "336.368500",
+              "Wait Time": null,
+              "Wait Count": null,
+              "Module": "libiomp5.so"
+            },
+            {
+              "Function": "(anonymous namespace)::tinyBLAS_Q0_AVX<block_q8_0, block_q8_0, float>::gemm4xN<(int)4>",
+              "CPU Time": "326.996531",
+              "CPU Time:Spin Time": "0.0",
+              "Wait Time": null,
+              "Wait Count": null,
+              "Module": "libggml-cpu.so.0.26.0"
+            },
+            {
+              "Function": "ggml_vec_dot_q5_1_q8_1",
+              "CPU Time": "122.998327",
+              "CPU Time:Spin Time": "0.0",
+              "Wait Time": null,
+              "Wait Count": null,
+              "Module": "libggml-cpu.so.0.26.0"
+            },
+            {
+              "Function": "ggml_gemv_q4_K_8x8_q8_K",
+              "CPU Time": "106.660028",
+              "CPU Time:Spin Time": "0.0",
+              "Wait Time": null,
+              "Wait Count": null,
+              "Module": "libggml-cpu.so.0.26.0"
+            },
+            {
+              "Function": "ggml_compute_forward_dsv4_hc_post",
+              "CPU Time": "45.286158",
+              "CPU Time:Spin Time": "0.0",
+              "Wait Time": null,
+              "Wait Count": null,
+              "Module": "libggml-cpu.so.0.26.0"
+            },
+            {
+              "Function": "__kmp_fork_barrier",
+              "CPU Time": "19.585912",
+              "CPU Time:Spin Time": "19.585912",
+              "Wait Time": null,
+              "Wait Count": null,
+              "Module": "libiomp5.so"
+            },
+            {
+              "Function": "ggml_compute_forward_gated_delta_net",
+              "CPU Time": "16.328276",
+              "CPU Time:Spin Time": "0.0",
+              "Wait Time": null,
+              "Wait Count": null,
+              "Module": "libggml-cpu.so.0.26.0"
+            }
+          ],
+          "summary_metrics_lines": [
+            "Elapsed Time: 901.345s",
+            "    CPU Time: 1098.134s",
+            "        Effective Time: 741.869s",
+            "        Spin Time: 355.964s",
+            "    Total Thread Count: 40",
+            "Effective CPU Utilization: 30.4%",
+            "    Average Effective CPU Utilization: 12.161 out of 40"
+          ]
+        },
+        "03_later_pp": {
+          "target_pid": 2292921,
+          "reported_rows": 120,
+          "reported_cpu_sum": 2180.6918639999926,
+          "reported_spin_sum": 726.34266,
+          "spin_percent": 33.30789975378211,
+          "reported_wait_sum": null,
+          "top_cpu": [
+            {
+              "Function": "__kmpc_barrier",
+              "CPU Time": "722.774295",
+              "CPU Time:Spin Time": "722.363332",
+              "Wait Time": null,
+              "Wait Count": null,
+              "Module": "libiomp5.so"
+            },
+            {
+              "Function": "(anonymous namespace)::tinyBLAS_Q0_AVX<block_q8_0, block_q8_0, float>::gemm4xN<(int)4>",
+              "CPU Time": "635.178958",
+              "CPU Time:Spin Time": "0.0",
+              "Wait Time": null,
+              "Wait Count": null,
+              "Module": "libggml-cpu.so.0.26.0"
+            },
+            {
+              "Function": "ggml_vec_dot_q5_1_q8_1",
+              "CPU Time": "242.969558",
+              "CPU Time:Spin Time": "0.0",
+              "Wait Time": null,
+              "Wait Count": null,
+              "Module": "libggml-cpu.so.0.26.0"
+            },
+            {
+              "Function": "ggml_gemv_q4_K_8x8_q8_K",
+              "CPU Time": "209.430939",
+              "CPU Time:Spin Time": "0.0",
+              "Wait Time": null,
+              "Wait Count": null,
+              "Module": "libggml-cpu.so.0.26.0"
+            },
+            {
+              "Function": "ggml_compute_forward_dsv4_hc_post",
+              "CPU Time": "91.494477",
+              "CPU Time:Spin Time": "0.0",
+              "Wait Time": null,
+              "Wait Count": null,
+              "Module": "libggml-cpu.so.0.26.0"
+            },
+            {
+              "Function": "ggml_compute_forward_gated_delta_net",
+              "CPU Time": "32.315753",
+              "CPU Time:Spin Time": "0.0",
+              "Wait Time": null,
+              "Wait Count": null,
+              "Module": "libggml-cpu.so.0.26.0"
+            },
+            {
+              "Function": "ggml_vec_dot_f32",
+              "CPU Time": "23.785758",
+              "CPU Time:Spin Time": "0.0",
+              "Wait Time": null,
+              "Wait Count": null,
+              "Module": "libggml-cpu.so.0.26.0"
+            }
+          ],
+          "summary_metrics_lines": [
+            "Elapsed Time: 480.254s",
+            "    CPU Time: 2180.752s",
+            "        Effective Time: 1453.918s",
+            "        Spin Time: 726.343s",
+            "    Total Thread Count: 40",
+            "Effective CPU Utilization: 59.7%",
+            "    Average Effective CPU Utilization: 23.874 out of 40"
+          ]
+        }
+      },
+      "evidence_files": [
+        "D:\\compete\\.codex-deploy\\optimization\\vtune_wait_pair\\completed_report_bundle.json",
+        "D:\\compete\\.codex-deploy\\optimization\\vtune_wait_pair\\completed_report_summary.json"
+      ]
+    },
+    "4340376": {
+      "summary": "同节点首次PP→TG→后续PP全部完成，独立固定PPL2.7767 PASS；PP 26.462413→54.154719，TG3.046464，三进程各10样本。两个PP控制窗口均约61秒，resume/pause返回码0，所有报告导出成功，未发现数据上限截断日志。软件模式target PID的__kmp_fork_barrier记录约370.780539线程秒、74次等待；后续PP未记录该等待项。barrier自旋占报告CPU时间约31.88%→30.17%，比例接近。fork-barrier休眠/唤醒是可检验线索，尚不能认定唯一原因。已按target.pid及process/function过滤包装Python。完整elapsed包含暂停时段，不能把整个elapsed当采样窗口；等待事件可能跨窗口边界，等待数/线程秒不是墙钟因果分解。报告有跳帧/未知符号限制；软件与硬件作业不同节点且采样方式有开销，不直接比较模式间吞吐。保留原始报告、全部十次样本，不计算性能Score。下一轮以200/infinite等待时长单变量做无采样平衡顺序干预，运行时设置先核验。",
+      "ppl": 2.7767,
+      "values": {
+        "01_first_pp": {
+          "pp": 26.462413,
+          "cv_percent": 7.472852154487953
+        },
+        "03_later_pp": {
+          "pp": 54.154719,
+          "cv_percent": 0.2572499729894268
+        }
+      },
+      "tg": 3.046464,
+      "rois": {
+        "01_first_pp": {
+          "requested_window_seconds": 60.0,
+          "marker": "prompt run 1/10",
+          "status": "PAUSED_WINDOW_COMPLETE",
+          "marker_seen_unix": 1792484583.2433949,
+          "resume": {
+            "requested_unix": 1792484583.414252,
+            "completed_unix": 1792484584.1937995,
+            "returncode": 0
+          },
+          "pause": {
+            "requested_unix": 1792484644.2489023,
+            "completed_unix": 1792484644.9320679,
+            "returncode": 0
+          },
+          "control_interval_seconds": 60.73826837539673,
+          "target_end_seen_unix": 1792485363.461157
+        },
+        "03_later_pp": {
+          "requested_window_seconds": 60.0,
+          "marker": "prompt run 1/10",
+          "status": "PAUSED_WINDOW_COMPLETE",
+          "marker_seen_unix": 1792485967.7733965,
+          "resume": {
+            "requested_unix": 1792485967.8322916,
+            "completed_unix": 1792485968.4499052,
+            "returncode": 0
+          },
+          "pause": {
+            "requested_unix": 1792486028.5564506,
+            "completed_unix": 1792486029.1337755,
+            "returncode": 0
+          },
+          "control_interval_seconds": 60.68387031555176,
+          "target_end_seen_unix": 1792486348.3930376
+        }
+      },
+      "target_process_hotspot_summary": {
+        "01_first_pp": {
+          "target_pid": 2123099,
+          "reported_rows": 104,
+          "reported_cpu_sum": 966.8307629999995,
+          "reported_spin_sum": 308.233585,
+          "spin_percent": 31.88082100776102,
+          "reported_wait_sum": 370.806151,
+          "top_cpu": [
+            {
+              "Function": "__kmpc_barrier",
+              "CPU Time": "294.584219",
+              "CPU Time:Spin Time": "294.314113",
+              "Wait Time": "0.025612",
+              "Wait Count": "1",
+              "Module": "libiomp5.so"
+            },
+            {
+              "Function": "(anonymous namespace)::tinyBLAS_Q0_AVX<block_q8_0, block_q8_0, float>::gemm4xN<(int)4>",
+              "CPU Time": "286.985902",
+              "CPU Time:Spin Time": "0.0",
+              "Wait Time": "",
+              "Wait Count": "",
+              "Module": "libggml-cpu.so.0"
+            },
+            {
+              "Function": "ggml_vec_dot_q5_1_q8_1",
+              "CPU Time": "116.081865",
+              "CPU Time:Spin Time": "0.0",
+              "Wait Time": "",
+              "Wait Count": "",
+              "Module": "libggml-cpu.so.0"
+            },
+            {
+              "Function": "ggml_gemv_q4_K_8x8_q8_K",
+              "CPU Time": "92.984335",
+              "CPU Time:Spin Time": "0.0",
+              "Wait Time": "",
+              "Wait Count": "",
+              "Module": "libggml-cpu.so.0"
+            },
+            {
+              "Function": "ggml_compute_forward_dsv4_hc_post",
+              "CPU Time": "41.096662",
+              "CPU Time:Spin Time": "0.0",
+              "Wait Time": "",
+              "Wait Count": "",
+              "Module": "libggml-cpu.so.0"
+            },
+            {
+              "Function": "ggml_compute_forward_gated_delta_net",
+              "CPU Time": "14.950685",
+              "CPU Time:Spin Time": "0.0",
+              "Wait Time": "",
+              "Wait Count": "",
+              "Module": "libggml-cpu.so.0"
+            },
+            {
+              "Function": "__kmp_fork_barrier",
+              "CPU Time": "13.919472",
+              "CPU Time:Spin Time": "13.919472",
+              "Wait Time": "370.780539",
+              "Wait Count": "74",
+              "Module": "libiomp5.so"
+            }
+          ],
+          "summary_metrics_lines": [
+            "Elapsed Time: 938.578s",
+            "Effective CPU Utilization: 27.1% (10.839 out of 40 logical CPUs)",
+            "    Total Thread Count: 40"
+          ]
+        },
+        "03_later_pp": {
+          "target_pid": 2127170,
+          "reported_rows": 120,
+          "reported_cpu_sum": 2293.2586900000033,
+          "reported_spin_sum": 691.8229519999999,
+          "spin_percent": 30.167680384980855,
+          "reported_wait_sum": 0.0,
+          "top_cpu": [
+            {
+              "Function": "(anonymous namespace)::tinyBLAS_Q0_AVX<block_q8_0, block_q8_0, float>::gemm4xN<(int)4>",
+              "CPU Time": "700.525025",
+              "CPU Time:Spin Time": "0.0",
+              "Wait Time": "",
+              "Wait Count": "",
+              "Module": "libggml-cpu.so.0"
+            },
+            {
+              "Function": "__kmpc_barrier",
+              "CPU Time": "688.313650",
+              "CPU Time:Spin Time": "687.683647",
+              "Wait Time": "",
+              "Wait Count": "",
+              "Module": "libiomp5.so"
+            },
+            {
+              "Function": "ggml_vec_dot_q5_1_q8_1",
+              "CPU Time": "269.042274",
+              "CPU Time:Spin Time": "0.0",
+              "Wait Time": "",
+              "Wait Count": "",
+              "Module": "libggml-cpu.so.0"
+            },
+            {
+              "Function": "ggml_gemv_q4_K_8x8_q8_K",
+              "CPU Time": "229.058799",
+              "CPU Time:Spin Time": "0.0",
+              "Wait Time": "",
+              "Wait Count": "",
+              "Module": "libggml-cpu.so.0"
+            },
+            {
+              "Function": "ggml_compute_forward_dsv4_hc_post",
+              "CPU Time": "97.662820",
+              "CPU Time:Spin Time": "0.0",
+              "Wait Time": "",
+              "Wait Count": "",
+              "Module": "libggml-cpu.so.0"
+            },
+            {
+              "Function": "ggml_compute_forward_gated_delta_net",
+              "CPU Time": "35.974534",
+              "CPU Time:Spin Time": "0.0",
+              "Wait Time": "",
+              "Wait Count": "",
+              "Module": "libggml-cpu.so.0"
+            },
+            {
+              "Function": "ggml_vec_dot_f32",
+              "CPU Time": "26.702185",
+              "CPU Time:Spin Time": "0.0",
+              "Wait Time": "",
+              "Wait Count": "",
+              "Module": "libggml-cpu.so.0"
+            }
+          ],
+          "summary_metrics_lines": [
+            "Elapsed Time: 466.056s",
+            "Effective CPU Utilization: 66.0% (26.382 out of 40 logical CPUs)",
+            "    Total Thread Count: 40"
+          ]
+        }
+      },
+      "evidence_files": [
+        "D:\\compete\\.codex-deploy\\optimization\\vtune_wait_pair\\completed_report_bundle.json",
+        "D:\\compete\\.codex-deploy\\optimization\\vtune_wait_pair\\completed_report_summary.json"
+      ]
+    }
+  }
+}

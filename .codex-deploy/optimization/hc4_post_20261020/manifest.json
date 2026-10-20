@@ -1,0 +1,9 @@
+{
+  "variants": {
+    "hc4-post": {
+      "file": "ggml/src/ggml-cpu/ops.cpp",
+      "sha256": "c910ad8b734e9cfb94766bcd4688d76e800cbca07e412458ffd335f407d0e383",
+      "original_sha256": "215d16e7ebbb4066920e2d7a5f7ea6c46636d298aedd553e00f0b3ebb0d59305"
+    }
+  }
+}

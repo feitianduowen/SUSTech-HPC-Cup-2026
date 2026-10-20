@@ -1,0 +1,156 @@
+{
+  "updated_at_hkt": "2026-10-20T19:28:05.564301+08:00",
+  "phase": "v1 failed cross-build bit identity; corrected source resubmitted as v2",
+  "jobs": [
+    {
+      "job_id": "4340907",
+      "submission": {
+        "script": "/work/apac2602/qwen38-cpu/optimization/20261020-hc4-post/build_and_pair.lsf",
+        "kind": "同节点完整对照",
+        "purpose": "HC-post四路连续通道专用展开：固定hc=4并提升post/comb加载，保留每输出乘加顺序和线程分块；其余形状走原版。仅修改ops.cpp，不叠加HC-pre、NUMA或量化候选。",
+        "environment": {
+          "SOURCE_VARIANT": "hc4-post",
+          "PAIR_ORDER": "ABBA"
+        },
+        "lsf_args": [
+          "-J",
+          "qwen38_hc4_abba"
+        ],
+        "config": "Intel Classic2021.9 icc/icpc O3 precise/no-ftz CORE-AVX512 qsimd-honor-fp-model；OpenMP ON，BLAS OFF；hg_6148 Gold6148双路40核40slots，推理38线程close/cores。独立源码副本全SHA校验，四工具构建、量化测试、ldd；实际GGML图1/3/38线程、hc1/2/4/8、连续/填充/转置、comb缺省/单位/稠密、短行尾段和真实2560通道，3重复及跨库逐bit一致门槛；10轮AB/BA算子微基准。整模顺序ABBA，A=原版，B=候选；每case固定PPL t/tb38 c512 chunks2 b512 ub256 f16KV ngl0 NUMA distribute no-warmup 590s ±5%；每case PP2048、TG128d2048各r10 b2048 ub512。",
+        "baseline": "本作业同节点Intel原版A1/A2；B1对应A1，B2对应A2；算子对照原版实际库",
+        "case_prefix": "confirm-hc4-post-abba",
+        "comparison_scope": "same-node",
+        "measurement_baselines": {
+          "confirm-hc4-post-abba-A1_{job_id}": null,
+          "confirm-hc4-post-abba-B1_{job_id}": "confirm-hc4-post-abba-A1_{job_id}",
+          "confirm-hc4-post-abba-B2_{job_id}": "confirm-hc4-post-abba-A2_{job_id}",
+          "confirm-hc4-post-abba-A2_{job_id}": null
+        },
+        "ppl_scope": "每case独立固定PPL，无共享PPL",
+        "note": "实际库逐bit差分不过即停止，保留失败及所有慢样本。两个节点分别ABBA/BAAB以检查顺序影响，跨节点不直接相除；算子收益不是整模成绩，完整结果前不替换部署。",
+        "submitted_at_client": "2026-10-20T19:18:30.360877+08:00",
+        "submission_output": "Job <4340907> is submitted to queue <ssc-cpu>.\n",
+        "return_code": 0,
+        "job_id": "4340907"
+      },
+      "logs": [
+        "/work/apac2602/qwen38-cpu/logs/4340907.hc4_post.out"
+      ],
+      "measurements": [],
+      "evidence": [
+        {
+          "path": "/work/apac2602/qwen38-cpu/optimization/20261020-hc4-post/results/4340907/job.status",
+          "text": "FAILED phase=HC4_POST_MICROBENCH exit=1 time=2026-10-20T19:22:15+08:00\n"
+        },
+        {
+          "path": "/work/apac2602/qwen38-cpu/optimization/20261020-hc4-post/results/4340907/environment.txt",
+          "text": "2026-10-20T19:18:34+08:00\nr13n45\nArchitecture:        x86_64\nCPU op-mode(s):      32-bit, 64-bit\nByte Order:          Little Endian\nCPU(s):              40\nOn-line CPU(s) list: 0-39\nThread(s) per core:  1\nCore(s) per socket:  20\nSocket(s):           2\nNUMA node(s):        2\nVendor ID:           GenuineIntel\nCPU family:          6\nModel:               85\nModel name:          Intel(R) Xeon(R) Gold 6148 CPU @ 2.40GHz\nStepping:            4\nCPU MHz:             2400.000\nCPU max MHz:         3700.0000\nCPU min MHz:         1000.0000\nBogoMIPS:            4800.00\nVirtualization:      VT-x\nL1d cache:           32K\nL1i cache:           32K\nL2 cache:            1024K\nL3 cache:            28160K\nNUMA node0 CPU(s):   0-19\nNUMA node1 CPU(s):   20-39\nFlags:               fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid dca sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb cat_l3 cdp_l3 invpcid_single pti intel_ppin ssbd mba ibrs ibpb stibp tpr_shadow vnmi flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm cqm mpx rdt_a avx512f avx512dq rdseed adx smap clflushopt clwb intel_pt avx512cd avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local dtherm ida arat pln pts hwp hwp_act_window hwp_epp hwp_pkg_req pku ospke md_clear flush_l1d arch_capabilities\nCurrently Loaded Modulefiles:\n 1) cmake/3.28.1   2) gcc/11.2.0   3) compiler-rt/latest   4) icc/2023.1.0  \nicc: remark #10441: The Intel(R) C++ Compiler Classic (ICC) is deprecated and will be removed from product release in the second half of 2023. The Intel(R) oneAPI DPC++/C++ Compiler (ICX) is the recommended compiler moving forward. Please transition to use this compiler. Use '-diag-disable=10441' to disable this message.\nicc (ICC) 2021.9.0 20230302\nCopyright (C) 1985-2023 Intel Corporation.  All rights reserved.\n\nicpc: remark #10441: The Intel(R) C++ Compiler Classic (ICC) is deprecated and will be removed from product release in the second half of 2023. The Intel(R) oneAPI DPC++/C++ Compiler (ICX) is the recommended compiler moving forward. Please transition to use this compiler. Use '-diag-disable=10441' to disable this message.\nicpc (ICC) 2021.9.0 20230302\nCopyright (C) 1985-2023 Intel Corporation.  All rights reserved.\n\n"
+        },
+        {
+          "path": "/work/apac2602/qwen38-cpu/optimization/20261020-hc4-post/results/4340907/source-verification.json",
+          "text": "{\"base_commit\": \"d81235049384534c167caea52b85a694f6103d14\", \"verified_files\": 3687, \"new_source\": \"/work/apac2602/qwen38-cpu/optimization/20261020-hc4-post/sources/hc4-post-4340907\", \"changed_files\": [\"ggml/src/ggml-cpu/ops.cpp\"], \"independent_regular_files\": true, \"original_unchanged\": true, \"all_match\": true}\n"
+        },
+        {
+          "path": "/work/apac2602/qwen38-cpu/optimization/20261020-hc4-post/results/4340907/library-correctness.json",
+          "text": "{\n  \"status\": \"FAIL\",\n  \"cases\": 972,\n  \"values\": 42341535,\n  \"bit_mismatches\": 860892,\n  \"repetitions\": 3\n}"
+        },
+        {
+          "path": "/work/apac2602/qwen38-cpu/optimization/20261020-hc4-post/results/4340907/sha256.txt",
+          "text": "3b5184846602e710bd97582cb708dbaf7b8b4e558416c714a5bae3d042769216  /work/apac2602/qwen38-cpu/optimization/20261020-hc4-post/sources/hc4-post-4340907/build/bin/llama-bench\n5ea58264cd1fc8c60d9657633d8eee7d73e7b9dc80496ce4919537af7441b6f5  /work/apac2602/qwen38-cpu/optimization/20261020-hc4-post/sources/hc4-post-4340907/build/bin/llama-perplexity\nb165426d2c992812b2b29162555353fad6495343b478025af700d428759b9f97  /work/apac2602/qwen38-cpu/optimization/20261020-hc4-post/sources/hc4-post-4340907/build/bin/libggml-cpu.so\n"
+        }
+      ],
+      "submit_time": "2026-10-20T19:18:30+08:00",
+      "state": "EXIT",
+      "stdout_sha256": "3d8d74926db94f244d7ce26648a4ab6511ef05263fc73c06257e5d9737a4d1bd",
+      "start_time": "2026-10-20T19:18:31+08:00",
+      "finish_time": "2026-10-20T19:22:16+08:00",
+      "exec_host": "40*r13n45",
+      "job_name": "qwen38_hc4_abba",
+      "compiler_observations": [],
+      "lsf_summary": "Subject: Job 4340907: <qwen38_hc4_abba> in cluster <qmhpc> Exited\n\nJob <qwen38_hc4_abba> was submitted from host <b04u17l> by user <apac2602> in cluster <qmhpc> at Tue Oct 20 19:18:30 2026\nJob was executed on host(s) <40*r13n45>, in queue <ssc-cpu>, as user <apac2602> in cluster <qmhpc> at Tue Oct 20 19:18:31 2026\n</work/apac2602> was used as the home directory.\n</work/apac2602/qwen38-cpu/optimization/20261020-hc4-post> was used as the working directory.\nStarted at Tue Oct 20 19:18:31 2026\nTerminated at Tue Oct 20 19:22:16 2026\nResults reported at Tue Oct 20 19:22:16 2026\n\nYour job looked like:\n\n------------------------------------------------------------\n# LSBATCH: User input\n#!/bin/bash\n#BSUB -J qwen38_hc4_post\n#BSUB -q ssc-cpu\n#BSUB -m hg_6148\n#BSUB -n 40\n#BSUB -R \"span[ptile=40]\"\n#BSUB -W 06:00\n#BSUB -o /work/apac2602/qwen38-cpu/logs/%J.hc4_post.out\n#BSUB -e /work/apac2602/qwen38-cpu/logs/%J.hc4_post.err\nset -Eeuo pipefail\nsource /work/apac2602/qwen38-cpu/scripts/env.sh\nROOT=/work/apac2602/qwen38-cpu/optimization/20261020-hc4-post\nVARIANT=${SOURCE_VARIANT:?set SOURCE_VARIANT}\n[[ \"$VARIANT\" == hc4-post ]]\nOUT=\"$ROOT/results/$LSB_JOBID\"\nSRC=\"$ROOT/sources/$VARIANT-$LSB_JOBID\"\nBUILD=\"$SRC/build\"\nmkdir -p \"$OUT\"\nphase=INIT\ntrap 'rc=$?; echo \"FAILED phase=$phase exit=$rc time=$(date -Is)\" > \"$OUT/job.status\"; exit \"$rc\"' ERR\nstage() { phase=$1; echo \"$phase time=$(date -Is)\" > \"$OUT/job.status\"; }\n[[ \"$LSB_DJOB_NUMPROC\" == 40 ]]\n[[ $(getconf _NPROCESSORS_ONLN) == 40 ]]\nlscpu | grep -q 'Intel(R) Xeon(R) Gold 6148'\nunset KMP_AFFINITY GOMP_CPU_AFFINITY KMP_BLOCKTIME OMP_WAIT_POLICY KMP_HW_SUBSET KMP_FORKJOIN_BARRIER KMP_FORKJOIN_BARRIER_PATTERN KMP_PLAIN_BARRIER KMP_PLAIN_BARRIER_PATTERN KMP_REDUCTION_BARRIER KMP_REDUCTION_BARRIER_PATTERN KMP_HOT_TEAMS_MAX_LEVEL KMP_HOT_TEAMS_MODE PROF_DIR INTEL_PROF_DUMP_INTERVAL INTEL_PROF_DUMP_CUMULATIVE\nexport OMP_NUM_THREADS=38 OMP_DYNAMIC=FALSE OMP_PROC_BIND=close OMP_PLACES=cores\nexport OPENBLAS_NUM_THREADS=38 MKL_NUM_THREADS=38 BLIS_NUM_THREADS=38\n{ date -Is; hostname; lscpu; module list; icc --version; icpc --version; } > \"$OUT/environment.txt\" 2>&1\ncp \"$ROOT/build_and_pair.lsf\" \"$OUT/pipeline.lsf\"\ncp \"$ROOT/ppl_gate.lsf\" \"$OUT/ppl_gate.lsf\"\ncp \"$ROOT/$VARIANT.patch\" \"$OUT/source.patch\"\nstage COPY_VERIFY_SOURCE\npython3 \"$ROOT/copy_verify.py\" > \"$OUT/source-verification.json\"\nflags='-fp-model precise -no-ftz -xCORE-AVX512 -qsimd-honor-fp-model -diag-disable=10441 -qopt-report=3 -qopt-report-phase=vec'\nomp=ON\nblas=OFF\nextra=()\nstage BUILD_AND_QUANT_TEST\ncmake -S \"$SRC\" -B \"$BUILD\" \\\n    -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \\\n    -DCMAKE_C_COMPILER=icc -DCMAKE_CXX_COMPILER=icpc \\\n    -DCMAKE_C_FLAGS=\"-gcc-name=/share/base/e5/gcc/11.2.0/bin/gcc $flags\" \\\n    -DCMAKE_CXX_FLAGS=\"-gxx-name=/share/base/e5/gcc/11.2.0/bin/g++ $flags\" \\\n    -DCMAKE_EXE_LINKER_FLAGS='-Wl,--no-as-needed,/lib64/libm.so.6,--as-needed' \\\n    -DCMAKE_SHARED_LINKER_FLAGS='-Wl,--no-as-needed,/lib64/libm.so.6,--as-needed' \\\n    -DGGML_NATIVE=ON -DGGML_OPENMP=\"$omp\" -DGGML_OPENMP_FETCH=OFF \\\n    -DGGML_BLAS=\"$blas\" \"${extra[@]}\" -DGGML_CUDA=OFF -DGGML_HIP=OFF -DGGML_VULKAN=OFF \\\n    -DGGML_SYCL=OFF -DGGML_OPENCL=OFF -DGGML_RPC=OFF -DGGML_METAL=OFF -DGGML_MUSA=OFF \\\n    -DLLAMA_BUILD_TESTS=ON -DLLAMA_BUILD_EXAMPLES=ON -DLLAMA_BUILD_TOOLS=ON \\\n    -DLLAMA_BUILD_SERVER=ON -DLLAMA_BUILD_APP=OFF -DLLAMA_BUILD_UI=OFF \\\n\n(... more ...)\n------------------------------------------------------------\n\nExited with exit code 1.\n\nResource usage summary:\n\n    CPU time :                                   1265.92 sec.\n    Max Memory :                                 12656 MB\n    Average Memory :                             2625.94 MB\n    Total Requested Memory :                     -\n    Delta Memory :                               -\n    Max Swap :                                   -\n    Max Processes :                              89\n    Max Threads :                                90\n    Run time :                                   224 sec.\n    Turnaround time :                            226 sec.\n\nThe output (if any) is above this job summary.\n\n\n\nPS:\n\nRead file </work/apac2602/qwen38-cpu/logs/4340907.hc4_post.err> for stderr output of this job.\n\n"
+    },
+    {
+      "job_id": "4340908",
+      "submission": {
+        "script": "/work/apac2602/qwen38-cpu/optimization/20261020-hc4-post/build_and_pair.lsf",
+        "kind": "同节点完整对照",
+        "purpose": "HC-post四路连续通道专用展开：固定hc=4并提升post/comb加载，保留每输出乘加顺序和线程分块；其余形状走原版。仅修改ops.cpp，不叠加HC-pre、NUMA或量化候选。",
+        "environment": {
+          "SOURCE_VARIANT": "hc4-post",
+          "PAIR_ORDER": "BAAB"
+        },
+        "lsf_args": [
+          "-J",
+          "qwen38_hc4_baab"
+        ],
+        "config": "Intel Classic2021.9 icc/icpc O3 precise/no-ftz CORE-AVX512 qsimd-honor-fp-model；OpenMP ON，BLAS OFF；hg_6148 Gold6148双路40核40slots，推理38线程close/cores。独立源码副本全SHA校验，四工具构建、量化测试、ldd；实际GGML图1/3/38线程、hc1/2/4/8、连续/填充/转置、comb缺省/单位/稠密、短行尾段和真实2560通道，3重复及跨库逐bit一致门槛；10轮AB/BA算子微基准。整模顺序BAAB，A=原版，B=候选；每case固定PPL t/tb38 c512 chunks2 b512 ub256 f16KV ngl0 NUMA distribute no-warmup 590s ±5%；每case PP2048、TG128d2048各r10 b2048 ub512。",
+        "baseline": "本作业同节点Intel原版A1/A2；B1对应A1，B2对应A2；算子对照原版实际库",
+        "case_prefix": "confirm-hc4-post-baab",
+        "comparison_scope": "same-node",
+        "measurement_baselines": {
+          "confirm-hc4-post-baab-A1_{job_id}": null,
+          "confirm-hc4-post-baab-B1_{job_id}": "confirm-hc4-post-baab-A1_{job_id}",
+          "confirm-hc4-post-baab-B2_{job_id}": "confirm-hc4-post-baab-A2_{job_id}",
+          "confirm-hc4-post-baab-A2_{job_id}": null
+        },
+        "ppl_scope": "每case独立固定PPL，无共享PPL",
+        "note": "实际库逐bit差分不过即停止，保留失败及所有慢样本。两个节点分别ABBA/BAAB以检查顺序影响，跨节点不直接相除；算子收益不是整模成绩，完整结果前不替换部署。",
+        "submitted_at_client": "2026-10-20T19:18:30.670598+08:00",
+        "submission_output": "Job <4340908> is submitted to queue <ssc-cpu>.\n",
+        "return_code": 0,
+        "job_id": "4340908"
+      },
+      "logs": [
+        "/work/apac2602/qwen38-cpu/logs/4340908.hc4_post.out"
+      ],
+      "measurements": [],
+      "evidence": [
+        {
+          "path": "/work/apac2602/qwen38-cpu/optimization/20261020-hc4-post/results/4340908/job.status",
+          "text": "FAILED phase=HC4_POST_MICROBENCH exit=1 time=2026-10-20T19:21:48+08:00\n"
+        },
+        {
+          "path": "/work/apac2602/qwen38-cpu/optimization/20261020-hc4-post/results/4340908/environment.txt",
+          "text": "2026-10-20T19:18:34+08:00\nr13n08\nArchitecture:        x86_64\nCPU op-mode(s):      32-bit, 64-bit\nByte Order:          Little Endian\nCPU(s):              40\nOn-line CPU(s) list: 0-39\nThread(s) per core:  1\nCore(s) per socket:  20\nSocket(s):           2\nNUMA node(s):        2\nVendor ID:           GenuineIntel\nCPU family:          6\nModel:               85\nModel name:          Intel(R) Xeon(R) Gold 6148 CPU @ 2.40GHz\nStepping:            4\nCPU MHz:             2400.000\nCPU max MHz:         3700.0000\nCPU min MHz:         1000.0000\nBogoMIPS:            4800.00\nVirtualization:      VT-x\nL1d cache:           32K\nL1i cache:           32K\nL2 cache:            1024K\nL3 cache:            28160K\nNUMA node0 CPU(s):   0-19\nNUMA node1 CPU(s):   20-39\nFlags:               fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid dca sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb cat_l3 cdp_l3 invpcid_single pti intel_ppin ssbd mba ibrs ibpb stibp tpr_shadow vnmi flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm cqm mpx rdt_a avx512f avx512dq rdseed adx smap clflushopt clwb intel_pt avx512cd avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local dtherm ida arat pln pts hwp hwp_act_window hwp_epp hwp_pkg_req pku ospke md_clear flush_l1d arch_capabilities\nCurrently Loaded Modulefiles:\n 1) cmake/3.28.1   2) gcc/11.2.0   3) compiler-rt/latest   4) icc/2023.1.0  \nicc: remark #10441: The Intel(R) C++ Compiler Classic (ICC) is deprecated and will be removed from product release in the second half of 2023. The Intel(R) oneAPI DPC++/C++ Compiler (ICX) is the recommended compiler moving forward. Please transition to use this compiler. Use '-diag-disable=10441' to disable this message.\nicc (ICC) 2021.9.0 20230302\nCopyright (C) 1985-2023 Intel Corporation.  All rights reserved.\n\nicpc: remark #10441: The Intel(R) C++ Compiler Classic (ICC) is deprecated and will be removed from product release in the second half of 2023. The Intel(R) oneAPI DPC++/C++ Compiler (ICX) is the recommended compiler moving forward. Please transition to use this compiler. Use '-diag-disable=10441' to disable this message.\nicpc (ICC) 2021.9.0 20230302\nCopyright (C) 1985-2023 Intel Corporation.  All rights reserved.\n\n"
+        },
+        {
+          "path": "/work/apac2602/qwen38-cpu/optimization/20261020-hc4-post/results/4340908/source-verification.json",
+          "text": "{\"base_commit\": \"d81235049384534c167caea52b85a694f6103d14\", \"verified_files\": 3687, \"new_source\": \"/work/apac2602/qwen38-cpu/optimization/20261020-hc4-post/sources/hc4-post-4340908\", \"changed_files\": [\"ggml/src/ggml-cpu/ops.cpp\"], \"independent_regular_files\": true, \"original_unchanged\": true, \"all_match\": true}\n"
+        },
+        {
+          "path": "/work/apac2602/qwen38-cpu/optimization/20261020-hc4-post/results/4340908/library-correctness.json",
+          "text": "{\n  \"status\": \"FAIL\",\n  \"cases\": 972,\n  \"values\": 42341535,\n  \"bit_mismatches\": 860892,\n  \"repetitions\": 3\n}"
+        },
+        {
+          "path": "/work/apac2602/qwen38-cpu/optimization/20261020-hc4-post/results/4340908/sha256.txt",
+          "text": "60d81b78d24d197890257d3e19766255586e8c4a74fba27d9af66424ba7bb634  /work/apac2602/qwen38-cpu/optimization/20261020-hc4-post/sources/hc4-post-4340908/build/bin/llama-bench\ne93f00c86a11c5b54da1c0436642700204ae4a71156170827fec00a23a307868  /work/apac2602/qwen38-cpu/optimization/20261020-hc4-post/sources/hc4-post-4340908/build/bin/llama-perplexity\nb174b33ba2d87abd2e8251a9c6320c3db0407bff1f53576baf0bff317b777674  /work/apac2602/qwen38-cpu/optimization/20261020-hc4-post/sources/hc4-post-4340908/build/bin/libggml-cpu.so\n"
+        }
+      ],
+      "submit_time": "2026-10-20T19:18:30+08:00",
+      "state": "EXIT",
+      "stdout_sha256": "4a04414822c34f7efff4ea443a8676770817f9c4e6af8d19a7979a76bf7de34f",
+      "start_time": "2026-10-20T19:18:31+08:00",
+      "finish_time": "2026-10-20T19:21:50+08:00",
+      "exec_host": "40*r13n08",
+      "job_name": "qwen38_hc4_baab",
+      "compiler_observations": [],
+      "lsf_summary": "Subject: Job 4340908: <qwen38_hc4_baab> in cluster <qmhpc> Exited\n\nJob <qwen38_hc4_baab> was submitted from host <b04u17l> by user <apac2602> in cluster <qmhpc> at Tue Oct 20 19:18:30 2026\nJob was executed on host(s) <40*r13n08>, in queue <ssc-cpu>, as user <apac2602> in cluster <qmhpc> at Tue Oct 20 19:18:31 2026\n</work/apac2602> was used as the home directory.\n</work/apac2602/qwen38-cpu/optimization/20261020-hc4-post> was used as the working directory.\nStarted at Tue Oct 20 19:18:31 2026\nTerminated at Tue Oct 20 19:21:50 2026\nResults reported at Tue Oct 20 19:21:50 2026\n\nYour job looked like:\n\n------------------------------------------------------------\n# LSBATCH: User input\n#!/bin/bash\n#BSUB -J qwen38_hc4_post\n#BSUB -q ssc-cpu\n#BSUB -m hg_6148\n#BSUB -n 40\n#BSUB -R \"span[ptile=40]\"\n#BSUB -W 06:00\n#BSUB -o /work/apac2602/qwen38-cpu/logs/%J.hc4_post.out\n#BSUB -e /work/apac2602/qwen38-cpu/logs/%J.hc4_post.err\nset -Eeuo pipefail\nsource /work/apac2602/qwen38-cpu/scripts/env.sh\nROOT=/work/apac2602/qwen38-cpu/optimization/20261020-hc4-post\nVARIANT=${SOURCE_VARIANT:?set SOURCE_VARIANT}\n[[ \"$VARIANT\" == hc4-post ]]\nOUT=\"$ROOT/results/$LSB_JOBID\"\nSRC=\"$ROOT/sources/$VARIANT-$LSB_JOBID\"\nBUILD=\"$SRC/build\"\nmkdir -p \"$OUT\"\nphase=INIT\ntrap 'rc=$?; echo \"FAILED phase=$phase exit=$rc time=$(date -Is)\" > \"$OUT/job.status\"; exit \"$rc\"' ERR\nstage() { phase=$1; echo \"$phase time=$(date -Is)\" > \"$OUT/job.status\"; }\n[[ \"$LSB_DJOB_NUMPROC\" == 40 ]]\n[[ $(getconf _NPROCESSORS_ONLN) == 40 ]]\nlscpu | grep -q 'Intel(R) Xeon(R) Gold 6148'\nunset KMP_AFFINITY GOMP_CPU_AFFINITY KMP_BLOCKTIME OMP_WAIT_POLICY KMP_HW_SUBSET KMP_FORKJOIN_BARRIER KMP_FORKJOIN_BARRIER_PATTERN KMP_PLAIN_BARRIER KMP_PLAIN_BARRIER_PATTERN KMP_REDUCTION_BARRIER KMP_REDUCTION_BARRIER_PATTERN KMP_HOT_TEAMS_MAX_LEVEL KMP_HOT_TEAMS_MODE PROF_DIR INTEL_PROF_DUMP_INTERVAL INTEL_PROF_DUMP_CUMULATIVE\nexport OMP_NUM_THREADS=38 OMP_DYNAMIC=FALSE OMP_PROC_BIND=close OMP_PLACES=cores\nexport OPENBLAS_NUM_THREADS=38 MKL_NUM_THREADS=38 BLIS_NUM_THREADS=38\n{ date -Is; hostname; lscpu; module list; icc --version; icpc --version; } > \"$OUT/environment.txt\" 2>&1\ncp \"$ROOT/build_and_pair.lsf\" \"$OUT/pipeline.lsf\"\ncp \"$ROOT/ppl_gate.lsf\" \"$OUT/ppl_gate.lsf\"\ncp \"$ROOT/$VARIANT.patch\" \"$OUT/source.patch\"\nstage COPY_VERIFY_SOURCE\npython3 \"$ROOT/copy_verify.py\" > \"$OUT/source-verification.json\"\nflags='-fp-model precise -no-ftz -xCORE-AVX512 -qsimd-honor-fp-model -diag-disable=10441 -qopt-report=3 -qopt-report-phase=vec'\nomp=ON\nblas=OFF\nextra=()\nstage BUILD_AND_QUANT_TEST\ncmake -S \"$SRC\" -B \"$BUILD\" \\\n    -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \\\n    -DCMAKE_C_COMPILER=icc -DCMAKE_CXX_COMPILER=icpc \\\n    -DCMAKE_C_FLAGS=\"-gcc-name=/share/base/e5/gcc/11.2.0/bin/gcc $flags\" \\\n    -DCMAKE_CXX_FLAGS=\"-gxx-name=/share/base/e5/gcc/11.2.0/bin/g++ $flags\" \\\n    -DCMAKE_EXE_LINKER_FLAGS='-Wl,--no-as-needed,/lib64/libm.so.6,--as-needed' \\\n    -DCMAKE_SHARED_LINKER_FLAGS='-Wl,--no-as-needed,/lib64/libm.so.6,--as-needed' \\\n    -DGGML_NATIVE=ON -DGGML_OPENMP=\"$omp\" -DGGML_OPENMP_FETCH=OFF \\\n    -DGGML_BLAS=\"$blas\" \"${extra[@]}\" -DGGML_CUDA=OFF -DGGML_HIP=OFF -DGGML_VULKAN=OFF \\\n    -DGGML_SYCL=OFF -DGGML_OPENCL=OFF -DGGML_RPC=OFF -DGGML_METAL=OFF -DGGML_MUSA=OFF \\\n    -DLLAMA_BUILD_TESTS=ON -DLLAMA_BUILD_EXAMPLES=ON -DLLAMA_BUILD_TOOLS=ON \\\n    -DLLAMA_BUILD_SERVER=ON -DLLAMA_BUILD_APP=OFF -DLLAMA_BUILD_UI=OFF \\\n\n(... more ...)\n------------------------------------------------------------\n\nExited with exit code 1.\n\nResource usage summary:\n\n    CPU time :                                   1206.82 sec.\n    Max Memory :                                 11748 MB\n    Average Memory :                             2834.93 MB\n    Total Requested Memory :                     -\n    Delta Memory :                               -\n    Max Swap :                                   -\n    Max Processes :                              87\n    Max Threads :                                89\n    Run time :                                   197 sec.\n    Turnaround time :                            200 sec.\n\nThe output (if any) is above this job summary.\n\n\n\nPS:\n\nRead file </work/apac2602/qwen38-cpu/logs/4340908.hc4_post.err> for stderr output of this job.\n\n"
+    }
+  ],
+  "hypothesis": "For actual hc=4, hoist comb/post coefficients and unroll the four ordered residual products across contiguous embedding channels; original flat per-thread partition and generic fallback remain. This differs from the previous generic HC row-segment rewrite and does not include HC-pre/NUMA changes.",
+  "gates": "ICC build and quantize checks; actual-library 972-case graph differential with 1/3/38 threads and 3 repeats, double oracle and cross-build bit identity; 10 alternating operator trials; then each A/B case independently runs fixed PPL ±5% and full PP10/TG10.",
+  "orders": {
+    "4340907": "ABBA",
+    "4340908": "BAAB"
+  },
+  "interpretation": "Pending full results; operator speedup alone does not prove model gain. Keep all samples and do not replace production. Analyze within-node B1/A1 and B2/A2 plus both order directions.",
+  "next": "Do not retry v1. Follow v2 jobs 4340916/4340917 and preserve both failed jobs. No PPL or performance measurements were run for v1.",
+  "excel": "D:\\compete\\Qwen38_CPU_实验日志.xlsx",
+  "latest_followup": {
+    "path": ".codex-deploy\\optimization\\hc4_post_v2_20261020\\next_actions.json",
+    "jobs": [
+      "4340916",
+      "4340917"
+    ]
+  }
+}

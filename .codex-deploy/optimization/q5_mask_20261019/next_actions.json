@@ -1,7 +1,7 @@
 {
   "job_id": "4339768",
-  "updated_hong_kong": "2026-10-20T13:00:41.849221+08:00",
-  "last_known_status": "RUN",
+  "updated_hong_kong": "2026-10-20T15:58:54.256677+08:00",
+  "last_known_status": "DONE",
   "node": "r13n12",
   "remote_root": "/work/apac2602/qwen38-cpu/optimization/20261019-q5-mask",
   "source": "/work/apac2602/qwen38-cpu/optimization/20261019-q5-mask/sources/q5-mask-4338563",
@@ -52,10 +52,50 @@
     "caveat": "Same-node A/B/A; major baseline drift makes end-to-end gain inconclusive. All raw samples retained. Kernel resident microbench gain does not prove model gain."
   },
   "next": [
-    "Check 4339768 job.status and three case folders: 01_candidate,02_baseline,03_candidate_after.",
-    "Each case must independently pass fixed PPL [2.63112,2.90808] and have all 10 PP2048/TG128d2048 samples. No early or cherry-picked score.",
-    "Compare both candidate passes to middle baseline; retain first/last and cross-run drift. Kernel speedups alone do not establish model speedups.",
-    "Do not overwrite production or prior candidate sources. Record failure, slow samples and all three submission IDs in Excel.",
-    "Update summary interpretation after complete, refresh collector with all three IDs, write and mirror Excel."
-  ]
+    "Preserve independent source, raw samples and full fixed-PPL/performance evidence. No production promotion from these results.",
+    "Softmax: operator gain is reproduced; workload benefit not established amid large variance.",
+    "Q5: kernel gain reproduced; final candidate versus middle baseline has small positive full-model observation, with strong first/last order effect.",
+    "Use a new concrete hypothesis or balanced follow-up design before submitting more work; do not cherry-pick favorable baseline or discard slow samples.",
+    "Excel updated and mirrored after this check."
+  ],
+  "completed_hong_kong": "2026-10-20T14:00:20+08:00",
+  "review": {
+    "status": "COMPLETE",
+    "decision": "kernel_gain_reproduced_model_gain_small_unconfirmed_not_promoted",
+    "cases": {
+      "01_candidate": {
+        "ppl": 2.7767,
+        "ppl_elapsed_seconds": 333,
+        "pp_ts": 34.774621,
+        "pp_cv": 0.11430059870386508,
+        "tg_ts": 3.039594,
+        "tg_cv": 0.0058820355613282554
+      },
+      "02_baseline": {
+        "ppl": 2.7767,
+        "ppl_elapsed_seconds": 66,
+        "pp_ts": 54.030897,
+        "pp_cv": 0.0017433728705262843,
+        "tg_ts": 3.035202,
+        "tg_cv": 0.0034495232936720523
+      },
+      "03_candidate_after": {
+        "ppl": 2.7767,
+        "ppl_elapsed_seconds": 67,
+        "pp_ts": 54.53717,
+        "pp_cv": 0.0023208574995732265,
+        "tg_ts": 3.053929,
+        "tg_cv": 0.006525364538599293
+      }
+    },
+    "candidate_first_vs_baseline": {
+      "pp_ts": -0.35639378705854163,
+      "tg_ts": 0.0014470206595804669
+    },
+    "candidate_last_vs_baseline": {
+      "pp_ts": 0.009370064687247437,
+      "tg_ts": 0.006169935312377861
+    },
+    "caveat": "B/A/B: first candidate PP34.7746 vs second candidate54.5372 shows a large order/cache effect. Last candidate PP+0.937% and TG+0.617% relative to middle baseline are small sequential observations, not established causal gains. Preserve all samples and compare with previous4338567. No production replacement."
+  }
 }

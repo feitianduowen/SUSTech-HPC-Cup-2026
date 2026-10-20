@@ -1,0 +1,32 @@
+{
+  "job_id": "4340524",
+  "updated_hong_kong": "2026-10-20T17:03:19.197004+08:00",
+  "last_known_status": "DONE",
+  "node": "r13n17",
+  "remote_root": "/work/apac2602/qwen38-cpu/optimization/20261020-q5-paircvt",
+  "source": "/work/apac2602/qwen38-cpu/optimization/20261020-q5-paircvt/sources/q5-paircvt-4340524",
+  "change": "Q5_1 x Q8_1: batch four FP16 parameters dx,mx,dy,sy into one F16C conversion; replace FP16 lookup loads; unchanged scale products and accumulation order. Independent original-source copy, only arch/x86/quants.c changes. No Q5 mask overlay.",
+  "next": [
+    "Retain source and raw negative result. Kernel throughput -18.46% to -21.11%; model PPL and PP/TG were not run. Do not resubmit the same conversion candidate.",
+    "Follow independent ordered-unroll candidate4340602; Q5 mask balanced4340350/4340351 remain separate."
+  ],
+  "decision": "do_not_promote",
+  "review": {
+    "status": "COMPLETE_KERNEL_SCREEN_NO_GAIN",
+    "decision": "do_not_promote",
+    "model_ppl": "not_run",
+    "model_pp_tg": "not_run",
+    "dot_cases": 262432,
+    "dot_bit_mismatches": 0,
+    "matrix_cases": 144,
+    "matrix_bit_mismatches": 0,
+    "throughput_changes": {
+      "256": -0.21108489841168543,
+      "1024": -0.19053073529344866,
+      "2560": -0.18460302814712193,
+      "6144": -0.19532028364259646,
+      "16384": -0.19184005202461518
+    },
+    "caveat": "Finite FP16 conversion is correct in actual-library checks, but every resident microbench size is slower and every pair loses. Do not infer full model PPL or performance from kernel tests."
+  }
+}

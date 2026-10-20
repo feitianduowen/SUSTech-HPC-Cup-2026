@@ -1,0 +1,18 @@
+{
+  "all_four_done": true,
+  "independent_ppl_passes": 16,
+  "retained_samples": 320,
+  "sample_counts": {
+    "4340520": 80,
+    "4340521": 80,
+    "4340614": 80,
+    "4340615": 80
+  },
+  "all_cases_preserved": {
+    "4340520": 4,
+    "4340521": 4,
+    "4340614": 4,
+    "4340615": 4
+  },
+  "total_raw_samples": 2730
+}

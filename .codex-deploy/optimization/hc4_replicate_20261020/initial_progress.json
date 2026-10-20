@@ -1,0 +1,29 @@
+{
+  "at_hkt": "2026-10-20T21:26:52.435040+08:00",
+  "jobs": [
+    {
+      "job_id": "4341175",
+      "phase": "VERIFY_AND_PPL_PP10_TG10_A1 time=2026-10-20T21:25:47+08:00",
+      "frozen_gate_status": "PASS",
+      "candidate_source_sha256": "71615b16a90a3a70387fe846a60b19cc47732009f1c34433a19b8c43208a3a3a",
+      "initial_case_checks": [
+        {
+          "name": "A1-binary-sha256.json",
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "job_id": "4341176",
+      "phase": "VERIFY_AND_PPL_PP10_TG10_B1 time=2026-10-20T21:25:47+08:00",
+      "frozen_gate_status": "PASS",
+      "candidate_source_sha256": "71615b16a90a3a70387fe846a60b19cc47732009f1c34433a19b8c43208a3a3a",
+      "initial_case_checks": [
+        {
+          "name": "B1-binary-sha256.json",
+          "status": "PASS"
+        }
+      ]
+    }
+  ]
+}

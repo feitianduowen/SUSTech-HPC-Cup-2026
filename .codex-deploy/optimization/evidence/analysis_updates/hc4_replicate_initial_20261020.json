@@ -1,0 +1,36 @@
+{
+  "updated_at_hkt": "2026-10-20T21:27:50.634872+08:00",
+  "source": "/work/apac2602/qwen38-cpu/optimization/20261020-hc4-replicate/initial_progress.json",
+  "jobs": {
+    "4341175": {
+      "summary": "启动核验（2026-10-20T21:26:52.435040+08:00）：冻结两构建共48项eval二进制/库SHA、候选源码SHA及ldd依赖均PASS，首轮前重复核验PASS；当时阶段为VERIFY_AND_PPL_PP10_TG10_A1 time=2026-10-20T21:25:47+08:00。节点Gold6148、40物理核/40slots检查通过；沿用先前Intel构建及972组算子差分证据，各轮PPL和完整PP/TG仍独立重新执行，尚未形成新复测结论。",
+      "initial_evidence": {
+        "job_id": "4341175",
+        "phase": "VERIFY_AND_PPL_PP10_TG10_A1 time=2026-10-20T21:25:47+08:00",
+        "frozen_gate_status": "PASS",
+        "candidate_source_sha256": "71615b16a90a3a70387fe846a60b19cc47732009f1c34433a19b8c43208a3a3a",
+        "initial_case_checks": [
+          {
+            "name": "A1-binary-sha256.json",
+            "status": "PASS"
+          }
+        ]
+      }
+    },
+    "4341176": {
+      "summary": "启动核验（2026-10-20T21:26:52.435040+08:00）：冻结两构建共48项eval二进制/库SHA、候选源码SHA及ldd依赖均PASS，首轮前重复核验PASS；当时阶段为VERIFY_AND_PPL_PP10_TG10_B1 time=2026-10-20T21:25:47+08:00。节点Gold6148、40物理核/40slots检查通过；沿用先前Intel构建及972组算子差分证据，各轮PPL和完整PP/TG仍独立重新执行，尚未形成新复测结论。",
+      "initial_evidence": {
+        "job_id": "4341176",
+        "phase": "VERIFY_AND_PPL_PP10_TG10_B1 time=2026-10-20T21:25:47+08:00",
+        "frozen_gate_status": "PASS",
+        "candidate_source_sha256": "71615b16a90a3a70387fe846a60b19cc47732009f1c34433a19b8c43208a3a3a",
+        "initial_case_checks": [
+          {
+            "name": "B1-binary-sha256.json",
+            "status": "PASS"
+          }
+        ]
+      }
+    }
+  }
+}

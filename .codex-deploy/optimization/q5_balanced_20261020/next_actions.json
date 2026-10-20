@@ -1,0 +1,79 @@
+{
+  "updated_hong_kong": "2026-10-20T18:09:43.123409+08:00",
+  "phase": "both completed; joint review inconclusive, not promoted",
+  "jobs": [
+    {
+      "job_id": "4340350",
+      "state": "DONE",
+      "node": "r13n19",
+      "order": "ABBA",
+      "latest_stage": "PPL_PP10_TG10_02_candidate1 time=2026-10-20T16:45:55+08:00",
+      "cases_complete": 4,
+      "cases_expected": 4,
+      "review": "model_gain_not_established_no_promotion"
+    },
+    {
+      "job_id": "4340351",
+      "state": "DONE",
+      "node": "r13n20",
+      "order": "BAAB",
+      "latest_stage": "PPL_PP10_TG10_02_baseline1 time=2026-10-20T16:47:16+08:00",
+      "cases_complete": 4,
+      "cases_expected": 4,
+      "review": "model_gain_not_established_no_promotion"
+    }
+  ],
+  "remote_root": "/work/apac2602/qwen38-cpu/optimization/20261020-q5-balanced",
+  "source": "/work/apac2602/qwen38-cpu/optimization/20261019-q5-mask/sources/q5-mask-4338563",
+  "design": "Each node separately retains original fixed-PPL/TG10 preparation (no PP, excluded from gains), then four independent fixed-PPL/PP10/TG10 comparison cases; A original, B Q5 mask candidate. ABBA and BAAB complement time positions. No source or system-setting changes.",
+  "next": [
+    "Retain both complete ABBA/BAAB results and all80PP+80TG samples; PP direction inconsistent, do not promote mask candidate from this model experiment.",
+    "Follow combined candidate4340624 full model test and streaming diagnostic4340728. Do not resubmit the same balanced mask experiment without a new hypothesis."
+  ],
+  "observation": "First candidate pass on BAAB node has TG CV21.5%, min sample1.41278 versus max3.07051. Preparation has not eliminated variation; retain slow samples and do not infer causality before all four passes on both nodes finish.",
+  "joint_review": {
+    "decision": "model_gain_not_established_no_promotion",
+    "jobs": {
+      "4340350": {
+        "order": "ABBA",
+        "pass_means": {
+          "A": {
+            "pp": 39.8742855,
+            "tg": 3.0439285
+          },
+          "B": {
+            "pp": 54.8400015,
+            "tg": 3.0776805
+          }
+        },
+        "candidate_change": {
+          "pp": 0.37532248696970383,
+          "tg": 0.011088302501192304
+        },
+        "max_pp_cv": 0.062223821456541144,
+        "max_tg_cv": 0.010108587035294086
+      },
+      "4340351": {
+        "order": "BAAB",
+        "pass_means": {
+          "A": {
+            "pp": 37.4311795,
+            "tg": 2.503795
+          },
+          "B": {
+            "pp": 31.435516999999997,
+            "tg": 2.5755875
+          }
+        },
+        "candidate_change": {
+          "pp": -0.16017829467543232,
+          "tg": 0.028673473666973592
+        },
+        "max_pp_cv": 0.10515573707207208,
+        "max_tg_cv": 0.2149876263929797
+      }
+    },
+    "evidence": "Both jobs complete with8comparison passes,80PP+80TG samples retained; all comparison and preparation PPL2.7767 PASS.",
+    "caveat": "PP direction reverses across ABBA/BAAB (+37.532% vs -16.018%); preparation did not eliminate slow first runs or time-varying noise. TG means positive in both jobs (+1.109%/+2.867%), but BAAB per-pass TG CV13.1%-21.5% exceeds that observation. Do not pool into a claimed causal gain or choose favorable passes."
+  }
+}

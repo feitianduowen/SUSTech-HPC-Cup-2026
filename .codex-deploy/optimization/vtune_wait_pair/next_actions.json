@@ -1,0 +1,37 @@
+{
+  "updated_at_hkt": "2026-10-20T17:02:06.000943+08:00",
+  "phase": "both paired VTune jobs completed; candidate runtime intervention prepared",
+  "jobs": [
+    {
+      "job_id": "4340364",
+      "state": "EXIT",
+      "host": "40*r13n22",
+      "mode": "threading"
+    },
+    {
+      "job_id": "4340365",
+      "state": "DONE",
+      "host": "40*r13n23",
+      "mode": "hotspots"
+    },
+    {
+      "job_id": "4340376",
+      "state": "DONE",
+      "host": "40*r13n28",
+      "mode": "threading"
+    }
+  ],
+  "next": "检查四轮每轮固定PPL与PP10/TG10，全部样本保留。A=KMP_BLOCKTIME200，B=infinite，两者ACTIVE。ABBA/BAAB各自同节点B1对A1、B2对A2，另看首次A/B与后续轮次走势，警惕节点/顺序/温度/跨段延续混杂。不得只报最快轮次。已验证infinite被实际运行时识别为2147483647。源码/二进制不改，无采样；固定PPL默认等待设置，与测速变量分开。运行时策略正式采用前按赛题申报。",
+  "expected_case_directories": [
+    "01_first_pp",
+    "02_intervening_tg",
+    "03_later_pp"
+  ],
+  "ppl_policy": "fixed requirements, Intel compiler, ±5% inclusive [2.63112,2.90808]",
+  "do_not_duplicate": [
+    "4340350",
+    "4340351"
+  ],
+  "excel": "D:/compete/Qwen38_CPU_实验日志.xlsx",
+  "latest_followup": "D:\\compete\\.codex-deploy\\optimization\\kmp_infinite\\next_actions.json"
+}

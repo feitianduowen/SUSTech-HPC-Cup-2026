@@ -1,0 +1,49 @@
+#!/bin/bash
+#BSUB -J qwen38_q5_stream
+#BSUB -q ssc-cpu
+#BSUB -m hg_6148
+#BSUB -n 40
+#BSUB -R "span[ptile=40]"
+#BSUB -W 01:00
+#BSUB -o /work/apac2602/qwen38-cpu/logs/%J.q5_stream.out
+#BSUB -e /work/apac2602/qwen38-cpu/logs/%J.q5_stream.err
+set -Eeuo pipefail
+source /work/apac2602/qwen38-cpu/scripts/env.sh
+ROOT=/work/apac2602/qwen38-cpu/optimization/20261020-q5-stream
+OUT="$ROOT/results/$LSB_JOBID"
+BASE=/work/apac2602/qwen38-cpu/llama.cpp
+MASK=/work/apac2602/qwen38-cpu/optimization/20261019-q5-mask
+UNROLL=/work/apac2602/qwen38-cpu/optimization/20261020-q5-unroll
+COMBO=/work/apac2602/qwen38-cpu/optimization/20261020-q5-combined
+mkdir -p "$OUT"
+phase=INIT
+trap 'rc=$?; printf "FAILED phase=%s exit=%s time=%s\n" "$phase" "$rc" "$(date -Is)" > "$OUT/job.status"; exit "$rc"' ERR
+stage() { phase=$1; printf '%s time=%s\n' "$phase" "$(date -Is)" > "$OUT/job.status"; }
+[[ "$LSB_DJOB_NUMPROC" == 40 ]]
+[[ $(getconf _NPROCESSORS_ONLN) == 40 ]]
+lscpu | grep -q 'Intel(R) Xeon(R) Gold 6148'
+unset KMP_AFFINITY GOMP_CPU_AFFINITY KMP_BLOCKTIME OMP_WAIT_POLICY KMP_HW_SUBSET PROF_DIR
+export OMP_NUM_THREADS=38 OMP_DYNAMIC=FALSE OMP_PROC_BIND=close OMP_PLACES=cores
+export MKL_NUM_THREADS=38 OPENBLAS_NUM_THREADS=38 BLIS_NUM_THREADS=38
+cp "$ROOT/run.lsf" "$ROOT/run.py" "$ROOT/stream.cpp" "$OUT/"
+{ date -Is; hostname; lscpu; module list; icc --version; icpc --version; cat /proc/sys/kernel/numa_balancing; env | sort | grep -E '^(OMP_|KMP_|MKL_|OPENBLAS_|BLIS_)'; } > "$OUT/environment.txt" 2>&1
+stage VERIFY_REFERENCES
+sha256sum -c "$MASK/results/4339768/baseline-sha256.txt" > "$OUT/baseline-reference-check.log"
+sha256sum -c "$MASK/results/4338563/sha256.txt" > "$OUT/mask-reference-check.log"
+sha256sum -c "$UNROLL/results/4340602/sha256.txt" > "$OUT/unroll-reference-check.log"
+sha256sum -c "$COMBO/results/4340624/sha256.txt" > "$OUT/combined-reference-check.log"
+stage BUILD_DRIVERS
+for name in baseline mask unroll combined; do
+    BIN="$BASE/build/bin"
+    [[ "$name" != mask ]] || BIN="$MASK/sources/q5-mask-4338563/build/bin"
+    [[ "$name" != unroll ]] || BIN="$UNROLL/sources/q5-unroll4-4340602/build/bin"
+    [[ "$name" != combined ]] || BIN="$COMBO/sources/q5-mask-unroll4-4340624/build/bin"
+    sha256sum "$BIN/"lib*.so* >> "$OUT/sha256.txt"
+    icpc -gxx-name=/share/base/e5/gcc/11.2.0/bin/g++ -std=c++17 -O2 -fp-model strict -no-ftz -diag-disable=10441 -I"$BASE/ggml/include" "$OUT/stream.cpp" -L"$BIN" -Wl,-rpath,"$BIN",--no-as-needed -lggml-cpu -lggml -lggml-base -Wl,--no-as-needed,/lib64/libm.so.6,--as-needed -qopenmp -ldl -o "$OUT/stream-$name" > "$OUT/build-$name.log" 2>&1
+    ldd "$OUT/stream-$name" > "$OUT/ldd-$name.txt"
+    ! grep -q 'not found' "$OUT/ldd-$name.txt"
+done
+stage FOUR_VARIANT_STREAMING_DIAGNOSTIC
+python3 "$OUT/run.py" "$OUT" > "$OUT/diagnostic.log" 2>&1
+sha256sum -c "$OUT/sha256.txt" > "$OUT/hash-after-check.log"
+stage COMPLETE

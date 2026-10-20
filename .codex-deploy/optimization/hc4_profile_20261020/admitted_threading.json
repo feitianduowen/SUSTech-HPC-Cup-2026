@@ -1,0 +1,27 @@
+{
+  "script": "/work/apac2602/qwen38-cpu/optimization/20261020-hc4-profile/profile.lsf",
+  "kind": "HC-post最优候选VTune对照诊断（不计分）",
+  "purpose": "对当前最优候选HC-post v2及Intel原版做软件线程/等待同节点BAAB对照，覆盖PP/TG；核对HC-post热点是否消退、量化GEMM/dot及OpenMP同步瓶颈是否迁移。",
+  "config": "Intel Classic2021.9 O3 precise/no-ftz CORE-AVX512 qsimd-honor-fp-model，OpenMP/tinyBLAS ON，BLAS/GPU OFF；Gold6148双路40物理核/40slots，t38 close/cores。A原版，B冻结4340916 HC-post v2构建；eval二进制/动态库及源码SHA/ldd核验。先2.5秒非模型工具探测，再BAAB四case各独立固定PPL t/tb38 c512 chunks2 b512ub256 f16KV ngl0 NUMA distribute no-warmup 590s ±5%。每case PP2048和TG128d2048各r10，b2048ub512 KVf16 ngl0 NUMA distribute --progress；每workload VTune threading sampling-and-waits=sw，使用已验证默认SW配置。start-paused，正式prompt/generation run1/10出现后resume，约60秒后pause并继续完成十次；每结果数据上限2048MB，每workload3600s保护。每30秒读取目标PID/线程/NUMA状态。导出summary、function、thread、process/function、callstacks、top-down，原始结果留存。",
+  "baseline": "同作业同节点A1/A2原版Intel；B1/A1、B2/A2均保留。不同采集模式分属节点，CPU/等待百分比和带采样吞吐不作跨模式成绩比较",
+  "environment": {
+    "PROFILE_MODE": "threading",
+    "PAIR_ORDER": "BAAB"
+  },
+  "lsf_args": [
+    "-J",
+    "qwen38_hc4_threading",
+    "-m",
+    "r13n02 r13n03 r13n05 r13n07 r13n11 r13n12 r13n14 r13n15 r13n16 r13n17 r13n23 r13n26 r13n27 r13n28 r13n30 r13n31 r13n32 r13n33 r13n37 r13n39 r13n40 r13n43 r13n46 r13n47"
+  ],
+  "case_prefix": "profile-hc4-threading",
+  "comparison_scope": "same-node",
+  "measurement_baselines": {
+    "profile-hc4-threading-A1_{job_id}": null,
+    "profile-hc4-threading-B1_{job_id}": "profile-hc4-threading-A1_{job_id}",
+    "profile-hc4-threading-B2_{job_id}": "profile-hc4-threading-A2_{job_id}",
+    "profile-hc4-threading-A2_{job_id}": null
+  },
+  "ppl_scope": "四case各自无VTune固定PPL；PP/TG均带VTune诊断开销，不计算Score；算子差分复用4340916已有证据",
+  "note": "当前最优是候选HC-post单补丁，后段整模PP +5.43%-5.60%、TG +0.50%-1.78%、几何均值 +2.94%-3.67%，独立ABABA/BABAB复测4341175/4341176仍在运行。已有模块有/无消融，HC-post内部循环/展开/SIMD尚无逐项消融，不能给各子改动分摊收益。采样窗口按墙钟，覆盖token数及跨rep/depth状态恢复可能不同；必须结合roi/events和target.pid过滤到llama-bench，不能把包装Python或全运行Elapsed的平均CPU利用率当作目标活跃窗口。软件wait区间可能跨暂停边界；可选报告失败保留返回码。全部十次样本、首轮慢样本、原始VTune结果留存，诊断不计正式性能成绩，不修改部署。"
+}

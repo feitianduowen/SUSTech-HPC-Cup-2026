@@ -1,0 +1,43 @@
+{
+  "updated_at_hkt": "2026-10-20T19:09:28.532362+08:00",
+  "phase": "all four complete; runtime changes not adopted",
+  "jobs": [
+    {
+      "job_id": "4340614",
+      "state": "DONE",
+      "host": "40*r13n24",
+      "order": "ABBA"
+    },
+    {
+      "job_id": "4340615",
+      "state": "DONE",
+      "host": "40*r13n26",
+      "order": "BAAB"
+    }
+  ],
+  "other_active_jobs": [
+    {
+      "job_id": "4340520",
+      "state": "DONE",
+      "host": "40*r13n10"
+    },
+    {
+      "job_id": "4340521",
+      "state": "DONE",
+      "host": "40*r13n12"
+    }
+  ],
+  "next": "四个作业均已完成，不重提。infinite未消除首次慢速，第二对PP约+1%而TG受低速样本干扰；tree第二对PP方向不一致、TG差异约0.5%，两项均未证明稳定综合收益，暂不采用。保留全部16轮PPL、320测速样本及全部对照。后续以源码热点优化为主，候选需固定流程和配对重复评估；停止仅基于首次/后续速度差推进运行时猜测。",
+  "excel": "D:/compete/Qwen38_CPU_实验日志.xlsx",
+  "latest_progress": "D:\\compete\\.codex-deploy\\optimization\\barrier_tree\\runtime_progress_analysis.json",
+  "completed_verdict": "D:\\compete\\.codex-deploy\\optimization\\barrier_tree\\completed_runtime_verdict.json",
+  "latest_followup": {
+    "updated_at_hkt": "2026-10-20T21:27:50.634872+08:00",
+    "path": "D:\\compete\\.codex-deploy\\optimization\\hc4_replicate_20261020\\next_actions.json",
+    "jobs": [
+      "4341175",
+      "4341176"
+    ],
+    "purpose": "Independent five-case ABABA/BABAB HC-post v2 confirmation on other matching nodes; frozen same Intel binaries and fresh fixed PPL per case"
+  }
+}

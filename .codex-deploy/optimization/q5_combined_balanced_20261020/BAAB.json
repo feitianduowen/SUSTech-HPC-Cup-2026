@@ -1,0 +1,19 @@
+{
+  "script": "/work/apac2602/qwen38-cpu/optimization/20261020-q5-combined-balanced/balanced.lsf",
+  "kind": "Q5组合源码候选完整准备段后换序复测",
+  "purpose": "复测4340624 Q5 mask+unroll4组合版，顺序BAAB（A原版/B组合）。此前A/B/A末轮对照PP+2.34%、TG-0.04%，首轮原版PP明显偏慢，尚未证明模型收益。本次原版完整PPL/PP10/TG10准备段单列保留，然后四段独立PPL/PP10/TG10。",
+  "environment": {
+    "Q5_ORDER": "BAAB"
+  },
+  "lsf_args": [
+    "-J",
+    "qwen38_q5_combo_BAAB"
+  ],
+  "config": "Intel Classic2021.9 O3 precise/no-ftz CORE-AVX512 qsimd-honor-fp-model；OpenMP ON/BLAS OFF；hg_6148 40slots，推理38线程close/cores。复用4340624独立源码/构建，不重新编译；3687源码SHA与原版/组合四工具及所有lib*.so* SHA核验。原版完整固定PPL→PP10→TG10准备段独立保存、排除比较；其后BAAB四段各固定PPL t/tb38 c512 chunks2 b512ub256 f16KV ngl0 NUMA distribute no-warmup590s ±5%，PP2048/TG128d2048各r10 b2048ub512。无VTune、无系统设置更改。",
+  "baseline": "同作业baseline1和baseline2两次原版；明细相对baseline1，最终摘要用两个原版pass均值与两个候选pass均值比较。准备段不作为比较baseline。",
+  "case_prefix": "confirm-q5-combined-balanced-baab",
+  "baseline_case": "confirm-q5-combined-balanced-baab-baseline1_{job_id}",
+  "comparison_scope": "same-node",
+  "ppl_scope": "四个比较case各自独立固定PPL；准备段另有独立PPL，非共享",
+  "note": "开发复测。增加明确单列的原版PP10准备以检查首次PP偏慢，所有准备和比较样本保留。四比较段仍各r10且各自PPL；两节点ABBA/BAAB位置互补，不假定准备段能消除漂移，最终联合审查两个方向及每段变异，未确立模型收益前不替换部署。"
+}

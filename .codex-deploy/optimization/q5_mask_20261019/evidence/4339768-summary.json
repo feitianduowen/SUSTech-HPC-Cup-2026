@@ -1,0 +1,232 @@
+{
+  "dot_checks": {
+    "baseline": {
+      "status": "PASS",
+      "cases": 8480,
+      "repetitions": 3,
+      "failures": 0,
+      "scope": "finite and repeatable; cross-library bit comparison required"
+    },
+    "candidate": {
+      "status": "PASS",
+      "cases": 8480,
+      "repetitions": 3,
+      "failures": 0,
+      "scope": "finite and repeatable; cross-library bit comparison required"
+    }
+  },
+  "dot_correctness": {
+    "status": "PASS",
+    "cases": 8480,
+    "bit_mismatches": 0,
+    "repetitions": 3
+  },
+  "microbench": [
+    {
+      "n": 256,
+      "baseline_ns_median": 30.0853936,
+      "candidate_ns_median": 28.4420176,
+      "speedup": 1.0577798672060452,
+      "paired_wins": 10,
+      "samples": {
+        "baseline": [
+          30.1272896,
+          30.0800128,
+          30.04376,
+          30.0547168,
+          30.6658432,
+          30.0580512,
+          30.0907744,
+          29.9902912,
+          30.1416192,
+          30.144032
+        ],
+        "candidate": [
+          28.4446464,
+          28.386288,
+          28.4393888,
+          28.378688,
+          28.4099072,
+          28.4813408,
+          28.4484032,
+          28.4581408,
+          28.4331392,
+          28.486416
+        ]
+      }
+    },
+    {
+      "n": 1024,
+      "baseline_ns_median": 109.096672,
+      "candidate_ns_median": 98.5430528,
+      "speedup": 1.1070965319231514,
+      "paired_wins": 10,
+      "samples": {
+        "baseline": [
+          110.222387,
+          106.425088,
+          109.300595,
+          108.892749,
+          108.095603,
+          109.454554,
+          110.615654,
+          107.30967,
+          108.880781,
+          109.657882
+        ],
+        "candidate": [
+          98.4926976,
+          98.3819648,
+          98.557504,
+          98.6183424,
+          98.4597376,
+          98.5509376,
+          98.3412096,
+          98.535168,
+          98.5743232,
+          98.5947008
+        ]
+      }
+    },
+    {
+      "n": 2560,
+      "baseline_ns_median": 259.21412799999996,
+      "candidate_ns_median": 230.556896,
+      "speedup": 1.1242957052995715,
+      "paired_wins": 10,
+      "samples": {
+        "baseline": [
+          253.084704,
+          259.22896,
+          260.477184,
+          259.199296,
+          263.890304,
+          259.106528,
+          259.064256,
+          259.258016,
+          262.563232,
+          259.122816
+        ],
+        "candidate": [
+          230.578944,
+          231.398816,
+          237.66784,
+          230.770624,
+          230.486208,
+          230.504512,
+          230.612768,
+          230.534848,
+          230.48912,
+          230.475392
+        ]
+      }
+    },
+    {
+      "n": 6144,
+      "baseline_ns_median": 607.4065284999999,
+      "candidate_ns_median": 539.3254609999999,
+      "speedup": 1.1262337353288796,
+      "paired_wins": 10,
+      "samples": {
+        "baseline": [
+          606.971659,
+          607.407911,
+          606.687634,
+          607.444547,
+          607.202304,
+          607.405146,
+          613.787174,
+          607.436022,
+          610.952919,
+          607.146851
+        ],
+        "candidate": [
+          539.836482,
+          539.436252,
+          540.08341,
+          541.824194,
+          539.031951,
+          541.999846,
+          538.702611,
+          539.21467,
+          538.543702,
+          538.947849
+        ]
+      }
+    },
+    {
+      "n": 16384,
+      "baseline_ns_median": 1618.983,
+      "candidate_ns_median": 1476.7610599999998,
+      "speedup": 1.0963066699497075,
+      "paired_wins": 10,
+      "samples": {
+        "baseline": [
+          1617.41807,
+          1618.73331,
+          1618.63007,
+          1625.57313,
+          1623.19459,
+          1618.91889,
+          1618.83245,
+          1623.16551,
+          1619.04711,
+          1621.56841
+        ],
+        "candidate": [
+          1478.05674,
+          1474.84637,
+          1475.43445,
+          1477.61983,
+          1475.51495,
+          1480.70279,
+          1476.31667,
+          1477.20545,
+          1479.32138,
+          1474.77694
+        ]
+      }
+    }
+  ],
+  "advance_to_model": true,
+  "interpretation": "Q5 reverse B/A/B completed: 8480 direct-dot cases and144 matrix configurations bit-identical; all three fixed PPL2.7767 PASS, all PP10/TG10 complete. Five kernel sizes again improve5.78%-12.62%, each10/10 paired wins. B/A/B: first candidate PP34.7746 vs second candidate54.5372 shows a large order/cache effect. Last candidate PP+0.937% and TG+0.617% relative to middle baseline are small sequential observations, not established causal gains. Preserve all samples and compare with previous4338567. No production replacement.",
+  "source_screening_review": {
+    "status": "COMPLETE",
+    "decision": "kernel_gain_reproduced_model_gain_small_unconfirmed_not_promoted",
+    "cases": {
+      "01_candidate": {
+        "ppl": 2.7767,
+        "ppl_elapsed_seconds": 333,
+        "pp_ts": 34.774621,
+        "pp_cv": 0.11430059870386508,
+        "tg_ts": 3.039594,
+        "tg_cv": 0.0058820355613282554
+      },
+      "02_baseline": {
+        "ppl": 2.7767,
+        "ppl_elapsed_seconds": 66,
+        "pp_ts": 54.030897,
+        "pp_cv": 0.0017433728705262843,
+        "tg_ts": 3.035202,
+        "tg_cv": 0.0034495232936720523
+      },
+      "03_candidate_after": {
+        "ppl": 2.7767,
+        "ppl_elapsed_seconds": 67,
+        "pp_ts": 54.53717,
+        "pp_cv": 0.0023208574995732265,
+        "tg_ts": 3.053929,
+        "tg_cv": 0.006525364538599293
+      }
+    },
+    "candidate_first_vs_baseline": {
+      "pp_ts": -0.35639378705854163,
+      "tg_ts": 0.0014470206595804669
+    },
+    "candidate_last_vs_baseline": {
+      "pp_ts": 0.009370064687247437,
+      "tg_ts": 0.006169935312377861
+    },
+    "caveat": "B/A/B: first candidate PP34.7746 vs second candidate54.5372 shows a large order/cache effect. Last candidate PP+0.937% and TG+0.617% relative to middle baseline are small sequential observations, not established causal gains. Preserve all samples and compare with previous4338567. No production replacement."
+  }
+}

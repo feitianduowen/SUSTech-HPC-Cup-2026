@@ -1,0 +1,59 @@
+#!/bin/bash
+#BSUB -J qwen38_hc4_rep
+#BSUB -q ssc-cpu
+#BSUB -m hg_6148
+#BSUB -n 40
+#BSUB -R "span[ptile=40]"
+#BSUB -W 06:00
+#BSUB -o /work/apac2602/qwen38-cpu/logs/%J.hc4_rep.out
+#BSUB -e /work/apac2602/qwen38-cpu/logs/%J.hc4_rep.err
+set -Eeuo pipefail
+source /work/apac2602/qwen38-cpu/scripts/env.sh
+ROOT=/work/apac2602/qwen38-cpu/optimization/20261020-hc4-replicate
+OUT="$ROOT/results/$LSB_JOBID"
+mkdir -p "$OUT"
+phase=INIT
+trap 'rc=$?; echo "FAILED phase=$phase exit=$rc time=$(date -Is)" > "$OUT/job.status"; exit "$rc"' ERR
+stage() { phase=$1; echo "$phase time=$(date -Is)" > "$OUT/job.status"; }
+[[ "$LSB_DJOB_NUMPROC" == 40 ]]
+[[ $(getconf _NPROCESSORS_ONLN) == 40 ]]
+lscpu | grep -q 'Intel(R) Xeon(R) Gold 6148'
+[[ $(lscpu -p=CORE,SOCKET | sed '/^#/d' | sort -u | wc -l) == 40 ]]
+[[ $(hostname -s) != r13n08 && $(hostname -s) != r13n45 ]]
+unset KMP_AFFINITY GOMP_CPU_AFFINITY KMP_BLOCKTIME OMP_WAIT_POLICY KMP_HW_SUBSET KMP_FORKJOIN_BARRIER KMP_FORKJOIN_BARRIER_PATTERN KMP_PLAIN_BARRIER KMP_PLAIN_BARRIER_PATTERN KMP_REDUCTION_BARRIER KMP_REDUCTION_BARRIER_PATTERN KMP_HOT_TEAMS_MAX_LEVEL KMP_HOT_TEAMS_MODE PROF_DIR INTEL_PROF_DUMP_INTERVAL INTEL_PROF_DUMP_CUMULATIVE
+export OMP_NUM_THREADS=38 OMP_DYNAMIC=FALSE OMP_PROC_BIND=close OMP_PLACES=cores
+export OPENBLAS_NUM_THREADS=38 MKL_NUM_THREADS=38 BLIS_NUM_THREADS=38
+{ date -Is; hostname; lscpu; module list; icc --version; icpc --version; env | sort | grep -E '^(OMP|KMP|GOMP|MKL|OPENBLAS|BLIS|LD_LIBRARY_PATH)'; } > "$OUT/environment.txt" 2>&1
+cp "$ROOT/repeat.lsf" "$OUT/pipeline.lsf"
+cp "$ROOT/ppl_gate.lsf" "$OUT/ppl_gate.lsf"
+cp "$ROOT/frozen_builds.json" "$OUT/frozen_builds.json"
+ORDER=${PAIR_ORDER:?set PAIR_ORDER}
+case "$ORDER" in
+    ABABA) names=(A1 B1 A2 B2 A3) ;;
+    BABAB) names=(B1 A1 B2 A2 B3) ;;
+    *) exit 2 ;;
+esac
+export EXPERIMENT_OUTPUT_DIR="$OUT"
+python3 - <<'PY'
+import json,os
+from pathlib import Path
+p=Path(os.environ['EXPERIMENT_OUTPUT_DIR'])
+order=os.environ['PAIR_ORDER']
+plan={'order':order,'A':'Intel original production','B':'Intel HC-post v2 from 4340916','fresh_ppl_per_case':True,'late_bracket':['A2','B2','A3'] if order=='ABABA' else ['B2','A2','B3'],'first_case_retained':True,'prior_differential_evidence':'4340916: actual GGML 972 cases / 42341535 values / 0 bit differences; reused, not rerun','model_metrics':'PP2048 and TG128d2048, ten samples each, no profiling','interpretation':'Independent nodes with fixed verified binaries. Inspect both late bracket sides and all first-position samples; no promotion until complete.'}
+(p/'plan.json').write_text(json.dumps(plan,indent=2))
+PY
+stage VERIFY_FROZEN_BUILDS
+python3 "$ROOT/verify_frozen.py" > "$OUT/binary_sha256.json"
+BASE=/work/apac2602/qwen38-cpu/llama.cpp
+CAND=/work/apac2602/qwen38-cpu/optimization/20261020-hc4-post-v2/sources/hc4-post-v2-4340916
+ordinal=0
+for name in "${names[@]}"; do
+    ordinal=$((ordinal+1))
+    stage "VERIFY_AND_PPL_PP10_TG10_$name"
+    python3 "$ROOT/verify_frozen.py" > "$OUT/$name-binary-sha256.json"
+    CASE_ROOT="$CAND"
+    [[ "$name" != A* ]] || CASE_ROOT="$BASE"
+    dir=$(printf "%02d_%s" "$ordinal" "$name")
+    COMPILER_BUILD_ROOT="$CASE_ROOT" RUN_BENCH=1 EXPERIMENT_OUTPUT_DIR="$OUT/$dir" bash "$OUT/ppl_gate.lsf" > "$OUT/$name-bench.log" 2>&1
+done
+stage COMPLETE

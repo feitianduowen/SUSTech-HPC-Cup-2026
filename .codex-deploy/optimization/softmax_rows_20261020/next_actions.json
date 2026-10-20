@@ -1,17 +1,56 @@
 {
   "job_id": "4339793",
-  "updated_hong_kong": "2026-10-20T13:20:32.045541+08:00",
-  "last_known_status": "RUN",
+  "updated_hong_kong": "2026-10-20T15:58:54.241970+08:00",
+  "last_known_status": "DONE",
   "node": "r13n19",
   "remote_root": "/work/apac2602/qwen38-cpu/optimization/20261020-softmax-rows",
   "source": "/work/apac2602/qwen38-cpu/optimization/20261020-softmax-rows/sources/softmax-rows-4339793",
   "change": "Only ops.cpp::ggml_compute_forward_soft_max_f32 row scheduling: flatten queries/heads/batches; per-row body unchanged. Canonical source copied as independent regular files, no Q5/Q8/PGO overlays.",
   "next": [
-    "Check job.status, four-tool Intel build and quantization tests, ldd.",
-    "Check both 1280-case Softmax graph tests (3 repeats, threads1/38); compare binary outputs bitwise; library-correctness.json must PASS with zero mismatches.",
-    "Check summary.json softmax_microbench and softmax-raw-samples.json: 4 shapes x 10 alternating AB/BA rounds,38 threads; not full-model scores.",
-    "Check 01_baseline,02_candidate,03_baseline_after. Each independent fixed PPL within [2.63112,2.90808], then all10 PP2048/TG128d2048 samples at unchanged fixed config.",
-    "Fused attention may bypass regular Softmax. Retain order/cache/NUMA caveats; no production promotion without verified model benefit.",
-    "Refresh registry with --refresh-job4339793, write Excel and mirror; retain failed jobs and raw slow samples."
-  ]
+    "Preserve independent source, raw samples and full fixed-PPL/performance evidence. No production promotion from these results.",
+    "Softmax: operator gain is reproduced; workload benefit not established amid large variance.",
+    "Q5: kernel gain reproduced; final candidate versus middle baseline has small positive full-model observation, with strong first/last order effect.",
+    "Use a new concrete hypothesis or balanced follow-up design before submitting more work; do not cherry-pick favorable baseline or discard slow samples.",
+    "Excel updated and mirrored after this check."
+  ],
+  "completed_hong_kong": "2026-10-20T14:49:40+08:00",
+  "review": {
+    "status": "COMPLETE",
+    "decision": "model_benefit_unconfirmed_not_promoted",
+    "cases": {
+      "01_baseline": {
+        "ppl": 2.7767,
+        "ppl_elapsed_seconds": 332,
+        "pp_ts": 28.819277,
+        "pp_cv": 0.11817225671553107,
+        "tg_ts": 2.751696,
+        "tg_cv": 0.1510254039690431
+      },
+      "02_candidate": {
+        "ppl": 2.7767,
+        "ppl_elapsed_seconds": 137,
+        "pp_ts": 28.028788,
+        "pp_cv": 0.21913705294713423,
+        "tg_ts": 2.570143,
+        "tg_cv": 0.21406980078540377
+      },
+      "03_baseline_after": {
+        "ppl": 2.7767,
+        "ppl_elapsed_seconds": 237,
+        "pp_ts": 31.165565,
+        "pp_cv": 0.08004379192227062,
+        "tg_ts": 2.489347,
+        "tg_cv": 0.20579051454056022
+      }
+    },
+    "candidate_vs_first_baseline": {
+      "pp_ts": -0.02742917527042754,
+      "tg_ts": -0.06597858193637673
+    },
+    "candidate_vs_last_baseline": {
+      "pp_ts": -0.10064880903009465,
+      "tg_ts": 0.03245670450925475
+    },
+    "caveat": "Full-model PP and TG have substantial within-case and between-case variation. Candidate PP below both baseline passes; TG below first baseline and above last. Operator gains alone do not prove workload benefit. No production replacement."
+  }
 }

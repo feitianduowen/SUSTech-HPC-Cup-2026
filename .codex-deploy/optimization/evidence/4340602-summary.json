@@ -1,0 +1,450 @@
+{
+  "assembly_statistics": {
+    "baseline": {
+      "vector_fma_static": 1,
+      "scalar_fma_static": 1,
+      "half_conversion_static": 0,
+      "conditional_jumps_static": 2
+    },
+    "candidate": {
+      "vector_fma_static": 5,
+      "scalar_fma_static": 5,
+      "half_conversion_static": 0,
+      "conditional_jumps_static": 5
+    },
+    "scope": "Static counts from actual exported function, including remainder paths; not a dynamic instruction count or a speedup claim."
+  },
+  "dot_checks": {
+    "baseline": {
+      "status": "PASS",
+      "cases": 262432,
+      "repetitions": 3,
+      "failures": 0,
+      "scope": "finite and repeatable; cross-library bit comparison required"
+    },
+    "candidate": {
+      "status": "PASS",
+      "cases": 262432,
+      "repetitions": 3,
+      "failures": 0,
+      "scope": "finite and repeatable; cross-library bit comparison required"
+    }
+  },
+  "dot_correctness": {
+    "status": "PASS",
+    "cases": 262432,
+    "bit_mismatches": 0,
+    "repetitions": 3
+  },
+  "microbench": [
+    {
+      "n": 256,
+      "baseline_ns_median": 29.9529632,
+      "candidate_ns_median": 29.655859200000002,
+      "speedup": 1.0100183912391922,
+      "paired_wins": 10,
+      "samples": {
+        "baseline": [
+          29.8799872,
+          29.9654944,
+          30.0721664,
+          30.03088,
+          29.940432,
+          29.8999776,
+          29.9694144,
+          29.92392,
+          29.8558528,
+          29.9904768
+        ],
+        "candidate": [
+          29.6614624,
+          29.6479488,
+          29.673248,
+          29.8608736,
+          29.6498528,
+          29.65312,
+          29.6746496,
+          29.5571712,
+          29.6422464,
+          29.6585984
+        ]
+      }
+    },
+    {
+      "n": 1024,
+      "baseline_ns_median": 106.0232895,
+      "candidate_ns_median": 102.7815745,
+      "speedup": 1.0315398456948137,
+      "paired_wins": 7,
+      "samples": {
+        "baseline": [
+          101.774886,
+          110.593203,
+          109.558093,
+          109.943066,
+          108.661862,
+          107.20439,
+          104.594957,
+          104.842189,
+          96.7385728,
+          103.439885
+        ],
+        "candidate": [
+          102.727296,
+          102.703437,
+          102.581491,
+          102.796595,
+          102.908992,
+          102.902579,
+          102.766554,
+          106.566426,
+          102.636557,
+          102.80087
+        ]
+      }
+    },
+    {
+      "n": 2560,
+      "baseline_ns_median": 260.184544,
+      "candidate_ns_median": 238.05686400000002,
+      "speedup": 1.0929512370624188,
+      "paired_wins": 10,
+      "samples": {
+        "baseline": [
+          263.568064,
+          259.355872,
+          261.002624,
+          260.258208,
+          260.099776,
+          259.400864,
+          260.216448,
+          261.558944,
+          259.396928,
+          260.15264
+        ],
+        "candidate": [
+          238.018944,
+          237.689632,
+          238.081568,
+          238.133568,
+          237.938368,
+          237.778368,
+          238.03216,
+          238.170432,
+          238.419456,
+          238.280992
+        ]
+      }
+    },
+    {
+      "n": 6144,
+      "baseline_ns_median": 607.3029955,
+      "candidate_ns_median": 554.594547,
+      "speedup": 1.0950396082780092,
+      "paired_wins": 10,
+      "samples": {
+        "baseline": [
+          607.255069,
+          607.286713,
+          606.680952,
+          608.858525,
+          608.458449,
+          607.184255,
+          607.128648,
+          607.445469,
+          607.319278,
+          610.318664
+        ],
+        "candidate": [
+          555.355837,
+          554.579109,
+          554.544086,
+          554.275192,
+          553.484025,
+          553.848003,
+          554.609985,
+          554.776575,
+          554.92573,
+          554.827957
+        ]
+      }
+    },
+    {
+      "n": 16384,
+      "baseline_ns_median": 1618.33132,
+      "candidate_ns_median": 1506.310115,
+      "speedup": 1.0743679564284145,
+      "paired_wins": 10,
+      "samples": {
+        "baseline": [
+          1618.0805,
+          1618.58214,
+          1618.70115,
+          1622.57251,
+          1616.79066,
+          1617.11389,
+          1617.97829,
+          1621.23351,
+          1617.01721,
+          1656.40578
+        ],
+        "candidate": [
+          1503.67022,
+          1506.99099,
+          1507.94941,
+          1506.80356,
+          1505.81667,
+          1504.47112,
+          1505.70975,
+          1508.39799,
+          1510.29189,
+          1504.65547
+        ]
+      }
+    }
+  ],
+  "advance_to_model": true,
+  "interpretation": "Completed Intel Q5 unroll A/B/A. All PPL=2.7767 and PP/TG each ten samples. Candidate vs last original PP +0.5047%, TG -2.0680%. First-to-last original PP drift +77.9814%. Kernel correctness and speed gains retained, but full-model gain not established; do not promote. Streaming diagnostic4340728 is separate synthetic evidence and does not establish model throughput.",
+  "source_screening_review": {
+    "status": "COMPLETE_MODEL_GAIN_NOT_ESTABLISHED",
+    "decision": "do_not_promote_model_gain_not_established",
+    "dot_cases": 262432,
+    "dot_bit_mismatches": 0,
+    "matrix_cases": 144,
+    "matrix_bit_mismatches": 0,
+    "kernel_changes": {
+      "256": 0.010018391239192237,
+      "1024": 0.03153984569481372,
+      "2560": 0.09295123706241881,
+      "6144": 0.09503960827800917,
+      "16384": 0.07436795642841454
+    },
+    "phase": "COMPLETE time=2026-10-20T18:34:43+08:00",
+    "followup_combination_job": "4340624",
+    "reviewed_hong_kong": "2026-10-20T19:10:50.248453+08:00",
+    "model_cases": [
+      {
+        "case": "01_baseline",
+        "ppl": 2.7767,
+        "ppl_status": "PASS",
+        "pp": {
+          "avg_ts": 30.629364,
+          "raw_sample_count": 10,
+          "raw_cv_percent": 11.224959888543992,
+          "samples_ts": [
+            25.7634,
+            27.5312,
+            26.6056,
+            29.158,
+            29.4077,
+            31.0089,
+            33.1314,
+            34.9512,
+            34.7026,
+            34.0336
+          ],
+          "samples_ns": [
+            79492672208,
+            74388217747,
+            76976237155,
+            70238074343,
+            69641550894,
+            66045478864,
+            61814501439,
+            58596023035,
+            59015678443,
+            60175897612
+          ]
+        },
+        "tg": {
+          "avg_ts": 3.030502,
+          "raw_sample_count": 10,
+          "raw_cv_percent": 0.5918379672742197,
+          "samples_ts": [
+            2.99392,
+            3.03301,
+            3.02925,
+            3.04455,
+            3.00943,
+            3.03145,
+            3.04439,
+            3.02422,
+            3.04021,
+            3.05459
+          ],
+          "samples_ns": [
+            42753362794,
+            42202326573,
+            42254724056,
+            42042303122,
+            42532936832,
+            42224051651,
+            42044501552,
+            42324919228,
+            42102357802,
+            41904167072
+          ]
+        }
+      },
+      {
+        "case": "02_candidate",
+        "ppl": 2.7767,
+        "ppl_status": "PASS",
+        "pp": {
+          "avg_ts": 54.789687,
+          "raw_sample_count": 10,
+          "raw_cv_percent": 0.4794228614781147,
+          "samples_ts": [
+            54.3345,
+            54.6098,
+            54.5583,
+            54.6444,
+            54.6372,
+            55.0388,
+            54.9775,
+            54.9859,
+            54.9976,
+            55.1129
+          ],
+          "samples_ns": [
+            37692417261,
+            37502402919,
+            37537825716,
+            37478678928,
+            37483650353,
+            37210123283,
+            37251589968,
+            37245922120,
+            37238013681,
+            37160094211
+          ]
+        },
+        "tg": {
+          "avg_ts": 3.007731,
+          "raw_sample_count": 10,
+          "raw_cv_percent": 0.3217408566489472,
+          "samples_ts": [
+            3.0038,
+            2.99012,
+            2.99823,
+            3.0064,
+            3.00534,
+            3.0078,
+            3.02351,
+            3.01982,
+            3.01186,
+            3.01043
+          ],
+          "samples_ns": [
+            42612750803,
+            42807636209,
+            42691799855,
+            42575803218,
+            42590826579,
+            42556059818,
+            42334838935,
+            42386639531,
+            42498684150,
+            42518868259
+          ]
+        }
+      },
+      {
+        "case": "03_baseline_after",
+        "ppl": 2.7767,
+        "ppl_status": "PASS",
+        "pp": {
+          "avg_ts": 54.514568,
+          "raw_sample_count": 10,
+          "raw_cv_percent": 0.26141229706560754,
+          "samples_ts": [
+            54.1215,
+            54.5688,
+            54.5753,
+            54.4692,
+            54.5451,
+            54.5837,
+            54.5638,
+            54.5443,
+            54.5936,
+            54.5803
+          ],
+          "samples_ns": [
+            37840800019,
+            37530618551,
+            37526142932,
+            37599197711,
+            37546932693,
+            37520324530,
+            37534047125,
+            37547440488,
+            37513528281,
+            37522689070
+          ]
+        },
+        "tg": {
+          "avg_ts": 3.071243,
+          "raw_sample_count": 10,
+          "raw_cv_percent": 0.4665749770828281,
+          "samples_ts": [
+            3.03244,
+            3.07943,
+            3.07966,
+            3.08416,
+            3.0711,
+            3.07668,
+            3.07331,
+            3.07174,
+            3.07082,
+            3.07308
+          ],
+          "samples_ns": [
+            42210272901,
+            41566124514,
+            41562989758,
+            41502378089,
+            41678843579,
+            41603298471,
+            41648844453,
+            41670188763,
+            41682683406,
+            41652054540
+          ]
+        }
+      }
+    ],
+    "candidate_comparisons": {
+      "first_original": {
+        "pp_change_percent": 78.8796104287376,
+        "tg_change_percent": -0.7513936634920393
+      },
+      "last_original": {
+        "pp_change_percent": 0.5046706047455052,
+        "tg_change_percent": -2.0679575012462315
+      }
+    },
+    "original_before_after_drift": {
+      "pp_change_percent": 77.98139066811834,
+      "tg_change_percent": 1.3443647290118932
+    },
+    "validation": "All six performance cases contain ten raw samples; all three fixed PPL cases PASS; fixed benchmark dimensions checked.",
+    "limitation": "Single original/candidate/original sequence, no counterbalanced replication. First original PP differs strongly from last original; last comparison alone does not establish a causal gain. Raw samples and reported statistics retained."
+  },
+  "pre_completion_review": {
+    "status": "KERNEL_GAIN_MODEL_RUNNING",
+    "decision": "not_promoted_pending_full_model",
+    "dot_cases": 262432,
+    "dot_bit_mismatches": 0,
+    "matrix_cases": 144,
+    "matrix_bit_mismatches": 0,
+    "kernel_changes": {
+      "256": 0.010018391239192237,
+      "1024": 0.03153984569481372,
+      "2560": 0.09295123706241881,
+      "6144": 0.09503960827800917,
+      "16384": 0.07436795642841454
+    },
+    "phase": "PPL_PP10_TG10_baseline time=2026-10-20T17:32:30+08:00",
+    "followup_combination_job": "4340624"
+  }
+}

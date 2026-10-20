@@ -1,0 +1,78 @@
+{
+  "compiler": "Intel Classic2021.9 icc/icpc O3 precise/no-ftz CORE-AVX512 qsimd-honor-fp-model",
+  "source_sha256": "71615b16a90a3a70387fe846a60b19cc47732009f1c34433a19b8c43208a3a3a",
+  "source_file": "/work/apac2602/qwen38-cpu/optimization/20261020-hc4-post-v2/sources/hc4-post-v2-4340916/ggml/src/ggml-cpu/ops.cpp",
+  "prior_actual_library_checks": {
+    "job_id": "4340916",
+    "cases": 972,
+    "values": 42341535,
+    "repetitions": 3,
+    "threads": [
+      1,
+      3,
+      38
+    ],
+    "bit_mismatches": 0,
+    "reused_evidence_not_rerun": true
+  },
+  "builds": {
+    "A": {
+      "root": "/work/apac2602/qwen38-cpu/llama.cpp",
+      "files": {
+        "llama-bench": "b7009175033685a35b3f26cedf3d60474b47371a2b1d1a2fb9db847f77b98556",
+        "llama-perplexity": "427425040a186a18410d43a42bf21d4c67880b21a78e68d1478995604a2b8e9f",
+        "libggml-base.so": "57e9343613abb27ec839911ab8260bf3d0bf3b24ff7c554c9e9d3dac032f4c90",
+        "libggml-base.so.0": "57e9343613abb27ec839911ab8260bf3d0bf3b24ff7c554c9e9d3dac032f4c90",
+        "libggml-base.so.0.26.0": "57e9343613abb27ec839911ab8260bf3d0bf3b24ff7c554c9e9d3dac032f4c90",
+        "libggml-cpu.so": "be71251ce20e2330364d43dfeb684a8b031371a8835dee43f2eb4ad6e87d9176",
+        "libggml-cpu.so.0": "be71251ce20e2330364d43dfeb684a8b031371a8835dee43f2eb4ad6e87d9176",
+        "libggml-cpu.so.0.26.0": "be71251ce20e2330364d43dfeb684a8b031371a8835dee43f2eb4ad6e87d9176",
+        "libggml.so": "a31475642d986f0b4f1f6c9459b148bf776900ed5192533bb90bf80a19ea3b57",
+        "libggml.so.0": "a31475642d986f0b4f1f6c9459b148bf776900ed5192533bb90bf80a19ea3b57",
+        "libggml.so.0.26.0": "a31475642d986f0b4f1f6c9459b148bf776900ed5192533bb90bf80a19ea3b57",
+        "libllama-bench-impl.so": "ae43936d7633bd631527488ebbb10e4041abe1c98f98dca4e93ddca8d41339df",
+        "libllama-cli-impl.so": "e22ac565f26f4385049c4c19618f900c979cd28ec8fc3625f724f1e68c6977c7",
+        "libllama-common.so": "3f830414f7324d745f281132a3cce73352cdaef5a301e6b64537bf0ff0369f5e",
+        "libllama-common.so.0": "3f830414f7324d745f281132a3cce73352cdaef5a301e6b64537bf0ff0369f5e",
+        "libllama-common.so.0.6.0": "3f830414f7324d745f281132a3cce73352cdaef5a301e6b64537bf0ff0369f5e",
+        "libllama-perplexity-impl.so": "3c60c901fcb4ece8bb4009af5286b90c0b6e30a470bed673730bf703641a1047",
+        "libllama-server-impl.so": "52823264b269d90772d6917b23cb77dc6ece27d98d099a43a94db224f2b7a808",
+        "libllama.so": "b4dc2971839a8e7971d875e79eec8f9a2f274e20f76da953402f87514866e986",
+        "libllama.so.0": "b4dc2971839a8e7971d875e79eec8f9a2f274e20f76da953402f87514866e986",
+        "libllama.so.0.6.0": "b4dc2971839a8e7971d875e79eec8f9a2f274e20f76da953402f87514866e986",
+        "libmtmd.so": "2f4cb553712bfcfbd02352f1044e7d40310ec301d067f5a5f86248c846a13025",
+        "libmtmd.so.0": "2f4cb553712bfcfbd02352f1044e7d40310ec301d067f5a5f86248c846a13025",
+        "libmtmd.so.0.6.0": "2f4cb553712bfcfbd02352f1044e7d40310ec301d067f5a5f86248c846a13025"
+      }
+    },
+    "B": {
+      "root": "/work/apac2602/qwen38-cpu/optimization/20261020-hc4-post-v2/sources/hc4-post-v2-4340916",
+      "files": {
+        "llama-bench": "454d75cfad97464b85ed5e0211827288f577ab6e10ab7bcf68902725134419f1",
+        "llama-perplexity": "cbea3ff5b48678dd5a4fa4ca80db261b4fabfa2696d21426695cc0b43d46e983",
+        "libggml-base.so": "b13773e4c3b3657a5a0b6dcccb82e9d19a61e4f2fed8c858bf26c50a5b920f38",
+        "libggml-base.so.0": "b13773e4c3b3657a5a0b6dcccb82e9d19a61e4f2fed8c858bf26c50a5b920f38",
+        "libggml-base.so.0.26.0": "b13773e4c3b3657a5a0b6dcccb82e9d19a61e4f2fed8c858bf26c50a5b920f38",
+        "libggml-cpu.so": "f8f160953cf48a08e5d8cf528dc718bc3415ddcb82ccdef9beaedb44067219d3",
+        "libggml-cpu.so.0": "f8f160953cf48a08e5d8cf528dc718bc3415ddcb82ccdef9beaedb44067219d3",
+        "libggml-cpu.so.0.26.0": "f8f160953cf48a08e5d8cf528dc718bc3415ddcb82ccdef9beaedb44067219d3",
+        "libggml.so": "5d913ad6e675f8648a7d6ee76c6d630fb71cab2bed46052dadeb3b8d6de3232b",
+        "libggml.so.0": "5d913ad6e675f8648a7d6ee76c6d630fb71cab2bed46052dadeb3b8d6de3232b",
+        "libggml.so.0.26.0": "5d913ad6e675f8648a7d6ee76c6d630fb71cab2bed46052dadeb3b8d6de3232b",
+        "libllama-bench-impl.so": "561816f3deaf5d64bb99ead79e69533b31c494555563c8c91c1f3366d7da3d55",
+        "libllama-cli-impl.so": "1726438d4d6567de50ae0736c13425f8705db13844f5dadfb0d3932d05402e73",
+        "libllama-common.so": "4d4803c61c0f53335d4a7ff8d8af39671337f6bd97d60f7ace03e2bd31d87732",
+        "libllama-common.so.0": "4d4803c61c0f53335d4a7ff8d8af39671337f6bd97d60f7ace03e2bd31d87732",
+        "libllama-common.so.0.6.0": "4d4803c61c0f53335d4a7ff8d8af39671337f6bd97d60f7ace03e2bd31d87732",
+        "libllama-perplexity-impl.so": "c4b196bd3a2689fe5ec49ee6c1caf8983ec25bea6aec4077a15fdb7524099b68",
+        "libllama-server-impl.so": "6ff6429ef8c43a7bdced08a0c21a8990443063b0417e63da4430ae9b37175842",
+        "libllama.so": "8598c805d8e6c5a9cac1344cd3a84adf5c10a697d0b925849da2e40ba91a3659",
+        "libllama.so.0": "8598c805d8e6c5a9cac1344cd3a84adf5c10a697d0b925849da2e40ba91a3659",
+        "libllama.so.0.6.0": "8598c805d8e6c5a9cac1344cd3a84adf5c10a697d0b925849da2e40ba91a3659",
+        "libmtmd.so": "3866d5c828b961b8b925739c8ac23e7ffe6c6e32bff8e0172c1c350ec847a19f",
+        "libmtmd.so.0": "3866d5c828b961b8b925739c8ac23e7ffe6c6e32bff8e0172c1c350ec847a19f",
+        "libmtmd.so.0.6.0": "3866d5c828b961b8b925739c8ac23e7ffe6c6e32bff8e0172c1c350ec847a19f"
+      }
+    }
+  }
+}

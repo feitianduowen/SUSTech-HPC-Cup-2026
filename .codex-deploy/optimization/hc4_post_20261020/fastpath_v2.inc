@@ -1,0 +1,67 @@
+#if defined(__AVX2__) && defined(__FMA__) && (defined(__GNUC__) || defined(__INTEL_COMPILER))
+    // Match the original rounded product followed by four ordered FMAs.
+    if (hc == 4 && nbx0 == sizeof(float) && nbr0 == sizeof(float) && nbd0 == sizeof(float)) {
+        for (int64_t ir = ir0; ir < ir1;) {
+            const int64_t row  = ir / n_embd;
+            const int64_t i0   = ir % n_embd;
+            const int64_t idst = row % hc;
+            const int64_t it   = row / hc;
+            const int64_t count = MIN(n_embd - i0, ir1 - ir);
+            const float * xp = (const float *) ((const char *) x->data + it*nbx1) + i0;
+            const char * rp = (const char *) residual->data + it*nbr2;
+            float * dp = (float *) ((char *) dst->data + idst*nbd1 + it*nbd2) + i0;
+            const float pv = *(const float *) ((const char *) post->data + idst*nbp0 + it*nbp1);
+            const __m256 pv8 = _mm256_set1_ps(pv);
+            const __m128 pv1 = _mm_set_ss(pv);
+            int64_t j = 0;
+            if (comb) {
+                const char * cp = (const char *) comb->data + idst*nbc0 + it*nbc2;
+                const float c0 = *(const float *) (cp + 0*nbc1);
+                const float c1 = *(const float *) (cp + 1*nbc1);
+                const float c2 = *(const float *) (cp + 2*nbc1);
+                const float c3 = *(const float *) (cp + 3*nbc1);
+                const __m256 c08 = _mm256_set1_ps(c0), c18 = _mm256_set1_ps(c1);
+                const __m256 c28 = _mm256_set1_ps(c2), c38 = _mm256_set1_ps(c3);
+                const __m128 c01 = _mm_set_ss(c0), c11 = _mm_set_ss(c1);
+                const __m128 c21 = _mm_set_ss(c2), c31 = _mm_set_ss(c3);
+                const float * r0 = (const float *) (rp + 0*nbr1) + i0;
+                const float * r1 = (const float *) (rp + 1*nbr1) + i0;
+                const float * r2 = (const float *) (rp + 2*nbr1) + i0;
+                const float * r3 = (const float *) (rp + 3*nbr1) + i0;
+                for (; j + 8 <= count; j += 8) {
+                    __m256 sum = _mm256_mul_ps(_mm256_loadu_ps(xp + j), pv8);
+                    __asm__("" : "+x"(sum)); // Keep the initial multiplication rounded.
+                    sum = _mm256_fmadd_ps(_mm256_loadu_ps(r0 + j), c08, sum);
+                    sum = _mm256_fmadd_ps(_mm256_loadu_ps(r1 + j), c18, sum);
+                    sum = _mm256_fmadd_ps(_mm256_loadu_ps(r2 + j), c28, sum);
+                    sum = _mm256_fmadd_ps(_mm256_loadu_ps(r3 + j), c38, sum);
+                    _mm256_storeu_ps(dp + j, sum);
+                }
+                for (; j < count; ++j) {
+                    __m128 sum = _mm_mul_ss(_mm_load_ss(xp + j), pv1);
+                    __asm__("" : "+x"(sum));
+                    sum = _mm_fmadd_ss(_mm_load_ss(r0 + j), c01, sum);
+                    sum = _mm_fmadd_ss(_mm_load_ss(r1 + j), c11, sum);
+                    sum = _mm_fmadd_ss(_mm_load_ss(r2 + j), c21, sum);
+                    sum = _mm_fmadd_ss(_mm_load_ss(r3 + j), c31, sum);
+                    _mm_store_ss(dp + j, sum);
+                }
+            } else {
+                const float * rp_self = (const float *) (rp + idst*nbr1) + i0;
+                for (; j + 8 <= count; j += 8) {
+                    __m256 sum = _mm256_mul_ps(_mm256_loadu_ps(xp + j), pv8);
+                    __asm__("" : "+x"(sum));
+                    _mm256_storeu_ps(dp + j, _mm256_add_ps(sum, _mm256_loadu_ps(rp_self + j)));
+                }
+                for (; j < count; ++j) {
+                    __m128 sum = _mm_mul_ss(_mm_load_ss(xp + j), pv1);
+                    __asm__("" : "+x"(sum));
+                    _mm_store_ss(dp + j, _mm_add_ss(sum, _mm_load_ss(rp_self + j)));
+                }
+            }
+            ir += count;
+        }
+        return;
+    }
+#endif
+

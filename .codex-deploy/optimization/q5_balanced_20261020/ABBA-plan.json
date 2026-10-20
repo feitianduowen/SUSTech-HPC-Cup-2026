@@ -1,0 +1,33 @@
+{
+  "order": "ABBA",
+  "A": "original Intel build",
+  "B": "Q5 mask Intel build from4338563",
+  "preparation": "Same original build: separate fixed PPL then TG128d2048 r10; retained and excluded from comparative model statistics. All four later cases have their own fresh fixed PPL, PP10 and TG10.",
+  "cases": [
+    {
+      "ordinal": 1,
+      "letter": "A",
+      "role": "baseline1",
+      "directory": "01_baseline1"
+    },
+    {
+      "ordinal": 2,
+      "letter": "B",
+      "role": "candidate1",
+      "directory": "02_candidate1"
+    },
+    {
+      "ordinal": 3,
+      "letter": "B",
+      "role": "candidate2",
+      "directory": "03_candidate2"
+    },
+    {
+      "ordinal": 4,
+      "letter": "A",
+      "role": "baseline2",
+      "directory": "04_baseline2"
+    }
+  ],
+  "source_change": "none in this confirmation; reuse SHA-verified immutable candidate"
+}

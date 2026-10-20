@@ -1,0 +1,102 @@
+{
+  "updated_at_hkt": "2026-10-20T16:00:53.012967+08:00",
+  "source": "All original benchmark JSON, fresh fixed PPL, SHA checks, thread and NUMA snapshots; raw archive preserved",
+  "jobs": {
+    "4339778": {
+      "summary": "平衡顺序ABBA完成；PPL2.7767 PASS，12个诊断命令各10次，所有SHA通过。第1段A：PP 29.787047→34.733821（+16.61%）；第2段B：PP 54.527065→54.119458（-0.75%）；第3段B：PP 54.355803→54.451335（+0.18%）；第4段A：PP 54.100421→54.277542（+0.33%）。首次状态转换幅度大，后续同节点段中A与B均接近54t/s，TG穿插未表现一致的稳定提升；ABBA/BAAB仍有跨段状态延续，不能将首次差异直接当作TG因果效应。首次PP采样窗口内跨线程自愿切换约4,512,509次，runnable排队时间占CPU运行+排队统计约0.022%；看到互斥/条件等待符号快照，后续快速PP此类快照减少。采样时38线程主要为两NUMA节点各19线程，未见线程数超过38的采样快照；全部诊断进程major faults=0且采样read_bytes=0。同步/阻塞及启动状态是后续线索，尚未识别到具体代码或根因。采样有开销、覆盖离散时间且schedstat不包括全部阻塞时间；仅诊断不计算Score，不删除任何慢样本。",
+      "blocks": [
+        {
+          "block": 1,
+          "order": "A",
+          "anchor_pp": 29.787047,
+          "probe_pp": 34.733821,
+          "probe_change_percent": 16.607131280922193,
+          "anchor_cv_percent": 6.268684505718207,
+          "probe_cv_percent": 9.198786393239029
+        },
+        {
+          "block": 2,
+          "order": "B",
+          "anchor_pp": 54.527065,
+          "probe_pp": 54.119458,
+          "probe_change_percent": -0.7475315240238922,
+          "anchor_cv_percent": 0.12467936794324067,
+          "probe_cv_percent": 0.6894488854637089
+        },
+        {
+          "block": 3,
+          "order": "B",
+          "anchor_pp": 54.355803,
+          "probe_pp": 54.451335,
+          "probe_change_percent": 0.175753083805974,
+          "anchor_cv_percent": 0.18878021174666484,
+          "probe_cv_percent": 0.1522533836865524
+        },
+        {
+          "block": 4,
+          "order": "A",
+          "anchor_pp": 54.100421,
+          "probe_pp": 54.277542,
+          "probe_change_percent": 0.3273930160358596,
+          "anchor_cv_percent": 0.38213196159785895,
+          "probe_cv_percent": 0.27372094336917474
+        }
+      ],
+      "evidence_files": [
+        "D:\\compete\\.codex-deploy\\optimization\\order_crossover\\completed_summary.json",
+        "D:\\compete\\.codex-deploy\\optimization\\order_crossover\\completed-telemetry.tar.gz"
+      ],
+      "thread_telemetry_scope": "per-TID observed lifetime deltas, 30s snapshots, not whole-run blocking-time attribution",
+      "ppl": 2.7767,
+      "raw_samples": 120
+    },
+    "4339779": {
+      "summary": "平衡顺序BAAB完成；PPL2.7767 PASS，12个诊断命令各10次，所有SHA通过。第1段B：PP 29.805774→54.188058（+81.80%）；第2段A：PP 54.149768→53.559870（-1.09%）；第3段A：PP 54.186480→54.271219（+0.16%）；第4段B：PP 52.509147→53.902291（+2.65%）。首次状态转换幅度大，后续同节点段中A与B均接近54t/s，TG穿插未表现一致的稳定提升；ABBA/BAAB仍有跨段状态延续，不能将首次差异直接当作TG因果效应。首次PP采样窗口内跨线程自愿切换约4,733,836次，runnable排队时间占CPU运行+排队统计约0.022%；看到互斥/条件等待符号快照，后续快速PP此类快照减少。采样时38线程主要为两NUMA节点各19线程，未见线程数超过38的采样快照；全部诊断进程major faults=0且采样read_bytes=0。同步/阻塞及启动状态是后续线索，尚未识别到具体代码或根因。采样有开销、覆盖离散时间且schedstat不包括全部阻塞时间；仅诊断不计算Score，不删除任何慢样本。",
+      "blocks": [
+        {
+          "block": 1,
+          "order": "B",
+          "anchor_pp": 29.805774,
+          "probe_pp": 54.188058,
+          "probe_change_percent": 81.8038947755559,
+          "anchor_cv_percent": 9.881521613899373,
+          "probe_cv_percent": 0.5913978316034135
+        },
+        {
+          "block": 2,
+          "order": "A",
+          "anchor_pp": 54.149768,
+          "probe_pp": 53.55987,
+          "probe_change_percent": -1.0893823220073706,
+          "anchor_cv_percent": 0.29418039242568866,
+          "probe_cv_percent": 0.4238453155319459
+        },
+        {
+          "block": 3,
+          "order": "A",
+          "anchor_pp": 54.18648,
+          "probe_pp": 54.271219,
+          "probe_change_percent": 0.15638402789772687,
+          "anchor_cv_percent": 0.2100173327368746,
+          "probe_cv_percent": 0.38547687679541526
+        },
+        {
+          "block": 4,
+          "order": "B",
+          "anchor_pp": 52.509147,
+          "probe_pp": 53.902291,
+          "probe_change_percent": 2.6531453653208192,
+          "anchor_cv_percent": 0.3583775603896212,
+          "probe_cv_percent": 0.48047122895017585
+        }
+      ],
+      "evidence_files": [
+        "D:\\compete\\.codex-deploy\\optimization\\order_crossover\\completed_summary.json",
+        "D:\\compete\\.codex-deploy\\optimization\\order_crossover\\completed-telemetry.tar.gz"
+      ],
+      "thread_telemetry_scope": "per-TID observed lifetime deltas, 30s snapshots, not whole-run blocking-time attribution",
+      "ppl": 2.7767,
+      "raw_samples": 120
+    }
+  }
+}
