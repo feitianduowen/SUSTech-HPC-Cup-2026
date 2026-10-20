@@ -1,0 +1,15 @@
+{
+  "base_commit": "d81235049384534c167caea52b85a694f6103d14",
+  "variants": {
+    "gemm-balanced": {
+      "file": "ggml/src/ggml-cpu/llamafile/sgemm.cpp",
+      "original_sha256": "8413c9a0828ddea7289aee72a32c03bd56a23ee40179ec3600f9b0589a21e338",
+      "sha256": "c85bd1323b256c73166682043e95930ab969eca96cf0fcfb92d3cb7f6aaa2ab9"
+    },
+    "row-quant": {
+      "file": "ggml/src/ggml-cpu/ggml-cpu.c",
+      "original_sha256": "45b22f8c83b2cbccabfc2f81a38ef8a5810223e1ce366b7c6f77d42faa5cc6f3",
+      "sha256": "dff4f8bf219334fc0a4e3efbdcd7b85cf0c82b57f27794d86ac51555ec342bbb"
+    }
+  }
+}

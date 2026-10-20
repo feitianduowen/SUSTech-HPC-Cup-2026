@@ -1,0 +1,10 @@
+{
+  "base_commit": "d81235049384534c167caea52b85a694f6103d14",
+  "variants": {
+    "softmax-rows": {
+      "file": "ggml/src/ggml-cpu/ops.cpp",
+      "original_sha256": "215d16e7ebbb4066920e2d7a5f7ea6c46636d298aedd553e00f0b3ebb0d59305",
+      "sha256": "f295df28a831fa21cb0f519a0609311375d98cf0a5f23726c312fc8cab6fd6a6"
+    }
+  }
+}

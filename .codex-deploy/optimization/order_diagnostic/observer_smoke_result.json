@@ -1,0 +1,15 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "started_unix": 1792424513.6441152,
+  "ended_unix": 1792424514.6561027,
+  "wall_seconds": 1.0119907390326262,
+  "user_cpu_seconds": 0.0,
+  "system_cpu_seconds": 0.003682,
+  "major_faults": 0,
+  "minor_faults": 91,
+  "max_rss_kb": 6964,
+  "voluntary_context_switches": 3,
+  "involuntary_context_switches": 0,
+  "diagnostic_unscored": true
+}

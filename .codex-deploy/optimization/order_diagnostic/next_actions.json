@@ -1,0 +1,29 @@
+{
+  "updated_at_hkt": "2026-10-20T13:11:40.401965+08:00",
+  "phase": "all three completed and analyzed",
+  "jobs": [
+    {
+      "job_id": "4338534",
+      "state": "DONE",
+      "host": "40*r13n10",
+      "mode": "pp-chain"
+    },
+    {
+      "job_id": "4338535",
+      "state": "DONE",
+      "host": "40*r13n12",
+      "mode": "tg-between"
+    },
+    {
+      "job_id": "4338536",
+      "state": "DONE",
+      "host": "40*r13n15",
+      "mode": "aaa"
+    }
+  ],
+  "source_baseline": "4338278 hash-verified Intel original production binary; same-node first PP/TG are per-job baselines",
+  "next": "检查阶段和固定PPL，失败则定位日志。完成后验证24个测速进程各10样本、全量SHA检查；分别计算各段probe/anchor PP与CV，先比较同节点A/B并保留时间位置和跨段残留效应，再交叉核对另一顺序。对齐每TID stat/schedstat/status/wchan与GGUF驻留页、NUMA、主机计数；schedstat为0或权限不足时明确不可解释。只诊断不计Score，不改变正式参数，不删慢样本。",
+  "fixed_requirements": "Intel Classic; 38 inference threads; fixed workloads and PPL ±5%; hg_6148 40slots; no OS settings changed",
+  "excel": "D:/compete/Qwen38_CPU_实验日志.xlsx",
+  "latest_followup": "D:\\compete\\.codex-deploy\\optimization\\order_crossover\\next_actions.json"
+}

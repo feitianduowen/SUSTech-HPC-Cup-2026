@@ -1,0 +1,836 @@
+CMake Warning at /work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/scripts/ui-assets.cmake:584 (message):
+icc: command line warning #10148: option '-Wpedantic' not supported
+icc: command line warning #10148: option '-Wpedantic' not supported
+icc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-alloc.c(136): warning #279: controlling expression is constant
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(3303): warning #279: controlling expression is constant
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(3304): warning #279: controlling expression is constant
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(3305): warning #279: controlling expression is constant
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(3306): warning #279: controlling expression is constant
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(3481): warning #279: controlling expression is constant
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(3482): warning #279: controlling expression is constant
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(3483): warning #279: controlling expression is constant
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(3484): warning #279: controlling expression is constant
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml.c(4291): warning #279: controlling expression is constant
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(3949): warning #279: controlling expression is constant
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(3950): warning #279: controlling expression is constant
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(3951): warning #279: controlling expression is constant
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml.c(4579): warning #279: controlling expression is constant
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml.c(4580): warning #279: controlling expression is constant
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml.c(4818): warning #279: controlling expression is constant
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml.c(4819): warning #279: controlling expression is constant
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(4189): warning #279: controlling expression is constant
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml.c(4820): warning #279: controlling expression is constant
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(4190): warning #279: controlling expression is constant
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(4191): warning #279: controlling expression is constant
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(4525): warning #279: controlling expression is constant
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(4526): warning #279: controlling expression is constant
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(4527): warning #279: controlling expression is constant
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(4528): warning #279: controlling expression is constant
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(4708): warning #279: controlling expression is constant
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(4709): warning #279: controlling expression is constant
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(4710): warning #279: controlling expression is constant
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(5122): warning #279: controlling expression is constant
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(5123): warning #279: controlling expression is constant
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-quants.c(5124): warning #279: controlling expression is constant
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml.c(7102): warning #279: controlling expression is constant
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml.c(7129): warning #279: controlling expression is constant
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml.c(7146): warning #188: enumerated type mixed with another type
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml.c(7213): warning #279: controlling expression is constant
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml.c(7219): warning #279: controlling expression is constant
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml.c(7376): warning #279: controlling expression is constant
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml.c(7377): warning #279: controlling expression is constant
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml.c(8158): warning #188: enumerated type mixed with another type
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-opt.cpp(24): warning #68: integer conversion resulted in a change of sign
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-opt.cpp(25): warning #68: integer conversion resulted in a change of sign
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icc: command line warning #10148: option '-Wpedantic' not supported
+icc: command line warning #10148: option '-Wpedantic' not supported
+icc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icc: command line warning #10148: option '-Wpedantic' not supported
+icc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+icpc: command line warning #10121: overriding '-xCORE-AVX512' with '-march=native'
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/tiled/tiled-kernel.cpp(290): warning #125: expected a "("
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/tiled/tiled-kernel.cpp(299): warning #125: expected a "("
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/tiled/tiled-kernel.cpp(307): warning #125: expected a "("
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/tiled/tiled-kernel.cpp(330): warning #125: expected a "("
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/tiled/tiled-kernel.cpp(339): warning #125: expected a "("
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/tiled/tiled-kernel.cpp(347): warning #125: expected a "("
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/tiled/tiled-kernel.cpp(368): warning #125: expected a "("
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/arch/x86/quants.c(69): remark #11505: No .dpi information for mul_add_epi8: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/arch/x86/quants.c(518): remark #11505: No .dpi information for get_scale_shuffle_q3k: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/arch/x86/quants.c(540): remark #11505: No .dpi information for get_scale_shuffle: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/arch/x86/quants.c(555): remark #11505: No .dpi information for ggml_vec_dot_q1_0_q8_0: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/arch/x86/quants.c(701): remark #11505: No .dpi information for ggml_vec_dot_q4_0_q8_0: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/arch/x86/quants.c(859): remark #11505: No .dpi information for ggml_vec_dot_q4_1_q8_1: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/arch/x86/quants.c(918): remark #11505: No .dpi information for ggml_vec_dot_mxfp4_q8_0: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/arch/x86/quants.c(1004): remark #11505: No .dpi information for ggml_vec_dot_nvfp4_q8_0: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/arch/x86/quants.c(1142): remark #11505: No .dpi information for ggml_vec_dot_q5_0_q8_0: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/arch/x86/quants.c(1376): remark #11505: No .dpi information for ggml_vec_dot_tq1_0_q8_K: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/arch/x86/quants.c(1508): remark #11505: No .dpi information for ggml_vec_dot_tq2_0_q8_K: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/arch/x86/quants.c(1574): remark #11505: No .dpi information for ggml_vec_dot_q2_K_q8_K: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/arch/x86/quants.c(1766): remark #11505: No .dpi information for ggml_vec_dot_q3_K_q8_K: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/arch/x86/quants.c(2038): remark #11505: No .dpi information for ggml_vec_dot_q4_K_q8_K: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/arch/x86/quants.c(2426): remark #11505: No .dpi information for ggml_vec_dot_q6_K_q8_K: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/arch/x86/quants.c(2660): remark #11505: No .dpi information for ggml_vec_dot_iq2_xxs_q8_K: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/arch/x86/quants.c(2778): remark #11505: No .dpi information for ggml_vec_dot_iq2_xs_q8_K: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/arch/x86/quants.c(3075): remark #11505: No .dpi information for ggml_vec_dot_iq2_s_q8_K: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/arch/x86/quants.c(3260): remark #11505: No .dpi information for ggml_vec_dot_iq3_xxs_q8_K: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/arch/x86/quants.c(3384): remark #11505: No .dpi information for ggml_vec_dot_iq3_s_q8_K: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/arch/x86/quants.c(3594): remark #11505: No .dpi information for ggml_vec_dot_iq1_s_q8_K: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/arch/x86/quants.c(3713): remark #11505: No .dpi information for ggml_vec_dot_iq1_m_q8_K: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/arch/x86/quants.c(3920): remark #11505: No .dpi information for ggml_vec_dot_iq4_nl_q8_0: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/arch/x86/quants.c(4004): remark #11505: No .dpi information for ggml_vec_dot_iq4_xs_q8_K: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/ggml-cpu.c(574): warning #188: enumerated type mixed with another type
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/repack.cpp(4927): warning #854: const variable "q1_0_4x4_q8_0" requires an initializer -- class "ggml::cpu::repack::tensor_traits<block_q1_0, 4L, 4L, GGML_TYPE_Q8_0>" has no user-provided default constructor
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/repack.cpp(4928): warning #854: const variable "q1_0_4x8_q8_0" requires an initializer -- class "ggml::cpu::repack::tensor_traits<block_q1_0, 8L, 4L, GGML_TYPE_Q8_0>" has no user-provided default constructor
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/repack.cpp(4931): warning #854: const variable "q4_0_4x4_q8_0" requires an initializer -- class "ggml::cpu::repack::tensor_traits<block_q4_0, 4L, 4L, GGML_TYPE_Q8_0>" has no user-provided default constructor
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/repack.cpp(4932): warning #854: const variable "q4_0_4x8_q8_0" requires an initializer -- class "ggml::cpu::repack::tensor_traits<block_q4_0, 8L, 4L, GGML_TYPE_Q8_0>" has no user-provided default constructor
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/repack.cpp(4933): warning #854: const variable "q4_0_8x8_q8_0" requires an initializer -- class "ggml::cpu::repack::tensor_traits<block_q4_0, 8L, 8L, GGML_TYPE_Q8_0>" has no user-provided default constructor
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/repack.cpp(4936): warning #854: const variable "q4_K_8x4_q8_K" requires an initializer -- class "ggml::cpu::repack::tensor_traits<block_q4_K, 4L, 8L, GGML_TYPE_Q8_K>" has no user-provided default constructor
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/repack.cpp(4937): warning #854: const variable "q4_K_8x8_q8_K" requires an initializer -- class "ggml::cpu::repack::tensor_traits<block_q4_K, 8L, 8L, GGML_TYPE_Q8_K>" has no user-provided default constructor
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/repack.cpp(4940): warning #854: const variable "q5_K_8x4_q8_K" requires an initializer -- class "ggml::cpu::repack::tensor_traits<block_q5_K, 4L, 8L, GGML_TYPE_Q8_K>" has no user-provided default constructor
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/repack.cpp(4941): warning #854: const variable "q5_K_8x8_q8_K" requires an initializer -- class "ggml::cpu::repack::tensor_traits<block_q5_K, 8L, 8L, GGML_TYPE_Q8_K>" has no user-provided default constructor
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/repack.cpp(4944): warning #854: const variable "q6_K_8x4_q8_K" requires an initializer -- class "ggml::cpu::repack::tensor_traits<block_q6_K, 4L, 8L, GGML_TYPE_Q8_K>" has no user-provided default constructor
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/repack.cpp(4945): warning #854: const variable "q6_K_8x8_q8_K" requires an initializer -- class "ggml::cpu::repack::tensor_traits<block_q6_K, 8L, 8L, GGML_TYPE_Q8_K>" has no user-provided default constructor
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/repack.cpp(4948): warning #854: const variable "q2_K_8x8_q8_K" requires an initializer -- class "ggml::cpu::repack::tensor_traits<block_q2_K, 8L, 8L, GGML_TYPE_Q8_K>" has no user-provided default constructor
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/repack.cpp(4951): warning #854: const variable "iq4_nl_4x4_q8_0" requires an initializer -- class "ggml::cpu::repack::tensor_traits<block_iq4_nl, 4L, 4L, GGML_TYPE_Q8_0>" has no user-provided default constructor
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/repack.cpp(4952): warning #854: const variable "iq4_nl_8x8_q8_0" requires an initializer -- class "ggml::cpu::repack::tensor_traits<block_iq4_nl, 8L, 8L, GGML_TYPE_Q8_0>" has no user-provided default constructor
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/repack.cpp(4955): warning #854: const variable "mxfp4_4x4_q8_0" requires an initializer -- class "ggml::cpu::repack::tensor_traits<block_mxfp4, 4L, 4L, GGML_TYPE_Q8_0>" has no user-provided default constructor
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/repack.cpp(4956): warning #854: const variable "mxfp4_8x8_q8_0" requires an initializer -- class "ggml::cpu::repack::tensor_traits<block_mxfp4, 8L, 8L, GGML_TYPE_Q8_0>" has no user-provided default constructor
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/repack.cpp(4959): warning #854: const variable "q8_0_4x4_q8_0" requires an initializer -- class "ggml::cpu::repack::tensor_traits<block_q8_0, 4L, 4L, GGML_TYPE_Q8_0>" has no user-provided default constructor
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/repack.cpp(4960): warning #854: const variable "q8_0_4x8_q8_0" requires an initializer -- class "ggml::cpu::repack::tensor_traits<block_q8_0, 8L, 4L, GGML_TYPE_Q8_0>" has no user-provided default constructor
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_fffE6mnpackILi4ELi5ELi4EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_fffE4gemmILi4ELi5ELi4EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(625): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_fffE9gemm_blocILi4ELi4EEEvll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_fffE6mnpackILi4ELi4ELi4EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_fffE4gemmILi4ELi4ELi4EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(625): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_fffE9gemm_blocILi4ELi3EEEvll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_fffE6mnpackILi4ELi3ELi4EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_fffE4gemmILi4ELi3ELi4EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(625): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_fffE9gemm_blocILi4ELi2EEEvll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_fffE6mnpackILi4ELi2ELi4EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_fffE4gemmILi4ELi2ELi4EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(625): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_fffE9gemm_blocILi4ELi1EEEvll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_fffE6mnpackILi4ELi1ELi4EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_fffE4gemmILi4ELi1ELi4EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_fffE6mnpackILi4ELi6ELi2EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_fffE4gemmILi4ELi6ELi2EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_fffE6mnpackILi4ELi5ELi2EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_fffE4gemmILi4ELi5ELi2EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_fffE6mnpackILi4ELi4ELi2EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_fffE4gemmILi4ELi4ELi2EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_fffE6mnpackILi4ELi3ELi2EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_fffE4gemmILi4ELi3ELi2EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_fffE6mnpackILi4ELi2ELi2EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_fffE4gemmILi4ELi2ELi2EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_fffE6mnpackILi4ELi1ELi2EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_fffE4gemmILi4ELi1ELi2EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_fffE6mnpackILi4ELi5ELi1EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_fffE4gemmILi4ELi5ELi1EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_fffE6mnpackILi4ELi4ELi1EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_fffE4gemmILi4ELi4ELi1EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_fffE6mnpackILi4ELi3ELi1EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_fffE4gemmILi4ELi3ELi1EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_fffE6mnpackILi4ELi2ELi1EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_fffE4gemmILi4ELi2ELi1EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_fffE6mnpackILi4ELi1ELi1EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_fffE4gemmILi4ELi1ELi1EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_11ggml_bf16_tS2_fE6mnpackILi4ELi5ELi4EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_11ggml_bf16_tS2_fE4gemmILi4ELi5ELi4EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(625): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_11ggml_bf16_tS2_fE9gemm_blocILi4ELi4EEEvll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_11ggml_bf16_tS2_fE6mnpackILi4ELi4ELi4EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_11ggml_bf16_tS2_fE4gemmILi4ELi4ELi4EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(625): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_11ggml_bf16_tS2_fE9gemm_blocILi4ELi3EEEvll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_11ggml_bf16_tS2_fE6mnpackILi4ELi3ELi4EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_11ggml_bf16_tS2_fE4gemmILi4ELi3ELi4EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(625): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_11ggml_bf16_tS2_fE9gemm_blocILi4ELi2EEEvll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_11ggml_bf16_tS2_fE6mnpackILi4ELi2ELi4EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_11ggml_bf16_tS2_fE4gemmILi4ELi2ELi4EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(625): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_11ggml_bf16_tS2_fE9gemm_blocILi4ELi1EEEvll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_11ggml_bf16_tS2_fE6mnpackILi4ELi1ELi4EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_11ggml_bf16_tS2_fE4gemmILi4ELi1ELi4EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_11ggml_bf16_tS2_fE6mnpackILi4ELi6ELi2EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_11ggml_bf16_tS2_fE4gemmILi4ELi6ELi2EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_11ggml_bf16_tS2_fE6mnpackILi4ELi5ELi2EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_11ggml_bf16_tS2_fE4gemmILi4ELi5ELi2EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_11ggml_bf16_tS2_fE6mnpackILi4ELi4ELi2EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_11ggml_bf16_tS2_fE4gemmILi4ELi4ELi2EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_11ggml_bf16_tS2_fE6mnpackILi4ELi3ELi2EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_11ggml_bf16_tS2_fE4gemmILi4ELi3ELi2EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_11ggml_bf16_tS2_fE6mnpackILi4ELi2ELi2EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_11ggml_bf16_tS2_fE4gemmILi4ELi2ELi2EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_11ggml_bf16_tS2_fE6mnpackILi4ELi1ELi2EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_11ggml_bf16_tS2_fE4gemmILi4ELi1ELi2EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_11ggml_bf16_tS2_fE6mnpackILi4ELi6ELi1EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_11ggml_bf16_tS2_fE4gemmILi4ELi6ELi1EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_11ggml_bf16_tS2_fE6mnpackILi4ELi5ELi1EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_11ggml_bf16_tS2_fE4gemmILi4ELi5ELi1EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_11ggml_bf16_tS2_fE6mnpackILi4ELi4ELi1EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_11ggml_bf16_tS2_fE4gemmILi4ELi4ELi1EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_11ggml_bf16_tS2_fE6mnpackILi4ELi3ELi1EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_11ggml_bf16_tS2_fE4gemmILi4ELi3ELi1EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_11ggml_bf16_tS2_fE6mnpackILi4ELi2ELi1EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_11ggml_bf16_tS2_fE4gemmILi4ELi2ELi1EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_11ggml_bf16_tS2_fE6mnpackILi4ELi1ELi1EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_11ggml_bf16_tS2_fE4gemmILi4ELi1ELi1EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(565): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfEC1EPK19ggml_compute_paramslPKtlS7_lPfl: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(568): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE6matmulEll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE6mnpackILi4ELi6ELi4EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE4gemmILi4ELi6ELi4EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(625): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE9gemm_blocILi4ELi6EEEvll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(625): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE9gemm_blocILi4ELi5EEEvll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE6mnpackILi4ELi5ELi4EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE4gemmILi4ELi5ELi4EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(625): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE9gemm_blocILi4ELi4EEEvll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE6mnpackILi4ELi4ELi4EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE4gemmILi4ELi4ELi4EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(625): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE9gemm_blocILi4ELi3EEEvll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE6mnpackILi4ELi3ELi4EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE4gemmILi4ELi3ELi4EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(625): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE9gemm_blocILi4ELi2EEEvll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE6mnpackILi4ELi2ELi4EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE4gemmILi4ELi2ELi4EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(625): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE9gemm_blocILi4ELi1EEEvll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE6mnpackILi4ELi1ELi4EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE4gemmILi4ELi1ELi4EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE6mnpackILi4ELi6ELi2EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE4gemmILi4ELi6ELi2EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE6mnpackILi4ELi5ELi2EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE4gemmILi4ELi5ELi2EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE6mnpackILi4ELi4ELi2EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE4gemmILi4ELi4ELi2EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE6mnpackILi4ELi3ELi2EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE4gemmILi4ELi3ELi2EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE6mnpackILi4ELi2ELi2EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE4gemmILi4ELi2ELi2EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE6mnpackILi4ELi1ELi2EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE4gemmILi4ELi1ELi2EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE6mnpackILi4ELi6ELi1EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE4gemmILi4ELi6ELi1EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE6mnpackILi4ELi5ELi1EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE4gemmILi4ELi5ELi1EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE6mnpackILi4ELi4ELi1EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE4gemmILi4ELi4ELi1EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE6mnpackILi4ELi3ELi1EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE4gemmILi4ELi3ELi1EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE6mnpackILi4ELi2ELi1EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE4gemmILi4ELi2ELi1EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(612): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE6mnpackILi4ELi1ELi1EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(674): remark #11505: No .dpi information for _ZN12_GLOBAL__N_18tinyBLASILi16E6__m512S1_ttfE4gemmILi4ELi1ELi1EEEvlll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1615): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q8_0S1_fE7gemm4xNILi3EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1669): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q8_0S1_fE7gemmMx4ILi3EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1726): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q8_0S1_fE4gemmILi3ELi3EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1615): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q8_0S1_fE7gemm4xNILi2EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1669): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q8_0S1_fE7gemmMx4ILi2EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1726): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q8_0S1_fE4gemmILi3ELi2EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1726): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q8_0S1_fE4gemmILi2ELi3EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1615): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q8_0S1_fE7gemm4xNILi1EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1726): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q8_0S1_fE4gemmILi2ELi2EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1669): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q8_0S1_fE7gemmMx4ILi1EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1726): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q8_0S1_fE4gemmILi3ELi1EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1726): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q8_0S1_fE4gemmILi1ELi3EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1726): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q8_0S1_fE4gemmILi2ELi1EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1726): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q8_0S1_fE4gemmILi1ELi2EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1726): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q8_0S1_fE4gemmILi1ELi1EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1451): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q4_010block_q8_0fEC1ElPKS1_lPKS2_lPflii: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1462): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q4_010block_q8_0fE6matmulEll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1467): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q4_010block_q8_0fE6mnpackEllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1775): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q4_010block_q8_0fE4loadEPKS2_: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1787): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q4_010block_q8_0fE4loadEPKS1_: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1845): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q4_010block_q8_0fE5updotE7__m256iS4_: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1857): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q4_010block_q8_0fE8denibbleEPKh: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1615): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q4_010block_q8_0fE7gemm4xNILi4EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1615): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q4_010block_q8_0fE7gemm4xNILi3EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1669): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q4_010block_q8_0fE7gemmMx4ILi3EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1726): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q4_010block_q8_0fE4gemmILi3ELi3EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1615): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q4_010block_q8_0fE7gemm4xNILi2EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1669): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q4_010block_q8_0fE7gemmMx4ILi2EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1726): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q4_010block_q8_0fE4gemmILi3ELi2EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1726): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q4_010block_q8_0fE4gemmILi2ELi3EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1615): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q4_010block_q8_0fE7gemm4xNILi1EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1726): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q4_010block_q8_0fE4gemmILi2ELi2EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1669): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q4_010block_q8_0fE7gemmMx4ILi1EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1726): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q4_010block_q8_0fE4gemmILi3ELi1EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1726): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q4_010block_q8_0fE4gemmILi1ELi3EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1726): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q4_010block_q8_0fE4gemmILi2ELi1EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1726): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q4_010block_q8_0fE4gemmILi1ELi2EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1726): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q4_010block_q8_0fE4gemmILi1ELi1EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1451): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q5_010block_q8_0fEC1ElPKS1_lPKS2_lPflii: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1462): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q5_010block_q8_0fE6matmulEll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1467): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q5_010block_q8_0fE6mnpackEllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1775): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q5_010block_q8_0fE4loadEPKS2_: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1801): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q5_010block_q8_0fE4loadEPKS1_: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1845): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q5_010block_q8_0fE5updotE7__m256iS4_: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1857): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q5_010block_q8_0fE8denibbleEPKh: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1864): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q5_010block_q8_0fE9bittobyteEPKh: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1615): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q5_010block_q8_0fE7gemm4xNILi4EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1615): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q5_010block_q8_0fE7gemm4xNILi3EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1669): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q5_010block_q8_0fE7gemmMx4ILi3EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1726): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q5_010block_q8_0fE4gemmILi3ELi3EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1615): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q5_010block_q8_0fE7gemm4xNILi2EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1669): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q5_010block_q8_0fE7gemmMx4ILi2EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1726): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q5_010block_q8_0fE4gemmILi3ELi2EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1726): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q5_010block_q8_0fE4gemmILi2ELi3EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1615): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q5_010block_q8_0fE7gemm4xNILi1EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1726): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q5_010block_q8_0fE4gemmILi2ELi2EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1669): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q5_010block_q8_0fE7gemmMx4ILi1EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1726): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q5_010block_q8_0fE4gemmILi3ELi1EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1726): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q5_010block_q8_0fE4gemmILi1ELi3EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1726): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q5_010block_q8_0fE4gemmILi2ELi1EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1726): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q5_010block_q8_0fE4gemmILi1ELi2EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1726): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI10block_q5_010block_q8_0fE4gemmILi1ELi1EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1451): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI12block_iq4_nl10block_q8_0fEC1ElPKS1_lPKS2_lPflii: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1462): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI12block_iq4_nl10block_q8_0fE6matmulEll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1467): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI12block_iq4_nl10block_q8_0fE6mnpackEllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1775): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI12block_iq4_nl10block_q8_0fE4loadEPKS2_: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1831): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI12block_iq4_nl10block_q8_0fE4loadEPKS1_: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1835): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI12block_iq4_nl10block_q8_0fE5load0EPKS1_: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1840): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI12block_iq4_nl10block_q8_0fE5load1EPKS1_: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1845): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI12block_iq4_nl10block_q8_0fE5updotE7__m256iS4_: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1615): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI12block_iq4_nl10block_q8_0fE7gemm4xNILi4EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1615): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI12block_iq4_nl10block_q8_0fE7gemm4xNILi3EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1669): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI12block_iq4_nl10block_q8_0fE7gemmMx4ILi3EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1726): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI12block_iq4_nl10block_q8_0fE4gemmILi3ELi3EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1615): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI12block_iq4_nl10block_q8_0fE7gemm4xNILi2EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1669): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI12block_iq4_nl10block_q8_0fE7gemmMx4ILi2EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1726): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI12block_iq4_nl10block_q8_0fE4gemmILi3ELi2EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1726): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI12block_iq4_nl10block_q8_0fE4gemmILi2ELi3EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1615): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI12block_iq4_nl10block_q8_0fE7gemm4xNILi1EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1726): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI12block_iq4_nl10block_q8_0fE4gemmILi2ELi2EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1669): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI12block_iq4_nl10block_q8_0fE7gemmMx4ILi1EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1726): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI12block_iq4_nl10block_q8_0fE4gemmILi3ELi1EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1726): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI12block_iq4_nl10block_q8_0fE4gemmILi1ELi3EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1726): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI12block_iq4_nl10block_q8_0fE4gemmILi2ELi1EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1726): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI12block_iq4_nl10block_q8_0fE4gemmILi1ELi2EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(1726): remark #11505: No .dpi information for _ZN12_GLOBAL__N_115tinyBLAS_Q0_AVXI12block_iq4_nl10block_q8_0fE4gemmILi1ELi1EEEvllll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(80): remark #11505: No .dpi information for _ZN17_INTERNAL7a04e6e312_GLOBAL__N_16unhalfEt: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(141): remark #11505: No .dpi information for _ZN17_INTERNAL7a04e6e312_GLOBAL__N_14maddI6__m256S2_EET0_T_S4_S3_: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(147): remark #11505: No .dpi information for _ZN17_INTERNAL7a04e6e312_GLOBAL__N_14maddI6__m512S2_EET0_T_S4_S3_: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(252): remark #11505: No .dpi information for _ZN17_INTERNAL7a04e6e312_GLOBAL__N_14hsumE6__m128: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(268): remark #11505: No .dpi information for _ZN17_INTERNAL7a04e6e312_GLOBAL__N_14hsumE6__m256: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(275): remark #11505: No .dpi information for _ZN17_INTERNAL7a04e6e312_GLOBAL__N_14hsumE6__m512: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(360): remark #11505: No .dpi information for _ZN17_INTERNAL7a04e6e312_GLOBAL__N_14loadI6__m512fEET_PKT0_: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(363): remark #11505: No .dpi information for _ZN17_INTERNAL7a04e6e312_GLOBAL__N_14loadI6__m512tEET_PKT0_: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(366): remark #11505: No .dpi information for _ZN17_INTERNAL7a04e6e312_GLOBAL__N_14loadI6__m51211ggml_bf16_tEET_PKT0_: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(425): remark #11505: No .dpi information for _ZN17_INTERNAL7a04e6e312_GLOBAL__N_116load_partial_u16I7__m256iEET_PKvi: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(441): remark #11505: No .dpi information for _ZN17_INTERNAL7a04e6e312_GLOBAL__N_112load_partialI6__m512fEET_PKT0_i: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(445): remark #11505: No .dpi information for _ZN17_INTERNAL7a04e6e312_GLOBAL__N_112load_partialI6__m512tEET_PKT0_i: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(449): remark #11505: No .dpi information for _ZN17_INTERNAL7a04e6e312_GLOBAL__N_112load_partialI6__m51211ggml_bf16_tEET_PKT0_i: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(554): remark #11505: No .dpi information for _ZN17_INTERNAL7a04e6e312_GLOBAL__N_18BLOC_POSElll: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp(549): remark #11505: No .dpi information for _ZN17_INTERNAL7a04e6e312_GLOBAL__N_110BLOCK_SIZEILi6EEElm: computing static profile
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/arch/x86/quants.c: remark #11503: Total routines 42, routines w/o profile info: 24
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp: remark #11503: Total routines 241, routines w/o profile info: 219
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/src/llama-grammar.cpp(618): warning #68: integer conversion resulted in a change of sign
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/src/llama-grammar.cpp(621): warning #68: integer conversion resulted in a change of sign
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/src/llama-sampler.cpp(3338): warning #68: integer conversion resulted in a change of sign
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/src/llama-kv-cache-dsv4.cpp(2186): warning #854: const variable "empty" requires an initializer -- class "llama_kv_cache_dsv4_context::comp_plan" has no user-provided default constructor
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/src/llama-kv-cache-dsv4.cpp(2197): warning #854: const variable "empty" requires an initializer -- class "llama_kv_cache_dsv4_context::comp_plan" has no user-provided default constructor
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/src/llama-kv-cache-dsv4.cpp(2208): warning #854: const variable "empty" requires an initializer -- class "llama_kv_cache_dsv4_context::comp_plan" has no user-provided default constructor
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/src/llama-context.cpp(4271): warning #68: integer conversion resulted in a change of sign
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/src/llama-context.cpp(4276): warning #68: integer conversion resulted in a change of sign
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/arg.cpp(1648): warning #68: integer conversion resulted in a change of sign
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/vendor/nlohmann/../nlohmann/json.hpp(8798): warning #1418: external function definition with no prior declaration
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/peg-parser.cpp(1761): warning #1011: missing return statement at end of non-void function "lambda [](const auto &)->std::string"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/peg-parser.cpp(1896): warning #1011: missing return statement at end of non-void function "lambda [](const auto &)->json"
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(354): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_array_t"
+/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/common/./jinja/value.h(489): warning #654: overloaded virtual function "jinja::value_t::at" is only partially overridden in class "jinja::value_object_t"
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+CMake Warning at /work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/scripts/ui-assets.cmake:584 (message):
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported
+icpc: command line warning #10148: option '-Wmissing-noreturn' not supported
+icpc: command line warning #10148: option '-Wpedantic' not supported

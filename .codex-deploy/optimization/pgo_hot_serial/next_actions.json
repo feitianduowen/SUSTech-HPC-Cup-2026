@@ -1,0 +1,39 @@
+{
+  "updated_at_hkt": "2026-10-19T20:45:57.247011+08:00",
+  "parent_job": "4337670",
+  "parent_status": "DONE / PPL_PASS",
+  "active_jobs": {
+    "control-first": "4338130",
+    "pgo-first": "4338131"
+  },
+  "nodes": {
+    "4338130": "r13n16",
+    "4338131": "r13n20"
+  },
+  "next": [
+    "先检查两项活动作业，RUN/PEND时不重复提交。每版本都必须本作业重新PPL PASS后PP/TG各完整十次，方可比较开发自测分数。",
+    "记录每作业内同节点相对变化；正反序跨节点，勿把绝对差异直接归因PGO。部分模板无训练计数，反馈日志保留；单线程训练分布有局限。",
+    "若一项失败，定位具体PPL/PP/TG/哈希阶段再修复；固定PPL590秒及正式38线程/形状/次数不改。",
+    "MKL正序PP+47.58%、反序-19.77%，未证明稳定收益，不据单轮替换生产。",
+    "O2暂缓，先取得O3热点PGO完整性能证据。保持生产部署、官方源、模型、旧失败及计数不变。",
+    "每个新LSF号立即登记；common collect --recent后同步Excel，保留人工备注、旧FAIL和新5%复核口径。"
+  ],
+  "ppl_policy": {
+    "baseline": 2.7696,
+    "tolerance_percent": 5,
+    "inclusive_interval": [
+      2.63112,
+      2.90808
+    ]
+  },
+  "logging": "D:/compete/Qwen38_CPU_实验日志.xlsx",
+  "latest_followup": {
+    "at": "2026-10-19T21:37:04.891794+08:00",
+    "completed_jobs": [
+      "4338130",
+      "4338131"
+    ],
+    "conclusion": "正反序PP收益反转，不认定PGO稳定提升；5组其他变量已提交。",
+    "next_actions": "D:\\compete\\.codex-deploy\\optimization\\factor_screen\\next_actions.json"
+  }
+}

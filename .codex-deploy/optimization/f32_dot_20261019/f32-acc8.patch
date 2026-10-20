@@ -1,0 +1,38 @@
+--- a/ggml/src/ggml-cpu/vec.cpp
++++ b/ggml/src/ggml-cpu/vec.cpp
+@@ -14,6 +14,35 @@
+    GGML_UNUSED(bx);
+    GGML_UNUSED(by);
+    GGML_UNUSED(bs);
++
++#if defined(__AVX512F__)
++    // Long F32 dot products: eight independent accumulation chains.
++    // Preserve the original implementation for short vectors and other ISAs.
++    if (n >= 256) {
++        __m512 accum[8] = {};
++        int i = 0;
++        for (; i <= n - 128; i += 128) {
++            for (int j = 0; j < 8; ++j) {
++                accum[j] = _mm512_fmadd_ps(_mm512_loadu_ps(x + i + 16*j),
++                                          _mm512_loadu_ps(y + i + 16*j), accum[j]);
++            }
++        }
++        if (i <= n - 64) {
++            for (int j = 0; j < 4; ++j) {
++                accum[j] = _mm512_fmadd_ps(_mm512_loadu_ps(x + i + 16*j),
++                                          _mm512_loadu_ps(y + i + 16*j), accum[j]);
++            }
++            i += 64;
++        }
++        for (int j = 0; j < 4; ++j) accum[j] = _mm512_add_ps(accum[j], accum[j+4]);
++        accum[0] = _mm512_add_ps(accum[0], accum[2]);
++        accum[1] = _mm512_add_ps(accum[1], accum[3]);
++        float result = _mm512_reduce_add_ps(_mm512_add_ps(accum[0], accum[1]));
++        for (; i < n; ++i) result += x[i]*y[i];
++        *s = result;
++        return;
++    }
++#endif
+ 
+ #if defined(GGML_SIMD)
+     float sumf = 0.0f;

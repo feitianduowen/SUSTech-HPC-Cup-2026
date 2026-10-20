@@ -1,0 +1,13 @@
+{
+  "validated": true,
+  "job_count": 82,
+  "sample_count": 910,
+  "new_jobs": [
+    "4338130",
+    "4338131"
+  ],
+  "parent_ppl": 2.7767,
+  "historical_failures_preserved": true,
+  "new_rule_separate": true,
+  "paired_benchmark_scores_pending": true
+}

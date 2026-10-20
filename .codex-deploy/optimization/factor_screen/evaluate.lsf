@@ -1,0 +1,366 @@
+#!/bin/bash
+#BSUB -J qwen38_candidate_bench
+#BSUB -q ssc-cpu
+#BSUB -m hg_6148
+#BSUB -W 04:00
+#BSUB -n 40
+#BSUB -e /work/apac2602/qwen38-cpu/logs/%J.err
+#BSUB -o /work/apac2602/qwen38-cpu/logs/%J.out
+#BSUB -R "span[ptile=40]"
+
+set -euo pipefail
+
+# =============================================================================
+# 1. USER CONFIGURATION (edit the paths here; all others are derived)
+# =============================================================================
+LLAMA_CPP_DIR="/work/apac2602/qwen38-cpu/llama.cpp"  # Your compiled llama.cpp source tree
+MODEL="/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf"  # First GGUF shard
+PPL_DATA="/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/wikitext-2-raw/wiki.test.raw"  # Download on login node first
+
+# Reference from the original (unoptimized) llama.cpp run.
+# Command-line environment values may override these defaults.
+PPL_BASELINE_JSON="${PPL_BASELINE_JSON:-/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/perplexity_result.json}"
+
+# Baseline performance from the same unoptimized build (tokens/s).
+BASE_PP2048="${BASE_PP2048:-46.929024}"
+BASE_TG128_D2048="${BASE_TG128_D2048:-3.295524}"
+# For reference only (not part of the score formula).
+BASE_PP2048_STDDEV=0.732771
+BASE_TG128_D2048_STDDEV=0.005524
+
+# 0: run ONLY the perplexity precision test (max ~10 min per run).
+# 1: run the precision test first, THEN the original two speed benchmarks.
+# Important: RUN_BENCH=1 does NOT limit the entire LSF job to 10 minutes.
+RUN_BENCH="${RUN_BENCH:-1}"
+
+# Conservative, low-cost PPL smoke/regression test; keep exactly identical
+# between baseline and optimized runs or comparison is rejected.
+# Default: 512 x 2 = 1024 tokens processed; roughly half are scored.
+# If this times out on your node, use 256 x 2 (batch=256, ubatch=128),
+# or use 512 x 4 for a stronger check when performance allows.
+# ALWAYS regenerate the baseline after changing any of these values.
+PPL_CTX=512
+PPL_CHUNKS=2
+PPL_BATCH=512
+PPL_UBATCH=256
+PPL_MAX_REL_DIFF_PERCENT=5.0  # Official amendment: inclusive [2.63112, 2.90808]
+PPL_TIMEOUT_SECONDS=590     # timeout(1) + 2-sec kill grace < 600s; includes model loading
+
+# Preserve the performance benchmark's original settings.
+THREADS=38
+REPS=10
+BATCH=2048
+UBATCH=512
+
+# =============================================================================
+# 2. OFFLINE CPU ENVIRONMENT
+# =============================================================================
+source /work/apac2602/qwen38-cpu/scripts/env.sh
+EXPERIMENT_ROOT=/work/apac2602/qwen38-cpu/optimization/20261018-v1
+EXPERIMENT_VARIANT=${EXPERIMENT_VARIANT:-compiler}
+LLAMA_CPP_DIR=${COMPILER_BUILD_ROOT:?set COMPILER_BUILD_ROOT}
+
+LLAMA_BENCH="${LLAMA_CPP_DIR}/build/bin/llama-bench"
+LLAMA_PPL="${LLAMA_CPP_DIR}/build/bin/llama-perplexity"
+RESULT_DIR="${EXPERIMENT_OUTPUT_DIR:-${EXPERIMENT_ROOT}/results/${EXPERIMENT_VARIANT}_${LSB_JOBID}}"
+
+unset KMP_BLOCKTIME OMP_WAIT_POLICY KMP_AFFINITY GOMP_CPU_AFFINITY KMP_HW_SUBSET
+export OMP_NUM_THREADS="${THREADS}"
+export OMP_DYNAMIC=FALSE
+export OMP_PROC_BIND=close
+export OMP_PLACES=cores
+export OPENBLAS_NUM_THREADS="${THREADS}"
+export MKL_NUM_THREADS="${THREADS}"
+export BLIS_NUM_THREADS="${THREADS}"
+
+cd "${LS_SUBCWD:-$PWD}"
+mkdir -p "${RESULT_DIR}"
+
+error() { echo "ERROR: $*" >&2; exit 1; }
+[[ -x "${LLAMA_PPL}" ]] || error "llama-perplexity missing: ${LLAMA_PPL}; rebuild with the install script"
+[[ -f "${MODEL}" ]] || error "Model file not found: ${MODEL}"
+[[ -s "${PPL_DATA}" ]] || error "PPL input missing/empty: ${PPL_DATA}; download WikiText-2 on login node"
+[[ -f "${PPL_BASELINE_JSON}" ]] || error "PPL baseline JSON missing: ${PPL_BASELINE_JSON}"
+[[ -r "${PPL_BASELINE_JSON}" ]] || error "PPL baseline JSON not readable: ${PPL_BASELINE_JSON}"
+[[ "${RUN_BENCH}" == 0 || "${RUN_BENCH}" == 1 ]] || error "RUN_BENCH must be 0 or 1"
+command -v timeout >/dev/null 2>&1 || error "GNU timeout is required for the <=10 min PPL time limit"
+command -v python3 >/dev/null 2>&1 || error "python3 is required for PPL parsing and validation"
+if [[ "${RUN_BENCH}" == 1 ]]; then
+    [[ -x "${LLAMA_BENCH}" ]] || error "llama-bench missing: ${LLAMA_BENCH}"
+fi
+
+# Check each shard of a split GGUF model. The first shard is passed to llama.cpp.
+MODEL_DIR="$(dirname "${MODEL}")"
+MODEL_NAME="$(basename "${MODEL}")"
+if [[ "${MODEL_NAME}" =~ ^(.*)-([0-9]{5})-of-([0-9]{5})\.gguf$ ]]; then
+    PREFIX="${BASH_REMATCH[1]}"
+    SHARD_TOTAL=$((10#${BASH_REMATCH[3]}))
+    for ((i=1; i<=SHARD_TOTAL; i++)); do
+        printf -v SHARD_NAME '%s-%05d-of-%05d.gguf' "${PREFIX}" "${i}" "${SHARD_TOTAL}"
+        [[ -s "${MODEL_DIR}/${SHARD_NAME}" ]] || error "Missing/empty model shard: ${MODEL_DIR}/${SHARD_NAME}"
+    done
+fi
+
+{
+    echo "===== CPU experiment environment ====="
+    echo "Date: $(date -Is)"
+    echo "Host: $(hostname)"
+    echo "LSF job ID: ${LSB_JOBID:-N/A}"
+    echo "Allocated slots: ${LSB_DJOB_NUMPROC:-N/A}"
+    echo "CPU threads: ${THREADS}"
+    echo "Model: ${MODEL}"
+    echo "WikiText: ${PPL_DATA}"
+    echo "PPL parameters: ctx=${PPL_CTX}, chunks=${PPL_CHUNKS}, batch=${PPL_BATCH}, ubatch=${PPL_UBATCH}"
+    echo "PPL time limit: ${PPL_TIMEOUT_SECONDS}s + at most 2s kill grace"
+    echo "PPL comparison tolerance: +/- ${PPL_MAX_REL_DIFF_PERCENT}%"
+    echo "Reference JSON: ${PPL_BASELINE_JSON:-<not set: record baseline only>}"
+    echo "PP2048 baseline: ${BASE_PP2048} t/s (stddev ${BASE_PP2048_STDDEV})"
+    echo "TG128 baseline: ${BASE_TG128_D2048} t/s (stddev ${BASE_TG128_D2048_STDDEV})"
+    echo "Run benchmarks: ${RUN_BENCH}"
+    echo
+    echo "===== Modules / compilers ====="
+    module list 2>&1 || true
+    icc --version | head -n 1
+    icpc --version | head -n 1
+    cmake --version | head -n 1
+    echo
+    echo "===== CPU / memory ====="
+    lscpu
+    free -h
+    echo
+    echo "===== llama.cpp ====="
+    "${LLAMA_PPL}" --version 2>&1 || true
+    git -C "${LLAMA_CPP_DIR}" rev-parse HEAD 2>/dev/null || true
+    git -C "${LLAMA_CPP_DIR}" describe --tags --always --dirty 2>/dev/null || true
+    echo
+    echo "===== Model shards ====="
+    if [[ -n "${SHARD_TOTAL:-}" ]]; then
+        for ((i=1; i<=SHARD_TOTAL; i++)); do
+            printf -v SHARD_NAME '%s-%05d-of-%05d.gguf' "${PREFIX}" "${i}" "${SHARD_TOTAL}"
+            ls -lh "${MODEL_DIR}/${SHARD_NAME}"
+        done
+    else
+        ls -lh "${MODEL}"
+    fi
+} | tee "${RESULT_DIR}/environment.txt"
+
+# =============================================================================
+# 3. PPL PRECISION TEST: hard time limit on the actual inference process
+# =============================================================================
+PPL_LOG="${RESULT_DIR}/perplexity.log"
+PPL_JSON="${RESULT_DIR}/perplexity_result.json"
+PPL_ARGS=(
+    -m "${MODEL}" -f "${PPL_DATA}"
+    -t "${THREADS}" -tb "${THREADS}" -ngl 0
+    -c "${PPL_CTX}" -b "${PPL_BATCH}" -ub "${PPL_UBATCH}"
+    -ctk f16 -ctv f16
+    --numa distribute
+    --chunks "${PPL_CHUNKS}"
+    --no-warmup
+)
+
+echo "===== PPL accuracy regression (maximum 10 minutes) ====="
+PPL_STARTED=$(date +%s)
+if timeout --signal=TERM --kill-after=2s "${PPL_TIMEOUT_SECONDS}s" \
+    "${LLAMA_PPL}" "${PPL_ARGS[@]}" > "${PPL_LOG}" 2>&1; then
+    PPL_EXIT=0
+else
+    PPL_EXIT=$?
+fi
+PPL_ELAPSED=$(( $(date +%s) - PPL_STARTED ))
+
+echo "PPL process exit=${PPL_EXIT}; elapsed=${PPL_ELAPSED}s"
+echo "PPL log: ${PPL_LOG}"
+if (( PPL_EXIT != 0 )); then
+    if (( PPL_EXIT == 124 || PPL_EXIT == 137 )); then
+        echo "PPL STATUS: TIMEOUT. No numerical accuracy verdict is possible." >&2
+    else
+        echo "PPL STATUS: ERROR. Read ${PPL_LOG}." >&2
+    fi
+    tail -n 25 "${PPL_LOG}" >&2 || true
+    exit 1
+fi
+
+# Require a completed, finite PPL and the exact requested number of chunks;
+# write a reproducible reference record or compare against a previous one.
+if ! python3 - "${PPL_LOG}" "${PPL_JSON}" "${PPL_BASELINE_JSON}" \
+    "${MODEL}" "${PPL_DATA}" "${PPL_CTX}" "${PPL_CHUNKS}" \
+    "${PPL_BATCH}" "${PPL_UBATCH}" "${THREADS}" \
+    "${PPL_MAX_REL_DIFF_PERCENT}" "${PPL_ELAPSED}" <<'PY'
+import hashlib
+import json
+import math
+from pathlib import Path
+import re
+import sys
+
+(log_path, result_path, reference_path, model_name, data_name, ctx_s,
+ chunks_s, batch_s, ubatch_s, threads_s, tolerance_s, elapsed_s) = sys.argv[1:]
+ctx, chunks = int(ctx_s), int(chunks_s)
+tolerance = float(tolerance_s)
+log_text = Path(log_path).read_text(encoding="utf-8", errors="replace")
+
+# Accept only a *completed* run; not intermediate [chunk] values.
+match = re.findall(r"Final estimate:\s*PPL\s*=\s*([0-9]+(?:\.[0-9]+)?(?:[eE][+-]?\d+)?)", log_text)
+if not match:
+    sys.exit("PPL INVALID: no completed 'Final estimate: PPL = ...' found")
+ppl = float(match[-1])
+if not math.isfinite(ppl) or ppl <= 0:
+    sys.exit(f"PPL INVALID: not finite or positive: {ppl}")
+chunk_matches = re.findall(
+    r"(?:calculating perplexity|computing) over\s+(\d+)\s+chunks,\s*"
+    r"n_ctx=(\d+),\s*batch_size=(\d+)", log_text)
+if not chunk_matches or tuple(map(int, chunk_matches[-1])) != (chunks, ctx, int(batch_s)):
+    sys.exit(f"PPL INVALID: log does not confirm requested chunks={chunks}, "
+             f"ctx={ctx}, batch={batch_s}")
+
+model = Path(model_name).resolve(strict=True)
+data = Path(data_name).resolve(strict=True)
+shard_match = re.fullmatch(r"(.*)-(\d{5})-of-(\d{5})\.gguf", model.name)
+if shard_match:
+    prefix, _, total = shard_match.groups()
+    model_files = [model.with_name(f"{prefix}-{i:05d}-of-{total}.gguf")
+                   for i in range(1, int(total) + 1)]
+else:
+    model_files = [model]
+model_fingerprint = [[str(p), p.stat().st_size] for p in model_files]
+sha = hashlib.sha256()
+with data.open("rb") as fp:
+    for block in iter(lambda: fp.read(1024 * 1024), b""):
+        sha.update(block)
+
+conditions = {
+    "model_files_path_and_size": model_fingerprint,
+    "data_sha256": sha.hexdigest(),
+    "ppl_ctx": ctx,
+    "ppl_chunks": chunks,
+    "ppl_batch": int(batch_s),
+    "ppl_ubatch": int(ubatch_s),
+    "threads": int(threads_s),
+    "kv_cache_k": "f16",
+    "kv_cache_v": "f16",
+    "numa": "distribute",
+    "warmup": False,
+    "gpu_layers": 0,
+}
+result = {
+    "schema": "llama_cpp_ppl_regression_v1",
+    "ppl": ppl,
+    "elapsed_seconds": int(elapsed_s),
+    "conditions": conditions,
+    "baseline_json": reference_path or None,
+    "tolerance_percent": tolerance,
+}
+status = "REFERENCE_RECORDED"
+if reference_path:
+    reference = json.loads(Path(reference_path).read_text(encoding="utf-8"))
+    if reference.get("schema") != result["schema"]:
+        sys.exit("PPL INVALID: unsupported baseline JSON schema")
+    if reference.get("conditions") != conditions:
+        sys.exit("PPL INVALID: baseline model/data/params do not match this run")
+    base_ppl = float(reference["ppl"])
+    if not math.isfinite(base_ppl) or base_ppl <= 0:
+        sys.exit("PPL INVALID: baseline PPL is not a positive finite number")
+    diff_pct = 100.0 * (ppl / base_ppl - 1.0)
+    result["baseline_ppl"] = base_ppl
+    result["relative_difference_percent"] = diff_pct
+    if base_ppl != 2.7696 or tolerance != 5.0:
+        sys.exit("PPL INVALID: amended policy requires baseline 2.7696 and tolerance 5%")
+    result["accepted_ppl_interval"] = [2.63112, 2.90808]
+    result["policy_id"] = "20261019-ppl-tolerance-5pct"
+    status = "PASS" if 2.63112 <= ppl <= 2.90808 else "FAIL"
+    print(f"Baseline PPL:   {base_ppl:.6f}")
+    print(f"Optimized PPL:  {ppl:.6f}")
+    print(f"Relative delta: {diff_pct:+.6f}% (allowed +/- {tolerance:.3f}%)")
+else:
+    print(f"Reference PPL:  {ppl:.6f}")
+    print("No comparison yet; use this JSON with PPL_BASELINE_JSON for the optimized run.")
+result["status"] = status
+Path(result_path).write_text(json.dumps(result, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+print(f"PPL STATUS: {status}")
+print(f"PPL JSON:   {result_path}")
+if status == "FAIL":
+    sys.exit(2)
+PY
+then
+    echo "PPL gate failed/invalid; skipping performance benchmarking." >&2
+    exit 1
+fi
+
+# A PPL-only job is intended for fast baseline/optimization checks.
+if [[ "${RUN_BENCH}" == 0 ]]; then
+    echo "===== PPL-only job complete (RUN_BENCH=0) ====="
+    echo "Results directory: ${RESULT_DIR}"
+    exit 0
+fi
+
+# =============================================================================
+# 4. ORIGINAL SPEED BENCHMARKS (NOT INCLUDED in the 10-minute PPL limit)
+# =============================================================================
+# Runtime factors apply to development speed measurements only.
+case "${FACTOR:?}:${CASE_NAME:?}" in
+  wait:baseline) export KMP_BLOCKTIME=200 OMP_WAIT_POLICY=ACTIVE;;
+  wait:candidate) export KMP_BLOCKTIME=0 OMP_WAIT_POLICY=ACTIVE;;
+  affinity:candidate) export OMP_PROC_BIND=spread;;
+esac
+env | sort | grep -E '^(OMP_|KMP_|MKL_|OPENBLAS_|BLIS_)' > "$RESULT_DIR/speed_environment.txt"
+COMMON_ARGS=(
+    -m "${MODEL}" -t "${THREADS}" -ngl 0
+    -b "${BATCH}" -ub "${UBATCH}"
+    -ctk f16 -ctv f16
+    --numa distribute
+    -r "${REPS}"
+)
+
+echo "===== Running PP2048 ====="
+PP_JSON="${RESULT_DIR}/pp2048.json"
+printf '%q ' "${LLAMA_BENCH}" "${COMMON_ARGS[@]}" -p 2048 -n 0 -o json > "${RESULT_DIR}/pp.command"
+"${LLAMA_BENCH}" "${COMMON_ARGS[@]}" -p 2048 -n 0 -o json > "${PP_JSON}"
+echo "PP2048 result written to ${PP_JSON}"
+
+echo "===== Running TG128 @ depth 2048 ====="
+TG_JSON="${RESULT_DIR}/tg128_d2048.json"
+printf '%q ' "${LLAMA_BENCH}" "${COMMON_ARGS[@]}" -p 0 -n 128 -d 2048 -o json > "${RESULT_DIR}/tg.command"
+"${LLAMA_BENCH}" "${COMMON_ARGS[@]}" -p 0 -n 128 -d 2048 -o json > "${TG_JSON}"
+echo "TG128@D2048 result written to ${TG_JSON}"
+
+if command -v python3 >/dev/null 2>&1; then
+    python3 - "${PP_JSON}" "${TG_JSON}" \
+        "${BASE_PP2048:-}" "${BASE_TG128_D2048:-}" <<'PY' || true
+import json
+import math
+import sys
+
+pp_file, tg_file, base_pp_s, base_tg_s = sys.argv[1:5]
+with open(pp_file, "r", encoding="utf-8") as f:
+    pp_data = json.load(f)
+with open(tg_file, "r", encoding="utf-8") as f:
+    tg_data = json.load(f)
+pp = pp_data[0] if isinstance(pp_data, list) else pp_data
+tg = tg_data[0] if isinstance(tg_data, list) else tg_data
+pp_avg = float(pp["avg_ts"])
+pp_std = float(pp.get("stddev_ts", 0.0))
+tg_avg = float(tg["avg_ts"])
+tg_std = float(tg.get("stddev_ts", 0.0))
+
+print("\n===== Benchmark summary =====")
+print(f"PP2048          : {pp_avg:.6f} t/s  (stddev {pp_std:.6f}, CV {100*pp_std/pp_avg:.2f}%)")
+print(f"TG128 @ D2048   : {tg_avg:.6f} t/s  (stddev {tg_std:.6f}, CV {100*tg_std/tg_avg:.2f}%)")
+if base_pp_s and base_tg_s:
+    base_pp = float(base_pp_s)
+    base_tg = float(base_tg_s)
+    score = 100.0 * math.sqrt((pp_avg/base_pp) * (tg_avg/base_tg))
+    print("\n===== Normalized score =====")
+    print(f"Baseline PP2048        : {base_pp:.6f} t/s")
+    print(f"Baseline TG128@D2048   : {base_tg:.6f} t/s")
+    print(f"PP speedup             : {pp_avg/base_pp:.6f}x")
+    print(f"TG speedup             : {tg_avg/base_tg:.6f}x")
+    print(f"Geometric-mean score   : {score:.4f}")
+else:
+    print("\nNo performance baseline values supplied; raw results shown above.")
+    print("To score: BASE_PP2048=<value> BASE_TG128_D2048=<value> bsub < llama_bench_38t_ppl.lsf")
+PY
+fi
+
+echo "===== PPL regression and benchmark complete ====="
+echo "Results directory: ${RESULT_DIR}"

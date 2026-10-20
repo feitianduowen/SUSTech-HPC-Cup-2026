@@ -81,6 +81,17 @@ for snapshot in sorted((EVIDENCE/'job_updates').glob('*.json')):
     registry['updated_at']=max(registry['updated_at'],update['updated_at'])
 registry['jobs']=sorted(merged_jobs.values(),key=lambda job:int(job['job_id']))
 jobs = registry['jobs']
+for analysis_path in sorted((EVIDENCE/'analysis_updates').glob('*.json')):
+    analysis_update=json.loads(analysis_path.read_text(encoding='utf-8'))
+    for job in jobs:
+        analysis_item=analysis_update['jobs'].get(job['job_id'])
+        if analysis_item:
+            job.setdefault('analysis_notes',[]).append(analysis_item['summary'])
+            for measurement in job['measurements']:
+                observed=analysis_item.get('ppl_observations',{}).get(measurement['name'])
+                if observed and not measurement.get('ppl'):
+                    measurement['ppl_observed_status']=observed
+            job['evidence'].append({'path':str(analysis_path),'text':json.dumps(analysis_item,ensure_ascii=False,indent=2)})
 # Audited descriptive corrections preserve raw submissions and runtime configuration.
 for correction_file in sorted(EVIDENCE.glob('submission_metadata_corrections*.json')):
     correction=json.loads(correction_file.read_text(encoding='utf-8'))
@@ -137,7 +148,7 @@ log.append(log_headers)
 detail = book.create_sheet('运行结果')
 detail.append(['作业ID','版本/结果目录','PPL','PPL状态','PP tokens/s','PP标准差','PP CV','TG tokens/s','TG标准差','TG CV','自测Score','相对 Baseline','基线PP','基线TG','PP相对变化','TG相对变化','Score相对变化','比较类型','证据目录','算子规模/模式','原版中位ns/dot','候选中位ns/dot','算子配对中位速度变化','逐位差分','诊断返回码','诊断结果'])
 kernel_samples = book.create_sheet('算子原始样本')
-kernel_samples.append(['作业ID','候选','blocks','模式','轮次','函数','ns/dot','配对速度变化','口径','证据文件'])
+kernel_samples.append(['作业ID','候选','blocks','模式','轮次','函数','ns/算子调用','配对速度变化','口径','证据文件'])
 samples = book.create_sheet('十次原始样本')
 samples.append(['作业ID','版本','workload','样本序号','tokens/s','耗时ns','测量类型','证据文件'])
 events = book.create_sheet('LSF与配置证据')
@@ -145,6 +156,12 @@ events.append(['作业ID','证据路径','原始记录（截取）'])
 for item in registry.get('admission_evidence',[]):
     events.append(['无（提交准入检查）',item['path'],item['text'][:30000]])
 
+for job in jobs:
+    configured=job.get('submission',{}).get('measurement_baselines',{})
+    mappings={name.format(job_id=job['job_id']): (base.format(job_id=job['job_id']) if base else None) for name,base in configured.items()}
+    for measurement in job['measurements']:
+        if measurement['name'] in mappings:
+            measurement['baseline_name']=mappings[measurement['name']]
 all_measurements = {m['name']:m for j in jobs for m in j['measurements']}
 jobs_by_id = {j['job_id']:j for j in jobs}
 def scalar(m,key):
@@ -188,13 +205,15 @@ for job in jobs:
         dpp=pp['avg_ts']/bpp['avg_ts']-1 if pp and bpp else None
         dtg=tg['avg_ts']/btg['avg_ts']-1 if tg and btg else None
         ds=score/bs-1 if score and bs else None
-        comp='同节点顺序对照' if bm and m['name'].startswith(('confirm-','memory-','compiler-','q8-paired-')) else ('跨节点筛选' if bm else '无')
+        same_node=job.get('submission',{}).get('comparison_scope')=='same-node' or m['name'].startswith(('confirm-','memory-','compiler-','q8-paired-','f32-acc8-'))
+        comp='同节点顺序对照' if bm and same_node else ('跨节点筛选' if bm else '无')
         if m.get('ppl_scope'): comp+='；'+m['ppl_scope']
         label=bm['name'] if bm else '无'
         if jid in ['4335554','4335568','4335584','4335605','4335636','4335832']:
             label='官方 PPL 2.7696'
-        detail.append([jid,m['name'],p.get('ppl'),p.get('status','未运行'),pp['avg_ts'] if pp else None,pp['stddev_ts'] if pp else None,pp['stddev_ts']/pp['avg_ts'] if pp else None,tg['avg_ts'] if tg else None,tg['stddev_ts'] if tg else None,tg['stddev_ts']/tg['avg_ts'] if tg else None,score,label,bpp['avg_ts'] if bpp else None,btg['avg_ts'] if btg else None,dpp,dtg,ds,comp,m['path']])
-        result=f"{m['name']}: PPL={p.get('ppl','待运行')}/{p.get('status','未运行')}"
+        ppl_display_status=p.get('status',m.get('ppl_observed_status','未运行'))
+        detail.append([jid,m['name'],p.get('ppl'),ppl_display_status,pp['avg_ts'] if pp else None,pp['stddev_ts'] if pp else None,pp['stddev_ts']/pp['avg_ts'] if pp else None,tg['avg_ts'] if tg else None,tg['stddev_ts'] if tg else None,tg['stddev_ts']/tg['avg_ts'] if tg else None,score,label,bpp['avg_ts'] if bpp else None,btg['avg_ts'] if btg else None,dpp,dtg,ds,comp,m['path']])
+        result=f"{m['name']}: PPL={p.get('ppl','无有效结果' if m.get('ppl_observed_status') else '待运行')}/{ppl_display_status}"
         if pp: result+=f"; PP={pp['avg_ts']:.6f} (CV {100*pp['stddev_ts']/pp['avg_ts']:.2f}%)"
         if tg: result+=f"; TG={tg['avg_ts']:.6f} (CV {100*tg['stddev_ts']/tg['avg_ts']:.2f}%)"
         if score: result+=f'; Score={score:.3f}'
@@ -230,6 +249,37 @@ for job in jobs:
                 summary+='\n'+kernel_summary['failure_reason']
             if kernel_summary.get('interpretation'):
                 summary+='\n'+kernel_summary['interpretation']
+            for result in kernel_summary.get('softmax_microbench',[]):
+                shape='x'.join(str(x) for x in result['shape'])
+                summary+=f"\nSoftmax {shape}: 中位原版={result['baseline_ns_median']:.3f}ns/graph, 候选={result['candidate_ns_median']:.3f}ns/graph, 吞吐变化={result['speedup']-1:+.2%}（仅算子）"
+                groups=result['samples']
+                assert len(groups['baseline'])==len(groups['candidate'])==10
+                for index,(base_ns,candidate_ns) in enumerate(zip(groups['baseline'],groups['candidate']),1):
+                    for name,ns in [('baseline',base_ns),('candidate',candidate_ns)]:
+                        kernel_samples.append([jid,'softmax-rows',None,shape,index,name,ns,base_ns/candidate_ns-1,'实际Softmax graph，含线程池调度；38线程10轮AB/BA；非完整模型',evidence['path']])
+            if 'microbench' in kernel_summary and 'dot_checks' in kernel_summary:
+                for result in kernel_summary['microbench']:
+                    summary+=f"\n实际dot n={result['n']}: 中位耗时原版={result['baseline_ns_median']:.3f}ns, 候选={result['candidate_ns_median']:.3f}ns, 吞吐变化={result['speedup']-1:+.2%}（仅单核驻留微基准）"
+                    groups=result['samples']
+                    assert len(groups['baseline'])==len(groups['candidate'])==10
+                    for index,(base_ns,candidate_ns) in enumerate(zip(groups['baseline'],groups['candidate']),1):
+                        for name,ns in [('baseline',base_ns),('candidate',candidate_ns)]:
+                            kernel_samples.append([jid,job.get('submission',{}).get('case_prefix','dot-candidate'),None,f"resident n={result['n']}",index,name,ns,base_ns/candidate_ns-1,'实际库函数交替AB/BA；单核CPU0/membind0；非完整模型',evidence['path']])
+            for probe in kernel_summary.get('runtime_probe_cases',[]):
+                result=probe.get('result',{})
+                state=result.get('status','TIMEOUT' if probe['returncode']==124 else 'FAIL')
+                line=f"{probe['name']}: {state}, rc={probe['returncode']}, wall={probe['wall_seconds']:.3f}s"
+                if result:
+                    line+=f"; compute={result['seconds']:.6f}s, mismatches={result['mismatches']}"
+                summary+='\n'+line
+                values=[None]*26
+                values[0:4]=[jid,probe['name'],None,'不适用（合成诊断）']
+                values[11]='无' if probe['variant']=='plain' else f"本作业plain_t{probe['threads']}"
+                values[17]='同节点顺序合成诊断；1线程后38线程；无PPL/PP/TG或Score'
+                values[18]=probe['path']
+                values[19]=f"{probe['threads']}线程；F32矩阵256x256乘256x64后16个ADD；10轮"
+                values[24:26]=[probe['returncode'],line]
+                detail.append(values)
             if 'kernel_times' in kernel_summary and 'checks' in kernel_summary:
                 lines=[]
                 for name,check in kernel_summary['checks'].items():
@@ -255,6 +305,8 @@ for job in jobs:
             summary+='；PGO计数训练PP超时；control通过PPL，尚未生成PGO产物及完整PP/TG分数。'
         if jid in ['4336529','4336530']:
             summary+='；计算节点无git，源码检查尚未开始编译；已改为登录节点保存源码哈希、计算节点逐文件验证后重新提交。'
+    if job.get('analysis_notes'):
+        summary+='\n'+'\n'.join(job['analysis_notes'])
     lsf_args=job.get('submission',{}).get('lsf_args',[])
     if job['state']=='PEND' and '-w' in lsf_args:
         summary+='\n等待依赖：'+lsf_args[lsf_args.index('-w')+1]
@@ -345,6 +397,12 @@ for r in range(2,detail.max_row+1):
     for col in [7,10,15,16,17]: detail.cell(r,col).number_format='0.00%'
     detail.cell(r,23).number_format='+0.00%;-0.00%;0.00%'
 detail.column_dimensions['B'].width=37;detail.column_dimensions['L'].width=45;detail.column_dimensions['S'].width=95
+log.column_dimensions['Y'].width=32;log.column_dimensions['Z'].width=75
+review_sheet=book['PPL新规复核']
+review_sheet.column_dimensions['B'].width=45
+review_sheet.column_dimensions['M'].width=100
+review_sheet.column_dimensions['N'].width=85
+for r in range(2,review_sheet.max_row+1):review_sheet.row_dimensions[r].height=58
 for ws in [info,config_sheet]:
     ws.column_dimensions['A'].width=29;ws.column_dimensions['B'].width=120
     for r in range(2,ws.max_row+1):ws.row_dimensions[r].height=44

@@ -1,0 +1,43 @@
+{
+  "source_screening_review": {
+    "values": {
+      "01_baseline": {
+        "ppl": 2.7767,
+        "ppl_seconds": 119,
+        "pp": 37.770821,
+        "tg": 3.050989,
+        "pp_cv_percent": 7.502068858921548,
+        "tg_cv_percent": 0.97663413404637,
+        "development_score": 86.32081516438262
+      },
+      "02_candidate": {
+        "ppl": 2.7767,
+        "ppl_seconds": 264,
+        "pp": 27.067813,
+        "tg": 2.792937,
+        "pp_cv_percent": 6.421113519588745,
+        "tg_cv_percent": 2.375456374418757,
+        "development_score": 69.91561030212642
+      }
+    },
+    "pp_relative_percent": -28.33670996984682,
+    "tg_relative_percent": -8.457978707887836,
+    "decision": "do_not_promote",
+    "order": "candidate PPL/PP10/TG10 then baseline PPL/PP10/TG10; independent fresh PPL for each binary",
+    "correctness": {
+      "status": "PASS",
+      "cases": 144,
+      "values": 745104,
+      "bit_mismatches": 0,
+      "repetitions": 3,
+      "threads": [
+        1,
+        38
+      ],
+      "baseline": "production Intel original actual GGML library",
+      "candidate": "new independent Intel library",
+      "note": "8 weight types, 9 shapes, 1/38 threads; row tails, token threshold37/38/39, batch2; repeated execution bitwise stable; no model throughput score"
+    }
+  },
+  "interpretation": "完整初筛完成：144矩阵配置、745104输出值逐bit差分均零，重复3次一致；candidate和baseline独立固定PPL均2.7767 PASS，PP/TG各10次完整。候选先执行、原版后执行，PP大幅差异存在缓存/顺序限制，不能单独归因于源码。tinyBLAS候选TG仅约+0.55%尚无稳定收益，整行量化TG约-8.46%；均暂不提升生产版本。保留全部慢样本，当前无未完成指标补零，开发自测不是正式成绩。"
+}

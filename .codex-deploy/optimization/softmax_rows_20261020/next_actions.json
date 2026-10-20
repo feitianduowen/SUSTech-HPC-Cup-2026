@@ -1,0 +1,17 @@
+{
+  "job_id": "4339793",
+  "updated_hong_kong": "2026-10-20T13:20:32.045541+08:00",
+  "last_known_status": "RUN",
+  "node": "r13n19",
+  "remote_root": "/work/apac2602/qwen38-cpu/optimization/20261020-softmax-rows",
+  "source": "/work/apac2602/qwen38-cpu/optimization/20261020-softmax-rows/sources/softmax-rows-4339793",
+  "change": "Only ops.cpp::ggml_compute_forward_soft_max_f32 row scheduling: flatten queries/heads/batches; per-row body unchanged. Canonical source copied as independent regular files, no Q5/Q8/PGO overlays.",
+  "next": [
+    "Check job.status, four-tool Intel build and quantization tests, ldd.",
+    "Check both 1280-case Softmax graph tests (3 repeats, threads1/38); compare binary outputs bitwise; library-correctness.json must PASS with zero mismatches.",
+    "Check summary.json softmax_microbench and softmax-raw-samples.json: 4 shapes x 10 alternating AB/BA rounds,38 threads; not full-model scores.",
+    "Check 01_baseline,02_candidate,03_baseline_after. Each independent fixed PPL within [2.63112,2.90808], then all10 PP2048/TG128d2048 samples at unchanged fixed config.",
+    "Fused attention may bypass regular Softmax. Retain order/cache/NUMA caveats; no production promotion without verified model benefit.",
+    "Refresh registry with --refresh-job4339793, write Excel and mirror; retain failed jobs and raw slow samples."
+  ]
+}

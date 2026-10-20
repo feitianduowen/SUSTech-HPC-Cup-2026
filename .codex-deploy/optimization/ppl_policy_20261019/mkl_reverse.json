@@ -1,0 +1,12 @@
+{
+  "script": "/work/apac2602/qwen38-cpu/optimization/20261019-ppl-policy5/mkl_reverse.lsf",
+  "kind": "同节点完整对照",
+  "purpose": "MKL首轮4337539完成后反序确认：MKL先执行完整PPL/PP10/TG10，再原版，检查原版先执行时偏低的PP是否为顺序或缓存影响",
+  "config": "hg_6148单节点40slots；Intel Classic2021.9 icc/icpc，O3 precise/no-ftz CORE-AVX512 qsimd-honor-fp-model；baseline OpenMP ON/BLAS OFF，mkl OpenMP ON/BLAS ON、Intel10_64lp/oneMKL LP64 threaded；两者38推理线程close/cores；每版本独立固定PPL t/tb38 c512 chunks2 b512 ub256 KVf16 ngl0 NUMA distribute no-warmup timeout590；只把PPL容差改为±5%含边界[2.63112,2.90808]；每版本PP p2048n0、TG p0n128d2048，b2048ub512 KVf16 ngl0 NUMA distribute各r10；顺序mkl PPL→PP10→TG10→baseline PPL→PP10→TG10；无采样",
+  "baseline": "本作业01_baseline：生产Intel Classic原版，同节点顺序对照；官方PP46.929024/TG3.295524仅用于开发自测归一化",
+  "case_prefix": "confirm-policy5-reverse",
+  "baseline_case": "confirm-policy5-reverse-baseline_{job_id}",
+  "note": "首轮4337539：baseline PP33.064954/TG2.961111，MKL PP48.795946/TG2.950859，各10次且两版独立PPL通过现行5%门槛。TG无改善，PP差异可能含顺序/缓存影响，不直接归因于MKL。本次同节点反序、两版再次独立固定PPL后各完整十次PP/TG；与首轮跨节点，仍保留节点影响限制。保留全部原始样本，开发自测非正式成绩；不修改源码、模型、生产部署或PGO构建。",
+  "retry_of": "4337539",
+  "ppl_scope": "每版本在本作业独立重新执行固定PPL，容差5%；无PPL共享或历史PASS冒用"
+}

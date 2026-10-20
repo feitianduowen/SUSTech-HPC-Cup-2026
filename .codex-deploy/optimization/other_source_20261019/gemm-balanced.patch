@@ -1,0 +1,56 @@
+--- a/ggml/src/ggml-cpu/llamafile/sgemm.cpp
++++ b/ggml/src/ggml-cpu/llamafile/sgemm.cpp
+@@ -1616,11 +1616,12 @@
+         int64_t ytiles = (m - m0) / 4;
+         int64_t xtiles = (n - n0) / RN;
+         int64_t tiles = xtiles * ytiles;
+-        int64_t duty = (tiles + nth - 1) / nth;
+-        int64_t start = duty * ith;
+-        int64_t end = start + duty;
+-        if (end > tiles)
+-            end = tiles;
++        // Give each worker floor(tiles/nth) jobs, then distribute the tail.
++        // Keep contiguous tiles and the arithmetic inside each tile unchanged.
++        const int64_t duty = tiles / nth;
++        const int64_t extra = tiles % nth;
++        const int64_t start = duty * ith + MIN((int64_t) ith, extra);
++        const int64_t end = start + duty + (ith < extra);
+         for (int64_t job = start; job < end; ++job) {
+             int64_t ii = m0 + job / xtiles * 4;
+             int64_t jj = n0 + job % xtiles * RN;
+@@ -1670,11 +1671,12 @@
+         int64_t ytiles = (m - m0) / RM;
+         int64_t xtiles = (n - n0) / 4;
+         int64_t tiles = xtiles * ytiles;
+-        int64_t duty = (tiles + nth - 1) / nth;
+-        int64_t start = duty * ith;
+-        int64_t end = start + duty;
+-        if (end > tiles)
+-            end = tiles;
++        // Give each worker floor(tiles/nth) jobs, then distribute the tail.
++        // Keep contiguous tiles and the arithmetic inside each tile unchanged.
++        const int64_t duty = tiles / nth;
++        const int64_t extra = tiles % nth;
++        const int64_t start = duty * ith + MIN((int64_t) ith, extra);
++        const int64_t end = start + duty + (ith < extra);
+         for (int64_t job = start; job < end; ++job) {
+             int64_t ii = m0 + job / xtiles * RM;
+             int64_t jj = n0 + job % xtiles * 4;
+@@ -1727,11 +1729,12 @@
+         int64_t ytiles = (m - m0) / RM;
+         int64_t xtiles = (n - n0) / RN;
+         int64_t tiles = xtiles * ytiles;
+-        int64_t duty = (tiles + nth - 1) / nth;
+-        int64_t start = duty * ith;
+-        int64_t end = start + duty;
+-        if (end > tiles)
+-            end = tiles;
++        // Give each worker floor(tiles/nth) jobs, then distribute the tail.
++        // Keep contiguous tiles and the arithmetic inside each tile unchanged.
++        const int64_t duty = tiles / nth;
++        const int64_t extra = tiles % nth;
++        const int64_t start = duty * ith + MIN((int64_t) ith, extra);
++        const int64_t end = start + duty + (ith < extra);
+         for (int64_t job = start; job < end; ++job) {
+             int64_t ii = m0 + job / xtiles * RM;
+             int64_t jj = n0 + job % xtiles * RN;

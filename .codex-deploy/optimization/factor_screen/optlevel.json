@@ -1,0 +1,18 @@
+{
+  "script": "/work/apac2602/qwen38-cpu/optimization/20261019-factor-screen/factor_job.lsf",
+  "kind": "同节点完整对照",
+  "purpose": "Intel优化级别单变量筛选：Intel icc/icpc Release -O3 → -O2；其余precise浮点选项相同",
+  "config": "Intel Classic2021.9 icc/icpc、官方源码d812350；hg_6148单节点40slots/Gold6148/38推理线程；baseline先、candidate后；Intel icc/icpc Release -O3 → -O2；其余precise浮点选项相同。默认O3 precise/no-ftz CORE-AVX512 qsimd-honor-fp-model，OpenMP ON、tinyBLAS ON、BLAS/GPU OFF、无PGO。每版独立固定PPL t/tb38 c512 chunks2 b512 ub256 f16KV ngl0 NUMA distribute no-warmup timeout590s，±5% [2.63112,2.90808]；通过后PP2048和TG128d2048各r10 b2048 ub512，其余固定。",
+  "baseline": "本作业confirm-factor-optlevel-baseline_{job_id}，同节点第一组；无跨节点性能baseline替代",
+  "case_prefix": "confirm-factor-optlevel",
+  "baseline_case": "confirm-factor-optlevel-baseline_{job_id}",
+  "environment": {
+    "FACTOR": "optlevel"
+  },
+  "lsf_args": [
+    "-J",
+    "qwen38_factor_optlevel"
+  ],
+  "ppl_scope": "每版分别重跑固定PPL，无共享；运行时变量仅测速阶段生效，PPL固定默认环境",
+  "note": "开发单变量筛选，非正式成绩。固定baseline→candidate顺序仍有缓存/顺序局限，有收益须反序复测。全部10次样本保留；无VTune/OS采样。运行时变量正式采用前须按赛题要求申报。编译因素两版独立新构建/量化测试/链接核验；运行时因素复用同一生产Intel二进制并前后SHA校验。"
+}

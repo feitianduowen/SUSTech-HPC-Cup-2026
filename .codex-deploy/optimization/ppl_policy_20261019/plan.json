@@ -1,0 +1,18 @@
+{
+  "job_id": "4337539",
+  "order": [
+    "baseline_PPL",
+    "baseline_PP10",
+    "baseline_TG10",
+    "MKL_PPL",
+    "MKL_PP10",
+    "MKL_TG10"
+  ],
+  "policy_id": "20261019-ppl-tolerance-5pct",
+  "host": "r13n12",
+  "ppl_scope": "Each binary runs independent fresh fixed PPL, no shared gate",
+  "performance_scope": "Same node sequential, no sampling; cache/order limitations; development score only",
+  "baseline": "01_baseline",
+  "candidate": "02_mkl",
+  "metadata_only": true
+}

@@ -1,0 +1,12 @@
+{
+  "checked_at_hkt": "2026-10-20T13:11:40.401965+08:00",
+  "job_ids": [
+    "4339778",
+    "4339779"
+  ],
+  "job_count": 102,
+  "raw_sample_count": 1710,
+  "all_registered": true,
+  "within_block_baseline_mappings_verified": true,
+  "diagnostic_score_blank": true
+}

@@ -1,0 +1,41 @@
+#!/bin/bash
+#BSUB -J qwen38_hot_pgo_paired
+#BSUB -q ssc-cpu
+#BSUB -m hg_6148
+#BSUB -n 40
+#BSUB -R "span[ptile=40]"
+#BSUB -W 04:00
+#BSUB -o /work/apac2602/qwen38-cpu/logs/%J.hot_pgo_paired.out
+#BSUB -e /work/apac2602/qwen38-cpu/logs/%J.hot_pgo_paired.err
+set -Eeuo pipefail
+source /work/apac2602/qwen38-cpu/scripts/env.sh
+ROOT=/work/apac2602/qwen38-cpu/optimization/20261019-pgo-hot-serial
+PARENT=${PGO_PARENT_JOB:?set completed pipeline job ID}
+ORDER=${PGO_ORDER:?set control-first or pgo-first}
+[[ "$PARENT" =~ ^[0-9]+$ ]]
+[[ "$ORDER" == control-first || "$ORDER" == pgo-first ]]
+OUT="$ROOT/results/$LSB_JOBID"
+mkdir -p "$OUT"
+phase=VERIFY_BUILDS
+trap 'rc=$?; printf "FAILED phase=%s exit=%s time=%s\n" "$phase" "$rc" "$(date -Is)" > "$OUT/job.status"; exit "$rc"' ERR
+unset KMP_BLOCKTIME OMP_WAIT_POLICY KMP_AFFINITY GOMP_CPU_AFFINITY KMP_HW_SUBSET PROF_DIR
+export OMP_NUM_THREADS=38 OMP_DYNAMIC=FALSE OMP_PROC_BIND=close OMP_PLACES=cores
+[[ "${LSB_DJOB_NUMPROC:?missing LSF slots}" == 40 ]]
+[[ $(getconf _NPROCESSORS_ONLN) == 40 ]]
+lscpu | grep -q 'Intel(R) Xeon(R) Gold 6148'
+{ date -Is; hostname; lscpu; module list; icc --version; icpc --version; env | sort | grep -E "^(OMP_|MKL_|OPENBLAS_|BLIS_)"; } > "$OUT/environment.txt" 2>&1
+python3 "$ROOT/verify_manifest.py" "$ROOT/results/$PARENT/manifest.json" > "$OUT/manifest-verification.json"
+cp "$ROOT/results/$PARENT/manifest.json" "$OUT/manifest.json"
+cp "$ROOT/paired_bench.lsf" "$OUT/paired_bench.lsf"
+cases=(control pgo)
+[[ "$ORDER" != pgo-first ]] || cases=(pgo control)
+i=0
+for name in "${cases[@]}"; do
+    i=$((i+1))
+    phase="PPL_PP10_TG10_$name"
+    printf '%s time=%s\n' "$phase" "$(date -Is)" > "$OUT/job.status"
+    ordinal=01
+    [[ "$name" != pgo ]] || ordinal=02
+    COMPILER_BUILD_ROOT="$ROOT/builds/$PARENT/$name" EXPERIMENT_OUTPUT_DIR="$OUT/${ordinal}_$name" RUN_BENCH=1 bash "$ROOT/ppl_gate.lsf" > "$OUT/$name-bench.log" 2>&1
+done
+printf 'COMPLETE time=%s\n' "$(date -Is)" > "$OUT/job.status"

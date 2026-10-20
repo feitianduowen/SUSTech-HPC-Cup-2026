@@ -1,0 +1,61 @@
+{
+  "job_id": "4339768",
+  "updated_hong_kong": "2026-10-20T13:00:41.849221+08:00",
+  "last_known_status": "RUN",
+  "node": "r13n12",
+  "remote_root": "/work/apac2602/qwen38-cpu/optimization/20261019-q5-mask",
+  "source": "/work/apac2602/qwen38-cpu/optimization/20261019-q5-mask/sources/q5-mask-4338563",
+  "prior_jobs": {
+    "4338563": "EXIT: objdump CLI compatibility; Intel build and numeric checks passed, no model tests",
+    "4338567": "DONE: Q5 kernel +5.59% to +12.66%, exact match; full A/B/A all PPL2.7767; baseline drift, end-to-end benefit inconclusive"
+  },
+  "prior_review": {
+    "decision": "reverse_confirmation_required_not_promoted",
+    "cases": {
+      "01_baseline": {
+        "pp_ts": 31.10949,
+        "pp_cv": 0.09535890816596479,
+        "tg_ts": 2.788882,
+        "tg_cv": 0.059055922767617994,
+        "ppl": 2.7767,
+        "ppl_elapsed_seconds": 231
+      },
+      "02_candidate": {
+        "pp_ts": 36.99902,
+        "pp_cv": 0.06825253749964189,
+        "tg_ts": 3.091346,
+        "tg_cv": 0.0020065693067032936,
+        "ppl": 2.7767,
+        "ppl_elapsed_seconds": 120
+      },
+      "03_baseline_after": {
+        "pp_ts": 53.350202,
+        "pp_cv": 0.0036403236111458392,
+        "tg_ts": 3.036284,
+        "tg_cv": 0.003570153516601214,
+        "ppl": 2.7767,
+        "ppl_elapsed_seconds": 73
+      }
+    },
+    "candidate_vs_first_baseline": {
+      "pp_ts": 0.1893161861541286,
+      "tg_ts": 0.10845349498472867
+    },
+    "candidate_vs_last_baseline": {
+      "pp_ts": -0.3064877242639119,
+      "tg_ts": 0.01813466724456614
+    },
+    "baseline_drift": {
+      "pp_ts": 0.714917280868314,
+      "tg_ts": 0.08871009960263643
+    },
+    "caveat": "Same-node A/B/A; major baseline drift makes end-to-end gain inconclusive. All raw samples retained. Kernel resident microbench gain does not prove model gain."
+  },
+  "next": [
+    "Check 4339768 job.status and three case folders: 01_candidate,02_baseline,03_candidate_after.",
+    "Each case must independently pass fixed PPL [2.63112,2.90808] and have all 10 PP2048/TG128d2048 samples. No early or cherry-picked score.",
+    "Compare both candidate passes to middle baseline; retain first/last and cross-run drift. Kernel speedups alone do not establish model speedups.",
+    "Do not overwrite production or prior candidate sources. Record failure, slow samples and all three submission IDs in Excel.",
+    "Update summary interpretation after complete, refresh collector with all three IDs, write and mirror Excel."
+  ]
+}

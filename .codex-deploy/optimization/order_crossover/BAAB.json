@@ -1,0 +1,34 @@
+{
+  "script": "/work/apac2602/qwen38-cpu/optimization/20261020-order-crossover/crossover.lsf",
+  "kind": "同节点平衡顺序诊断（不计分）",
+  "purpose": "同节点四段BAAB平衡顺序诊断：A=PP→PP→TG，B=PP→TG→PP；逐段比较probe/anchor PP并观察逐线程等待与内存分布",
+  "config": "SHA核验只读Intel Classic2021.9 O3 precise/no-ftz CORE-AVX512 qsimd-honor-fp-model原版，OpenMP/tinyBLAS ON，BLAS/GPU OFF；hg_6148单节点40slots/Gold6148，38推理线程close/cores、默认等待。开头一次固定PPL t/tb38 c512 chunks2 b512ub256 KVf16 ngl0 NUMA distribute no-warmup timeout590s，±5%。四段BAAB，每段2次PP2048与1次TG128d2048，各r10 t38 b2048ub512 KVf16 ngl0 NUMA distribute -v；总8次PP10+4次TG10，无额外PPL插入。每30秒只读记录缺页/I/O/RSS/GGUF和其他NUMA分布，加各TID stat/status/schedstat/wchan、亲和性、host CPU/load/pressure/frequency（不可用时null），每测速命令3600秒保护；不计Score。",
+  "baseline": "每段probe PP相对同段anchor PP；TG是顺序干预，无独立baseline。每个作业内同节点；ABBA与BAAB跨节点，只比较各自段内比值",
+  "baseline_case": "diagnostic-crossover-baab-no-global-baseline_{job_id}",
+  "case_prefix": "diagnostic-crossover-baab",
+  "comparison_scope": "same-node",
+  "environment": {
+    "CROSSOVER": "BAAB"
+  },
+  "lsf_args": [
+    "-J",
+    "qwen38_crossover_BAAB"
+  ],
+  "os_monitoring": true,
+  "ppl_scope": "本作业开始时独立固定PPL一次，12个诊断测速进程共享此门槛；无每段重新PPL，不计分",
+  "note": "上一轮A/A复现相同代码第二次PP加速，跨节点PP-chain/TG-between不足以归因。现在同节点ABBA/BAAB平衡时间位置，仍存在跨段状态延续，无缓存重置；不能自动视为无残留效应的因果实验。记录每个线程而不只主线程；schedstat可能未启用，wchan可能受权限限制，保留原始值，不修改系统设置。带采样开销，仅诊断，所有慢样本保留；原始测量配置不改。",
+  "measurement_baselines": {
+    "diagnostic-crossover-baab-b1_B_anchor_{job_id}": null,
+    "diagnostic-crossover-baab-b1_B_probe_{job_id}": "diagnostic-crossover-baab-b1_B_anchor_{job_id}",
+    "diagnostic-crossover-baab-b1_B_tg_{job_id}": null,
+    "diagnostic-crossover-baab-b2_A_anchor_{job_id}": null,
+    "diagnostic-crossover-baab-b2_A_probe_{job_id}": "diagnostic-crossover-baab-b2_A_anchor_{job_id}",
+    "diagnostic-crossover-baab-b2_A_tg_{job_id}": null,
+    "diagnostic-crossover-baab-b3_A_anchor_{job_id}": null,
+    "diagnostic-crossover-baab-b3_A_probe_{job_id}": "diagnostic-crossover-baab-b3_A_anchor_{job_id}",
+    "diagnostic-crossover-baab-b3_A_tg_{job_id}": null,
+    "diagnostic-crossover-baab-b4_B_anchor_{job_id}": null,
+    "diagnostic-crossover-baab-b4_B_probe_{job_id}": "diagnostic-crossover-baab-b4_B_anchor_{job_id}",
+    "diagnostic-crossover-baab-b4_B_tg_{job_id}": null
+  }
+}

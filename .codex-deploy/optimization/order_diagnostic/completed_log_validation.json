@@ -1,0 +1,11 @@
+{
+  "checked_at_hkt": "2026-10-20T13:00:52.157179+08:00",
+  "sample_counts": {
+    "4338534": 50,
+    "4338535": 50,
+    "4338536": 60
+  },
+  "diagnostic_scores_blank": true,
+  "states_all_done": true,
+  "total_raw_samples": 1710
+}

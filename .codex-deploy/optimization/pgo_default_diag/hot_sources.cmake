@@ -1,0 +1,10 @@
+include_guard(GLOBAL)
+function(qwen_hot_profile)
+    set(options -prof-gen=default -prof-dir "${QWEN_PROFILE_DIR}")
+    foreach(source ggml/src/ggml-cpu/arch/x86/quants.c ggml/src/ggml-cpu/llamafile/sgemm.cpp)
+        set_property(SOURCE "${CMAKE_SOURCE_DIR}/${source}" TARGET_DIRECTORY ggml-cpu
+                     APPEND PROPERTY COMPILE_OPTIONS ${options})
+    endforeach()
+    target_link_options(ggml-cpu PRIVATE ${options} -Wl,--no-as-needed)
+endfunction()
+cmake_language(DEFER CALL qwen_hot_profile)

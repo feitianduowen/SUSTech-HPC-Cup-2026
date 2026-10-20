@@ -1,0 +1,161 @@
+{
+  "runtime_probe_cases": [
+    {
+      "name": "plain_t1",
+      "variant": "plain",
+      "threads": 1,
+      "returncode": 0,
+      "wall_seconds": 0.03294416191056371,
+      "command": [
+        "/work/apac2602/qwen38-cpu/optimization/20261019-pgo-runtime-diag/results/4337634/probe-plain",
+        "1",
+        "10"
+      ],
+      "path": "/work/apac2602/qwen38-cpu/optimization/20261019-pgo-runtime-diag/results/4337634/plain_t1",
+      "diagnostic_only": true,
+      "result": {
+        "threads": 1,
+        "repetitions": 10,
+        "seconds": 0.004309666,
+        "mismatches": 0,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "broad_t1",
+      "variant": "broad",
+      "threads": 1,
+      "returncode": 0,
+      "wall_seconds": 2.117262677755207,
+      "command": [
+        "/work/apac2602/qwen38-cpu/optimization/20261019-pgo-runtime-diag/results/4337634/probe-broad",
+        "1",
+        "10"
+      ],
+      "path": "/work/apac2602/qwen38-cpu/optimization/20261019-pgo-runtime-diag/results/4337634/broad_t1",
+      "diagnostic_only": true,
+      "result": {
+        "threads": 1,
+        "repetitions": 10,
+        "seconds": 1.91490033,
+        "mismatches": 0,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "hot_t1",
+      "variant": "hot",
+      "threads": 1,
+      "returncode": 0,
+      "wall_seconds": 1.1661152709275484,
+      "command": [
+        "/work/apac2602/qwen38-cpu/optimization/20261019-pgo-runtime-diag/results/4337634/probe-hot",
+        "1",
+        "10"
+      ],
+      "path": "/work/apac2602/qwen38-cpu/optimization/20261019-pgo-runtime-diag/results/4337634/hot_t1",
+      "diagnostic_only": true,
+      "result": {
+        "threads": 1,
+        "repetitions": 10,
+        "seconds": 1.104454,
+        "mismatches": 0,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "plain_t38",
+      "variant": "plain",
+      "threads": 38,
+      "returncode": 0,
+      "wall_seconds": 0.06487811310216784,
+      "command": [
+        "/work/apac2602/qwen38-cpu/optimization/20261019-pgo-runtime-diag/results/4337634/probe-plain",
+        "38",
+        "10"
+      ],
+      "path": "/work/apac2602/qwen38-cpu/optimization/20261019-pgo-runtime-diag/results/4337634/plain_t38",
+      "diagnostic_only": true,
+      "result": {
+        "threads": 38,
+        "repetitions": 10,
+        "seconds": 0.007472294,
+        "mismatches": 0,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "broad_t38",
+      "variant": "broad",
+      "threads": 38,
+      "returncode": 0,
+      "wall_seconds": 3.3188433069735765,
+      "command": [
+        "/work/apac2602/qwen38-cpu/optimization/20261019-pgo-runtime-diag/results/4337634/probe-broad",
+        "38",
+        "10"
+      ],
+      "path": "/work/apac2602/qwen38-cpu/optimization/20261019-pgo-runtime-diag/results/4337634/broad_t38",
+      "diagnostic_only": true,
+      "result": {
+        "threads": 38,
+        "repetitions": 10,
+        "seconds": 3.14866738,
+        "mismatches": 0,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "hot_t38",
+      "variant": "hot",
+      "threads": 38,
+      "returncode": 0,
+      "wall_seconds": 1.5668757818639278,
+      "command": [
+        "/work/apac2602/qwen38-cpu/optimization/20261019-pgo-runtime-diag/results/4337634/probe-hot",
+        "38",
+        "10"
+      ],
+      "path": "/work/apac2602/qwen38-cpu/optimization/20261019-pgo-runtime-diag/results/4337634/hot_t38",
+      "diagnostic_only": true,
+      "result": {
+        "threads": 38,
+        "repetitions": 10,
+        "seconds": 1.51286835,
+        "mismatches": 0,
+        "status": "PASS"
+      }
+    }
+  ],
+  "vtune": {
+    "returncode": 0,
+    "command": [
+      "/share/intel/oneapi-2023.1/vtune/2023.1.0/bin64/vtune",
+      "-collect",
+      "hotspots",
+      "-knob",
+      "sampling-mode=hw",
+      "-knob",
+      "enable-stack-collection=true",
+      "-knob",
+      "sampling-interval=10",
+      "-duration",
+      "10",
+      "-target-pid",
+      "1845027",
+      "-r",
+      "/work/apac2602/qwen38-cpu/optimization/20261019-pgo-runtime-diag/results/4337634/vtune"
+    ],
+    "summary_report_returncode": 0,
+    "hotspots_report_returncode": 0
+  },
+  "interpretation": "Synthetic diagnostic only: same host, 1-thread then38-thread configurations, plain/broad-PGO/hot-source-PGO sequential. Matrix256x256 times256x64 followed by16 add nodes;10 graph iterations. No model, PPL, official PP/TG or Score. All child timeouts are retained. Diagnostic profiles must never be used as completed model-training profiles.\nAnalysis: VTune全量插桩38线程372.022秒CPU中约287.694秒(77.33%)在Intel线程安全PGO checkpoint，另约74.064秒在OpenMP barrier。合成正确性全部PASS；该证据证明本探针的插桩运行时开销，不直接证明先前模型训练超时的唯一根因。热点文件范围缩减仍很慢，不能仅延长训练超时。",
+  "relative_to_plain_compute_time": {
+    "broad_t1": 444.32685270737915,
+    "hot_t1": 256.27368803058056,
+    "broad_t38": 421.37894734869906,
+    "hot_t38": 202.46370793226282
+  },
+  "vtune_checkpoint_seconds": 287.694277,
+  "vtune_reported_function_cpu_seconds": 372.0219159999999
+}

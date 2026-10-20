@@ -1,0 +1,18 @@
+{
+  "script": "/work/apac2602/qwen38-cpu/optimization/20261019-other-source/build_and_pair.lsf",
+  "kind": "源码修改、算子差分及同节点完整对照",
+  "purpose": "tinyBLAS AVX量化矩阵三种tile循环改为商余数均衡连续分配，减少ceil划分导致的尾部线程空闲；tile内部算术及原有同步点不变",
+  "environment": {
+    "SOURCE_VARIANT": "gemm-balanced"
+  },
+  "lsf_args": [
+    "-J",
+    "qwen38_gemm-balanced"
+  ],
+  "config": "Intel Classic2021.9 O3 precise/no-ftz CORE-AVX512 qsimd-honor-fp-model；hg_6148单节点40slots，OpenMP ON/BLAS OFF；每作业从官方d812350 SHA校验3687文件，独立sources/<variant>-<job>副本，仅1个文件修改；四工具构建/ldd、量化单测；实际库矩阵差分8权重类型×9形状×1/38线程=144配置，每配置重复3次且逐bit对照原版；通过后candidate先、baseline后各独立固定PPL t/tb38 c512 chunks2 b512ub256 f16KV ngl0 NUMA distribute no-warmup timeout590s ±5%，各PP2048/TG128d2048 r10 b2048ub512 f16KV ngl0 NUMA distribute，38线程close/cores，无性能采样",
+  "baseline": "本作业01_baseline生产Intel官方原版，同节点顺序后执行；算子差分同节点baseline先、candidate后",
+  "case_prefix": "other-gemm-balanced",
+  "baseline_case": "other-gemm-balanced-baseline_{job_id}",
+  "ppl_scope": "candidate及baseline各自本作业新固定PPL，无共享PPL；通过PPL后才运行该版本完整测速",
+  "note": "保留所有旧源码和构建；两个独立修改分别提交，不混入Q8内核修改或PGO。候选先执行存在缓存/顺序限制，跨作业节点不同不可直接比较绝对吞吐；有收益时再做反序。矩阵差分只验证覆盖形状，完整PPL另测；任一阶段失败即停止后续，未完成指标留空，完整十次慢样本保留，分数仅开发自测。"
+}

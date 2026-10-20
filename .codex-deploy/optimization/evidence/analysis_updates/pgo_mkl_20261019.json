@@ -1,0 +1,47 @@
+{
+  "updated_at_hkt": "2026-10-19T21:37:04.891794+08:00",
+  "source": "LSF stdout, completed JSON, actual compiler diagnostics, manifest SHA256 verification",
+  "jobs": {
+    "4337539": {
+      "summary": "完整十次对照已完成。MKL相对本作业同节点baseline：PP +47.58%，TG -0.35%，几何均值相对变化 +21.27%。两版本独立PPL分别2.7767/2.7893，按5%通过。正反序PP优势未保持，存在顺序/缓存/运行状态混杂；不能认定MKL有稳定收益，未替换生产部署。各作业实际同节点，跨作业仍需保留节点/时段限制。"
+    },
+    "4337633": {
+      "summary": "完整十次对照已完成。MKL相对本作业同节点baseline：PP -19.77%，TG +10.87%，几何均值相对变化 -5.69%。两版本独立PPL分别2.7767/2.7893，按5%通过。正反序PP优势未保持，存在顺序/缓存/运行状态混杂；不能认定MKL有稳定收益，未替换生产部署。各作业实际同节点，跨作业仍需保留节点/时段限制。"
+    },
+    "4337488": {
+      "summary": "60分钟非计分合成PP训练仍超时exit124；末尾为图预留及线程池准备。TG/计数合并/反馈构建/PGO PPL均未执行；周期计数仅诊断。后续不再仅扩大时限，使用运行时诊断及热点源码默认计数/单线程训练方案4337670。"
+    },
+    "4337448": {
+      "summary": "60分钟非计分合成PP训练超时exit124；TG/计数合并/反馈构建/PGO PPL均未执行。4337634诊断VTune约77.33%CPU位于threadsafe checkpoint，作为运行时开销证据；未把诊断或失败计数用于反馈。"
+    },
+    "4337670": {
+      "summary": "热点源码单线程训练正常完成：PP64/TG8@D64各r1，t1/OMP1、default计数，无周期dump；仅quants.c、sgemm.cpp、薄main插桩。4个非空dyn、合并dpi已记录SHA；反馈编译范围、量化测试及四工具检查通过。候选38线程固定PPL2.7767，232秒，现行5% PASS；control为SHA核验4337216旧PPL复用、未重跑。此作业无完整性能分数。部分未执行函数/模板回退static profile（243条missing诊断），Q8_0热点未报告missing；这仅是覆盖线索，不证明所有热点均覆盖。单线程训练分布的收益须后续38线程完整对照验证。",
+      "evidence_files": [
+        "D:\\compete\\.codex-deploy\\optimization\\pgo_hot_serial\\evidence_4337670\\gen-build-pgo-scope.json",
+        "D:\\compete\\.codex-deploy\\optimization\\pgo_hot_serial\\evidence_4337670\\manifest.json",
+        "D:\\compete\\.codex-deploy\\optimization\\pgo_hot_serial\\evidence_4337670\\pgo-build-pgo-scope.json",
+        "D:\\compete\\.codex-deploy\\optimization\\pgo_hot_serial\\evidence_4337670\\pgo-build-profile-diagnostics.txt",
+        "D:\\compete\\.codex-deploy\\optimization\\pgo_hot_serial\\evidence_4337670\\training-pp.json",
+        "D:\\compete\\.codex-deploy\\optimization\\pgo_hot_serial\\evidence_4337670\\training-tg.json",
+        "D:\\compete\\.codex-deploy\\optimization\\pgo_hot_serial\\evidence_4337670\\training-validation.json"
+      ],
+      "profile_missing_diagnostics": 243
+    },
+    "4338130": {
+      "summary": "完整同节点对照已完成，40*r13n16，顺序control→PGO。两版本新PPL均2.7767 PASS，PP/TG各完整10次。PGO相对本作业control：PP +72.12%，TG -1.40%，几何均值 +30.27%。正反序PGO的PP收益反转，且两轮后运行版本PP均明显较快；存在强烈顺序/缓存/节点或时段混杂，尚不能认定PGO有稳定收益。保留全部慢样本，暂不提升生产版本。开发自测非正式成绩。",
+      "metrics": {
+        "pp_change_percent": 72.12413768967276,
+        "tg_change_percent": -1.401258119197335,
+        "geomean_change_percent": 30.273648231404728
+      }
+    },
+    "4338131": {
+      "summary": "完整同节点对照已完成，40*r13n20，顺序PGO→control。两版本新PPL均2.7767 PASS，PP/TG各完整10次。PGO相对本作业control：PP -40.19%，TG -2.48%，几何均值 -23.63%。正反序PGO的PP收益反转，且两轮后运行版本PP均明显较快；存在强烈顺序/缓存/节点或时段混杂，尚不能认定PGO有稳定收益。保留全部慢样本，暂不提升生产版本。开发自测非正式成绩。",
+      "metrics": {
+        "pp_change_percent": -40.19123965871175,
+        "tg_change_percent": -2.480532944373759,
+        "geomean_change_percent": -23.62907337382828
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "policy_id": "20261019-ppl-tolerance-5pct",
+  "source": "用户在本会话转述的赛题正式通知",
+  "recorded_at_hkt": "2026-10-19T16:57:32.296183+08:00",
+  "baseline_ppl": 2.7696,
+  "old_tolerance_percent": 0.5,
+  "tolerance_percent": 5.0,
+  "accepted_interval_inclusive": [
+    2.63112,
+    2.90808
+  ],
+  "other_evaluation_requirements": "unchanged",
+  "compiler_requirement": "Intel",
+  "historical_results": "preserve originals; reassessment separate; no missing performance imputed",
+  "active_pgo_jobs": [
+    "4337488",
+    "4337448"
+  ],
+  "active_job_effect": "Training unchanged. Future gate calls use amended root ppl_gate.lsf; copied original gates remain historical snapshots."
+}

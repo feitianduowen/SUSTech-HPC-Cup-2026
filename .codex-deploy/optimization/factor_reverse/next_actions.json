@@ -1,0 +1,43 @@
+{
+  "updated_at_hkt": "2026-10-19T23:43:18.143072+08:00",
+  "phase": "all reverse jobs completed; order diagnostics submitted",
+  "jobs": [
+    {
+      "job_id": "4338446",
+      "state": "DONE",
+      "host": "40*r13n17",
+      "factor": "affinity"
+    },
+    {
+      "job_id": "4338447",
+      "state": "DONE",
+      "host": "40*r13n23",
+      "factor": "tinyblas"
+    },
+    {
+      "job_id": "4338448",
+      "state": "DONE",
+      "host": "40*r13n27",
+      "factor": "optlevel"
+    },
+    {
+      "job_id": "4338449",
+      "state": "DONE",
+      "host": "40*r13n28",
+      "factor": "aa"
+    }
+  ],
+  "completed_parent_jobs": {
+    "4338277": "DONE",
+    "4338278": "DONE",
+    "4338279": "DONE",
+    "4338280": "DONE",
+    "4338281": "EXIT"
+  },
+  "next": "检查阶段/PPL，诊断两作业均3次PP10与2次TG10，只变顺序。读各case pp/tg.observations.jsonl、.result.json、.stderr.log、.command.json，将缺页、read_bytes、GGUF NUMA分布和主机迁移计数按实际时间对齐；pp-chain与tg-between跨节点，不能仅用绝对速度作因果判断。AAA无采样三轮固定PPL/PP10/TG10，检查重复趋势，保留第一轮与所有慢样本。诊断绝不计算Score。",
+  "do_not_duplicate": [
+    "4338429"
+  ],
+  "excel": "D:/compete/Qwen38_CPU_实验日志.xlsx",
+  "latest_followup": "D:\\compete\\.codex-deploy\\optimization\\order_diagnostic\\next_actions.json"
+}

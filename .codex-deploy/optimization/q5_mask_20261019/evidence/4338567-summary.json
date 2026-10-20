@@ -1,0 +1,235 @@
+{
+  "dot_checks": {
+    "baseline": {
+      "status": "PASS",
+      "cases": 8480,
+      "repetitions": 3,
+      "failures": 0,
+      "scope": "finite and repeatable; cross-library bit comparison required"
+    },
+    "candidate": {
+      "status": "PASS",
+      "cases": 8480,
+      "repetitions": 3,
+      "failures": 0,
+      "scope": "finite and repeatable; cross-library bit comparison required"
+    }
+  },
+  "dot_correctness": {
+    "status": "PASS",
+    "cases": 8480,
+    "bit_mismatches": 0,
+    "repetitions": 3
+  },
+  "microbench": [
+    {
+      "n": 256,
+      "baseline_ns_median": 30.0670528,
+      "candidate_ns_median": 28.4744672,
+      "speedup": 1.0559303037635064,
+      "paired_wins": 10,
+      "samples": {
+        "baseline": [
+          30.0424128,
+          30.0753312,
+          30.0531168,
+          30.1626176,
+          30.0587744,
+          30.1174368,
+          30.0975616,
+          30.0429568,
+          30.0448576,
+          30.115216
+        ],
+        "candidate": [
+          28.4763072,
+          28.460208,
+          29.0137536,
+          28.4242688,
+          28.475984,
+          28.4699136,
+          28.4729504,
+          28.4792736,
+          28.4549408,
+          28.8506176
+        ]
+      }
+    },
+    {
+      "n": 1024,
+      "baseline_ns_median": 110.245024,
+      "candidate_ns_median": 98.50800000000001,
+      "speedup": 1.119147927071913,
+      "paired_wins": 10,
+      "samples": {
+        "baseline": [
+          112.678848,
+          110.32297,
+          109.724826,
+          107.219315,
+          110.665536,
+          109.648256,
+          110.307968,
+          110.38935,
+          109.787661,
+          110.18208
+        ],
+        "candidate": [
+          98.4500224,
+          98.522496,
+          98.4922112,
+          98.435712,
+          103.076698,
+          98.531968,
+          98.4099968,
+          103.102656,
+          98.493504,
+          99.6349568
+        ]
+      }
+    },
+    {
+      "n": 2560,
+      "baseline_ns_median": 259.838832,
+      "candidate_ns_median": 230.64528,
+      "speedup": 1.1265733770923039,
+      "paired_wins": 10,
+      "samples": {
+        "baseline": [
+          260.835104,
+          259.131616,
+          259.762624,
+          263.48704,
+          261.749088,
+          259.926496,
+          259.080608,
+          259.013856,
+          259.07248,
+          259.91504
+        ],
+        "candidate": [
+          230.45264,
+          230.578304,
+          230.43216,
+          230.528544,
+          233.605664,
+          230.905952,
+          230.712256,
+          233.279584,
+          230.477376,
+          230.76896
+        ]
+      }
+    },
+    {
+      "n": 6144,
+      "baseline_ns_median": 607.517819,
+      "candidate_ns_median": 539.2668590000001,
+      "speedup": 1.1265624965839036,
+      "paired_wins": 10,
+      "samples": {
+        "baseline": [
+          613.353687,
+          607.773041,
+          613.001536,
+          609.796774,
+          606.693011,
+          607.005837,
+          607.195008,
+          607.332335,
+          607.611444,
+          607.424194
+        ],
+        "candidate": [
+          539.272965,
+          541.88871,
+          539.260753,
+          538.276267,
+          541.052995,
+          538.724117,
+          539.167896,
+          541.307757,
+          539.19977,
+          541.790169
+        ]
+      }
+    },
+    {
+      "n": 16384,
+      "baseline_ns_median": 1618.746415,
+      "candidate_ns_median": 1477.36481,
+      "speedup": 1.0956985059093156,
+      "paired_wins": 10,
+      "samples": {
+        "baseline": [
+          1619.60406,
+          1618.55387,
+          1617.68619,
+          1619.56452,
+          1618.74334,
+          1618.74949,
+          1617.91704,
+          1619.55264,
+          1618.12515,
+          1619.99447
+        ],
+        "candidate": [
+          1475.04609,
+          1473.91438,
+          1475.40987,
+          1482.1145,
+          1480.49488,
+          1477.7882,
+          1476.8644,
+          1481.0213,
+          1482.6567,
+          1476.94142
+        ]
+      }
+    }
+  ],
+  "advance_to_model": true,
+  "interpretation": "Q5 integer high-bit mask change: actual-library 8480 direct-dot cases and 144 matrix cases match baseline bitwise. All 5 kernel sizes improve 5.59%-12.66%, each 10/10 paired wins. Full A/B/A finished with PPL 2.7767 for all three cases and 10 PP/TG samples each. Same-node A/B/A; major baseline drift makes end-to-end gain inconclusive. All raw samples retained. Kernel resident microbench gain does not prove model gain.",
+  "source_screening_review": {
+    "decision": "reverse_confirmation_required_not_promoted",
+    "cases": {
+      "01_baseline": {
+        "pp_ts": 31.10949,
+        "pp_cv": 0.09535890816596479,
+        "tg_ts": 2.788882,
+        "tg_cv": 0.059055922767617994,
+        "ppl": 2.7767,
+        "ppl_elapsed_seconds": 231
+      },
+      "02_candidate": {
+        "pp_ts": 36.99902,
+        "pp_cv": 0.06825253749964189,
+        "tg_ts": 3.091346,
+        "tg_cv": 0.0020065693067032936,
+        "ppl": 2.7767,
+        "ppl_elapsed_seconds": 120
+      },
+      "03_baseline_after": {
+        "pp_ts": 53.350202,
+        "pp_cv": 0.0036403236111458392,
+        "tg_ts": 3.036284,
+        "tg_cv": 0.003570153516601214,
+        "ppl": 2.7767,
+        "ppl_elapsed_seconds": 73
+      }
+    },
+    "candidate_vs_first_baseline": {
+      "pp_ts": 0.1893161861541286,
+      "tg_ts": 0.10845349498472867
+    },
+    "candidate_vs_last_baseline": {
+      "pp_ts": -0.3064877242639119,
+      "tg_ts": 0.01813466724456614
+    },
+    "baseline_drift": {
+      "pp_ts": 0.714917280868314,
+      "tg_ts": 0.08871009960263643
+    },
+    "caveat": "Same-node A/B/A; major baseline drift makes end-to-end gain inconclusive. All raw samples retained. Kernel resident microbench gain does not prove model gain."
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "script": "/work/apac2602/qwen38-cpu/optimization/20261019-q5-mask/reverse_checks.lsf",
+  "kind": "Q5_1源码优化反序完整确认",
+  "purpose": "Q5掩码解包反序B/A/B完整确认：4338567微基准五长度提升5.59%-12.66%、逐bit验证通过，但A/B/A原版PP漂移31.11→53.35 t/s，整模型收益未确认。复用同一Intel候选，候选→原版→候选独立PPL和PP10/TG10。",
+  "environment": {
+    "SOURCE_VARIANT": "q5-mask"
+  },
+  "lsf_args": [
+    "-J",
+    "qwen38_q5_mask_reverse"
+  ],
+  "config": "复用4338563源码及构建，3687文件SHA及3个关键产物SHA复核，无重新编译；其余验证配置：Intel Classic2021.9 O3 precise/no-ftz CORE-AVX512 qsimd-honor-fp-model; OpenMP ON/BLAS OFF; hg_6148单节点40slots,38推理线程close/cores。3687源码SHA核验，仅arch/x86/quants.c修改。四工具构建、量化测试、矩阵144配置3重复要求逐bit一致；实际Q5函数8480组输入3重复与原版逐bit一致，反汇编检查新掩码指令。五个长度单核CPU0/membind0微基准10轮AB/BA。至少一个代表长度2560或6144提升>=3%、10轮至少7轮胜出且各长度退化<=5%才进入模型阶段：candidate→baseline→candidate_after，各自固定PPL t/tb38 c512 chunks2 b512ub256 f16KV ngl0 NUMA distribute no-warmup590s ±5%，通过后PP2048/TG128d2048各r10 b2048ub512。",
+  "baseline": "本作业02_baseline原版Intel（同节点中间执行），与01_candidate及03_candidate_after比较；跨作业4338567仅用于顺序趋势参考",
+  "case_prefix": "confirm-q5-mask-reverse",
+  "baseline_case": "confirm-q5-mask-reverse-baseline_{job_id}",
+  "comparison_scope": "same-node",
+  "ppl_scope": "各case独立固定PPL；微基准未通过收益门槛则不运行模型PPL/PP/TG",
+  "note": "原版与候选均复用已SHA核验的固定产物。核函数收益不代表模型收益；本轮B/A/B仍须保留时段、缓存、NUMA驻留影响，不能只挑选有利baseline或剔除慢样本。首次4338563验证工具失败及4338567完整结果全部保留。"
+}

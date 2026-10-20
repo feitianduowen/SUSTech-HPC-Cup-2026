@@ -1,0 +1,39 @@
+Function,CPU Time,CPU Time:Effective Time,CPU Time:Spin Time,CPU Time:Spin Time:Imbalance or Serial Spinning,CPU Time:Spin Time:Lock Contention,CPU Time:Spin Time:Other,CPU Time:Overhead Time,CPU Time:Overhead Time:Creation,CPU Time:Overhead Time:Scheduling,CPU Time:Overhead Time:Reduction,CPU Time:Overhead Time:Atomics,CPU Time:Overhead Time:Other,Instructions Retired,Microarchitecture Usage(%),Microarchitecture Usage:Microarchitecture Usage(%),Microarchitecture Usage:CPI Rate,Module,Function (Full),Source File,Start Address
+"_INTERNAL996a78df::apply_binary_op<&(_INTERNAL996a78df::op_add(float, float)), float, float, float>",198.314796,198.314796,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,768000000,0.0,0.0,795.000000,libggml-cpu.so.0.26.0,"_INTERNAL996a78df::apply_binary_op<&(_INTERNAL996a78df::op_add(float, float)), float, float, float>(ggml_compute_params const*, ggml_tensor*)",[Unknown],0xea250
+"(anonymous namespace)::tinyBLAS<(int)16, __m512, __m512, float, float, float>::gemm<(int)4, (int)6, (int)2>",84.498040,84.498040,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,984000000,0.0,0.0,222.048780,libggml-cpu.so.0.26.0,"(anonymous namespace)::tinyBLAS<(int)16, __m512, __m512, float, float, float>::gemm<(int)4, (int)6, (int)2>(long, long, long)",[Unknown],0x207500
+__kmpc_barrier,73.051212,0.000000,72.971024,72.940954,0.0,0.030070,0.080188,0.0,0.0,0.0,0.0,0.080188,89136000000,0.0,0.0,2.531502,libiomp5.so,__kmpc_barrier,kmp_csupport.cpp,0x896c0
+[Outside any known module],8.700391,8.700391,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,24000000,0.0,0.0,1099.000000,[Unknown],[Outside any known module],[Unknown],0x0
+ggml_cpu_extra_compute_forward,2.145027,2.145027,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,48000000,0.0,0.0,141.000000,libggml-cpu.so.0.26.0,ggml_cpu_extra_compute_forward,[Unknown],0xb5e30
+pgopti_Prof_Div_VP,1.854346,1.854346,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0,0.0,0.0,,libggml-cpu.so.0.26.0,pgopti_Prof_Div_VP,[Unknown],0x24f080
+ggml_graph_compute_thread,0.531245,0.531245,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,24000000,0.0,0.0,82.000000,libggml-cpu.so.0.26.0,ggml_graph_compute_thread,[Unknown],0x63840
+_PGOPTI_Prof_Div_64_VP_V13,0.370869,0.370869,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0,0.0,0.0,,libggml-cpu.so.0.26.0,_PGOPTI_Prof_Div_64_VP_V13,[Unknown],0x24d7b0
+ggml_can_repeat,0.360846,0.360846,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,24000000,0.0,0.0,49.000000,libggml-base.so.0.26.0,ggml_can_repeat,[Unknown],0xf7590
+_PGOPTI_Prof_Icall_V13,0.350822,0.350822,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0,0.0,0.0,,libggml-cpu.so.0.26.0,_PGOPTI_Prof_Icall_V13,[Unknown],0x24e570
+ggml_compute_forward,0.350822,0.350822,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0,0.0,0.0,,libggml-cpu.so.0.26.0,ggml_compute_forward,[Unknown],0x64240
+pgopti_Prof_Div_VP,0.260611,0.260611,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0,0.0,0.0,,libggml-base.so.0.26.0,pgopti_Prof_Div_VP,[Unknown],0x2f6820
+ggml_compute_forward_add,0.140329,0.140329,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0,0.0,0.0,,libggml-cpu.so.0.26.0,ggml_compute_forward_add,[Unknown],0x139ff0
+ggml_compute_forward_add_non_quantized,0.130305,0.130305,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0,0.0,0.0,,libggml-cpu.so.0.26.0,ggml_compute_forward_add_non_quantized,[Unknown],0xe49c0
+__kmp_fork_barrier,0.090211,0.0,0.090211,0.090211,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,72000000,0.0,0.0,2.666667,libiomp5.so,"__kmp_fork_barrier(int, int)",kmp_barrier.cpp,0x86a80
+ggml_is_empty,0.090211,0.090211,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0,0.0,0.0,,libggml-base.so.0.26.0,ggml_is_empty,[Unknown],0xf76d0
+ggml::cpu::repack::extra_buffer_type::get_tensor_traits,0.060141,0.060141,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0,0.0,0.0,,libggml-cpu.so.0.26.0,ggml::cpu::repack::extra_buffer_type::get_tensor_traits(ggml_tensor const*),[Unknown],0xb03a0
+ggml_compute_forward_mul_mat_tiled,0.060141,0.060141,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0,0.0,0.0,,libggml-cpu.so.0.26.0,ggml_compute_forward_mul_mat_tiled,[Unknown],0xde9a0
+__kmp_get_global_thread_id_reg,0.050117,0.0,0.0,0.0,0.0,0.0,0.050117,0.0,0.0,0.0,0.0,0.050117,0,0.0,0.0,,libiomp5.so,__kmp_get_global_thread_id_reg,kmp_runtime.cpp,0xc99c0
+ggml_is_contiguous_rows,0.050117,0.050117,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0,0.0,0.0,,libggml-base.so.0.26.0,ggml_is_contiguous_rows,[Unknown],0xed5a0
+_PGOPTI_Prof_Div_64_VP_V13,0.040094,0.040094,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0,0.0,0.0,,libggml-base.so.0.26.0,_PGOPTI_Prof_Div_64_VP_V13,[Unknown],0x2f4f50
+ggml_graph_compute,0.040094,0.040094,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0,0.0,0.0,,libggml-cpu.so.0.26.0,ggml_graph_compute,[Unknown],0x62e90
+__intel_avx_rep_memset,0.030070,0.030070,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0,0.0,0.0,0.0,probe-broad,__intel_avx_rep_memset,[Unknown],0x410ea0
+func@0x5b900,0.030070,0.030070,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0,0.0,0.0,,libggml-cpu.so.0.26.0,func@0x5b900,[Unknown],0x5b900
+ggml_are_same_shape,0.030070,0.030070,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0,0.0,0.0,,libggml-base.so.0.26.0,ggml_are_same_shape,[Unknown],0xf48f0
+ggml_backend_cpu_get_extra_buffer_types,0.030070,0.030070,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0,0.0,0.0,,libggml-cpu.so.0.26.0,ggml_backend_cpu_get_extra_buffer_types(void),[Unknown],0x6c050
+ggml_compute_forward_mul_mat,0.030070,0.030070,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0,0.0,0.0,,libggml-cpu.so.0.26.0,ggml_compute_forward_mul_mat,[Unknown],0x65b90
+ggml_barrier,0.020047,0.020047,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0,0.0,0.0,,libggml-cpu.so.0.26.0,ggml_barrier,[Unknown],0x69470
+ggml_type_size,0.020047,0.020047,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0,0.0,0.0,,libggml-base.so.0.26.0,ggml_type_size,[Unknown],0xea090
+ggml_blck_size,0.010023,0.010023,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0,0.0,0.0,,libggml-base.so.0.26.0,ggml_blck_size,[Unknown],0xd6bc0
+ggml_is_contiguous,0.010023,0.010023,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0,0.0,0.0,0.0,libggml-base.so.0.26.0,ggml_is_contiguous,[Unknown],0xeb9c0
+ggml_is_contiguous_0,0.010023,0.010023,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0,0.0,0.0,0.0,libggml-base.so.0.26.0,ggml_is_contiguous_0,[Unknown],0xeba00
+ggml_threadpool_chunk_add,0.010023,0.010023,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0,0.0,0.0,0.0,libggml-cpu.so.0.26.0,ggml_threadpool_chunk_add,[Unknown],0x5d3b0
+llamafile_sgemm,0.010023,0.010023,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0,0.0,0.0,0.0,libggml-cpu.so.0.26.0,llamafile_sgemm,[Unknown],0x1a0ee0
+set_numa_thread_affinity,0.010023,0.010023,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0,0.0,0.0,,libggml-cpu.so.0.26.0,set_numa_thread_affinity,[Unknown],0x6adf0
+__kmp_join_barrier,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,48000000,0.0,0.0,0.0,libiomp5.so,__kmp_join_barrier(int),kmp_barrier.cpp,0x85a40
+__kmp_join_call,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,24000000,0.0,0.0,0.0,libiomp5.so,__kmp_join_call,kmp_runtime.cpp,0xd4500
+ggml_is_numa,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,24000000,0.0,0.0,0.0,libggml-cpu.so.0.26.0,ggml_is_numa,[Unknown],0x68e40

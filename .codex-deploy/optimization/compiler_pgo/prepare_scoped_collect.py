@@ -2,7 +2,7 @@ from pathlib import Path
 
 here=Path(__file__).resolve().parent
 source=(here.parent/'orchestrator/collect_job_registry.py').read_text(encoding='utf-8')
-source=source.replace("registry_lock = (root/'results/job_registry.lock').open('a')\nfcntl.flock(registry_lock.fileno(), fcntl.LOCK_EX)","wanted = {'4336626','4336627','4336716','4336889','4337216','4337222','4337257','4337425','4337427','4337448','4337488'}")
+source=source.replace("registry_lock = (root/'results/job_registry.lock').open('a')\nfcntl.flock(registry_lock.fileno(), fcntl.LOCK_EX)","wanted = {'4336626','4336627','4336716','4336889','4337216','4337222','4337257','4337425','4337427','4337448','4337488','4337539'}")
 source=source.replace("        spec = json.loads(line)","        spec = json.loads(line)\n        if 'job_id' in spec and spec['job_id'] not in wanted: continue")
 source=source.replace("    jid = match[1]", "    jid = match[1]\n    if jid not in wanted: continue")
 # Only the scoped snapshot is written; no shared collection lock or old files.
@@ -21,6 +21,10 @@ source=source[:pos]+'''for jid,row in jobs.items():
                 handle.seek(max(0,size-20000))
                 tail=handle.read().decode('utf-8',errors='replace')
             row['evidence'].append({'path':str(file),'text':tail})
+    policy_run=deploy/'optimization/20261019-ppl-policy5/results'/jid
+    for name in ['policy.json','pipeline.lsf','baseline.sha256.txt','mkl.sha256.txt','baseline.ldd.txt','mkl.ldd.txt','baseline.CMakeCache.txt','mkl.CMakeCache.txt']:
+        file=policy_run/name
+        if file.is_file():row['evidence'].append({'path':str(file),'text':file.read_text(errors='replace')[:20000]})
     for evidence in row['evidence']:
         if evidence['path'].endswith('/environment.txt'):
             match=re.search(r'^r13n[0-9]+$',evidence['text'],re.M)

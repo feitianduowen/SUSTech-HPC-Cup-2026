@@ -1,0 +1,18 @@
+{
+  "verified": true,
+  "files": [
+    "D:\\compete\\.codex-deploy\\package\\benchmark.lsf",
+    "D:\\compete\\.codex-deploy\\optimization\\orchestrator\\benchmark_diagnostic.lsf",
+    "D:\\compete\\.codex-deploy\\optimization\\orchestrator\\benchmark_load_mode.lsf",
+    "D:\\compete\\.codex-deploy\\optimization\\orchestrator\\benchmark_runtime.lsf",
+    "D:\\compete\\.codex-deploy\\optimization\\orchestrator\\benchmark_variant.lsf",
+    "D:\\compete\\.codex-deploy\\optimization\\compiler_pgo\\pipeline_driver_long_train.lsf",
+    "D:\\compete\\.codex-deploy\\optimization\\compiler_pgo\\pipeline_driver_no_as_needed.lsf",
+    "D:\\compete\\.codex-deploy\\optimization\\compiler_pgo\\pipeline_ggml_pgo_v3.lsf",
+    "D:\\compete\\.codex-deploy\\optimization\\compiler_pgo\\pipeline_ggml_pgo_v4.lsf",
+    "D:\\compete\\.codex-deploy\\optimization\\compiler_pgo\\ppl_gate.lsf",
+    "D:\\compete\\.codex-deploy\\optimization\\source_v2\\ppl_gate.lsf",
+    "D:\\compete\\.codex-deploy\\optimization\\q8_avx2_v2\\ppl_gate.lsf"
+  ],
+  "unchanged": "PPL shape, timeout, threads, all benchmark command arguments and repetitions"
+}

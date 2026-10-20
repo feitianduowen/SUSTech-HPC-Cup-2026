@@ -1,0 +1,9 @@
+{
+  "script": "/work/apac2602/qwen38-cpu/optimization/20261019-pgo-runtime-diag/diagnostic.lsf",
+  "kind": "PGO运行时合成诊断/VTune",
+  "purpose": "3600秒PGO训练连续超时后，先隔离多线程运行时开销：同节点比较普通GGML、全GGML插桩、仅热点源码插桩的1/38线程合成图，并采集全插桩热点",
+  "config": "Intel Classic2021.9，O3 precise/no-ftz CORE-AVX512 qsimd-honor-fp-model；hg_6148单节点40slots；新独立GGML库构建/计数目录，不加载模型；F32矩阵256x256乘256x64后16个ADD节点，每配置10轮；plain→broad→hot顺序，1线程后38线程，每子进程60s诊断限时；关闭周期计数转储；VTune对broad38额外采样10s；合成诊断没有PPL/正式PP/TG/Score",
+  "baseline": "同节点生产Intel原版GGML库，匹配的1线程或38线程合成图；无完整模型性能baseline",
+  "note": "保持原模型与全部旧构建/计数/失败结果；只读官方源，独立构建。子进程超时作为诊断结果保留，不视为正式训练；诊断计数不得合并至模型PGO。hot仅arch/x86/quants.c与llamafile/sgemm.cpp插桩，运行时/同步/重排不插桩。该作业用于验证可能的计数竞争或运行时开销，当前不预断根因。",
+  "retry_of": "4337448"
+}

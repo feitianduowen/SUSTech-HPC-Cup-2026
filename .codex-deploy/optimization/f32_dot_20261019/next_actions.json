@@ -1,0 +1,58 @@
+{
+  "updated_hong_kong": "2026-10-19T23:46:53.994221+08:00",
+  "job_id": "4338454",
+  "last_known_status": "DONE",
+  "node": "r13n37",
+  "remote_root": "/work/apac2602/qwen38-cpu/optimization/20261019-f32-dot",
+  "source": "/work/apac2602/qwen38-cpu/optimization/20261019-f32-dot/sources/f32-acc8-4338454",
+  "change": "vec.cpp::ggml_vec_dot_f32, AVX512 n>=256 uses8 independent accumulators; shorter lengths/other ISA unchanged. Independent full original-source copy; Intel Classic2021.9 precise flags.",
+  "next": [
+    "Keep this independent source and all raw evidence as a negative result. Do not replace the current build or resubmit the same acc8 candidate. Any next optimization requires a different source hypothesis."
+  ],
+  "completed_hong_kong": "2026-10-19T23:38:34+08:00",
+  "decision": "do_not_promote",
+  "result": {
+    "status": "COMPLETE",
+    "decision": "do_not_promote",
+    "node": "r13n37",
+    "baseline": "same-job original Intel build, 01_baseline",
+    "cases": {
+      "01_baseline": {
+        "pp_ts": 53.159213,
+        "pp_samples": 10,
+        "tg_ts": 3.016623,
+        "tg_samples": 10,
+        "ppl": 2.7767,
+        "ppl_elapsed_seconds": 79
+      },
+      "02_candidate": {
+        "pp_ts": 32.77892,
+        "pp_samples": 10,
+        "tg_ts": 3.012123,
+        "tg_samples": 10,
+        "ppl": 2.769,
+        "ppl_elapsed_seconds": 323
+      }
+    },
+    "pp_change_percent": -38.338214299748955,
+    "tg_change_percent": -0.14917343002424088,
+    "matrix_correctness": {
+      "status": "PASS",
+      "cases": 144,
+      "values": 745104,
+      "bit_mismatches": 12,
+      "tolerance_failures": 0,
+      "max_abs_error": 3.814697265625e-06,
+      "tolerance": "1e-4 + 5e-5*abs(baseline); float reassociation permitted; independent long-double dot test and fixed model PPL also required",
+      "repetitions": 3
+    },
+    "microbench_speedups": {
+      "256": 0.8547187543824171,
+      "1024": 0.8561768734269267,
+      "2560": 0.9526192736318511,
+      "4096": 0.9003491493556698,
+      "16384": 0.9051813649967828
+    },
+    "caveat": "Candidate first, baseline second. Candidate PP samples rise from 23.647 to 39.0711 t/s; order/cache confounding prevents attributing the full PP loss to code. All five alternating AB/BA resident dot microbench medians are slower; TG has no measured gain. No reverse full-model rerun warranted for this candidate."
+  }
+}

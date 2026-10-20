@@ -1,0 +1,65 @@
+#!/bin/bash
+#BSUB -J qwen38_crossover
+#BSUB -q ssc-cpu
+#BSUB -m hg_6148
+#BSUB -n 40
+#BSUB -R "span[ptile=40]"
+#BSUB -W 04:00
+#BSUB -o /work/apac2602/qwen38-cpu/logs/%J.crossover.out
+#BSUB -e /work/apac2602/qwen38-cpu/logs/%J.crossover.err
+set -Eeuo pipefail
+source /work/apac2602/qwen38-cpu/scripts/env.sh
+ROOT=/work/apac2602/qwen38-cpu/optimization/20261020-order-crossover
+OUT="$ROOT/results/$LSB_JOBID"
+BUILD=/work/apac2602/qwen38-cpu/llama.cpp
+PARENT=/work/apac2602/qwen38-cpu/optimization/20261019-factor-screen/results/4338278
+[[ "${CROSSOVER:?}" =~ ^(ABBA|BAAB)$ ]]
+mkdir -p "$OUT"
+phase=VERIFY
+trap 'rc=$?; printf "FAILED phase=%s exit=%s time=%s\n" "$phase" "$rc" "$(date -Is)" > "$OUT/job.status"; exit "$rc"' ERR
+stage() { phase=$1; printf '%s time=%s\n' "$phase" "$(date -Is)" | tee "$OUT/job.status"; }
+unset KMP_BLOCKTIME OMP_WAIT_POLICY KMP_AFFINITY GOMP_CPU_AFFINITY KMP_HW_SUBSET PROF_DIR
+export OMP_NUM_THREADS=38 OMP_DYNAMIC=FALSE OMP_PROC_BIND=close OMP_PLACES=cores
+export MKL_NUM_THREADS=38 OPENBLAS_NUM_THREADS=38 BLIS_NUM_THREADS=38
+[[ "${LSB_DJOB_NUMPROC:?}" == 40 ]]
+[[ $(getconf _NPROCESSORS_ONLN) == 40 ]]
+lscpu | grep -q 'Intel(R) Xeon(R) Gold 6148'
+cp "$PARENT/baseline-sha256.txt" "$OUT/sha256.txt"
+sha256sum -c "$OUT/sha256.txt" > "$OUT/hash-check.txt"
+cp "$ROOT/$CROSSOVER.json" "$OUT/plan.json"
+cp "$ROOT/crossover.lsf" "$ROOT/ppl_gate.lsf" "$ROOT/observed_run.py" "$OUT/"
+{ date -Is; hostname; lscpu; module list; icc --version; icpc --version; cat /proc/sys/kernel/numa_balancing; env | sort | grep -E '^(OMP_|KMP_|MKL_|OPENBLAS_|BLIS_)'; } > "$OUT/environment.txt" 2>&1
+stage FIXED_PPL
+COMPILER_BUILD_ROOT="$BUILD" EXPERIMENT_OUTPUT_DIR="$OUT/ppl" RUN_BENCH=0 bash "$OUT/ppl_gate.lsf" > "$OUT/ppl.log" 2>&1
+MODEL=/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf
+common=(-m "$MODEL" -t 38 -ngl 0 -b 2048 -ub 512 -ctk f16 -ctv f16 --numa distribute -r 10 -v -o json)
+ordinal=0
+for ((block=1; block<=4; block++)); do
+    letter=${CROSSOVER:$((block-1)):1}
+    roles=(anchor probe tg)
+    [[ "$letter" != B ]] || roles=(anchor tg probe)
+    for role in "${roles[@]}"; do
+        ordinal=$((ordinal+1))
+        printf -v name '%02d_b%d_%s_%s' "$ordinal" "$block" "$letter" "$role"
+        workload=pp; args=(-p 2048 -n 0)
+        [[ "$role" != tg ]] || { workload=tg; args=(-p 0 -n 128 -d 2048); }
+        stage "DIAGNOSTIC_$name"
+        mkdir -p "$OUT/$name"
+        python3 - "$OUT/$name/result.json" "$block" "$letter" "$role" "$workload" <<'PY'
+import json,sys,time
+p,b,l,r,w=sys.argv[1:]
+json.dump({'block':int(b),'order':l,'role':r,'workload':w,'started_unix':time.time(),'baseline_role':'same-block anchor PP' if r=='probe' else None,'diagnostic_unscored':True},open(p,'w'),indent=2)
+PY
+        python3 "$OUT/observed_run.py" --output "$OUT/$name/$workload" --timeout 3600 --interval 30 "$BUILD/build/bin/llama-bench" "${common[@]}" "${args[@]}" > "$OUT/$name/$workload.observer.log" 2>&1
+        python3 - "$OUT/$name/$workload.json" "$workload" <<'PY'
+import json,sys
+x=json.load(open(sys.argv[1]))[0]
+assert len(x['samples_ts'])==len(x['samples_ns'])==10
+assert all(v>0 for v in x['samples_ns'])
+assert (x['n_threads'],x['n_batch'],x['n_ubatch'],x['n_gpu_layers'],x['type_k'],x['type_v'])==(38,2048,512,0,'f16','f16')
+assert (x['n_prompt'],x['n_gen'],x['n_depth'])==((2048,0,0) if sys.argv[2]=='pp' else (0,128,2048))
+PY
+        sha256sum -c "$OUT/sha256.txt" >> "$OUT/hash-check.txt"
+    done
+done
+stage COMPLETE

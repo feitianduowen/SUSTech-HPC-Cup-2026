@@ -1,0 +1,20 @@
+{
+  "script": "/work/apac2602/qwen38-cpu/optimization/20261019-order-diagnostic/order_job.lsf",
+  "kind": "顺序效应诊断（不计分）",
+  "purpose": "定位TG穿插、模型加载/缺页/NUMA分布与PP逐轮加速的关联：固定PPL一次→PP1→PP2→PP3→TG1→TG2",
+  "config": "只读复用SHA核验Intel Classic2021.9 O3 precise/no-ftz CORE-AVX512 qsimd-honor-fp-model官方原版；OpenMP ON、tinyBLAS ON、BLAS/GPU OFF。hg_6148单节点40slots/Gold6148，推理38线程close/cores，默认等待策略。PPL t/tb38 c512 chunks2 b512 ub256 KVf16 ngl0 NUMA distribute no-warmup timeout590s，±5%[2.63112,2.90808]。PP p2048n0、TG p0n128d2048，各r10/t38/b2048/ub512/f16KV/ngl0/NUMA distribute；执行顺序=固定PPL一次→PP1→PP2→PP3→TG1→TG2。测速-v，每30秒只读采样该子进程缺页、I/O、RSS、GGUF/其他NUMA页分布，及主机内存/NUMA迁移计数；每命令超时3600s；不计算Score。",
+  "baseline": "同作业01_baseline的首次PP/首次TG；比较各自同节点后续相同workload，非优化收益",
+  "baseline_case": "diagnostic-order-pp-chain-baseline_{job_id}",
+  "case_prefix": "diagnostic-order-pp-chain",
+  "comparison_scope": "same-node",
+  "environment": {
+    "ORDER_MODE": "pp-chain"
+  },
+  "lsf_args": [
+    "-J",
+    "qwen38_order_pp-chain"
+  ],
+  "os_monitoring": true,
+  "ppl_scope": "所有测速阶段共享本作业开始时的一次独立固定PPL，非每case重跑；采样只覆盖测速",
+  "note": "A/A 4338449无配置变化第二次PP约+76.6%，因此先验证测量顺序效应。两种顺序分属不同节点/时段，采样有开销，均为诊断不能计分；分目录PP与TG可能不相邻，真实顺序见plan、command和时间戳。主机计数可能含其他系统活动，相关性不能单独证明因果。不清缓存、不改OS NUMA设置，不修改生产构建或模型。"
+}

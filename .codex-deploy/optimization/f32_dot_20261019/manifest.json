@@ -1,0 +1,10 @@
+{
+  "base_commit": "d81235049384534c167caea52b85a694f6103d14",
+  "variants": {
+    "f32-acc8": {
+      "file": "ggml/src/ggml-cpu/vec.cpp",
+      "original_sha256": "31e43ec66a1e2920a549dd2f71e6ce474e68f2fc298c4d2942404ca327e763d1",
+      "sha256": "28033a784af2812acec8cdd95e40064a78eca61cbc864ec21b92a74d7330b808"
+    }
+  }
+}

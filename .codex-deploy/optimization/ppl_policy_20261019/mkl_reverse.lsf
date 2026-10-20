@@ -1,0 +1,44 @@
+#!/bin/bash
+#BSUB -J qwen38_policy5_mkl_reverse
+#BSUB -q ssc-cpu
+#BSUB -m hg_6148
+#BSUB -n 40
+#BSUB -R "span[ptile=40]"
+#BSUB -W 04:00
+#BSUB -o /work/apac2602/qwen38-cpu/logs/%J.policy5.out
+#BSUB -e /work/apac2602/qwen38-cpu/logs/%J.policy5.err
+set -Eeuo pipefail
+source /work/apac2602/qwen38-cpu/scripts/env.sh
+ROOT=/work/apac2602/qwen38-cpu/optimization/20261019-ppl-policy5
+OLD=/work/apac2602/qwen38-cpu/optimization/20261018-v1
+OUT="$ROOT/results/$LSB_JOBID"
+mkdir -p "$OUT"
+phase=INIT
+trap 'rc=$?; printf "FAILED phase=%s exit=%s time=%s\n" "$phase" "$rc" "$(date -Is)" > "$OUT/job.status"; exit "$rc"' ERR
+stage() { phase=$1; printf '%s time=%s\n' "$phase" "$(date -Is)" | tee "$OUT/job.status"; }
+[[ "$LSB_DJOB_NUMPROC" == 40 ]]
+[[ $(getconf _NPROCESSORS_ONLN) == 40 ]]
+lscpu | grep -q 'Intel(R) Xeon(R) Gold 6148'
+{ date -Is; hostname; lscpu; module list; icc --version; icpc --version; } > "$OUT/environment.txt" 2>&1
+cp "$ROOT/mkl_reverse.lsf" "$OUT/pipeline.lsf"
+cp "$ROOT/policy.json" "$OUT/policy.json"
+cp "$OLD/scripts/benchmark_variant.lsf" "$OUT/benchmark-policy5.lsf"
+grep -q '^PPL_MAX_REL_DIFF_PERCENT=5.0' "$OUT/benchmark-policy5.lsf"
+for name in baseline mkl; do
+    build=/work/apac2602/qwen38-cpu/llama.cpp/build
+    [[ "$name" != mkl ]] || build="$OLD/variants/mkl/build"
+    for file in llama-cli llama-server llama-bench llama-perplexity; do test -x "$build/bin/$file"; done
+    ldd "$build/bin/llama-bench" > "$OUT/$name.ldd.txt"
+    ! grep -q 'not found' "$OUT/$name.ldd.txt"
+    sha256sum "$build/bin/llama-bench" "$build/bin/llama-perplexity" "$build/bin/"lib*.so* > "$OUT/$name.sha256.txt"
+    cp "$build/CMakeCache.txt" "$OUT/$name.CMakeCache.txt"
+done
+for name in mkl baseline; do
+    stage "${name}_FIXED_PPL_PP10_TG10"
+    unset KMP_BLOCKTIME OMP_WAIT_POLICY KMP_AFFINITY GOMP_CPU_AFFINITY KMP_HW_SUBSET
+    export EXPERIMENT_VARIANT="$name"
+    if [[ "$name" == baseline ]]; then ordinal=01; else ordinal=02; fi
+    export EXPERIMENT_OUTPUT_DIR="$OUT/${ordinal}_${name}"
+    RUN_BENCH=1 bash "$OUT/benchmark-policy5.lsf" > "$OUT/$name.out" 2> "$OUT/$name.err"
+done
+stage READY

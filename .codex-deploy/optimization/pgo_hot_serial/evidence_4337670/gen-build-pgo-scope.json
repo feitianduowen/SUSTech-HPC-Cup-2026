@@ -1,0 +1,10 @@
+{
+  "phase": "gen",
+  "profiled_sources": [
+    "/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/llamafile/sgemm.cpp",
+    "/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/ggml/src/ggml-cpu/arch/x86/quants.c",
+    "/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native/tools/llama-bench/main.cpp"
+  ],
+  "expected_count": 3,
+  "status": "PASS"
+}

@@ -1,0 +1,163 @@
+{
+  "job_id": "4337670",
+  "opt_level": "3",
+  "compiler": "Intel Classic 2021.9",
+  "pgo_scope": "Only x86/quants.c, llamafile/sgemm.cpp and thin llama-bench main.cpp; all other sources plain",
+  "source": "d81235049384534c167caea52b85a694f6103d14",
+  "source_path": "/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native",
+  "builds": {
+    "control": {
+      "root": "/work/apac2602/qwen38-cpu/optimization/20261019-pgo-hot-serial/builds/4337670/control",
+      "ppl": {
+        "schema": "llama_cpp_ppl_regression_v1",
+        "ppl": 2.7767,
+        "elapsed_seconds": 293,
+        "conditions": {
+          "model_files_path_and_size": [
+            [
+              "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+              10946624
+            ],
+            [
+              "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00002-of-00004.gguf",
+              49859583136
+            ],
+            [
+              "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00003-of-00004.gguf",
+              49376141504
+            ],
+            [
+              "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00004-of-00004.gguf",
+              12087983520
+            ]
+          ],
+          "data_sha256": "173c87a53759e0201f33e0ccf978e510c2042d7f2cb78229d9a50d79b9e7dd08",
+          "ppl_ctx": 512,
+          "ppl_chunks": 2,
+          "ppl_batch": 512,
+          "ppl_ubatch": 256,
+          "threads": 38,
+          "kv_cache_k": "f16",
+          "kv_cache_v": "f16",
+          "numa": "distribute",
+          "warmup": false,
+          "gpu_layers": 0
+        },
+        "baseline_json": "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/perplexity_result.json",
+        "tolerance_percent": 0.5,
+        "baseline_ppl": 2.7696,
+        "relative_difference_percent": 0.2563547082611084,
+        "status": "PASS"
+      },
+      "artifacts": {
+        "libggml-base.so": "491c95f9eae92d33ca9b35a43e4a4fbbd143d8a6ded460eab806f7aa0be5f3b0",
+        "libggml-base.so.0": "491c95f9eae92d33ca9b35a43e4a4fbbd143d8a6ded460eab806f7aa0be5f3b0",
+        "libggml-base.so.0.26.0": "491c95f9eae92d33ca9b35a43e4a4fbbd143d8a6ded460eab806f7aa0be5f3b0",
+        "libggml-cpu.so": "71bd3fbeb85ff9c397bce00984b48a7ddded45d4894209f36c34c361d0debca7",
+        "libggml-cpu.so.0": "71bd3fbeb85ff9c397bce00984b48a7ddded45d4894209f36c34c361d0debca7",
+        "libggml-cpu.so.0.26.0": "71bd3fbeb85ff9c397bce00984b48a7ddded45d4894209f36c34c361d0debca7",
+        "libggml.so": "bbe450c0db6d76e19c3cafd20ccf141c5d5573625609e2e713310ab3adad24d8",
+        "libggml.so.0": "bbe450c0db6d76e19c3cafd20ccf141c5d5573625609e2e713310ab3adad24d8",
+        "libggml.so.0.26.0": "bbe450c0db6d76e19c3cafd20ccf141c5d5573625609e2e713310ab3adad24d8",
+        "libllama-bench-impl.so": "fa855fa13145207eb7284f73b187b2e51f54bc23403693254f462415e5b32548",
+        "libllama-cli-impl.so": "e54389b38edec60e6e69f409ce4880cbe33fd11b5109aae53fce37289721cb2c",
+        "libllama-common.so": "f92d150a2c4ee4b1a8108965383c442fe24d1372c856c7402aa3fd3f358099ff",
+        "libllama-common.so.0": "f92d150a2c4ee4b1a8108965383c442fe24d1372c856c7402aa3fd3f358099ff",
+        "libllama-common.so.0.6.0": "f92d150a2c4ee4b1a8108965383c442fe24d1372c856c7402aa3fd3f358099ff",
+        "libllama-perplexity-impl.so": "0a07451fb17d9632cb0f3bfc45c99fca4e46c650c2e8da4f80e8a92679177f55",
+        "libllama-server-impl.so": "aff5a947deef84091e82981acc10d40a806540010815bb69ba3150f9848728c6",
+        "libllama.so": "30b6ec583a35b33b464eae578bd626edad26ffa679141f61ccb4ebe09f195909",
+        "libllama.so.0": "30b6ec583a35b33b464eae578bd626edad26ffa679141f61ccb4ebe09f195909",
+        "libllama.so.0.6.0": "30b6ec583a35b33b464eae578bd626edad26ffa679141f61ccb4ebe09f195909",
+        "libmtmd.so": "53ca90bab7a8b4adca00261e9687e6daf2a3e83523f6710a9ec728521cde8431",
+        "libmtmd.so.0": "53ca90bab7a8b4adca00261e9687e6daf2a3e83523f6710a9ec728521cde8431",
+        "libmtmd.so.0.6.0": "53ca90bab7a8b4adca00261e9687e6daf2a3e83523f6710a9ec728521cde8431",
+        "llama-bench": "f19932144effca385ba2f3d6fc0597ebb3427e7693b07cb916e964e2cfa6ab6e",
+        "llama-cli": "51b5aad99f6d7573b0553e15ce83a79731e259de10d7e0d852c23b87a390fb90",
+        "llama-perplexity": "f60ff03bd9c8dc50761ff6a23243170d6f10fb275a99a7756bd9f2de7c047777",
+        "llama-server": "0c654d019b7d5cedb4cada1ffba57f2453943e06c4481528f21169902b85ac85"
+      }
+    },
+    "pgo": {
+      "root": "/work/apac2602/qwen38-cpu/optimization/20261019-pgo-hot-serial/builds/4337670/pgo",
+      "ppl": {
+        "schema": "llama_cpp_ppl_regression_v1",
+        "ppl": 2.7767,
+        "elapsed_seconds": 232,
+        "conditions": {
+          "model_files_path_and_size": [
+            [
+              "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+              10946624
+            ],
+            [
+              "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00002-of-00004.gguf",
+              49859583136
+            ],
+            [
+              "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00003-of-00004.gguf",
+              49376141504
+            ],
+            [
+              "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00004-of-00004.gguf",
+              12087983520
+            ]
+          ],
+          "data_sha256": "173c87a53759e0201f33e0ccf978e510c2042d7f2cb78229d9a50d79b9e7dd08",
+          "ppl_ctx": 512,
+          "ppl_chunks": 2,
+          "ppl_batch": 512,
+          "ppl_ubatch": 256,
+          "threads": 38,
+          "kv_cache_k": "f16",
+          "kv_cache_v": "f16",
+          "numa": "distribute",
+          "warmup": false,
+          "gpu_layers": 0
+        },
+        "baseline_json": "/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/perplexity_result.json",
+        "tolerance_percent": 5.0,
+        "baseline_ppl": 2.7696,
+        "relative_difference_percent": 0.2563547082611084,
+        "accepted_ppl_interval": [
+          2.63112,
+          2.90808
+        ],
+        "policy_id": "20261019-ppl-tolerance-5pct",
+        "status": "PASS"
+      },
+      "artifacts": {
+        "libggml-base.so": "11e0a19d97f6ac0a3d6306da2ab6581ebadf7c12ff6084323c11515acfc5cea1",
+        "libggml-base.so.0": "11e0a19d97f6ac0a3d6306da2ab6581ebadf7c12ff6084323c11515acfc5cea1",
+        "libggml-base.so.0.26.0": "11e0a19d97f6ac0a3d6306da2ab6581ebadf7c12ff6084323c11515acfc5cea1",
+        "libggml-cpu.so": "2ee6518a48a5d994f8fe7db00b7b85d3c4de4beda403c523d4161fa6a89bb117",
+        "libggml-cpu.so.0": "2ee6518a48a5d994f8fe7db00b7b85d3c4de4beda403c523d4161fa6a89bb117",
+        "libggml-cpu.so.0.26.0": "2ee6518a48a5d994f8fe7db00b7b85d3c4de4beda403c523d4161fa6a89bb117",
+        "libggml.so": "6f8b263d2ebe6e3180b8c5a977cfc32dfa576164109f50b608ee86d8ace61e58",
+        "libggml.so.0": "6f8b263d2ebe6e3180b8c5a977cfc32dfa576164109f50b608ee86d8ace61e58",
+        "libggml.so.0.26.0": "6f8b263d2ebe6e3180b8c5a977cfc32dfa576164109f50b608ee86d8ace61e58",
+        "libllama-bench-impl.so": "1a93741294e4879a8252d38fec9a5c410844a76eb3ab70b97ab4954bcb44f8e6",
+        "libllama-cli-impl.so": "349dd48a47c8b6bc8f68dd9ef0d71c0d3e441fb3fe2a827e54fd206196cd1968",
+        "libllama-common.so": "513088399813036a10ee65c9befcba61534c8233251387f9f1dd9cf484a430ab",
+        "libllama-common.so.0": "513088399813036a10ee65c9befcba61534c8233251387f9f1dd9cf484a430ab",
+        "libllama-common.so.0.6.0": "513088399813036a10ee65c9befcba61534c8233251387f9f1dd9cf484a430ab",
+        "libllama-perplexity-impl.so": "3578c52860dd5e9b1bdc5d83f52d6bea4f1174082ea92997c3ec3eb181d761d6",
+        "libllama-server-impl.so": "061fcd21a350872fe44e0a1fdc1fa3348cc131e535c3190683be78925dccf78a",
+        "libllama.so": "2c976261a69ac3614c9a7d2c2656a919dc6f5148efa2ff52303df13077e5c3db",
+        "libllama.so.0": "2c976261a69ac3614c9a7d2c2656a919dc6f5148efa2ff52303df13077e5c3db",
+        "libllama.so.0.6.0": "2c976261a69ac3614c9a7d2c2656a919dc6f5148efa2ff52303df13077e5c3db",
+        "libmtmd.so": "128fdb817c5b8cceb28c822ad646c33342289d226307c01c987d00a93624e651",
+        "libmtmd.so.0": "128fdb817c5b8cceb28c822ad646c33342289d226307c01c987d00a93624e651",
+        "libmtmd.so.0.6.0": "128fdb817c5b8cceb28c822ad646c33342289d226307c01c987d00a93624e651",
+        "llama-bench": "a0b76c338e8f5be0b67c73f99f1ecd2bd4a237b037115d0af2f60e87a7fd63b2",
+        "llama-cli": "ca6313cb182534aca0e81a8772e2b3591ad170085e70ea88ea5671adf13d33c3",
+        "llama-perplexity": "f35ff4b3d374ca08421956e1289966ea3c90d9bac514430389fd3f7f4eb918e2",
+        "llama-server": "2f59eba8293b8b97bd0abb775d2ad7c18a49120924f3b9ab322785bfeece3a18"
+      }
+    }
+  },
+  "training": "Synthetic PP64 and TG8@D64; default counters, single inference/OpenMP thread to avoid races; 900s each, normal exits only; no periodic dump, new profiles only; unscored, no WikiText training; PPL and official performance remain 38 threads",
+  "profile_count": 4,
+  "updated_at": "2026-10-19T18:37:06.751701+08:00",
+  "dpi_sha256": "10c17fd9c8a03b7f54235524377f2183fc5cfb60772dd325882cef9e98bd44b6"
+}

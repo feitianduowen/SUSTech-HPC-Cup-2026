@@ -48,6 +48,10 @@ def add_policy_review(book, jobs, evidence):
         for measurement in job['measurements']:
             record = measurement.get('ppl')
             if not record:
+                sheet.append([job['job_id'],measurement['name'],None,'未运行',None,
+                              '未运行','待校验',BASELINE,LOWER,UPPER,None,'未重跑',
+                              measurement['path']+'/perplexity_result.json',
+                              '尚无完整PPL JSON，不得据其他版本的PASS替代'])
                 continue
             result = reassess(record, reference)
             source = measurement.get('ppl_gate_path',measurement['path']+'/perplexity_result.json')
@@ -65,16 +69,20 @@ def add_policy_review(book, jobs, evidence):
                           BASELINE,LOWER,UPPER,result.get('relative_difference_percent'),
                           '未重跑',source,result['reason']])
     log = book['作业日志']
+    jobs_by_id = {item['job_id']:item for item in jobs}
     log.cell(1,25,'现行5% PPL状态')
     log.cell(1,26,'新规复核口径')
     for row in range(2,log.max_row+1):
         jid = str(log.cell(row,1).value)
+        current_job = jobs_by_id[jid]
         cases = job_reviews.get(jid,[])
         if not cases:
             log.cell(row,25,'无完整PPL')
             continue
         if 'PGO' in str(log.cell(row,8).value) and len(cases)==1 and cases[0]['name'].startswith('compiler-control_'):
-            current = '仅control '+cases[0]['verdict']+'；PGO待校验'
+            current = '仅control '+cases[0]['verdict']+'；PGO'+('待校验' if current_job['state'] in ['RUN','PEND'] else '未校验')
+        elif len(cases)<len(current_job['measurements']):
+            current = '多版本尚未全部校验（见明细）'
         else:
             current = cases[0]['verdict'] if len(cases)==1 else '多版本见新规复核页'
         log.cell(row,25,current)

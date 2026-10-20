@@ -1,0 +1,130 @@
+{
+  "updated_at_hkt": "2026-10-19T22:46:56.553773+08:00",
+  "source": "Completed LSF, original fixed PPL and all ten PP/TG samples, NaN PPL raw log",
+  "jobs": {
+    "4338277": {
+      "values": {
+        "baseline": {
+          "ppl": 2.7767,
+          "ppl_status": "PASS",
+          "pp": 25.228198,
+          "pp_cv_percent": 7.530105796696221,
+          "tg": 2.959654,
+          "tg_cv_percent": 0.7736715170084071
+        },
+        "candidate": {
+          "ppl": 2.7767,
+          "ppl_status": "PASS",
+          "pp": 51.980336,
+          "pp_cv_percent": 1.0071693264930033,
+          "tg": 1.89504,
+          "tg_cv_percent": 0.10506374535629856
+        }
+      },
+      "changes_percent": {
+        "pp": 106.04062168847732,
+        "tg": -35.97089389502962,
+        "geomean": 14.859030241533787
+      },
+      "summary": "完整同节点baseline→candidate对照；两版独立固定PPL按5%通过（2.7767/2.7767），PP/TG各10次。候选相对本作业baseline：PP +106.04%，TG -35.97%，几何均值 +14.86%。四组后运行候选PP均显著高于先运行baseline，且候选前的默认PPL也明显更快，存在强烈顺序/缓存/时段混杂；不能将PP大幅提升直接归因于变量。等待时长0的TG约下降36%，暂不继续；保留全部慢样本。开发自测非正式成绩。"
+    },
+    "4338278": {
+      "values": {
+        "baseline": {
+          "ppl": 2.7767,
+          "ppl_status": "PASS",
+          "pp": 26.065434,
+          "pp_cv_percent": 7.667115767188069,
+          "tg": 2.995578,
+          "tg_cv_percent": 1.1189827138535535
+        },
+        "candidate": {
+          "ppl": 2.7767,
+          "ppl_status": "PASS",
+          "pp": 53.590429,
+          "pp_cv_percent": 0.975329008842232,
+          "tg": 3.033922,
+          "tg_cv_percent": 0.2720570930959991
+        }
+      },
+      "changes_percent": {
+        "pp": 105.59960367435278,
+        "tg": 1.2800200829355735,
+        "geomean": 44.3022244775944
+      },
+      "summary": "完整同节点baseline→candidate对照；两版独立固定PPL按5%通过（2.7767/2.7767），PP/TG各10次。候选相对本作业baseline：PP +105.60%，TG +1.28%，几何均值 +44.30%。四组后运行候选PP均显著高于先运行baseline，且候选前的默认PPL也明显更快，存在强烈顺序/缓存/时段混杂；不能将PP大幅提升直接归因于变量。下一轮复用已核验产物做candidate→baseline反序，并另设相同配置A/A对照。开发自测非正式成绩。"
+    },
+    "4338279": {
+      "values": {
+        "baseline": {
+          "ppl": 2.7767,
+          "ppl_status": "PASS",
+          "pp": 26.759749,
+          "pp_cv_percent": 18.484616578429044,
+          "tg": 3.083758,
+          "tg_cv_percent": 0.8048296915646429
+        },
+        "candidate": {
+          "ppl": 2.8635,
+          "ppl_status": "PASS",
+          "pp": 48.76305,
+          "pp_cv_percent": 1.343584948029297,
+          "tg": 3.086416,
+          "tg_cv_percent": 0.2506791048257915
+        }
+      },
+      "changes_percent": {
+        "pp": 82.22536392250915,
+        "tg": 0.0861935339932618,
+        "geomean": 35.04903939069912
+      },
+      "summary": "完整同节点baseline→candidate对照；两版独立固定PPL按5%通过（2.7767/2.8635），PP/TG各10次。候选相对本作业baseline：PP +82.23%，TG +0.09%，几何均值 +35.05%。四组后运行候选PP均显著高于先运行baseline，且候选前的默认PPL也明显更快，存在强烈顺序/缓存/时段混杂；不能将PP大幅提升直接归因于变量。下一轮复用已核验产物做candidate→baseline反序，并另设相同配置A/A对照。开发自测非正式成绩。"
+    },
+    "4338280": {
+      "values": {
+        "baseline": {
+          "ppl": 2.7767,
+          "ppl_status": "PASS",
+          "pp": 26.441999,
+          "pp_cv_percent": 19.996956357195234,
+          "tg": 3.060545,
+          "tg_cv_percent": 0.6931771955648423
+        },
+        "candidate": {
+          "ppl": 2.7767,
+          "ppl_status": "PASS",
+          "pp": 51.336181,
+          "pp_cv_percent": 1.2365508840636197,
+          "tg": 3.023544,
+          "tg_cv_percent": 0.24593655657069985
+        }
+      },
+      "changes_percent": {
+        "pp": 94.14636919092239,
+        "tg": -1.2089676838602292,
+        "geomean": 38.49158903269765
+      },
+      "summary": "完整同节点baseline→candidate对照；两版独立固定PPL按5%通过（2.7767/2.7767），PP/TG各10次。候选相对本作业baseline：PP +94.15%，TG -1.21%，几何均值 +38.49%。四组后运行候选PP均显著高于先运行baseline，且候选前的默认PPL也明显更快，存在强烈顺序/缓存/时段混杂；不能将PP大幅提升直接归因于变量。下一轮复用已核验产物做candidate→baseline反序，并另设相同配置A/A对照。开发自测非正式成绩。"
+    },
+    "4338281": {
+      "values": {
+        "baseline": {
+          "ppl": 2.7767,
+          "ppl_status": "PASS",
+          "pp": 27.230197,
+          "pp_cv_percent": 16.83302915509572,
+          "tg": 3.083857,
+          "tg_cv_percent": 0.398299921170145
+        },
+        "candidate": {
+          "ppl": null,
+          "ppl_status": null
+        }
+      },
+      "ppl_observations": {
+        "confirm-factor-fpmodel-candidate_4338281": "数值无效（NaN；已运行）"
+      },
+      "summary": "全局-fp-model fast=1数值失败：PPL进程74秒退出码0，但两个chunk均输出-nan，并报告Unexpected negative standard deviation of log(prob)，无有效Final estimate。固定PPL验证正确阻止测速。此结果不是±5%范围内通过，也不是未运行；candidate PP/TG/Score均未执行。两版Intel构建、量化测试、单变量缓存核验通过，但不代表模型数值有效。保留失败构建和日志，淘汰此全局fast=1配置，不盲目重提。baseline完整PPL/PP10/TG10保留。"
+    }
+  }
+}

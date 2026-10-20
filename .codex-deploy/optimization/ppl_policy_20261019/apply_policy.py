@@ -43,6 +43,8 @@ def main():
                        root/'optimization/20261019-q8-avx2-v2/scripts',
                        root/'optimization/20261019-source-v2',
                        root/'optimization/20261019-source-v2/scripts',
+                       root/'optimization/20261019-q8-avx512',
+                       root/'optimization/20261019-q8-avx512/scripts',
                        root/'optimization/20261019-memory/scripts']
     stamp = datetime.now(timezone(timedelta(hours=8))).isoformat()
     audit.mkdir(parents=True, exist_ok=True)

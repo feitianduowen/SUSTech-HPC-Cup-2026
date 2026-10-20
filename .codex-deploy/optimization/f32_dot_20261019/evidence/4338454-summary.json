@@ -1,0 +1,229 @@
+{
+  "dot_checks": {
+    "baseline": {
+      "status": "PASS",
+      "cases": 8672,
+      "failures": 0,
+      "max_normalized_absolute_error": 5.64821602785e-07,
+      "max_error_bound_ratio": 0.0142712861918,
+      "reference": "long double",
+      "bound": "4*FLT_EPSILON*(n/64+80)*sum(abs(x*y))+1e-30"
+    },
+    "candidate": {
+      "status": "PASS",
+      "cases": 8672,
+      "failures": 0,
+      "max_normalized_absolute_error": 5.64821602785e-07,
+      "max_error_bound_ratio": 0.0142712861918,
+      "reference": "long double",
+      "bound": "4*FLT_EPSILON*(n/64+80)*sum(abs(x*y))+1e-30"
+    }
+  },
+  "microbench": [
+    {
+      "n": 256,
+      "baseline_ns_median": 21.180652799999997,
+      "candidate_ns_median": 24.7808448,
+      "speedup": 0.8547187543824171,
+      "samples": {
+        "baseline": [
+          21.5801984,
+          21.2237312,
+          21.1180416,
+          20.960384,
+          36.950208,
+          21.1375744,
+          21.0897664,
+          27.4479104,
+          26.6426624,
+          21.1333632
+        ],
+        "candidate": [
+          24.7769088,
+          24.7847808,
+          30.9128704,
+          32.8047488,
+          28.7942656,
+          24.7020032,
+          24.4509696,
+          24.4968576,
+          24.4046336,
+          32.130048
+        ]
+      }
+    },
+    {
+      "n": 1024,
+      "baseline_ns_median": 56.291229349999995,
+      "candidate_ns_median": 65.74719675,
+      "speedup": 0.8561768734269267,
+      "samples": {
+        "baseline": [
+          55.4171317,
+          56.4610619,
+          55.5377093,
+          57.8829041,
+          56.1213968,
+          54.8814193,
+          58.2274845,
+          56.4957759,
+          57.0147458,
+          56.0129538
+        ],
+        "candidate": [
+          69.6724182,
+          64.4628027,
+          63.1567252,
+          61.6966873,
+          63.8815729,
+          68.546311,
+          67.8462956,
+          67.0315908,
+          70.6069838,
+          62.7297629
+        ]
+      }
+    },
+    {
+      "n": 2560,
+      "baseline_ns_median": 122.19470050000001,
+      "candidate_ns_median": 128.272337,
+      "speedup": 0.9526192736318511,
+      "samples": {
+        "baseline": [
+          121.349078,
+          120.918971,
+          123.569508,
+          121.4936,
+          126.866359,
+          123.626344,
+          122.895801,
+          121.141065,
+          121.010113,
+          124.879544
+        ],
+        "candidate": [
+          128.13236,
+          127.660522,
+          133.594854,
+          129.50384,
+          127.679724,
+          128.302739,
+          129.368792,
+          128.241935,
+          127.888633,
+          128.545955
+        ]
+      }
+    },
+    {
+      "n": 4096,
+      "baseline_ns_median": 213.31441999999998,
+      "candidate_ns_median": 236.924109,
+      "speedup": 0.9003491493556698,
+      "samples": {
+        "baseline": [
+          206.633347,
+          211.965178,
+          218.880787,
+          211.234125,
+          218.602007,
+          219.452683,
+          210.256862,
+          214.663662,
+          214.854158,
+          211.344121
+        ],
+        "candidate": [
+          239.363376,
+          234.445924,
+          237.495084,
+          234.312167,
+          237.253175,
+          234.24027,
+          237.704015,
+          242.013724,
+          236.595043,
+          231.703605
+        ]
+      }
+    },
+    {
+      "n": 16384,
+      "baseline_ns_median": 1755.10697,
+      "candidate_ns_median": 1938.956145,
+      "speedup": 0.9051813649967828,
+      "samples": {
+        "baseline": [
+          1711.49016,
+          1786.65574,
+          1877.6582,
+          1755.35902,
+          1721.30328,
+          1853.36721,
+          1736.12295,
+          1789.03115,
+          1724.9541,
+          1754.85492
+        ],
+        "candidate": [
+          1961.81557,
+          1910.60574,
+          1923.12213,
+          1959.48852,
+          1954.79016,
+          1972.30492,
+          1961.65246,
+          1894.97541,
+          1920.47377,
+          1855.6418
+        ]
+      }
+    }
+  ],
+  "interpretation": "F32 acc8: numerical checks and independent fixed PPL passed, including 8672 direct-dot cases per build and 144 matrix cases; matrix has 12 bit differences, zero tolerance failures. Both full PP/TG have ten samples. No demonstrated performance benefit; do not promote. Candidate first, baseline second. Candidate PP samples rise from 23.647 to 39.0711 t/s; order/cache confounding prevents attributing the full PP loss to code. All five alternating AB/BA resident dot microbench medians are slower; TG has no measured gain. No reverse full-model rerun warranted for this candidate.",
+  "source_screening_review": {
+    "status": "COMPLETE",
+    "decision": "do_not_promote",
+    "node": "r13n37",
+    "baseline": "same-job original Intel build, 01_baseline",
+    "cases": {
+      "01_baseline": {
+        "pp_ts": 53.159213,
+        "pp_samples": 10,
+        "tg_ts": 3.016623,
+        "tg_samples": 10,
+        "ppl": 2.7767,
+        "ppl_elapsed_seconds": 79
+      },
+      "02_candidate": {
+        "pp_ts": 32.77892,
+        "pp_samples": 10,
+        "tg_ts": 3.012123,
+        "tg_samples": 10,
+        "ppl": 2.769,
+        "ppl_elapsed_seconds": 323
+      }
+    },
+    "pp_change_percent": -38.338214299748955,
+    "tg_change_percent": -0.14917343002424088,
+    "matrix_correctness": {
+      "status": "PASS",
+      "cases": 144,
+      "values": 745104,
+      "bit_mismatches": 12,
+      "tolerance_failures": 0,
+      "max_abs_error": 3.814697265625e-06,
+      "tolerance": "1e-4 + 5e-5*abs(baseline); float reassociation permitted; independent long-double dot test and fixed model PPL also required",
+      "repetitions": 3
+    },
+    "microbench_speedups": {
+      "256": 0.8547187543824171,
+      "1024": 0.8561768734269267,
+      "2560": 0.9526192736318511,
+      "4096": 0.9003491493556698,
+      "16384": 0.9051813649967828
+    },
+    "caveat": "Candidate first, baseline second. Candidate PP samples rise from 23.647 to 39.0711 t/s; order/cache confounding prevents attributing the full PP loss to code. All five alternating AB/BA resident dot microbench medians are slower; TG has no measured gain. No reverse full-model rerun warranted for this candidate."
+  }
+}

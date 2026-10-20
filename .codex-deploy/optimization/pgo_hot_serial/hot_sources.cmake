@@ -1,0 +1,20 @@
+include_guard(GLOBAL)
+function(qwen_hot_profile)
+    if(QWEN_PGO_PHASE STREQUAL "gen")
+        set(options -prof-gen=default -prof-dir "${QWEN_PROFILE_DIR}")
+    elseif(QWEN_PGO_PHASE STREQUAL "use")
+        set(options -prof-use=nomerge -prof-dir "${QWEN_PROFILE_DIR}")
+    else()
+        return()
+    endif()
+    foreach(source ggml/src/ggml-cpu/arch/x86/quants.c ggml/src/ggml-cpu/llamafile/sgemm.cpp)
+        set_property(SOURCE "${CMAKE_SOURCE_DIR}/${source}" TARGET_DIRECTORY ggml-cpu
+                     APPEND PROPERTY COMPILE_OPTIONS ${options})
+    endforeach()
+    target_link_options(ggml-cpu PRIVATE ${options} -Wl,--no-as-needed)
+    # Only the thin executable main supplies Intel's profile runtime to DSOs.
+    # The benchmark implementation, tokenizer and synchronization stay plain.
+    target_compile_options(llama-bench PRIVATE ${options})
+    target_link_options(llama-bench PRIVATE ${options} -Wl,--no-as-needed)
+endfunction()
+cmake_language(DEFER CALL qwen_hot_profile)

@@ -1,0 +1,13 @@
+{
+  "script": "/work/apac2602/qwen38-cpu/optimization/20261019-pgo-hot-serial/pipeline.lsf",
+  "kind": "热点源码PGO单线程训练与PPL验证",
+  "purpose": "修复线程安全PGO运行时checkpoint严重开销：仅两热点源文件和thin main默认插桩，以单线程收集无竞争的新训练计数，再反馈编译并跑38线程固定PPL",
+  "config": "Intel Classic2021.9 O3 precise/no-ftz CORE-AVX512 qsimd-honor-fp-model；hg_6148 40slots；官方原始源码SHA校验，只读，不覆盖旧源码/构建；gen仅quants.c/sgemm.cpp/main.cpp -prof-gen=default，use对应-prof-use=nomerge；独立build/profile。训练PP64r1、TG8d64r1，t1/OMP1，b2048ub512 f16KV ngl0 NUMA distribute；分别900s，无周期dump，正常退出并验证完整JSON后才合并。use跑量化单测和四工具链接检查；固定PPL t/tb38,c512,chunks2,b512ub256,f16KV,ngl0,NUMA distribute,no-warmup,590s，±5%含边界。此作业不跑完整PP/TG测速。",
+  "baseline": "4337216已验证Intel O3 plain control，SHA256核验后只读复用；PPL2.7767，未重跑control PPL；无完整模型性能baseline",
+  "environment": {
+    "PGO_OPT_LEVEL": "3"
+  },
+  "retry_of": "4337448",
+  "note": "4337634 VTune显示77.3%CPU在threadsafe checkpoint；4337642 default模式诊断后才提交此方案。38线程default诊断计数可能竞争，绝不复用。此作业新计数只由1线程真实模型训练产生；训练计数与单线程分布不完全代表38线程负载，后续需完整配对测速证明收益。失败/超时则禁止合并。生产模型、官方源、旧构建全部保留。",
+  "ppl_scope": "control复用SHA校验的4337216固定PPL；候选use必须独立重新跑固定PPL，容差±5%"
+}

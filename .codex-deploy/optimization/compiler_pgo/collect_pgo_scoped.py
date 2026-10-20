@@ -9,7 +9,7 @@ from pathlib import Path
 
 deploy = Path('/work/apac2602/qwen38-cpu')
 root = deploy/'optimization/20261018-v1'
-wanted = {'4336626','4336627','4336716','4336889','4337216','4337222','4337257','4337425','4337427','4337448','4337488'}
+wanted = {'4336626','4336627','4336716','4336889','4337216','4337222','4337257','4337425','4337427','4337448','4337488','4337539'}
 tz = timezone(timedelta(hours=8))
 date_pattern = r'\w{3} \w{3}\s+\d{1,2} \d{2}:\d{2}:\d{2} \d{4}'
 
@@ -178,6 +178,10 @@ for jid,row in jobs.items():
                 handle.seek(max(0,size-20000))
                 tail=handle.read().decode('utf-8',errors='replace')
             row['evidence'].append({'path':str(file),'text':tail})
+    policy_run=deploy/'optimization/20261019-ppl-policy5/results'/jid
+    for name in ['policy.json','pipeline.lsf','baseline.sha256.txt','mkl.sha256.txt','baseline.ldd.txt','mkl.ldd.txt','baseline.CMakeCache.txt','mkl.CMakeCache.txt']:
+        file=policy_run/name
+        if file.is_file():row['evidence'].append({'path':str(file),'text':file.read_text(errors='replace')[:20000]})
     for evidence in row['evidence']:
         if evidence['path'].endswith('/environment.txt'):
             match=re.search(r'^r13n[0-9]+$',evidence['text'],re.M)

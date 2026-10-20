@@ -1,9 +1,9 @@
 {
   "phase": "Intel Classic O3/O2 PGO",
-  "status": "2026-10-19T16:42:19.041976+08:00: 4337257 and 4337427 both EXIT124 in synthetic PP training; new 4337488 RUN r13n38, independent 4337448 RUN r13n24. No PGO PPL/performance conclusion.",
+  "status": "2026-10-19T20:47+08:00: Broad/threadsafe jobs4337448 and4337488 EXIT124; hotspot/default single-thread training job4337670 DONE, fixed38-thread PPL2.7767 PASS. Paired benchmarks4338130/4338131 RUN.",
   "active_jobs": {
-    "O3_recursive_unprofiled_main_3600s": "4337448",
-    "O3_profiled_driver_keep_dso_3600s": "4337488"
+    "O3_hot_pgo_control_first": "4338130",
+    "O3_hot_pgo_pgo_first": "4338131"
   },
   "link_failure": {
     "job_id": "4336889",
@@ -39,13 +39,35 @@
   "rejected_retry_job_ids": [],
   "lsf_reason": "u-ssc pending slots reached MPEND3000. Five retries per request; return255, job not submitted.",
   "resource_snapshot": "2026-10-19T10:30:04+08:00: group PEND3012, MPEND3000; own NJOBS0; matching r13n04..17 nodes idle",
-  "next": "Inspect 4337488 and 4337448 before any resubmission. On training normal exit and parameter validation, inspect useful GGML profile counts, merged dpi, feedback build diagnostics and independent fixed PPL. Only after READY and PASS prepare PP10/TG10 paired comparisons. O2 waits. Both jobs use Intel Classic2021.9, original source/model and precise floating flags. 4337488 control is SHA-checked 4337222 PPL2.7767 reused; 4337448 control from4337216 likewise. No control PPL reruns. Never reuse timed-out partial counters. Register every acquired job ID immediately and update Excel; preserve manual notes and all failed/raw samples. Metadata encoding correction file remains required for4337425/4337427 display.",
+  "next": "Read optimization/20261019-pgo-hot-serial/next_actions.json. Monitor4338130(r13n16) and4338131(r13n20), each new fixedPPL then PP10/TG10 for both builds; no duplicate submissions while active. No O2 until O3 paired results. Never reuse timed-out counters. Keep production deployment unchanged until performance evidence is established. MKL reversal4337633 DONE: relative PP advantage reversed; no stable benefit claimed. Maintain Excel and new5%/original verdict separation.",
   "readme": "/work/apac2602/qwen38-cpu/optimization/20261019-compiler-pgo/README.md",
   "failed_pgo_jobs": {
     "4336889": "BUILD_GEN DSO missing/__start___pgoseg_addr",
     "4337216": "BUILD_GEN precheck: global PGO link flags override target disable flag",
     "4337222": "BUILD_GEN: cold disable precedence fixed, but --as-needed still drops DSO needed by Intel PGO runtime"
   },
-  "latest_observation": "2026-10-19T16:43+08:00: 4337488 BUILD_GEN PASS and TRAIN_PP_UNSCORED since16:42:59 onr13n38. 4337448 continues TRAIN_PP_UNSCORED onr13n24, 38 active threads observed. Both no complete PGO PPL/perf result.",
-  "timeout_contingency": "Both synthetic training limits now3600s. Do not extend or repeat blindly on another timeout: inspect latest OS and actual runtime hotspot first; fixed PPL590s and formal benchmark parameters must remain unchanged."
+  "latest_observation": "4337670 gen/use scope3sources and single-thread training validated; PPL2.7767/232s. Feedback has243 missing-function/template profile remarks, q8_0 hot function has no missing remark; limited coverage caveat retained. Training distribution differs from38-thread workload; paired benchmarking required.",
+  "timeout_contingency": "Both synthetic training limits now3600s. Do not extend or repeat blindly on another timeout: inspect latest OS and actual runtime hotspot first; fixed PPL590s and formal benchmark parameters must remain unchanged.",
+  "ppl_policy": {
+    "policy_id": "20261019-ppl-tolerance-5pct",
+    "baseline": 2.7696,
+    "tolerance_percent": 5,
+    "interval_inclusive": [
+      2.63112,
+      2.90808
+    ],
+    "source": "User provided official amendment; all other conditions unchanged",
+    "future_gate": "ROOT/ppl_gate.lsf patched; active training unchanged; copied old gate retained as evidence",
+    "document": "/work/apac2602/qwen38-cpu/optimization/20261019-ppl-policy5/README.md"
+  },
+  "new_policy_mkl_pair": "4337539 and reverse4337633 both DONE. MKL relativePP +47.58% vs -19.77%; relativeTG -0.35% vs +10.87%; no stable end-to-end improvement. All PPL2.7767/2.7893 PASS under5%.",
+  "latest_followup": {
+    "at": "2026-10-19T21:37:04.891794+08:00",
+    "completed_jobs": [
+      "4338130",
+      "4338131"
+    ],
+    "conclusion": "正反序PP收益反转，不认定PGO稳定提升；5组其他变量已提交。",
+    "next_actions": "D:\\compete\\.codex-deploy\\optimization\\factor_screen\\next_actions.json"
+  }
 }

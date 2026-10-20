@@ -1,0 +1,98 @@
+#!/bin/bash
+#BSUB -J qwen38_f32_acc8
+#BSUB -q ssc-cpu
+#BSUB -m hg_6148
+#BSUB -n 40
+#BSUB -R "span[ptile=40]"
+#BSUB -W 04:00
+#BSUB -o /work/apac2602/qwen38-cpu/logs/%J.f32_acc8.out
+#BSUB -e /work/apac2602/qwen38-cpu/logs/%J.f32_acc8.err
+set -Eeuo pipefail
+source /work/apac2602/qwen38-cpu/scripts/env.sh
+ROOT=/work/apac2602/qwen38-cpu/optimization/20261019-f32-dot
+VARIANT=${SOURCE_VARIANT:?set SOURCE_VARIANT}
+[[ "$VARIANT" == f32-acc8 ]]
+OUT="$ROOT/results/$LSB_JOBID"
+SRC="$ROOT/sources/$VARIANT-$LSB_JOBID"
+BUILD="$SRC/build"
+mkdir -p "$OUT"
+phase=INIT
+trap 'rc=$?; echo "FAILED phase=$phase exit=$rc time=$(date -Is)" > "$OUT/job.status"; exit "$rc"' ERR
+stage() { phase=$1; echo "$phase time=$(date -Is)" > "$OUT/job.status"; }
+[[ "$LSB_DJOB_NUMPROC" == 40 ]]
+[[ $(getconf _NPROCESSORS_ONLN) == 40 ]]
+lscpu | grep -q 'Intel(R) Xeon(R) Gold 6148'
+unset KMP_AFFINITY GOMP_CPU_AFFINITY KMP_BLOCKTIME OMP_WAIT_POLICY KMP_HW_SUBSET PROF_DIR INTEL_PROF_DUMP_INTERVAL INTEL_PROF_DUMP_CUMULATIVE
+export OMP_NUM_THREADS=38 OMP_DYNAMIC=FALSE OMP_PROC_BIND=close OMP_PLACES=cores
+export OPENBLAS_NUM_THREADS=38 MKL_NUM_THREADS=38 BLIS_NUM_THREADS=38
+{ date -Is; hostname; lscpu; module list; icc --version; icpc --version; } > "$OUT/environment.txt" 2>&1
+cp "$ROOT/build_and_pair.lsf" "$OUT/pipeline.lsf"
+cp "$ROOT/ppl_gate.lsf" "$OUT/ppl_gate.lsf"
+cp "$ROOT/$VARIANT.patch" "$OUT/source.patch"
+stage COPY_VERIFY_SOURCE
+python3 "$ROOT/copy_verify.py" > "$OUT/source-verification.json"
+flags='-fp-model precise -no-ftz -xCORE-AVX512 -qsimd-honor-fp-model -diag-disable=10441'
+omp=ON
+blas=OFF
+extra=()
+stage BUILD_AND_QUANT_TEST
+cmake -S "$SRC" -B "$BUILD" \
+    -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
+    -DCMAKE_C_COMPILER=icc -DCMAKE_CXX_COMPILER=icpc \
+    -DCMAKE_C_FLAGS="-gcc-name=/share/base/e5/gcc/11.2.0/bin/gcc $flags" \
+    -DCMAKE_CXX_FLAGS="-gxx-name=/share/base/e5/gcc/11.2.0/bin/g++ $flags" \
+    -DCMAKE_EXE_LINKER_FLAGS='-Wl,--no-as-needed,/lib64/libm.so.6,--as-needed' \
+    -DCMAKE_SHARED_LINKER_FLAGS='-Wl,--no-as-needed,/lib64/libm.so.6,--as-needed' \
+    -DGGML_NATIVE=ON -DGGML_OPENMP="$omp" -DGGML_OPENMP_FETCH=OFF \
+    -DGGML_BLAS="$blas" "${extra[@]}" -DGGML_CUDA=OFF -DGGML_HIP=OFF -DGGML_VULKAN=OFF \
+    -DGGML_SYCL=OFF -DGGML_OPENCL=OFF -DGGML_RPC=OFF -DGGML_METAL=OFF -DGGML_MUSA=OFF \
+    -DLLAMA_BUILD_TESTS=ON -DLLAMA_BUILD_EXAMPLES=ON -DLLAMA_BUILD_TOOLS=ON \
+    -DLLAMA_BUILD_SERVER=ON -DLLAMA_BUILD_APP=OFF -DLLAMA_BUILD_UI=OFF \
+    -DLLAMA_USE_PREBUILT_UI=OFF -DLLAMA_OPENSSL=OFF -DFETCHCONTENT_FULLY_DISCONNECTED=ON \
+    > "$OUT/configure.log" 2>&1
+cmake --build "$BUILD" --target llama-cli llama-server llama-bench llama-perplexity test-quantize-fns -j 40 > "$OUT/build.log" 2>&1
+"$BUILD/bin/test-quantize-fns" > "$OUT/quantize-tests.log" 2>&1
+for name in llama-cli llama-server llama-bench llama-perplexity; do
+    test -x "$BUILD/bin/$name"
+    ldd "$BUILD/bin/$name" >> "$OUT/ldd.txt"
+done
+! grep -q 'not found' "$OUT/ldd.txt"
+sha256sum "$BUILD/bin/llama-bench" "$BUILD/bin/llama-perplexity" "$BUILD/bin/libggml-cpu.so" > "$OUT/sha256.txt"
+cp "$BUILD/CMakeCache.txt" "$OUT/CMakeCache.txt"
+
+stage BUILD_MATMUL_CHECK
+BASE=/work/apac2602/qwen38-cpu/llama.cpp
+for name in baseline candidate; do
+    BIN="$BUILD/bin"
+    [[ "$name" != baseline ]] || BIN="$BASE/build/bin"
+    icpc -gxx-name=/share/base/e5/gcc/11.2.0/bin/g++ -std=c++17 -O3 $flags -I"$SRC/ggml/include" "$ROOT/matmul_check.cpp" -L"$BIN" -Wl,-rpath,"$BIN",--no-as-needed -lggml-cpu -lggml -lggml-base -Wl,--no-as-needed,/lib64/libm.so.6,--as-needed -qopenmp -o "$OUT/check-$name" > "$OUT/check-$name-build.log" 2>&1
+    ldd "$OUT/check-$name" > "$OUT/check-$name-ldd.txt"
+    ! grep -q 'not found' "$OUT/check-$name-ldd.txt"
+    stage "MATMUL_CHECK_$name"
+    timeout --signal=TERM --kill-after=10s 900 "$OUT/check-$name" "$OUT/$name.bin" > "$OUT/$name-check.json" 2> "$OUT/$name-check.log"
+done
+python3 "$ROOT/compare.py" "$OUT" > "$OUT/differential.log"
+
+stage F32_DOT_REFERENCE_CHECK
+for name in baseline candidate; do
+    BIN="$BUILD/bin"
+    [[ "$name" != baseline ]] || BIN="$BASE/build/bin"
+    icpc -gxx-name=/share/base/e5/gcc/11.2.0/bin/g++ -std=c++17 -O2 -fp-model strict -no-ftz -diag-disable=10441 -I"$SRC/ggml/include" "$ROOT/dot_check.cpp" -L"$BIN" -Wl,-rpath,"$BIN",--no-as-needed -lggml-cpu -lggml -lggml-base -Wl,--no-as-needed,/lib64/libm.so.6,--as-needed -o "$OUT/dot-$name" > "$OUT/dot-$name-build.log" 2>&1
+    ldd "$OUT/dot-$name" > "$OUT/dot-$name-ldd.txt"
+    ! grep -q 'not found' "$OUT/dot-$name-ldd.txt"
+    timeout 300 "$OUT/dot-$name" --check > "$OUT/dot-$name-check.json" 2> "$OUT/dot-$name-check.log"
+done
+stage F32_DOT_MICROBENCH
+python3 "$ROOT/bench.py" "$OUT" > "$OUT/dot-bench.log" 2>&1
+
+# Candidate first in both jobs. A reverse-order confirmation is needed if
+# apparent gains survive these initial full-workload screening measurements.
+for name in candidate baseline; do
+    stage "PPL_PP10_TG10_$name"
+    CASE_ROOT="$SRC"
+    ordinal=02
+    if [[ "$name" == baseline ]]; then CASE_ROOT="$BASE"; ordinal=01; fi
+    sha256sum "$CASE_ROOT/build/bin/llama-bench" "$CASE_ROOT/build/bin/llama-perplexity" "$CASE_ROOT/build/bin/"lib*.so* > "$OUT/$name-sha256.txt"
+    COMPILER_BUILD_ROOT="$CASE_ROOT" RUN_BENCH=1 EXPERIMENT_OUTPUT_DIR="$OUT/${ordinal}_$name" bash "$OUT/ppl_gate.lsf" > "$OUT/$name-bench.log" 2>&1
+done
+stage COMPLETE

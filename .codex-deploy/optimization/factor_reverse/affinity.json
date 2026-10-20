@@ -1,0 +1,20 @@
+{
+  "script": "/work/apac2602/qwen38-cpu/optimization/20261019-factor-reverse/reverse.lsf",
+  "kind": "同节点完整对照",
+  "purpose": "反序复测：OpenMP线程绑定单变量筛选：OMP_PROC_BIND=close → spread；OMP_PLACES=cores；KMP_BLOCKTIME/OMP_WAIT_POLICY均unset",
+  "config": "Intel Classic2021.9 icc/icpc、官方源码d812350；hg_6148单节点40slots/Gold6148/38推理线程；candidate先、baseline后；OMP_PROC_BIND=close → spread；OMP_PLACES=cores；KMP_BLOCKTIME/OMP_WAIT_POLICY均unset。默认O3 precise/no-ftz CORE-AVX512 qsimd-honor-fp-model，OpenMP ON、tinyBLAS ON、BLAS/GPU OFF、无PGO。每版独立固定PPL t/tb38 c512 chunks2 b512 ub256 f16KV ngl0 NUMA distribute no-warmup timeout590s，±5% [2.63112,2.90808]；通过后PP2048和TG128d2048各r10 b2048 ub512，其余固定。",
+  "baseline": "本作业confirm-reverse-affinity-baseline_{job_id}同节点后运行baseline；原正序作业4338278只用于比较各自同节点比例",
+  "case_prefix": "confirm-reverse-affinity",
+  "baseline_case": "confirm-reverse-affinity-baseline_{job_id}",
+  "environment": {
+    "FACTOR": "affinity",
+    "PARENT_JOB": "4338278"
+  },
+  "lsf_args": [
+    "-J",
+    "qwen38_reverse_affinity"
+  ],
+  "ppl_scope": "每版分别重跑固定PPL，无共享；运行时变量仅测速阶段生效，PPL固定默认环境",
+  "note": "只读复用父作业产物，父作业全部SHA256校验通过才运行，前后重复核验。每case独立重新固定PPL，无共享。无VTune/OS采样，不清缓存、不修改OS。保留全部10次样本，开发自测非正式成绩；反序与旧正序跨节点/时段，不能消除全部混杂。运行时参数正式采用前按题目申报。本作业不重新编译。",
+  "parent_job": "4338278"
+}

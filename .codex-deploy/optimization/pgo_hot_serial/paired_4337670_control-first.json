@@ -1,0 +1,20 @@
+{
+  "script": "/work/apac2602/qwen38-cpu/optimization/20261019-pgo-hot-serial/paired_bench.lsf",
+  "kind": "同节点完整对照",
+  "purpose": "Intel O3热点源码PGO（4337670）与原版完整性能对照，顺序=control-first",
+  "config": "hg_6148单节点40slots/Gold6148；推理38线程close/cores，OMP_DYNAMIC FALSE；Intel Classic2021.9 icc/icpc O3 precise/no-ftz CORE-AVX512 qsimd-honor-fp-model，CPU-only，OpenMP ON/BLAS OFF，未启用IPO；原始官方源码d812350；同作业内顺序=control-first；每版本重新固定PPL t/tb38 c512 chunks2 b512 ub256 KVf16 ngl0 NUMA distribute no-warmup timeout590，±5%含边界[2.63112,2.90808]；PASS后PP p2048n0及TG p0n128d2048，各r10、b2048ub512 KVf16 ngl0 NUMA distribute；无VTune/OS采样；产物为4337670哈希核验control/pgo",
+  "baseline": "本作业compiler-hot-control_{job_id}无PGO原版，同节点顺序对照；官方PP/TG仅用于开发自测归一化",
+  "case_prefix": "compiler-hot",
+  "baseline_case": "compiler-hot-control_{job_id}",
+  "environment": {
+    "PGO_PARENT_JOB": "4337670",
+    "PGO_ORDER": "control-first"
+  },
+  "lsf_args": [
+    "-J",
+    "qwen38_hot_pgo_control-first"
+  ],
+  "note": "4337670合成PP64及TG8d64各r1以t1/OMP1正常退出；default计数、仅quants.c/sgemm.cpp/薄main插桩；独立计数合并、反馈编译、量化测试和38线程固定PPL2.7767 PASS。部分未执行函数/模板回退静态profile，日志保留；Q8_0热点无missing诊断，不能据此认定全部函数被覆盖或性能提升。单线程训练分布不完全代表38线程。此作业每版重新PPL，不复用旧PASS。正反序跨节点；分别比较各自同节点相对比例，保留缓存/顺序/节点限制。完整原始样本保留，开发自测不是正式成绩。",
+  "ppl_scope": "每版本本作业独立重新固定PPL；±5%；无PPL共享",
+  "parent_job": "4337670"
+}

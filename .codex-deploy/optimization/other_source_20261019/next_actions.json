@@ -1,0 +1,31 @@
+{
+  "updated_hong_kong": "2026-10-19T22:44:21+08:00",
+  "remote_root": "/work/apac2602/qwen38-cpu/optimization/20261019-other-source",
+  "jobs": [
+    {
+      "job_id": "4338267",
+      "variant": "gemm-balanced",
+      "node": "r13n10",
+      "last_known_status": "DONE",
+      "source": "/work/apac2602/qwen38-cpu/optimization/20261019-other-source/sources/gemm-balanced-4338267",
+      "modified_file": "ggml/src/ggml-cpu/llamafile/sgemm.cpp",
+      "decision": "do_not_promote"
+    },
+    {
+      "job_id": "4338268",
+      "variant": "row-quant",
+      "node": "r13n29",
+      "last_known_status": "DONE",
+      "source": "/work/apac2602/qwen38-cpu/optimization/20261019-other-source/sources/row-quant-4338268",
+      "modified_file": "ggml/src/ggml-cpu/ggml-cpu.c",
+      "decision": "do_not_promote"
+    }
+  ],
+  "source_verification": "两个独立完整源码副本均已逐文件SHA校验3687文件；各仅一个指定文件修改，原版及旧构建保留。Intel Classic2021.9。",
+  "next": [
+    "Retain all sources/builds/results and slow samples. Do not promote either candidate based on these measurements.",
+    "No automatic resubmission of these identical candidates. Further investigation should isolate cache/order effects or propose a new targeted source change.",
+    "Maintain the existing Excel experiment log and original evidence."
+  ],
+  "result": "Both complete: 144 configurations,745104 values,0 bit mismatches,3 repetitions. Both candidate and baseline fresh PPL2.7767 PASS. gemm-balanced PP -53.33%,TG +0.55%; row-quant PP -28.34%,TG -8.46%. Candidate-first order/cache confounds PP; no stable end-to-end benefit demonstrated."
+}

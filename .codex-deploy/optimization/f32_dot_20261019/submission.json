@@ -1,0 +1,18 @@
+{
+  "script": "/work/apac2602/qwen38-cpu/optimization/20261019-f32-dot/build_and_pair.lsf",
+  "kind": "F32源码内核修改、数值检查及完整对照",
+  "purpose": "F32点积长向量AVX512改用8条独立累加链，减少依赖延迟；n<256和其他ISA保持原实现。独立源码副本，不叠加前轮Q8/PGO/调度修改。",
+  "environment": {
+    "SOURCE_VARIANT": "f32-acc8"
+  },
+  "lsf_args": [
+    "-J",
+    "qwen38_f32_acc8"
+  ],
+  "config": "Intel Classic2021.9 O3 precise/no-ftz CORE-AVX512 qsimd-honor-fp-model，OpenMP ON/BLAS OFF；hg_6148 40slots，38推理线程close/cores；官方源码3687文件SHA核验，新副本仅vec.cpp修改。四工具构建/量化测试/ldd；矩阵144配置3次重复对照，允许舍入误差1e-4+5e-5*abs(reference)，记录逐bit差异；实际F32函数约8500组长度/错位/数值模式对long-double参考误差界检查。单核CPU0 dot微基准10轮AB/BA保留全样本，不计模型分数。然后candidate先baseline后，各独立新固定PPL t/tb38 c512 chunks2 b512ub256 f16KV ngl0 NUMA distribute no-warmup 590s ±5%；PPL通过后PP2048/TG128d2048各r10 b2048ub512。",
+  "baseline": "本作业01_baseline生产Intel原版，同节点后执行；直接dot函数检查和微基准对生产原版，微基准交替AB/BA",
+  "case_prefix": "f32-acc8",
+  "baseline_case": "f32-acc8-baseline_{job_id}",
+  "ppl_scope": "candidate/baseline分别本作业新固定PPL，无共享PPL",
+  "note": "增加累加链改变浮点舍入顺序，不能宣称逐bit一致；依据高精度参考误差及官方PPL判断。单核微基准不是模型性能，完整模型比较保留顺序/缓存限制。有稳定收益再反序验证，任何正确性阶段失败即停止。旧源码/构建/原始JSON/慢样本全部保留。"
+}

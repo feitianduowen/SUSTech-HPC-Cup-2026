@@ -1,0 +1,56 @@
+{
+  "updated_at_hkt": "2026-10-19T22:48:21.351896+08:00",
+  "phase": "screen completed; follow reverse/AA results",
+  "jobs": [
+    {
+      "job_id": "4338277",
+      "state": "DONE",
+      "host": "40*r13n26",
+      "factor": "wait"
+    },
+    {
+      "job_id": "4338278",
+      "state": "DONE",
+      "host": "40*r13n32",
+      "factor": "affinity"
+    },
+    {
+      "job_id": "4338279",
+      "state": "DONE",
+      "host": "40*r13n34",
+      "factor": "tinyblas"
+    },
+    {
+      "job_id": "4338280",
+      "state": "DONE",
+      "host": "40*r13n39",
+      "factor": "optlevel"
+    },
+    {
+      "job_id": "4338281",
+      "state": "EXIT",
+      "host": "40*r13n42",
+      "factor": "fpmodel"
+    }
+  ],
+  "pgo_paired_results": {
+    "4338130": {
+      "pp_change_percent": 72.12413768967276,
+      "tg_change_percent": -1.401258119197335,
+      "geomean_change_percent": 30.273648231404728
+    },
+    "4338131": {
+      "pp_change_percent": -40.19123965871175,
+      "tg_change_percent": -2.480532944373759,
+      "geomean_change_percent": -23.62907337382828
+    }
+  },
+  "next": "完成后检查每版固定PPL及PP/TG完整10次。将反序与正序各自同节点比值比较，并结合A/A量化顺序效应；A/A若复现明显PP差异则暂不能归因于任何参数。fast=1已因NaN淘汰，无效PPL绝不放行。等待时长0因TG下降约36%暂停。保留所有慢样本，Intel编译器及固定参数不变。",
+  "do_not_duplicate": [
+    "4338133",
+    "4338267",
+    "4338268"
+  ],
+  "excel": "D:/compete/Qwen38_CPU_实验日志.xlsx",
+  "latest_followup": "D:\\compete\\.codex-deploy\\optimization\\factor_reverse\\next_actions.json"
+}

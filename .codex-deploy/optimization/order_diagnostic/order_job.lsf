@@ -1,0 +1,61 @@
+#!/bin/bash
+#BSUB -J qwen38_order
+#BSUB -q ssc-cpu
+#BSUB -m hg_6148
+#BSUB -n 40
+#BSUB -R "span[ptile=40]"
+#BSUB -W 04:00
+#BSUB -o /work/apac2602/qwen38-cpu/logs/%J.order.out
+#BSUB -e /work/apac2602/qwen38-cpu/logs/%J.order.err
+set -Eeuo pipefail
+source /work/apac2602/qwen38-cpu/scripts/env.sh
+ROOT=/work/apac2602/qwen38-cpu/optimization/20261019-order-diagnostic
+OUT="$ROOT/results/$LSB_JOBID"
+BUILD=/work/apac2602/qwen38-cpu/llama.cpp
+PARENT=/work/apac2602/qwen38-cpu/optimization/20261019-factor-screen/results/4338278
+[[ "${ORDER_MODE:?}" =~ ^(pp-chain|tg-between|aaa)$ ]]
+mkdir -p "$OUT"
+phase=VERIFY
+trap 'rc=$?; printf "FAILED phase=%s exit=%s time=%s\n" "$phase" "$rc" "$(date -Is)" > "$OUT/job.status"; exit "$rc"' ERR
+stage() { phase=$1; printf '%s time=%s\n' "$phase" "$(date -Is)" | tee "$OUT/job.status"; }
+unset KMP_BLOCKTIME OMP_WAIT_POLICY KMP_AFFINITY GOMP_CPU_AFFINITY KMP_HW_SUBSET PROF_DIR
+export OMP_NUM_THREADS=38 OMP_DYNAMIC=FALSE OMP_PROC_BIND=close OMP_PLACES=cores
+export MKL_NUM_THREADS=38 OPENBLAS_NUM_THREADS=38 BLIS_NUM_THREADS=38
+[[ "${LSB_DJOB_NUMPROC:?}" == 40 ]]
+[[ $(getconf _NPROCESSORS_ONLN) == 40 ]]
+lscpu | grep -q 'Intel(R) Xeon(R) Gold 6148'
+cp "$PARENT/baseline-sha256.txt" "$OUT/sha256.txt"
+sha256sum -c "$OUT/sha256.txt" > "$OUT/hash-check.txt"
+cp "$ROOT/$ORDER_MODE.json" "$OUT/plan.json"
+cp "$ROOT/order_job.lsf" "$ROOT/ppl_gate.lsf" "$ROOT/observed_run.py" "$OUT/"
+{ date -Is; hostname; lscpu; module list; icc --version; icpc --version; cat /proc/sys/kernel/numa_balancing; env | sort | grep -E '^(OMP_|KMP_|MKL_|OPENBLAS_|BLIS_)'; } > "$OUT/environment.txt" 2>&1
+if [[ "$ORDER_MODE" == aaa ]]; then
+    for name in 01_baseline 02_repeat2 03_repeat3; do
+        stage "FIXED_PPL_PP10_TG10_$name"
+        COMPILER_BUILD_ROOT="$BUILD" EXPERIMENT_OUTPUT_DIR="$OUT/$name" RUN_BENCH=1 bash "$OUT/ppl_gate.lsf" > "$OUT/$name.log" 2>&1
+        sha256sum -c "$OUT/sha256.txt" >> "$OUT/hash-check.txt"
+    done
+else
+    stage FIXED_PPL
+    COMPILER_BUILD_ROOT="$BUILD" EXPERIMENT_OUTPUT_DIR="$OUT/ppl" RUN_BENCH=0 bash "$OUT/ppl_gate.lsf" > "$OUT/ppl.log" 2>&1
+    MODEL=/work/ssc-zhaojh/llama_model/unsloth/Qwen3.8-Flash-Next-GGUF/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf
+    common=(-m "$MODEL" -t 38 -ngl 0 -b 2048 -ub 512 -ctk f16 -ctv f16 --numa distribute -r 10 -v -o json)
+    tasks=(01_baseline:pp 02_repeat2:pp 03_repeat3:pp 01_baseline:tg 02_repeat2:tg)
+    [[ "$ORDER_MODE" != tg-between ]] || tasks=(01_baseline:pp 01_baseline:tg 02_repeat2:pp 02_repeat2:tg 03_repeat3:pp)
+    for task in "${tasks[@]}"; do
+        name=${task%:*}; workload=${task#*:}
+        stage "DIAGNOSTIC_${name}_$workload"
+        mkdir -p "$OUT/$name"
+        args=(-p 2048 -n 0)
+        [[ "$workload" != tg ]] || args=(-p 0 -n 128 -d 2048)
+        python3 "$OUT/observed_run.py" --output "$OUT/$name/$workload" --timeout 3600 --interval 30 "$BUILD/build/bin/llama-bench" "${common[@]}" "${args[@]}" > "$OUT/$name/$workload.observer.log" 2>&1
+        python3 - "$OUT/$name/$workload.json" <<'PY'
+import json,sys
+x=json.load(open(sys.argv[1]))[0]
+assert len(x['samples_ts'])==len(x['samples_ns'])==10
+assert all(v>0 for v in x['samples_ns'])
+PY
+        sha256sum -c "$OUT/sha256.txt" >> "$OUT/hash-check.txt"
+    done
+fi
+stage COMPLETE

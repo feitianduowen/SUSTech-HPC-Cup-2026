@@ -1,0 +1,97 @@
+#!/bin/bash
+#BSUB -J qwen38_factor
+#BSUB -q ssc-cpu
+#BSUB -m hg_6148
+#BSUB -n 40
+#BSUB -R "span[ptile=40]"
+#BSUB -W 04:00
+#BSUB -o /work/apac2602/qwen38-cpu/logs/%J.factor.out
+#BSUB -e /work/apac2602/qwen38-cpu/logs/%J.factor.err
+set -Eeuo pipefail
+source /work/apac2602/qwen38-cpu/scripts/env.sh
+ROOT=/work/apac2602/qwen38-cpu/optimization/20261019-factor-screen
+VERIFY=/work/apac2602/qwen38-cpu/optimization/20261019-compiler-pgo
+SRC=/work/apac2602/qwen38-cpu/optimization/20261018-v1/sources/native
+OUT="$ROOT/results/$LSB_JOBID"
+BUILDS="$ROOT/builds/$LSB_JOBID"
+[[ "${FACTOR:?}" =~ ^(wait|affinity|tinyblas|optlevel|fpmodel)$ ]]
+mkdir -p "$OUT" "$BUILDS"
+phase=INIT
+trap 'rc=$?; printf "FAILED phase=%s exit=%s time=%s\n" "$phase" "$rc" "$(date -Is)" > "$OUT/job.status"; exit "$rc"' ERR
+stage() { phase=$1; printf '%s time=%s\n' "$phase" "$(date -Is)" | tee "$OUT/job.status"; }
+unset KMP_BLOCKTIME OMP_WAIT_POLICY KMP_AFFINITY GOMP_CPU_AFFINITY KMP_HW_SUBSET PROF_DIR
+export OMP_NUM_THREADS=38 OMP_DYNAMIC=FALSE OMP_PROC_BIND=close OMP_PLACES=cores
+export GIT_OPTIONAL_LOCKS=0
+[[ "${LSB_DJOB_NUMPROC:?}" == 40 ]]
+[[ $(getconf _NPROCESSORS_ONLN) == 40 ]]
+lscpu | grep -q 'Intel(R) Xeon(R) Gold 6148'
+python3 "$VERIFY/verify_source.py" "$SRC" "$VERIFY/source_identity.json" > "$OUT/source-verification.json"
+{ date -Is; hostname; lscpu; module list; icc --version; icpc --version; } > "$OUT/environment.txt" 2>&1
+cp "$ROOT/$FACTOR.json" "$OUT/plan.json"
+cp "$ROOT/factor_job.lsf" "$ROOT/evaluate.lsf" "$OUT/"
+link='-Wl,--no-as-needed,/lib64/libm.so.6,--as-needed'
+build_one() {
+    local name=$1 mode=plain LEVEL=3 tiny=ON
+    local flags='-fp-model precise -no-ftz -xCORE-AVX512 -qsimd-honor-fp-model -diag-disable=10441'
+    if [[ "$name" == candidate ]]; then
+        case "$FACTOR" in
+            tinyblas) tiny=OFF;;
+            optlevel) LEVEL=2;;
+            fpmodel) flags=${flags/precise/fast=1};;
+        esac
+    fi
+    local dest="$BUILDS/$name/build" logs="$OUT/$name-build"
+    local targets=(llama-cli llama-server llama-bench llama-perplexity test-quantize-fns)
+    mkdir -p "$logs"
+    local command=(cmake -S "$SRC" -B "$dest"
+        -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+        -DCMAKE_C_COMPILER=icc -DCMAKE_CXX_COMPILER=icpc
+        "-DCMAKE_C_FLAGS=-gcc-name=/share/base/e5/gcc/11.2.0/bin/gcc $flags"
+        "-DCMAKE_CXX_FLAGS=-gxx-name=/share/base/e5/gcc/11.2.0/bin/g++ $flags"
+        "-DCMAKE_C_FLAGS_RELEASE=-O$LEVEL -DNDEBUG"
+        "-DCMAKE_CXX_FLAGS_RELEASE=-O$LEVEL -DNDEBUG"
+        "-DCMAKE_EXE_LINKER_FLAGS=$link"
+        "-DCMAKE_SHARED_LINKER_FLAGS=$link"
+        "-DGGML_LLAMAFILE=$tiny" -DGGML_NATIVE=ON -DGGML_OPENMP=ON -DGGML_OPENMP_FETCH=OFF
+        -DGGML_BLAS=OFF -DGGML_CUDA=OFF -DGGML_HIP=OFF -DGGML_VULKAN=OFF
+        -DGGML_SYCL=OFF -DGGML_OPENCL=OFF -DGGML_RPC=OFF -DGGML_METAL=OFF -DGGML_MUSA=OFF
+        -DLLAMA_BUILD_TESTS=ON -DLLAMA_BUILD_EXAMPLES=ON -DLLAMA_BUILD_TOOLS=ON
+        -DLLAMA_BUILD_SERVER=ON -DLLAMA_BUILD_APP=OFF -DLLAMA_BUILD_UI=OFF
+        -DLLAMA_USE_PREBUILT_UI=OFF -DLLAMA_OPENSSL=OFF -DFETCHCONTENT_FULLY_DISCONNECTED=ON)
+    printf '%q ' "${command[@]}" > "$logs/configure.command"; printf '\n' >> "$logs/configure.command"
+    "${command[@]}" > "$logs/configure.log" 2>&1
+    cmake --build "$dest" --target "${targets[@]}" -j 40 > "$logs/build.log" 2>&1
+    cp "$dest/CMakeCache.txt" "$logs/CMakeCache.txt"
+    cp "$dest/compile_commands.json" "$logs/compile_commands.json"
+    sha256sum "$dest/bin/llama-bench" "$dest/bin/libggml-cpu.so" > "$logs/sha256.txt"
+    if [[ "$mode" != gen ]]; then
+        "$dest/bin/test-quantize-fns" > "$logs/quantize-tests.log" 2>&1
+        for name in llama-cli llama-server llama-bench llama-perplexity; do
+            test -x "$dest/bin/$name"
+            ldd "$dest/bin/$name" >> "$logs/ldd.txt"
+            sha256sum "$dest/bin/$name" >> "$logs/sha256.txt"
+        done
+        ! grep -q 'not found' "$logs/ldd.txt"
+    fi
+}
+case "$FACTOR" in
+  wait|affinity)
+    for name in baseline candidate; do
+      ln -s /work/apac2602/qwen38-cpu/llama.cpp "$BUILDS/$name"
+    done;;
+  *)
+    stage BUILD_BASELINE; build_one baseline
+    stage BUILD_CANDIDATE; build_one candidate
+    python3 "$ROOT/verify_factor.py" "$FACTOR" "$BUILDS" > "$OUT/variable-verification.json";;
+esac
+for name in baseline candidate; do
+    sha256sum "$BUILDS/$name/build/bin/llama-bench" "$BUILDS/$name/build/bin/llama-perplexity" "$BUILDS/$name/build/bin/"*.so* > "$OUT/$name-sha256.txt"
+done
+for name in baseline candidate; do
+    stage "PPL_PP10_TG10_$name"
+    ordinal=01; [[ "$name" != candidate ]] || ordinal=02
+    sha256sum -c "$OUT/$name-sha256.txt" > "$OUT/$name-sha-check.txt"
+    CASE_NAME="$name" COMPILER_BUILD_ROOT="$BUILDS/$name" EXPERIMENT_OUTPUT_DIR="$OUT/${ordinal}_$name" RUN_BENCH=1 bash "$OUT/evaluate.lsf" > "$OUT/$name-bench.log" 2>&1
+    sha256sum -c "$OUT/$name-sha256.txt" >> "$OUT/$name-sha-check.txt"
+done
+stage COMPLETE

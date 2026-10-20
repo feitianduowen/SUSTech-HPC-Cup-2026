@@ -1,0 +1,825 @@
+{
+  "updated_at_hkt": "2026-10-20T13:00:52.157179+08:00",
+  "source": "LSF completion summaries, fixed PPL and all benchmark samples, per-process read-only observations",
+  "jobs": {
+    "4338534": {
+      "summary": "连续PP诊断完成，顺序PP1→PP2→PP3→TG1→TG2；三次PP均值31.096765→45.666116→28.507846 t/s，未稳定，第三次PP CV约29.6%；TG约2.67/2.62且有明显低速样本。全部5个测速进程major faults=0，采样read_bytes=0；GGUF驻留页数量在部分阶段明显变化，主线程上下文切换增加，主机NUMA迁移计数增长。不能仅凭主机计数或与另一节点的差异证明NUMA因果，也不能认定连续PP必然变慢。每30秒采样有开销，单次最高约0.85秒；不计Score，保留所有样本。",
+      "values": [
+        {
+          "name": "diagnostic-order-pp-chain-baseline_4338534",
+          "ppl": 2.7767,
+          "ppl_seconds": 314,
+          "pp": 31.096765,
+          "pp_cv_percent": 11.817984925441602,
+          "tg": 2.670476,
+          "tg_cv_percent": 23.640167520696686
+        },
+        {
+          "name": "diagnostic-order-pp-chain-repeat2_4338534",
+          "ppl": 2.7767,
+          "ppl_seconds": 314,
+          "pp": 45.666116,
+          "pp_cv_percent": 19.88695732301823,
+          "tg": 2.619513,
+          "tg_cv_percent": 21.449979442743746
+        },
+        {
+          "name": "diagnostic-order-pp-chain-repeat3_4338534",
+          "ppl": 2.7767,
+          "ppl_seconds": 314,
+          "pp": 28.507846,
+          "pp_cv_percent": 29.58548674635046
+        }
+      ],
+      "telemetry_summary": [
+        {
+          "phase": "01_baseline/pp",
+          "result": {
+            "returncode": 0,
+            "timed_out": false,
+            "started_unix": 1792424832.34528,
+            "ended_unix": 1792425662.4143353,
+            "wall_seconds": 830.0690559139475,
+            "user_cpu_seconds": 16248.464628,
+            "system_cpu_seconds": 284.6423,
+            "major_faults": 0,
+            "minor_faults": 20344175,
+            "max_rss_kb": 112731656,
+            "voluntary_context_switches": 6433391,
+            "involuntary_context_switches": 74154,
+            "diagnostic_unscored": true
+          },
+          "samples": 28,
+          "observation_cost_total_s": 16.428121916484088,
+          "observation_cost_max_s": 0.7107243090867996,
+          "last_io": {
+            "rchar": 11101664,
+            "wchar": 458809,
+            "syscr": 1437,
+            "syscw": 4790,
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "cancelled_write_bytes": 0
+          },
+          "first_loaded_model_kb": {
+            "N0": 11085976,
+            "N1": 51396496
+          },
+          "last_model_kb": {
+            "N0": 14633084,
+            "N1": 54193048
+          },
+          "peak_model_kb": 68826132,
+          "compute_rss_kb_min_max": [
+            91404772,
+            112662956
+          ],
+          "compute_main_thread_voluntary_context_switches_delta": 228476,
+          "model_node0_pct_min_max": [
+            17.742537459145343,
+            21.26094199220726
+          ],
+          "host_counter_deltas": {
+            "numa_hit": 3282313,
+            "numa_miss": 39016,
+            "numa_foreign": 39016,
+            "numa_interleave": 0,
+            "numa_local": 3282295,
+            "numa_other": 39034,
+            "pswpin": 0,
+            "pswpout": 2439,
+            "pgfault": 20902940,
+            "pgmajfault": 13,
+            "numa_pte_updates": 55393503,
+            "numa_huge_pte_updates": 105721,
+            "numa_hint_faults": 1028301,
+            "numa_hint_faults_local": 813140,
+            "numa_pages_migrated": 2094384,
+            "pgmigrate_success": 2094395,
+            "pgmigrate_fail": 725609
+          },
+          "available_kb_min_max": [
+            144244328,
+            188381796
+          ]
+        },
+        {
+          "phase": "02_repeat2/pp",
+          "result": {
+            "returncode": 0,
+            "timed_out": false,
+            "started_unix": 1792425662.7529879,
+            "ended_unix": 1792426276.160251,
+            "wall_seconds": 613.4072643993422,
+            "user_cpu_seconds": 15813.9337,
+            "system_cpu_seconds": 368.454778,
+            "major_faults": 0,
+            "minor_faults": 22652779,
+            "max_rss_kb": 104946920,
+            "voluntary_context_switches": 18118762,
+            "involuntary_context_switches": 56392,
+            "diagnostic_unscored": true
+          },
+          "samples": 21,
+          "observation_cost_total_s": 9.031174906529486,
+          "observation_cost_max_s": 0.6519929761998355,
+          "last_io": {
+            "rchar": 11101664,
+            "wchar": 458809,
+            "syscr": 1437,
+            "syscw": 4790,
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "cancelled_write_bytes": 0
+          },
+          "first_loaded_model_kb": {
+            "N0": 8912360,
+            "N1": 51113652
+          },
+          "last_model_kb": {
+            "N0": 12211444,
+            "N1": 18360788
+          },
+          "peak_model_kb": 60026012,
+          "compute_rss_kb_min_max": [
+            68086768,
+            103808668
+          ],
+          "compute_main_thread_voluntary_context_switches_delta": 466113,
+          "model_node0_pct_min_max": [
+            14.847496448706272,
+            14.847496448706272
+          ],
+          "host_counter_deltas": {
+            "numa_hit": 6244991,
+            "numa_miss": 0,
+            "numa_foreign": 0,
+            "numa_interleave": 0,
+            "numa_local": 6244985,
+            "numa_other": 6,
+            "pswpin": 0,
+            "pswpout": 0,
+            "pgfault": 22994660,
+            "pgmajfault": 1,
+            "numa_pte_updates": 57710436,
+            "numa_huge_pte_updates": 112576,
+            "numa_hint_faults": 162860,
+            "numa_hint_faults_local": 138860,
+            "numa_pages_migrated": 1069946,
+            "pgmigrate_success": 1069947,
+            "pgmigrate_fail": 488523
+          },
+          "available_kb_min_max": [
+            144259492,
+            188359332
+          ]
+        },
+        {
+          "phase": "03_repeat3/pp",
+          "result": {
+            "returncode": 0,
+            "timed_out": false,
+            "started_unix": 1792426276.5122323,
+            "ended_unix": 1792427236.9098575,
+            "wall_seconds": 960.3976263906807,
+            "user_cpu_seconds": 15974.97065,
+            "system_cpu_seconds": 373.184449,
+            "major_faults": 0,
+            "minor_faults": 21024409,
+            "max_rss_kb": 106882224,
+            "voluntary_context_switches": 14672719,
+            "involuntary_context_switches": 71544,
+            "diagnostic_unscored": true
+          },
+          "samples": 32,
+          "observation_cost_total_s": 13.605245794169605,
+          "observation_cost_max_s": 0.556641380302608,
+          "last_io": {
+            "rchar": 11101664,
+            "wchar": 458809,
+            "syscr": 1437,
+            "syscw": 4790,
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "cancelled_write_bytes": 0
+          },
+          "first_loaded_model_kb": {
+            "N0": 11628380,
+            "N1": 48443284
+          },
+          "last_model_kb": {
+            "N0": 14482688,
+            "N1": 28927636
+          },
+          "peak_model_kb": 61499652,
+          "compute_rss_kb_min_max": [
+            70427008,
+            105334232
+          ],
+          "compute_main_thread_voluntary_context_switches_delta": 461806,
+          "model_node0_pct_min_max": [
+            19.3575127201404,
+            20.0721526034001
+          ],
+          "host_counter_deltas": {
+            "numa_hit": 14170554,
+            "numa_miss": 0,
+            "numa_foreign": 0,
+            "numa_interleave": 0,
+            "numa_local": 14170525,
+            "numa_other": 29,
+            "pswpin": 0,
+            "pswpout": 0,
+            "pgfault": 21752186,
+            "pgmajfault": 0,
+            "numa_pte_updates": 64058255,
+            "numa_huge_pte_updates": 124911,
+            "numa_hint_faults": 205942,
+            "numa_hint_faults_local": 165905,
+            "numa_pages_migrated": 2044525,
+            "pgmigrate_success": 2044526,
+            "pgmigrate_fail": 738400
+          },
+          "available_kb_min_max": [
+            144235500,
+            188442044
+          ]
+        },
+        {
+          "phase": "01_baseline/tg",
+          "result": {
+            "returncode": 0,
+            "timed_out": false,
+            "started_unix": 1792427237.2649317,
+            "ended_unix": 1792427877.382461,
+            "wall_seconds": 640.1175304008648,
+            "user_cpu_seconds": 17409.958877,
+            "system_cpu_seconds": 286.623522,
+            "major_faults": 0,
+            "minor_faults": 20956752,
+            "max_rss_kb": 107955148,
+            "voluntary_context_switches": 8222359,
+            "involuntary_context_switches": 61641,
+            "diagnostic_unscored": true
+          },
+          "samples": 22,
+          "observation_cost_total_s": 11.775156958494335,
+          "observation_cost_max_s": 0.849956335965544,
+          "last_io": {
+            "rchar": 11101664,
+            "wchar": 459797,
+            "syscr": 1437,
+            "syscw": 4809,
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "cancelled_write_bytes": 0
+          },
+          "first_loaded_model_kb": {
+            "N0": 9941792,
+            "N1": 51417324
+          },
+          "last_model_kb": {
+            "N0": 9835684,
+            "N1": 24751936
+          },
+          "peak_model_kb": 63927992,
+          "compute_rss_kb_min_max": [
+            73299016,
+            107954340
+          ],
+          "compute_main_thread_voluntary_context_switches_delta": 204392,
+          "model_node0_pct_min_max": [
+            16.202632384729924,
+            17.62977945560999
+          ],
+          "host_counter_deltas": {
+            "numa_hit": 9676727,
+            "numa_miss": 692549,
+            "numa_foreign": 692549,
+            "numa_interleave": 0,
+            "numa_local": 9676691,
+            "numa_other": 692585,
+            "pswpin": 0,
+            "pswpout": 0,
+            "pgfault": 21444456,
+            "pgmajfault": 0,
+            "numa_pte_updates": 54164162,
+            "numa_huge_pte_updates": 102642,
+            "numa_hint_faults": 1188766,
+            "numa_hint_faults_local": 997485,
+            "numa_pages_migrated": 1667002,
+            "pgmigrate_success": 1667002,
+            "pgmigrate_fail": 1424946
+          },
+          "available_kb_min_max": [
+            144069644,
+            188408536
+          ]
+        },
+        {
+          "phase": "02_repeat2/tg",
+          "result": {
+            "returncode": 0,
+            "timed_out": false,
+            "started_unix": 1792427877.7293787,
+            "ended_unix": 1792428539.4516454,
+            "wall_seconds": 661.7222676565871,
+            "user_cpu_seconds": 17373.051969,
+            "system_cpu_seconds": 264.947857,
+            "major_faults": 0,
+            "minor_faults": 18789784,
+            "max_rss_kb": 108075324,
+            "voluntary_context_switches": 10192665,
+            "involuntary_context_switches": 62403,
+            "diagnostic_unscored": true
+          },
+          "samples": 22,
+          "observation_cost_total_s": 12.3005042495206,
+          "observation_cost_max_s": 0.8485138090327382,
+          "last_io": {
+            "rchar": 11101664,
+            "wchar": 459797,
+            "syscr": 1437,
+            "syscw": 4809,
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "cancelled_write_bytes": 0
+          },
+          "first_loaded_model_kb": {
+            "N0": 16532004,
+            "N1": 45196796
+          },
+          "last_model_kb": {
+            "N0": 9517080,
+            "N1": 24440980
+          },
+          "peak_model_kb": 64009168,
+          "compute_rss_kb_min_max": [
+            72012384,
+            108033292
+          ],
+          "compute_main_thread_voluntary_context_switches_delta": 228706,
+          "model_node0_pct_min_max": [
+            26.781670792239602,
+            27.671723525604957
+          ],
+          "host_counter_deltas": {
+            "numa_hit": 9998428,
+            "numa_miss": 0,
+            "numa_foreign": 0,
+            "numa_interleave": 0,
+            "numa_local": 9998375,
+            "numa_other": 53,
+            "pswpin": 0,
+            "pswpout": 0,
+            "pgfault": 19193373,
+            "pgmajfault": 0,
+            "numa_pte_updates": 50747497,
+            "numa_huge_pte_updates": 98994,
+            "numa_hint_faults": 131642,
+            "numa_hint_faults_local": 109901,
+            "numa_pages_migrated": 1271784,
+            "pgmigrate_success": 1271784,
+            "pgmigrate_fail": 942139
+          },
+          "available_kb_min_max": [
+            144075388,
+            188411900
+          ]
+        }
+      ],
+      "evidence_files": [
+        "D:\\compete\\.codex-deploy\\optimization\\order_diagnostic\\completed_telemetry.json",
+        "D:\\compete\\.codex-deploy\\optimization\\order_diagnostic\\telemetry_summary.json"
+      ]
+    },
+    "4338535": {
+      "summary": "穿插TG诊断完成，顺序PP1→TG1→PP2→TG2→PP3；PP31.907140→53.628610→53.646353 t/s，后两次接近，CV约0.17%/0.24%；TG3.007951/3.040360。全部5个测速进程major faults=0，采样read_bytes=0，后两次PP的GGUF页分布较稳定。TG穿插与稳定速度同时出现，但与连续PP作业不同节点/时段，尚不能认定TG是加速原因；主机NUMA迁移计数也非该进程独占。每30秒采样有开销，单次最高约1.19秒；不计Score。",
+      "values": [
+        {
+          "name": "diagnostic-order-tg-between-baseline_4338535",
+          "ppl": 2.7767,
+          "ppl_seconds": 315,
+          "pp": 31.90714,
+          "pp_cv_percent": 10.12737587887852,
+          "tg": 3.007951,
+          "tg_cv_percent": 0.5332201222692791
+        },
+        {
+          "name": "diagnostic-order-tg-between-repeat2_4338535",
+          "ppl": 2.7767,
+          "ppl_seconds": 315,
+          "pp": 53.62861,
+          "pp_cv_percent": 0.16777425333231646,
+          "tg": 3.04036,
+          "tg_cv_percent": 0.4921456669604915
+        },
+        {
+          "name": "diagnostic-order-tg-between-repeat3_4338535",
+          "ppl": 2.7767,
+          "ppl_seconds": 315,
+          "pp": 53.646353,
+          "pp_cv_percent": 0.2387673958004191
+        }
+      ],
+      "telemetry_summary": [
+        {
+          "phase": "01_baseline/pp",
+          "result": {
+            "returncode": 0,
+            "timed_out": false,
+            "started_unix": 1792424833.916354,
+            "ended_unix": 1792425643.2860224,
+            "wall_seconds": 809.3696690718643,
+            "user_cpu_seconds": 16261.167551,
+            "system_cpu_seconds": 277.714791,
+            "major_faults": 0,
+            "minor_faults": 20012523,
+            "max_rss_kb": 114604372,
+            "voluntary_context_switches": 6565243,
+            "involuntary_context_switches": 66358,
+            "diagnostic_unscored": true
+          },
+          "samples": 27,
+          "observation_cost_total_s": 16.23184427153319,
+          "observation_cost_max_s": 0.7263897419907153,
+          "last_io": {
+            "rchar": 11101664,
+            "wchar": 458809,
+            "syscr": 1437,
+            "syscw": 4790,
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "cancelled_write_bytes": 0
+          },
+          "first_loaded_model_kb": {
+            "N0": 48504604,
+            "N1": 15368908
+          },
+          "last_model_kb": {
+            "N0": 50969704,
+            "N1": 19731020
+          },
+          "peak_model_kb": 70700724,
+          "compute_rss_kb_min_max": [
+            94600108,
+            114510508
+          ],
+          "compute_main_thread_voluntary_context_switches_delta": 229052,
+          "model_node0_pct_min_max": [
+            72.09219526521397,
+            75.93852675581702
+          ],
+          "host_counter_deltas": {
+            "numa_hit": 1719957,
+            "numa_miss": 1171440,
+            "numa_foreign": 1171440,
+            "numa_interleave": 0,
+            "numa_local": 1719890,
+            "numa_other": 1171507,
+            "pswpin": 0,
+            "pswpout": 0,
+            "pgfault": 20578960,
+            "pgmajfault": 0,
+            "numa_pte_updates": 70729418,
+            "numa_huge_pte_updates": 136474,
+            "numa_hint_faults": 821717,
+            "numa_hint_faults_local": 392374,
+            "numa_pages_migrated": 431880,
+            "pgmigrate_success": 431880,
+            "pgmigrate_fail": 1701539
+          },
+          "available_kb_min_max": [
+            144552464,
+            188682396
+          ]
+        },
+        {
+          "phase": "01_baseline/tg",
+          "result": {
+            "returncode": 0,
+            "timed_out": false,
+            "started_unix": 1792425643.6564138,
+            "ended_unix": 1792426154.0178382,
+            "wall_seconds": 510.3614256060682,
+            "user_cpu_seconds": 17469.495686,
+            "system_cpu_seconds": 156.738946,
+            "major_faults": 0,
+            "minor_faults": 16694288,
+            "max_rss_kb": 108475488,
+            "voluntary_context_switches": 186017,
+            "involuntary_context_switches": 35813,
+            "diagnostic_unscored": true
+          },
+          "samples": 17,
+          "observation_cost_total_s": 11.674296766053885,
+          "observation_cost_max_s": 1.1886998261325061,
+          "last_io": {
+            "rchar": 11101664,
+            "wchar": 459797,
+            "syscr": 1437,
+            "syscw": 4809,
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "cancelled_write_bytes": 0
+          },
+          "first_loaded_model_kb": {
+            "N0": 47558600,
+            "N1": 13223820
+          },
+          "last_model_kb": {
+            "N0": 48777680,
+            "N1": 15589788
+          },
+          "peak_model_kb": 64367468,
+          "compute_rss_kb_min_max": [
+            104599312,
+            108392300
+          ],
+          "compute_main_thread_voluntary_context_switches_delta": 3600,
+          "model_node0_pct_min_max": [
+            75.7800198075214,
+            78.24400542130438
+          ],
+          "host_counter_deltas": {
+            "numa_hit": 524590,
+            "numa_miss": 0,
+            "numa_foreign": 0,
+            "numa_interleave": 0,
+            "numa_local": 524590,
+            "numa_other": 0,
+            "pswpin": 0,
+            "pswpout": 0,
+            "pgfault": 17059206,
+            "pgmajfault": 0,
+            "numa_pte_updates": 33283551,
+            "numa_huge_pte_updates": 64922,
+            "numa_hint_faults": 83592,
+            "numa_hint_faults_local": 69551,
+            "numa_pages_migrated": 1220866,
+            "pgmigrate_success": 1220866,
+            "pgmigrate_fail": 595512
+          },
+          "available_kb_min_max": [
+            144344588,
+            188644952
+          ]
+        },
+        {
+          "phase": "02_repeat2/pp",
+          "result": {
+            "returncode": 0,
+            "timed_out": false,
+            "started_unix": 1792426154.3280346,
+            "ended_unix": 1792426620.278517,
+            "wall_seconds": 465.9504844471812,
+            "user_cpu_seconds": 15756.50201,
+            "system_cpu_seconds": 214.652612,
+            "major_faults": 0,
+            "minor_faults": 18356952,
+            "max_rss_kb": 114628716,
+            "voluntary_context_switches": 109468,
+            "involuntary_context_switches": 31012,
+            "diagnostic_unscored": true
+          },
+          "samples": 16,
+          "observation_cost_total_s": 9.412222469691187,
+          "observation_cost_max_s": 0.7277284259907901,
+          "last_io": {
+            "rchar": 11101664,
+            "wchar": 458809,
+            "syscr": 1437,
+            "syscw": 4790,
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "cancelled_write_bytes": 0
+          },
+          "first_loaded_model_kb": {
+            "N0": 48493600,
+            "N1": 15312860
+          },
+          "last_model_kb": {
+            "N0": 50976824,
+            "N1": 19738284
+          },
+          "peak_model_kb": 70715108,
+          "compute_rss_kb_min_max": [
+            103891648,
+            114551720
+          ],
+          "compute_main_thread_voluntary_context_switches_delta": 1443,
+          "model_node0_pct_min_max": [
+            72.08759972479997,
+            76.00108202210247
+          ],
+          "host_counter_deltas": {
+            "numa_hit": 522545,
+            "numa_miss": 0,
+            "numa_foreign": 0,
+            "numa_interleave": 0,
+            "numa_local": 522544,
+            "numa_other": 1,
+            "pswpin": 0,
+            "pswpout": 0,
+            "pgfault": 18808035,
+            "pgmajfault": 0,
+            "numa_pte_updates": 50418868,
+            "numa_huge_pte_updates": 98390,
+            "numa_hint_faults": 123224,
+            "numa_hint_faults_local": 103285,
+            "numa_pages_migrated": 1785663,
+            "pgmigrate_success": 1785663,
+            "pgmigrate_fail": 295449
+          },
+          "available_kb_min_max": [
+            144523596,
+            188647200
+          ]
+        },
+        {
+          "phase": "02_repeat2/tg",
+          "result": {
+            "returncode": 0,
+            "timed_out": false,
+            "started_unix": 1792426620.5779133,
+            "ended_unix": 1792427127.3694644,
+            "wall_seconds": 506.7915516085923,
+            "user_cpu_seconds": 17334.365597,
+            "system_cpu_seconds": 158.18819,
+            "major_faults": 0,
+            "minor_faults": 16939926,
+            "max_rss_kb": 108468300,
+            "voluntary_context_switches": 97236,
+            "involuntary_context_switches": 46936,
+            "diagnostic_unscored": true
+          },
+          "samples": 17,
+          "observation_cost_total_s": 11.20118302712217,
+          "observation_cost_max_s": 0.7555895037949085,
+          "last_io": {
+            "rchar": 11101664,
+            "wchar": 459797,
+            "syscr": 1437,
+            "syscw": 4809,
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "cancelled_write_bytes": 0
+          },
+          "first_loaded_model_kb": {
+            "N0": 47528720,
+            "N1": 13158784
+          },
+          "last_model_kb": {
+            "N0": 48780076,
+            "N1": 15596568
+          },
+          "peak_model_kb": 64376644,
+          "compute_rss_kb_min_max": [
+            104439972,
+            108392208
+          ],
+          "compute_main_thread_voluntary_context_switches_delta": 1536,
+          "model_node0_pct_min_max": [
+            75.77294026075668,
+            78.31714416859194
+          ],
+          "host_counter_deltas": {
+            "numa_hit": 432193,
+            "numa_miss": 0,
+            "numa_foreign": 0,
+            "numa_interleave": 0,
+            "numa_local": 432189,
+            "numa_other": 4,
+            "pswpin": 0,
+            "pswpout": 0,
+            "pgfault": 17233572,
+            "pgmajfault": 0,
+            "numa_pte_updates": 49009322,
+            "numa_huge_pte_updates": 95623,
+            "numa_hint_faults": 121828,
+            "numa_hint_faults_local": 100658,
+            "numa_pages_migrated": 1881469,
+            "pgmigrate_success": 1881469,
+            "pgmigrate_fail": 589902
+          },
+          "available_kb_min_max": [
+            144336588,
+            188645452
+          ]
+        },
+        {
+          "phase": "03_repeat3/pp",
+          "result": {
+            "returncode": 0,
+            "timed_out": false,
+            "started_unix": 1792427127.68565,
+            "ended_unix": 1792427591.7052832,
+            "wall_seconds": 464.0196354649961,
+            "user_cpu_seconds": 15712.921208,
+            "system_cpu_seconds": 217.66209,
+            "major_faults": 0,
+            "minor_faults": 18436263,
+            "max_rss_kb": 114627896,
+            "voluntary_context_switches": 177828,
+            "involuntary_context_switches": 27623,
+            "diagnostic_unscored": true
+          },
+          "samples": 16,
+          "observation_cost_total_s": 9.50063210260123,
+          "observation_cost_max_s": 0.7060097749345005,
+          "last_io": {
+            "rchar": 11101664,
+            "wchar": 458809,
+            "syscr": 1437,
+            "syscw": 4790,
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "cancelled_write_bytes": 0
+          },
+          "first_loaded_model_kb": {
+            "N0": 48550920,
+            "N1": 15476548
+          },
+          "last_model_kb": {
+            "N0": 51018056,
+            "N1": 19747868
+          },
+          "peak_model_kb": 70765924,
+          "compute_rss_kb_min_max": [
+            104150824,
+            114599180
+          ],
+          "compute_main_thread_voluntary_context_switches_delta": 3450,
+          "model_node0_pct_min_max": [
+            72.09409997953252,
+            75.82826795524696
+          ],
+          "host_counter_deltas": {
+            "numa_hit": 468815,
+            "numa_miss": 0,
+            "numa_foreign": 0,
+            "numa_interleave": 0,
+            "numa_local": 468760,
+            "numa_other": 55,
+            "pswpin": 0,
+            "pswpout": 0,
+            "pgfault": 18819897,
+            "pgmajfault": 0,
+            "numa_pte_updates": 55298421,
+            "numa_huge_pte_updates": 107925,
+            "numa_hint_faults": 132058,
+            "numa_hint_faults_local": 105903,
+            "numa_pages_migrated": 3290093,
+            "pgmigrate_success": 3290093,
+            "pgmigrate_fail": 403481
+          },
+          "available_kb_min_max": [
+            144516880,
+            188645480
+          ]
+        }
+      ],
+      "evidence_files": [
+        "D:\\compete\\.codex-deploy\\optimization\\order_diagnostic\\completed_telemetry.json",
+        "D:\\compete\\.codex-deploy\\optimization\\order_diagnostic\\telemetry_summary.json"
+      ]
+    },
+    "4338536": {
+      "summary": "不采样三轮相同Intel原版完整固定评测均完成，各自独立PPL2.7767 PASS（313/72/92秒），每轮PP/TG各10次。PP31.341873→52.861537→53.370862 t/s；第三轮相对第二轮+0.96%，后两轮接近。TG3.063875→3.026859→3.048581。复现相同配置先慢后快，支持顺序/运行状态混杂确实存在，不能作为代码优化收益；本节点后三轮中后两轮趋稳不能推广为所有节点都稳定。第一轮及全部慢样本保留，开发自测非正式成绩。",
+      "values": [
+        {
+          "name": "confirm-order-aaa-baseline_4338536",
+          "ppl": 2.7767,
+          "ppl_seconds": 313,
+          "pp": 31.341873,
+          "pp_cv_percent": 9.084019962686977,
+          "tg": 3.063875,
+          "tg_cv_percent": 0.5936926277997634
+        },
+        {
+          "name": "confirm-order-aaa-repeat2_4338536",
+          "ppl": 2.7767,
+          "ppl_seconds": 72,
+          "pp": 52.861537,
+          "pp_cv_percent": 1.5106257693566496,
+          "tg": 3.026859,
+          "tg_cv_percent": 1.0860433208154063
+        },
+        {
+          "name": "confirm-order-aaa-repeat3_4338536",
+          "ppl": 2.7767,
+          "ppl_seconds": 92,
+          "pp": 53.370862,
+          "pp_cv_percent": 0.8697161383677858,
+          "tg": 3.048581,
+          "tg_cv_percent": 0.6618489060976238
+        }
+      ],
+      "telemetry_summary": [],
+      "evidence_files": [
+        "D:\\compete\\.codex-deploy\\optimization\\order_diagnostic\\completed_telemetry.json",
+        "D:\\compete\\.codex-deploy\\optimization\\order_diagnostic\\telemetry_summary.json"
+      ]
+    }
+  }
+}
